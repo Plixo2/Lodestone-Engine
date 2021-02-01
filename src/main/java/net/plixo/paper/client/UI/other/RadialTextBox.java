@@ -41,7 +41,6 @@ public class RadialTextBox extends RadialMenu {
 	public void keyTyped(char typedChar, int keyCode) {
 		if (shown) {
 		field.charTyped(typedChar, keyCode);
-		//TODO add keyPressed if needed...
 		}
 		this.name = field.getText();
 	}

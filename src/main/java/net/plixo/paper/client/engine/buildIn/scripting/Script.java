@@ -21,7 +21,7 @@ public class Script extends Behavior {
 
 	public Script() {
 		super("Script");
-		setSerializableResources(new Resource("Javascript", File.class, null) , new Resource("Int", Integer.class, null) ,  new Resource("float", Float.class, null) , new Resource("Text", String.class, null) , new Resource("boolean", Boolean.class, null));
+		setSerializableResources(new Resource("Javascript", File.class, null));
 	}
 
 	@Override

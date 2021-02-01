@@ -28,7 +28,7 @@ public class UniformFunction {
     }
 
     public void execute(Variable... vars) {
-
+        //TODO javascript and blueprint function
     }
 
     //TODO add select function

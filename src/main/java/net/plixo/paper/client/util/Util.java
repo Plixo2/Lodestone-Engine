@@ -280,7 +280,6 @@ public class Util {
 	public static void print(Object obj) {
 
 		TheEditor.printLn(obj);
-		//TODO key utils
 		mc.ingameGUI.getChatGUI().printChatMessage(new StringTextComponent(obj+""));
 	}
 
