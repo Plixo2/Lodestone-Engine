@@ -32,20 +32,16 @@ public class Canvas {
 
 
     public String name;
-
     public JsonParser parser;
 
     public Canvas(Module mod) {
         this.mod = mod;
         name = mod.name;
-
-
     }
 
     public void addDrawFunction(DrawFuntion function) {
         function.function.setTypes();
         functions.add(function);
-
     }
 
     public void addFunction(Function function, float x, float y) {

@@ -64,6 +64,12 @@ public class TheManager {
 
     }
 
+    public static void load(){
+        loadEntiys();
+        loadGlobals();
+        loadResources();
+        loadFunctions();
+    }
     public static void loadEntiys() {
         parser = new JsonParser();
         allEntitys.clear();
@@ -215,6 +221,12 @@ public class TheManager {
 
     }
 
+    public static void save(){
+        saveFunctions();
+        saveEntitys();
+        saveGlobals();
+        saveResources();
+    }
     public static void saveFunctions() {
 
         File file = SaveUtil.getFileFromName("functions", SaveUtil.FileFormat.Other);

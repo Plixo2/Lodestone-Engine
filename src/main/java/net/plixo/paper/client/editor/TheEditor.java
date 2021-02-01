@@ -11,7 +11,6 @@ public class TheEditor {
 	public static TabConsole console;
 	public static TabExplorer explorer;
 	public static TabFiles files;
-	public static TabHud hud;
 	public static TabInspector inspector;
 
 	public static TabViewport viewport;
@@ -19,7 +18,6 @@ public class TheEditor {
 	public static void init() {
 		initTab(console);
 		initTab(files);
-		initTab(hud);
 		initTab(explorer);
 		initTab(viewport);
 		initTab(inspector);

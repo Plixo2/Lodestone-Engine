@@ -76,7 +76,6 @@ public class UIEditor extends Screen {
 		background.x = 200;
 
 		background.addTab(new TabViewport(0));
-		background.addTab(new TabHud(1));
 
 		TabbedUI explorer = new TabbedUI(200, this.height /2 -10, "Test0");
 		explorer.y = 20;
