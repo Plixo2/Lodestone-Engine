@@ -1,0 +1,26 @@
+{
+	"Creeper": {
+		"Blueprint": {
+			"File": {
+				"Value": "E:\\forge\\Paper\\run\\Paper\\testFolder\\vsTest.vs"
+			}
+		},
+		"Script": {
+			"Javascript": {
+				"Value": ""
+			},
+			"Int": {
+				"Value": "0"
+			},
+			"float": {
+				"Value": "0.0"
+			},
+			"Text": {
+				"Value": "aw"
+			},
+			"boolean": {
+				"Value": "true"
+			}
+		}
+	}
+}

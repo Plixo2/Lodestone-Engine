@@ -1,0 +1,1 @@
+[{"Name":"sin","Output":{"Name":"isZero","Type":"BOOLEAN"},"List":[{"Name":"rad","Type":"FLOAT"},{"Name":"power","Type":"INT"},{"Name":"isCos","Type":"BOOLEAN"}]},{"Name":"jump","Output":{"Name":"output","Type":"BOOLEAN"},"List":[]},{"Name":"setSpeed","Output":{"Name":"newSpeed","Type":"FLOAT"},"List":[{"Name":"speed","Type":"FLOAT"},{"Name":"yaw","Type":"FLOAT"}]}]
