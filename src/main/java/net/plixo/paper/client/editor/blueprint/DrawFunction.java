@@ -5,6 +5,7 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.math.vector.Vector3i;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.tabs.TabViewport;
+import net.plixo.paper.client.engine.TheManager;
 import net.plixo.paper.client.engine.buildIn.blueprint.BlueprintManager;
 import net.plixo.paper.client.engine.buildIn.blueprint.Module;
 import net.plixo.paper.client.engine.buildIn.blueprint.event.Event;
@@ -17,7 +18,6 @@ import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.KeyboardUtil;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-
 import java.util.ArrayList;
 
 public class DrawFunction {
@@ -100,6 +100,9 @@ public class DrawFunction {
 
             Execute execute = (Execute) function;
             if (execute.nextConnection != null)
+                if(!TheManager.functions.contains(function)){
+
+                }
                 for (int i = 0; i < execute.size; i++) {
                     Execute next = execute.nextConnection[i];
                     if (next == null) {
@@ -302,7 +305,6 @@ public class DrawFunction {
         try {
             if (function instanceof Execute) {
                 Execute execute = (Execute) function;
-
                 for (Rect rect : rights) {
                     if (rect.mouseInside(mouseX - x, mouseY - y, mouseButton)) {
                         if (!KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {

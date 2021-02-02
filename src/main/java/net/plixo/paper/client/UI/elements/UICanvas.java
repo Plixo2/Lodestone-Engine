@@ -1,8 +1,6 @@
 package net.plixo.paper.client.UI.elements;
 
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import net.plixo.paper.client.UI.IAbstractAction;
 import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.util.Gui;
