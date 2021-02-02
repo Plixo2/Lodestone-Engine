@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 
-public class DrawFuntion {
+public class DrawFunction {
 
     static float connectionButtonWidth = 10f;
     static float headerHeight = 20;
@@ -41,7 +41,7 @@ public class DrawFuntion {
     ArrayList<Rect> rights = new ArrayList<Rect>();
     public float x = 0, y = 0;
 
-    public DrawFuntion(Function function) {
+    public DrawFunction(Function function) {
         this.function = function;
         function.setDrawFunction(this);
     }
@@ -95,10 +95,8 @@ public class DrawFuntion {
         GL11.glTranslated(x, y, 0);
 
 
-        int leftOffset = 5;
+
         if (function instanceof Execute) {
-            int colorL = 0xFF384247;
-            int colorR = 0xFF384247;
 
             Execute execute = (Execute) function;
             if (execute.nextConnection != null)
@@ -107,6 +105,7 @@ public class DrawFuntion {
                     if (next == null) {
                         continue;
                     }
+
 
                     float height = (headerHeight / execute.size);
                     float h = i * height;
@@ -141,7 +140,7 @@ public class DrawFuntion {
                     start = new Vector2f(start.x, start.y + l.height / 2);
 
 
-                    DrawFuntion draw = function.inputs[i].function.drawFunction;
+                    DrawFunction draw = function.inputs[i].function.drawFunction;
                     int index = function.inputs[i].connectionIndex;
                     // Vector2f end = new Vector2f(draw.x + getWidth() / 2,draw.y + headerHeight +
                     // function.inputs[i].connectionIndex * IOHeight);

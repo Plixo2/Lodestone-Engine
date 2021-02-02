@@ -3,6 +3,7 @@ package net.plixo.paper.client.UI.other;
 import net.plixo.paper.Paper;
 import net.plixo.paper.client.UI.elements.UIButton;
 import net.plixo.paper.client.UI.elements.UICanvas;
+import net.plixo.paper.client.editor.tabs.TabConsole;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Util;
 
@@ -40,6 +41,7 @@ public class Toolbar extends UICanvas {
         settingsButton.setRoundness(0);
 
 
+
         UIButton uiToggleButton = new UIButton(0) {
             @Override
             public void actionPerformed() {
@@ -65,6 +67,22 @@ public class Toolbar extends UICanvas {
             uiToggleButton.setDisplayName("Stop");
         }
 
+        UIButton consoleOutput = new UIButton(0) {
+            @Override
+            public void draw(float mouseX, float mouseY) {
+                if(TabConsole.consoleLines.size() > 0) {
+                   TabConsole.ConsoleLine line =  TabConsole.consoleLines.get(TabConsole.consoleLines.size()-1);
+                   displayName = line.line;
+                }
+
+                super.draw(mouseX, mouseY);
+            }
+        };
+        consoleOutput.setColor(0);
+        consoleOutput.setRoundness(0);
+        consoleOutput.setDimensions(width-300 , 0 , 300,20);
+
+        add(consoleOutput);
         add(uiToggleButton);
         add(fileButton);
         add(settingsButton);

@@ -33,7 +33,7 @@ graphicsMode:2
 ao:2
 biomeBlendRadius:2
 renderClouds:true
-resourcePacks:["vanilla","mod_resources","file/1.16 (1).zip","file/bloom-1.16-1-5-2020.zip"]
+resourcePacks:["vanilla","mod_resources"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us

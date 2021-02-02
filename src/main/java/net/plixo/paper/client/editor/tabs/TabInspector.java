@@ -78,13 +78,10 @@ public class TabInspector extends UITab {
                     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
                         super.mouseClicked(mouseX, mouseY, mouseButton);
 
-                        if (!Paper.paperEngine.isRunning && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
-                            int nId = -id - 1;
-                            if (entity.components.size() > 0 && nId >= 0 && nId < entity.components.size()) {
-                                entity.components.remove(nId);
+                        if (hovered(mouseX,mouseY) && !Paper.paperEngine.isRunning && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
+                                entity.components.remove(b);
                                 init();
                                 initInspector(lastEntity);
-                            }
                             //	entity.components.get(index);
                         }
                         //showMenu(id, EntityCanvas.getX()+mouseX, EntityCanvas.getY()+mouseY, "Remove");

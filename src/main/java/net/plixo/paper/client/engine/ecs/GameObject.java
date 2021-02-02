@@ -3,11 +3,12 @@ package net.plixo.paper.client.engine.ecs;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameObject {
 	
 	
-	public ArrayList<Behavior> components = new ArrayList<Behavior>();
+	public CopyOnWriteArrayList<Behavior> components = new CopyOnWriteArrayList<>();
 
 	public String name;
 	

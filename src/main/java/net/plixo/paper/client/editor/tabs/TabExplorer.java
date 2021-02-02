@@ -2,6 +2,8 @@ package net.plixo.paper.client.editor.tabs;
 
 import net.plixo.paper.Paper;
 import net.plixo.paper.client.UI.UITab;
+import net.plixo.paper.client.UI.elements.UIButton;
+import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.blueprint.Rect;
 import net.plixo.paper.client.engine.TheManager;
@@ -16,22 +18,9 @@ import java.util.ArrayList;
 
 public class TabExplorer extends UITab {
 
-    class EntityBox extends Rect {
 
-        GameObject entity;
-        public boolean state;
 
-        public EntityBox(GameObject entity, boolean state, float x, float y, float width, float height) {
-            super(x, y, width, height, 0xFF32a852, 0xFF328ca8);
-            this.entity = entity;
-            this.state = state;
-            this.setTxt(" -" + entity.name, Alignment.LEFT);
-            this.roundness = 0;
-        }
-
-    }
-
-    ArrayList<EntityBox> BoxList = new ArrayList<EntityBox>();
+    UICanvas canvas;
 
     GameObject selectedEntity;
 
@@ -43,11 +32,9 @@ public class TabExplorer extends UITab {
     @Override
     public void drawScreen(float mouseX, float mouseY) {
 
-    Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.2f));
+        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.2f));
 
-        for (EntityBox box : BoxList) {
-            box.draw(mouseX, mouseY);
-        }
+        canvas.draw(mouseX,mouseY);
 
      //  drawOutline();
     }
@@ -55,40 +42,39 @@ public class TabExplorer extends UITab {
     @Override
     public void init() {
 
-        BoxList.clear();
-        float y = 0;
-        for (GameObject e : TheManager.allEntitys) {
-            EntityBox box = new EntityBox(e, false, 0, y, parent.width, 20);
-            BoxList.add(box);
-            y += 20;
+        canvas = new UICanvas(0);
+
+        int y = 0;
+        for(GameObject obj : TheManager.allEntitys) {
+            UIButton button = new UIButton(0) {
+                @Override
+                public void actionPerformed() {
+                    TheEditor.inspector.initInspector(obj);
+                    if(KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
+                        TheManager.allEntitys.remove(obj);
+                        init();
+                    }
+                }
+            };
+            button.setDimensions(0,y, parent.width,20);
+            button.setDisplayName(obj.name);
+            button.setRoundness(0);
+            button.setColor(y % 40 == 0 ? ColorLib.blue() : ColorLib.getDarker(ColorLib.blue()));
+
+            canvas.add(button);
+             y+= 20;
         }
 
-        super.init();
+
+            super.init();
     }
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
         hideMenu();
-        if (!parent.isMouseInside(mouseX, mouseY)) {
-            return;
-        }
-        for (EntityBox box : BoxList) {
-            if (box.mouseInside(mouseX, mouseY, mouseButton)) {
-                if (mouseButton == 0) {
+        canvas.mouseClicked(mouseX,mouseY,mouseButton);
 
-                    if (KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
-                        GameObject e = box.entity;
-                        TheManager.removeEntity(e);
-                        init();
-                        break;
-                    } else {
-                        TheEditor.inspector.initInspector(box.entity);
-                    }
-                }
-                return;
-            }
-        }
-        if (mouseButton == 1) {
+        if (mouseButton == 1 && parent.isMouseInside(mouseX,mouseY)) {
             showMenu(0, mouseX, mouseY, "New Entity");
         }
         super.mouseClicked(mouseX, mouseY, mouseButton);

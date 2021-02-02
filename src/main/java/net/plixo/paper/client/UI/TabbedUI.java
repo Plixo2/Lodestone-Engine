@@ -56,8 +56,12 @@ public class TabbedUI implements IGuiEvent {
 
 				GL11.glPopMatrix();
 
+				if(tabs.size() >= 2) {
+					tab.head.color = 0x15000000;
+					tab.head.hoverColor = 0x25000000;
+				}
 			}
-			if(tabs.size() >= 1)
+
 			tab.head.draw(mouseX, mouseY);
 		}
 

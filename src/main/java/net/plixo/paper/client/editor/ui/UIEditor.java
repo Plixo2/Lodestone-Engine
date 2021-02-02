@@ -100,10 +100,8 @@ public class UIEditor extends Screen {
 
 		UITab b3 = new TabFiles(0);
 		UITab b7 = new TabConsole(1);
-		UITab b8 = new TabFunction(2);
 		console.addTab(b3);
 		console.addTab(b7);
-		console.addTab(b8);
 
 		TabbedUI modules = new TabbedUI(side, this.height/2 - 30, "Test0");
 		modules.y = this.height/2 + 30;

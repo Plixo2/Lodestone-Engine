@@ -1,7 +1,7 @@
 package net.plixo.paper.client.engine.buildIn.blueprint.function;
 
 import net.minecraft.client.Minecraft;
-import net.plixo.paper.client.editor.blueprint.DrawFuntion;
+import net.plixo.paper.client.editor.blueprint.DrawFunction;
 import net.plixo.paper.client.engine.buildIn.blueprint.function.other.Connection;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.VariableType;
@@ -11,7 +11,7 @@ public class Function {
 	public static Minecraft mc = Minecraft.getInstance();
 	public Variable customData;
 
-	public DrawFuntion drawFunction;
+	public DrawFunction drawFunction;
 
 	public boolean hasCalculated = false;
 	public Connection[] inputs = new Connection[0];
@@ -48,7 +48,7 @@ public class Function {
 		}
 	}
 
-	public void setDrawFunction(DrawFuntion drawFunction) {
+	public void setDrawFunction(DrawFunction drawFunction) {
 		this.drawFunction = drawFunction;
 	}
 

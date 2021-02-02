@@ -130,7 +130,7 @@ public class Util {
 
     public static void print(Object obj) {
 
-        TheEditor.console.consoleLines.add(new TabConsole.ConsoleLine(obj + ""));
+        TabConsole.consoleLines.add(new TabConsole.ConsoleLine(obj + ""));
         mc.ingameGUI.getChatGUI().printChatMessage(new StringTextComponent(obj + ""));
     }
 

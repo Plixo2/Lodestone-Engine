@@ -12,7 +12,6 @@ public class TheEditor {
 	public static TabExplorer explorer;
 	public static TabFiles files;
 	public static TabInspector inspector;
-	public static TabFunction function;
 	public static TabViewport viewport;
 
 	public static void init() {
