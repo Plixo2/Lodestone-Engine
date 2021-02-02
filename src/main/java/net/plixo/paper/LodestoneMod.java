@@ -20,12 +20,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Collectors;
 
-@Mod(PaperMod.Mod_ID)
-public class PaperMod {
-    public final static String Mod_ID = "paper";
+@Mod(LodestoneMod.Mod_ID)
+public class LodestoneMod {
+    public final static String Mod_ID = "lodestone";
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public PaperMod() {
+    public LodestoneMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
@@ -43,7 +43,7 @@ public class PaperMod {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        Paper.startClient();
+        Lodestone.startClient();
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
     }
 

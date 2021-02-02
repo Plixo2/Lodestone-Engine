@@ -7,7 +7,7 @@ import net.plixo.paper.client.engine.buildIn.blueprint.BlueprintManager;
 import net.plixo.paper.client.engine.buildIn.blueprint.Module;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
 
-public class Paper {
+public class Lodestone {
 
     static long lastMS = 0;
 
@@ -36,10 +36,10 @@ public class Paper {
 
     public static void update(String name, Variable var) {
 
-        Paper.paperEngine.onEvent(name, var);
+        Lodestone.paperEngine.onEvent(name, var);
         if (System.currentTimeMillis() - lastMS > 60000) {
             if (!paperEngine.isRunning) {
-                Paper.save();
+                Lodestone.save();
             }
             lastMS = System.currentTimeMillis();
         }

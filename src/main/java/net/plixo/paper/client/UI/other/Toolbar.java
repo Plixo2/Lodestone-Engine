@@ -1,6 +1,6 @@
 package net.plixo.paper.client.UI.other;
 
-import net.plixo.paper.Paper;
+import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.UI.elements.UIButton;
 import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.tabs.TabConsole;
@@ -45,14 +45,14 @@ public class Toolbar extends UICanvas {
         UIButton uiToggleButton = new UIButton(0) {
             @Override
             public void actionPerformed() {
-                if (Paper.paperEngine.isRunning) {
+                if (Lodestone.paperEngine.isRunning) {
                     setDisplayName("Start");
                     setColor(0);
-                    Paper.paperEngine.stopEngine();
+                    Lodestone.paperEngine.stopEngine();
                 } else {
                     setDisplayName("Stop");
                     setColor(ColorLib.cyan());
-                    Paper.paperEngine.startEngine();
+                    Lodestone.paperEngine.startEngine();
                 }
                 super.actionPerformed();
             }
@@ -62,7 +62,7 @@ public class Toolbar extends UICanvas {
         uiToggleButton.setRoundness(0);
         uiToggleButton.setColor(0);
 
-        if (Paper.paperEngine.isRunning) {
+        if (Lodestone.paperEngine.isRunning) {
             uiToggleButton.setColor(ColorLib.cyan());
             uiToggleButton.setDisplayName("Stop");
         }

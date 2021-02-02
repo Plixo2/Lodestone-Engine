@@ -2,7 +2,7 @@ package net.plixo.paper.client.engine.buildIn.blueprint;
 
 import java.io.File;
 
-import net.plixo.paper.Paper;
+import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.editor.blueprint.Canvas;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
 import net.plixo.paper.client.engine.ecs.Behavior;
@@ -33,7 +33,7 @@ public class Blueprint extends Behavior {
 				mod.canvas.execute(name, var);
 			}
 		} catch (Exception e) {
-			Paper.paperEngine.stopEngine();
+			Lodestone.paperEngine.stopEngine();
 			e.printStackTrace();
 		}
 		super.onEvent(name, var);
@@ -50,7 +50,7 @@ public class Blueprint extends Behavior {
 				String extension = FilenameUtils.getExtension(file.getName());
 				if(!extension.equals(SaveUtil.FileFormat.VisualScript.format)) {
 					System.out.println("Wrong Format");
-					Paper.paperEngine.stopEngine();
+					Lodestone.paperEngine.stopEngine();
 					return;
 				}
 				String name = FilenameUtils.removeExtension(file.getName());
@@ -60,7 +60,7 @@ public class Blueprint extends Behavior {
 				mod.canvas.execute("onStart", null);
 
 			} catch (Exception e) {
-				Paper.paperEngine.stopEngine();
+				Lodestone.paperEngine.stopEngine();
 				e.printStackTrace();
 			}
 		}
@@ -74,7 +74,7 @@ public class Blueprint extends Behavior {
 				mod.canvas.execute("onStop", null);
 			}
 		} catch (Exception e) {
-			Paper.paperEngine.stopEngine();
+			Lodestone.paperEngine.stopEngine();
 			e.printStackTrace();
 		}
 		super.stop();

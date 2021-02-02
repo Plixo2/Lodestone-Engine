@@ -110,6 +110,7 @@ public class TabViewport extends UITab {
     void drawLines() {
 
         int i = 50;
+        /*
         float toI = zoom * 50.0f;
         if (toI > 0) {
             float w = 10 / toI;
@@ -117,8 +118,12 @@ public class TabViewport extends UITab {
                 i *= w;
         }
 
+         */
+
+
         Vector3d top = screenToWorld(0, 0);
         Vector3d bottom = screenToWorld(parent.width, parent.height);
+
 
         float x = (float) top.x;
         float mX = x % i;

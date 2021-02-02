@@ -1,12 +1,9 @@
 package net.plixo.paper.client.forge.events;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.list.KeyBindingList;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.plixo.paper.Paper;
+import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.editor.ui.UIEditor;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.VariableType;
@@ -25,7 +22,7 @@ public class KeyInput {
     //    KeyBinding
     //    TranslationTextComponent translationTextComponent = new TranslationTextComponent(keybinding.getKeyDescription());
 
-        Paper.update("OnKey", keyVar);
+        Lodestone.update("OnKey", keyVar);
      //   event.
         if (Keybinds.openUI.isPressed()) {
             //   Minecraft.getInstance().player.abilities.isFlying = true;

@@ -2,7 +2,7 @@ package net.plixo.paper.client.engine;
 
 import javax.script.ScriptEngineManager;
 
-import net.plixo.paper.Paper;
+import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
 import net.plixo.paper.client.engine.ecs.GameObject;
 
@@ -26,7 +26,7 @@ public class PaperEngine {
 		if (!isRunning) {
 			isRunning = true;
 			System.out.println("Starting Engine");
-			Paper.save();
+			Lodestone.save();
 
 			for (GameObject e : TheManager.allEntitys) {
 				e.start();
@@ -43,7 +43,7 @@ public class PaperEngine {
 				e.stop();
 			}
 
-			Paper.load();
+			Lodestone.load();
 		}
 	}
 }

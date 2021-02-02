@@ -84,7 +84,7 @@ public class TabFiles extends UITab {
                     }
 
                     lastSelected = icon.file;
-                    showMenu(id, mouseX, mouseY, "Open", "Edit");
+                    showMenu(id, mouseX, mouseY, "Open", "Edit" , "Explorer");
                 }
 
                 return;
@@ -110,8 +110,6 @@ public class TabFiles extends UITab {
             if (option == 0) {
                 if (id == 0) {
                     openVs(lastSelected);
-                } else if (id == 1) {
-
                 } else if (id == 5) {
                     home = lastSelected;
                     update();
@@ -122,7 +120,15 @@ public class TabFiles extends UITab {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            } else if(option == 2) {
+                try {
+                   // Desktop.getDesktop().open(lastSelected.getParentFile());
+                    Runtime.getRuntime().exec("explorer.exe /select," + lastSelected);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
         }
 
         super.optionsSelected(id, option);
