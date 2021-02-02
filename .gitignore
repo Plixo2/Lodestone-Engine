@@ -28,3 +28,7 @@ build/*
 *.lock
 /gradle/
 /run/
+*.bin
+*.bin
+*.gz
+*.dat

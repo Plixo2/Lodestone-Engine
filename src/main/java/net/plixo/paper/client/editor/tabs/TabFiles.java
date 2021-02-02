@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.UI.other.FileIcon;
+import net.plixo.paper.client.editor.ui.FileIcon;
 import net.plixo.paper.client.editor.TheEditor;
-import net.plixo.paper.client.editor.blueprint.Canvas;
-import net.plixo.paper.client.engine.buildIn.blueprint.Module;
+import net.plixo.paper.client.editor.visualscript.Canvas;
+import net.plixo.paper.client.engine.buildIn.visualscript.Module;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Gui;

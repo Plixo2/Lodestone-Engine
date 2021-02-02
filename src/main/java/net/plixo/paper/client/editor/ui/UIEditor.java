@@ -8,7 +8,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.UI.TabbedUI;
 import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.UI.other.Toolbar;
 import net.plixo.paper.client.editor.tabs.*;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;

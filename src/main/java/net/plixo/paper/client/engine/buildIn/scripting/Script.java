@@ -9,7 +9,7 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
+import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.util.SaveUtil;

@@ -1,7 +1,7 @@
 package net.plixo.paper.client.engine;
 
-import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
-import net.plixo.paper.client.engine.buildIn.blueprint.variable.VariableType;
+import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
+import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
 
 import java.util.ArrayList;
 

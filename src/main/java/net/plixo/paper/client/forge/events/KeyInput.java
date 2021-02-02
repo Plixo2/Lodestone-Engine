@@ -5,8 +5,8 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.editor.ui.UIEditor;
-import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
-import net.plixo.paper.client.engine.buildIn.blueprint.variable.VariableType;
+import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
+import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
 import net.plixo.paper.client.forge.Keybinds;
 import org.lwjgl.glfw.GLFW;
 

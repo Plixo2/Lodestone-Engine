@@ -5,11 +5,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.editor.TheEditor;
-import net.plixo.paper.client.editor.blueprint.Canvas;
-import net.plixo.paper.client.editor.blueprint.Rect;
-import net.plixo.paper.client.engine.buildIn.blueprint.BlueprintManager;
-import net.plixo.paper.client.engine.buildIn.blueprint.Module;
-import net.plixo.paper.client.engine.buildIn.blueprint.function.Function;
+import net.plixo.paper.client.editor.visualscript.Canvas;
+import net.plixo.paper.client.editor.visualscript.Rect;
+import net.plixo.paper.client.engine.buildIn.visualscript.VisualScriptManager;
+import net.plixo.paper.client.engine.buildIn.visualscript.Module;
+import net.plixo.paper.client.engine.buildIn.visualscript.function.Function;
 import net.plixo.paper.client.util.*;
 import org.lwjgl.opengl.GL11;
 
@@ -297,9 +297,9 @@ public class TabViewport extends UITab {
                     float dx = startX - mouseX;
                     float dy = startY - mouseY;
                     if (dx * dx + dy * dy < 2) {
-                        String[] nameList = new String[BlueprintManager.allFunctions.size()];
+                        String[] nameList = new String[VisualScriptManager.allFunctions.size()];
                         for (int i = 0; i < nameList.length; i++) {
-                            nameList[i] = BlueprintManager.allFunctions.get(i).name;
+                            nameList[i] = VisualScriptManager.allFunctions.get(i).name;
                         }
                         showMenu(0, mouseX, mouseY, nameList);
                     }
@@ -320,7 +320,7 @@ public class TabViewport extends UITab {
         if (mod != null) {
             Canvas tab = mod.getTab();
             if (tab != null) {
-                Function func = BlueprintManager.getFromList(BlueprintManager.allFunctions.get(option).name, "");
+                Function func = VisualScriptManager.getFromList(VisualScriptManager.allFunctions.get(option).name, "");
                 if (func != null) {
                     Vector3d toWorld = TheEditor.viewport.screenToWorld(TheEditor.viewport.parent.width / 2,
                             TheEditor.viewport.parent.height / 2);

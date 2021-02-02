@@ -3,9 +3,9 @@ package net.plixo.paper;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.engine.PaperEngine;
 import net.plixo.paper.client.engine.TheManager;
-import net.plixo.paper.client.engine.buildIn.blueprint.BlueprintManager;
-import net.plixo.paper.client.engine.buildIn.blueprint.Module;
-import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
+import net.plixo.paper.client.engine.buildIn.visualscript.VisualScriptManager;
+import net.plixo.paper.client.engine.buildIn.visualscript.Module;
+import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 
 public class Lodestone {
 
@@ -29,7 +29,7 @@ public class Lodestone {
     public static void startClient() {
         System.setProperty("java.awt.headless", "false");
         paperEngine = new PaperEngine();
-        BlueprintManager.register();
+        VisualScriptManager.register();
         TheManager.register();
         load();
     }
