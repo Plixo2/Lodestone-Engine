@@ -1,6 +1,7 @@
 package net.plixo.paper.client.UI.elements;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.plixo.paper.client.UI.IAbstractAction;
 import net.plixo.paper.client.UI.UIElement;
@@ -11,7 +12,7 @@ public class UICanvas extends UIElement {
 
 
 	IAbstractAction action;
-	ArrayList<UIElement> elements = new ArrayList<UIElement>();
+	CopyOnWriteArrayList<UIElement> elements = new CopyOnWriteArrayList<>();
 
 	UIElement lastElement;
 
@@ -51,7 +52,7 @@ public class UICanvas extends UIElement {
 	}
 
 
-	public ArrayList<UIElement> getList() {
+	public CopyOnWriteArrayList<UIElement> getList() {
 		return elements;
 	}
 

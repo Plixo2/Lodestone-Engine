@@ -68,8 +68,8 @@ public class TabFunction extends UITab {
             public void actionPerformed() {
                 if (TheManager.functions.contains(function) && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
                     TheManager.functions.remove(function);
-                    //search.clear();
-                    //updateTab();
+                    search.clear();
+                    updateTab();
                     return;
                 }
                 initWithFunction(function);
@@ -90,7 +90,7 @@ public class TabFunction extends UITab {
 
     //TODO redo load (save) system to exeption instead of statements
     public void initWithFunction(UniformFunction function) {
-        build.clear();
+        search.clear();
         float midX = (parent.width - 100) / 2;
         float w = 100;
         UITextbox field = new UITextbox(0) {
