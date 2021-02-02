@@ -11,7 +11,7 @@ public class UIButton extends UIElement {
 	String hoverName;
 	public UIButton(int id) {
 		super(id);
-		this.setColor(ColorLib.getDarker(ColorLib.getButtonColor()));
+		this.setColor(ColorLib.orange());
 	}
 
 	@Override

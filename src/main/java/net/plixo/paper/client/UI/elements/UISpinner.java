@@ -26,7 +26,7 @@ public class UISpinner extends UIMultiButton {
 	@Override
 	public void draw(float mouseX, float mouseY) {
 
-		Gui.drawRoundetRect(x, y, x + width, y + height, roundness, ColorLib.getBackground());
+		Gui.drawRoundetRect(x, y, x + width, y + height, roundness, ColorLib.getBackground(0.3f));
 		int color = ColorLib.interpolateColor(0x00000000, 0x23000000, hoverProgress / 100f);
 		Gui.drawRoundetRect(x, y, x + width, y + height, roundness, color);
 

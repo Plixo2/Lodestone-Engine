@@ -35,7 +35,7 @@ public class OptionMenu {
 		}
 		rects.clear();
 		for (String str : options) {
-			Rect rect = new Rect(0, index * 12, width + 5, 12, ColorLib.getDarker(ColorLib.getBackground()), ColorLib.getBackground());
+			Rect rect = new Rect(0, index * 12, width + 5, 12, ColorLib.getBackground(0.4f), ColorLib.getBackground(0.3f));
 			rect.roundness = 0;
 			rect.setTxt(str, Rect.Alignment.LEFT);
 			rects.add(rect);

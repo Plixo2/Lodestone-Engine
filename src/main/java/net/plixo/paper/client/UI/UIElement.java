@@ -20,8 +20,8 @@ public abstract class UIElement {
     UIElement parent;
     protected float roundness = 0;
 
-    protected int textColor = ColorLib.getTextColor();
-    public int color = ColorLib.getBackground();
+    protected int textColor = -1;
+    public int color = ColorLib.getBackground(0.5f);
     protected float width;
 
 
@@ -40,7 +40,7 @@ public abstract class UIElement {
         if (hovered(mouseX, mouseY) && displayName != null) {
             String txt = displayName;
             Gui.drawLinedRoundetRect(mouseX + 8, mouseY - 5, mouseX + Gui.getStringWidth(txt) + 16, mouseY + 5, 3, ColorLib.utilLines(), 2);
-            Gui.drawRoundetRect(mouseX + 8, mouseY - 5, mouseX + Gui.getStringWidth(txt) + 16, mouseY + 5, 3, ColorLib.getDarker(ColorLib.getBackground()));
+            Gui.drawRoundetRect(mouseX + 8, mouseY - 5, mouseX + Gui.getStringWidth(txt) + 16, mouseY + 5, 3, ColorLib.getBackground(0.4f));
             Gui.drawString(txt, mouseX + 12, mouseY, textColor);
         }
     }

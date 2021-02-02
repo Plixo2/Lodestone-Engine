@@ -5,10 +5,15 @@ public class ColorLib {
     public static int getMainColor() {
         return 0xFF2f98f5;
     }
-    public static int getBackground() {return  0xFF1B1F26;}
-    public static int getTextColor() {return 0xFFF5F5DC;}
-    public static int getButtonColor() {return getMainColor();}
-    public static int getOffButtonColor() {return 0xFF090b0d;}
+    public static int getBackground(float fraction) {return  interpolateColor(0xFF202225 , 0xFFFFFFFF , fraction*0.3f);}
+
+
+    public static int cyan() {return 0xFF1BBFAF;}
+    public static int blue() {return 0xFF1E2D59;}
+    public static int red() {return 0xFFF21D44;}
+    public static int yellow() {return  0xFFF2A516;}
+    public static int orange() {return 0xFFF25D27;}
+
 
     public static int utilLines() {
         return  0x6F000000;

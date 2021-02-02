@@ -41,7 +41,7 @@ public class TabbedUI implements IGuiEvent {
 			UITab tab = tabs.get(i);
 			tab.head.x = i * headWidth;
 
-			tab.head.color = ColorLib.getOffButtonColor();
+			tab.head.color = ColorLib.getBackground(0);
 			tab.head.hoverColor = ColorLib.getBrighter(tab.head.color);
 
 			if (selectedIndex == i) {
@@ -55,12 +55,12 @@ public class TabbedUI implements IGuiEvent {
 
 				GL11.glPopMatrix();
 
-				tab.head.color = ColorLib.getButtonColor();
+				tab.head.color = ColorLib.orange();
 				tab.head.hoverColor = ColorLib.getDarker(tab.head.color);
 			}
 			tab.head.draw(mouseX, mouseY);
 		}
-		Gui.drawRect(tabs.size()*headWidth,-20,width, 0 , ColorLib.getOffButtonColor());
+		//Gui.drawRect(tabs.size()*headWidth,-12,width, 0 , ColorLib.getBackground(0));
 
 
 		if (menu != null) {

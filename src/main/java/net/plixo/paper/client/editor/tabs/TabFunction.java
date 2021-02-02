@@ -27,18 +27,18 @@ public class TabFunction extends UITab {
         canvas = new UICanvas(0);
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
-        canvas.setColor(ColorLib.getBackground());
+        canvas.setColor(ColorLib.getBackground(0.7f));
 
         search = new UICanvas(1);
         search.setDimensions(0, 0, 100, parent.height);
         search.setRoundness(3);
-        search.setColor(ColorLib.getDarker(ColorLib.getBackground()));
+        search.setColor(ColorLib.getDarker(ColorLib.getBackground(0.6f)));
 
 
         build = new UICanvas(2);
         build.setDimensions(100,0, parent.width-100, parent.height);
         build.setRoundness(3);
-        build.setColor(ColorLib.getBackground());
+        build.setColor(ColorLib.getBackground(0.5f));
 
 
         UIButton addFunction = new UIButton(0) {
@@ -99,7 +99,7 @@ public class TabFunction extends UITab {
 
         UICanvas functionCanvas = new UICanvas(1);
         functionCanvas.setDimensions(midX - w / 2, 30, w, 100);
-        functionCanvas.setColor(ColorLib.getDarker(ColorLib.getBackground()));
+        functionCanvas.setColor(ColorLib.getDarker(ColorLib.getBackground(0.2f)));
         functionCanvas.setRoundness(4);
 
 
@@ -154,7 +154,7 @@ public class TabFunction extends UITab {
     @Override
     public void drawScreen(float mouseX, float mouseY) {
         canvas.draw(mouseX, mouseY);
-        drawOutline();
+        //drawOutline();
     }
 
     @Override

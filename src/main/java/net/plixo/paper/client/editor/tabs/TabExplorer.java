@@ -6,6 +6,7 @@ import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.blueprint.Rect;
 import net.plixo.paper.client.engine.TheManager;
 import net.plixo.paper.client.engine.ecs.GameObject;
+import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.KeyboardUtil;
 import org.lwjgl.glfw.GLFW;
@@ -42,13 +43,13 @@ public class TabExplorer extends UITab {
     @Override
     public void drawScreen(float mouseX, float mouseY) {
 
-    Gui.drawRect(0, 0, parent.width, parent.height, 0xFF1B1F26);
+    Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.2f));
 
         for (EntityBox box : BoxList) {
             box.draw(mouseX, mouseY);
         }
 
-       drawOutline();
+     //  drawOutline();
     }
 
     @Override

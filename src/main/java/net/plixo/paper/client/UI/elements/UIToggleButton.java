@@ -28,7 +28,7 @@ public class UIToggleButton extends UIElement {
 
         int Bcolor = color;
         if (!state) {
-            Bcolor = ColorLib.getOffButtonColor();
+            Bcolor = ColorLib.getBackground(0.2f);
             Gui.drawLinedRoundetRect(x, y, x + width, y + height, roundness, -1, 1);
         }
 

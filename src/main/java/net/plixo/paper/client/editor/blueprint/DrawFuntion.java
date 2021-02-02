@@ -281,12 +281,12 @@ public class DrawFuntion {
                 float h = i * height;
 
                 Rect rectRight;
-                rights.add(rectRight = new Rect(-connectionButtonWidth, h, connectionButtonWidth, height, ColorLib.getButtonColor(),
-                        ColorLib.getDarker(ColorLib.getButtonColor()), head, Rect.Alignment.RIGHT));
+                rights.add(rectRight = new Rect(-connectionButtonWidth, h, connectionButtonWidth, height, ColorLib.cyan(),
+                        ColorLib.getDarker(ColorLib.cyan()), head, Rect.Alignment.RIGHT));
                 rectRight.setCustomVector(new Vector3i(i, 0, 0));
                 if (!(function instanceof Event)) {
-                    leftConnection = new Rect(connectionButtonWidth, 0, connectionButtonWidth, headerHeight, ColorLib.getButtonColor(),
-                            ColorLib.getDarker(ColorLib.getButtonColor()), head, Rect.Alignment.LEFT);
+                    leftConnection = new Rect(connectionButtonWidth, 0, connectionButtonWidth, headerHeight, ColorLib.cyan(),
+                            ColorLib.getDarker(ColorLib.cyan()), head, Rect.Alignment.LEFT);
                 }
             }
         }

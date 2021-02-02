@@ -10,6 +10,7 @@ import net.plixo.paper.client.UI.other.FileIcon;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.blueprint.Canvas;
 import net.plixo.paper.client.engine.buildIn.blueprint.Module;
+import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Gui;
 import org.apache.commons.io.FilenameUtils;
@@ -32,12 +33,12 @@ public class TabFiles extends UITab {
     @Override
     public void drawScreen(float mouseX, float mouseY) {
 
-    Gui.drawRect(0, 0, parent.width, parent.height, 0xFF1B1F26);
+     Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.2f));
 
         for (FileIcon icon : icons) {
             icon.draw(mouseX, mouseY);
         }
-      drawOutline();
+    //  drawOutline();
     }
 
     @Override

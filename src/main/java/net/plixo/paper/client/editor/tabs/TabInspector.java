@@ -33,7 +33,7 @@ public class TabInspector extends UITab {
 
         UI.draw(mouseX, mouseY);
 
-        drawOutline();
+//        drawOutline();
     }
 
     @Override
@@ -41,7 +41,8 @@ public class TabInspector extends UITab {
         UI = new UICanvas(0);
         UI.setDimensions(0, 0, parent.width, parent.height);
         UI.setRoundness(0);
-        UI.setColor(ColorLib.getBackground());
+        UI.setColor(ColorLib.getBackground(0.05f));
+
         super.init();
     }
 
@@ -69,7 +70,7 @@ public class TabInspector extends UITab {
                 // BehaviorCanvas
                 UICanvas EntityCanvas = new UICanvas(behaviorIndex);
                 EntityCanvas.setRoundness(5);
-                EntityCanvas.setColor(ColorLib.getBrighter(ColorLib.getBackground()));
+                EntityCanvas.setColor(ColorLib.getBackground(0.4f));
 
                 // Head
                 EntityCanvas.add(new UIHead(-(1 + behaviorIndex)) {

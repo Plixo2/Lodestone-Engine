@@ -54,11 +54,11 @@ public class TabViewport extends UITab {
             public void actionPerformed() {
                 if (Paper.paperEngine.isRunning) {
                     setDisplayName("Start");
-                    setColor(ColorLib.getDarker(ColorLib.getButtonColor()));
+                    setColor(ColorLib.getDarker(ColorLib.orange()));
                     Paper.paperEngine.stopEngine();
                 } else {
                     setDisplayName("Stop");
-                    setColor(ColorLib.getOffButtonColor());
+                    setColor(ColorLib.getBackground(0.1f));
                     Paper.paperEngine.startEngine();
                 }
                 super.actionPerformed();
@@ -68,7 +68,7 @@ public class TabViewport extends UITab {
         uiToggleButton.setDisplayName("Start");
 
         if (Paper.paperEngine.isRunning) {
-            uiToggleButton.setColor(ColorLib.getOffButtonColor());
+            uiToggleButton.setColor(ColorLib.getBackground(0.1f));
             uiToggleButton.setDisplayName("Stop");
         }
 
@@ -81,7 +81,7 @@ public class TabViewport extends UITab {
 
     @Override
     public void drawScreen(float mouseX, float mouseY) {
-        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground());
+        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0));
 
         if (dragging) {
             x += (mouseX - dragX);
@@ -119,7 +119,7 @@ public class TabViewport extends UITab {
                 GL11.glTranslated(nameX, parent.height - 20, 0);
                 GL11.glScaled(2, 2, 0);
                 Gui.drawString("§l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format, 0, 0, 0xFF000000);
-                Gui.drawString("§l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format, -1, -1, ColorLib.getTextColor());
+                Gui.drawString("§l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format, -1, -1, -1);
                 GL11.glPopMatrix();
 
                 drawPoint();
@@ -146,7 +146,7 @@ public class TabViewport extends UITab {
         }
 
         uiToggleButton.draw(mouseX, mouseY);
-        drawOutline();
+      //  drawOutline();
     }
 
 
