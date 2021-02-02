@@ -1,1 +1,1 @@
-{"List":[]}
+{"List":[{"Name":"onKey","posX":6.024494,"posY":7.373741,"Variables":[],"Execution":[]},{"Name":"onPickUpItem","posX":7.3333435,"posY":73.33334,"Variables":[],"Execution":[{"to":"2","at":"0"}]},{"Name":"Log","posX":279.6667,"posY":61.333344,"Variables":[{"from":"1","to":"0","at":"0"},{"from":"2","to":"0","at":"1"},{"from":"3","to":"0","at":"2"}],"Execution":[]}]}
