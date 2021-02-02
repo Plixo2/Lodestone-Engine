@@ -38,7 +38,7 @@ public class TabConsole extends UITab {
     @Override
     public void drawScreen(float mouseX, float mouseY) {
 
-        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.2f));
+        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.3f));
         float y = 10;
         int size = consoleLines.size();
         int aw = size * 15;

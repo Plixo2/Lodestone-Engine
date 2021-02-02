@@ -37,12 +37,14 @@ public abstract class UIElement {
     public void draw(float mouseX, float mouseY) {
         updateHoverProgress(mouseX, mouseY);
 
+        /*
         if (hovered(mouseX, mouseY) && displayName != null) {
             String txt = displayName;
-            Gui.drawLinedRoundetRect(mouseX + 8, mouseY - 5, mouseX + Gui.getStringWidth(txt) + 16, mouseY + 5, 3, ColorLib.utilLines(), 2);
-            Gui.drawRoundetRect(mouseX + 8, mouseY - 5, mouseX + Gui.getStringWidth(txt) + 16, mouseY + 5, 3, ColorLib.getBackground(0.4f));
-            Gui.drawString(txt, mouseX + 12, mouseY, textColor);
+           // Gui.drawLinedRoundetRect(mouseX + 8, mouseY - 5, mouseX + Gui.getStringWidth(txt) + 16, mouseY + 5, 3, ColorLib.utilLines(), 2);
+          //  Gui.drawRoundetRect(mouseX + 8, mouseY - 5, mouseX + Gui.getStringWidth(txt) + 16, mouseY + 5, 3, ColorLib.getBackground(0.4f));
+          //  Gui.drawString(txt, mouseX + 12, mouseY, textColor);
         }
+        */
     }
 
     public int getId() {

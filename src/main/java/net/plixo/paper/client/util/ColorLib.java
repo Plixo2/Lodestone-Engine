@@ -42,7 +42,7 @@ public class ColorLib {
         int b1 = color1 & 0xff;
         int b2 = color2 & 0xff;
 
-        return (int) ((a2 - a1) * fraction + a1) << 24 |
+        return (int) (a1) << 24 |
                 (int) ((r2 - r1) * fraction + r1) << 16 |
                 (int) ((g2 - g1) * fraction + g1) << 8 |
                 (int) ((b2 - b1) * fraction + b1);

@@ -11,9 +11,6 @@ public class UICanvas extends UIElement {
 
 
 	IAbstractAction action;
-
-
-	
 	ArrayList<UIElement> elements = new ArrayList<UIElement>();
 
 	UIElement lastElement;
