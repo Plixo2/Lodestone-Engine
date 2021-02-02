@@ -12,7 +12,7 @@ public class TheEditor {
 	public static TabExplorer explorer;
 	public static TabFiles files;
 	public static TabInspector inspector;
-
+	public static TabFunction function;
 	public static TabViewport viewport;
 
 	public static void init() {
@@ -27,13 +27,7 @@ public class TheEditor {
 		if (tab != null) {
 			tab.init();
 		}
+		//TODO remove this lul
 	}
 
-	public static void printError(Object obj) {
-		printLn("�4: " + obj);
-	}
-
-	public static void printLn(Object obj) {
-		console.consoleLines.add(new TabConsole.ConsoleLine(obj + ""));
-	}
 }

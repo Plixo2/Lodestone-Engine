@@ -36,14 +36,11 @@ public class TabConsole extends UITab {
     }
 
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
 
         Gui.drawRect(0, 0, parent.width, parent.height, 0xFF1B1F26);
-
         float y = 10;
-
         int size = consoleLines.size();
-
         int aw = size * 15;
         if (aw > parent.height) {
             y = 10 + (-(aw - (parent.height - 5))) * zoom;
@@ -77,15 +74,11 @@ public class TabConsole extends UITab {
 
         Gui.drawRect(2, yS - hH, 5, yS + hH, ColorLib.getMainColor());
 
-        super.draw(mouseX, mouseY);
-
-        // System.out.println(zoom);
-
+        drawOutline();
     }
 
     @Override
-    public void updateScreen() {
-
+    public void onTick() {
         ArrayList<ConsoleLine> toRemove = new ArrayList<>();
 
         if (consoleLines.size() > 400) {
@@ -98,8 +91,5 @@ public class TabConsole extends UITab {
 
             consoleLines.remove(line);
         }
-
-        super.updateScreen();
     }
-
 }

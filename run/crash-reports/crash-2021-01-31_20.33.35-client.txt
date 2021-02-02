@@ -7,8 +7,8 @@ Description: mouseClicked event handler
 java.util.ConcurrentModificationException: null
 	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:909) ~[?:1.8.0_231] {}
 	at java.util.ArrayList$Itr.next(ArrayList.java:859) ~[?:1.8.0_231] {}
-	at net.plixo.paper.client.UI.Canvas.mouseClicked(Canvas.java:92) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.mouseClicked(Canvas.java:93) ~[main/:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.mouseClicked(Canvas.java:92) ~[main/:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.mouseClicked(Canvas.java:93) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction.mouseClicked(TabFunction.java:182) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.UI.TabbedUI.mouseClicked(TabbedUI.java:98) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.editor.ui.UIEditor.mouseClicked(UIEditor.java:161) ~[main/:?] {re:classloading}
@@ -47,8 +47,8 @@ Thread: Render thread
 Stacktrace:
 	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:909) ~[?:1.8.0_231] {}
 	at java.util.ArrayList$Itr.next(ArrayList.java:859) ~[?:1.8.0_231] {}
-	at net.plixo.paper.client.UI.Canvas.mouseClicked(Canvas.java:92) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.mouseClicked(Canvas.java:93) ~[?:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.mouseClicked(Canvas.java:92) ~[?:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.mouseClicked(Canvas.java:93) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction.mouseClicked(TabFunction.java:182) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.UI.TabbedUI.mouseClicked(TabbedUI.java:98) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.editor.ui.UIEditor.mouseClicked(UIEditor.java:161) ~[?:?] {re:classloading}

@@ -6,7 +6,7 @@ import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
 public abstract class Behavior {
 
 	public static Minecraft mc = Minecraft.getInstance();
-	public Entity entity;
+	public GameObject entity;
 
 	public String name;
 	public Resource[] serializable = new Resource[0];

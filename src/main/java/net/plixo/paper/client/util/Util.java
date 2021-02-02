@@ -6,6 +6,7 @@ import net.minecraft.util.SharedConstants;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.client.editor.TheEditor;
+import net.plixo.paper.client.editor.tabs.TabConsole;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
 import org.lwjgl.glfw.GLFW;
 
@@ -279,7 +280,7 @@ public class Util {
 
 	public static void print(Object obj) {
 
-		TheEditor.printLn(obj);
+		TheEditor.console.consoleLines.add(new TabConsole.ConsoleLine(obj + ""));
 		mc.ingameGUI.getChatGUI().printChatMessage(new StringTextComponent(obj+""));
 	}
 

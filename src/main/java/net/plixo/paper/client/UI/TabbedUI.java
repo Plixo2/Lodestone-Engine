@@ -8,7 +8,7 @@ import net.plixo.paper.client.util.Gui;
 import org.lwjgl.opengl.GL11;
 
 
-public class TabbedUI {
+public class TabbedUI implements IGuiEvent {
 
 
 	static float headWidth = 60;
@@ -34,10 +34,10 @@ public class TabbedUI {
 		tabs.add(tab);
 	}
 
-	public void draw(float mouseX, float mouseY) {
+	@Override
+	public void drawScreen(float mouseX, float mouseY) {
 
-
-		for (int i = 0; i < tabs.size(); i++) {
+	for (int i = 0; i < tabs.size(); i++) {
 			UITab tab = tabs.get(i);
 			tab.head.x = i * headWidth;
 
@@ -50,7 +50,7 @@ public class TabbedUI {
 				Gui.createScissorBox(x, y, x + width, y + height + 1);
 				Gui.activateScissor();
 
-				tab.draw(mouseX, mouseY);
+				tab.drawScreen(mouseX-x,mouseY-y);
 				Gui.deactivateScissor();
 
 				GL11.glPopMatrix();
@@ -69,8 +69,9 @@ public class TabbedUI {
 
 	}
 
-	public void exit() {
-		tabs.get(selectedIndex).exit();
+	@Override
+	public void close() {
+		tabs.get(selectedIndex).close();
 	}
 
 	public UITab getHoveredHead(float mouseX, float mouseY) {
@@ -86,18 +87,24 @@ public class TabbedUI {
 		return mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height;
 	}
 
+	@Override
 	public void keyTyped(char typedChar, int keyCode) {
 		tabs.get(selectedIndex).keyTyped(typedChar, keyCode);
 	}
+
+	@Override
 	public void keyPressed(int key, int scanCode, int action) {
 		tabs.get(selectedIndex).keyPressed(key , scanCode , action);
 	}
 
+
+	@Override
 	public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
 		optionsSelected(mouseX, mouseY, mouseButton);
 		tabs.get(selectedIndex).mouseClicked(mouseX, mouseY, mouseButton);
 	}
 
+	@Override
 	public void mouseReleased(float mouseX, float mouseY, int state) {
 		tabs.get(selectedIndex).mouseReleased(mouseX, mouseY, state);
 	}
@@ -113,7 +120,9 @@ public class TabbedUI {
 		}
 	}
 
-	public void updateScreen() {
-		tabs.get(selectedIndex).updateScreen();
+	@Override
+	public void onTick() {
+		tabs.get(selectedIndex).onTick();
 	}
+
 }

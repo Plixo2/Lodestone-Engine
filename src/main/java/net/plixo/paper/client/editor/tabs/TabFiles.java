@@ -30,14 +30,14 @@ public class TabFiles extends UITab {
     }
 
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
 
-        Gui.drawRect(0, 0, parent.width, parent.height, 0xFF1B1F26);
+    Gui.drawRect(0, 0, parent.width, parent.height, 0xFF1B1F26);
 
         for (FileIcon icon : icons) {
             icon.draw(mouseX, mouseY);
         }
-        super.draw(mouseX, mouseY);
+      drawOutline();
     }
 
     @Override

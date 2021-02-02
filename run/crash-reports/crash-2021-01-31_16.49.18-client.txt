@@ -7,8 +7,8 @@ Description: Rendering screen
 java.lang.ArrayIndexOutOfBoundsException: -1
 	at net.plixo.paper.client.editor.tabs.TabFunction$UIVariable.getType(TabFunction.java:146) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction$UIVariable.draw(TabFunction.java:151) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.draw(Canvas.java:46) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.draw(Canvas.java:46) ~[main/:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.draw(Canvas.java:46) ~[main/:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.draw(Canvas.java:46) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction.draw(TabFunction.java:103) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.UI.TabbedUI.draw(TabbedUI.java:53) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.editor.ui.UIEditor.render(UIEditor.java:60) ~[main/:?] {re:classloading}
@@ -38,8 +38,8 @@ Thread: Render thread
 Stacktrace:
 	at net.plixo.paper.client.editor.tabs.TabFunction$UIVariable.getType(TabFunction.java:146) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction$UIVariable.draw(TabFunction.java:151) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.draw(Canvas.java:46) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.draw(Canvas.java:46) ~[?:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.draw(Canvas.java:46) ~[?:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.draw(Canvas.java:46) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction.draw(TabFunction.java:103) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.UI.TabbedUI.draw(TabbedUI.java:53) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.editor.ui.UIEditor.render(UIEditor.java:60) ~[?:?] {re:classloading}

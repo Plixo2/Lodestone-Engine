@@ -39,11 +39,6 @@ public class Canvas {
         name = mod.name;
     }
 
-    public void addDrawFunction(DrawFuntion function) {
-        function.function.setTypes();
-        functions.add(function);
-    }
-
     public void addFunction(Function function, float x, float y) {
 
         DrawFuntion draw = new DrawFuntion(function);
@@ -81,7 +76,7 @@ public class Canvas {
             }
 
         } catch (Exception e) {
-            TheEditor.printError(e.toString() + e.getMessage());
+           Util.print(e.toString() + e.getMessage());
             e.printStackTrace();
         }
     }

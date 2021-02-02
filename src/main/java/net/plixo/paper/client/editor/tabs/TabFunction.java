@@ -1,53 +1,41 @@
 package net.plixo.paper.client.editor.tabs;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.mojang.datafixers.types.Func;
-import net.minecraft.util.text.TextFormatting;
-import net.plixo.paper.client.UI.Canvas;
+import net.plixo.paper.client.UI.elements.*;
 import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.UI.elements.UIButton;
-import net.plixo.paper.client.UI.elements.UIMultiButton;
-import net.plixo.paper.client.UI.elements.UISpinner;
-import net.plixo.paper.client.UI.elements.UITextbox;
-import net.plixo.paper.client.editor.blueprint.Rect;
+import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.engine.TheManager;
 import net.plixo.paper.client.engine.UniformFunction;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.VariableType;
-import net.plixo.paper.client.engine.ecs.Entity;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.KeyboardUtil;
-import net.plixo.paper.client.util.SaveUtil;
 import org.lwjgl.glfw.GLFW;
-
-import java.io.File;
 
 public class TabFunction extends UITab {
 
-    Canvas canvas;
-    Canvas search;
-    Canvas build;
+    UICanvas canvas;
+    UICanvas search;
+    UICanvas build;
 
     public TabFunction(int id) {
         super(id, "Functions");
+        TheEditor.function = this;
     }
 
     @Override
     public void init() {
-        canvas = new Canvas(0);
+        canvas = new UICanvas(0);
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
         canvas.setColor(ColorLib.getBackground());
 
-        search = new Canvas(1);
+        search = new UICanvas(1);
         search.setDimensions(0, 0, 100, parent.height);
         search.setRoundness(3);
         search.setColor(ColorLib.getDarker(ColorLib.getBackground()));
 
 
-        build = new Canvas(2);
+        build = new UICanvas(2);
         build.setDimensions(100,0, parent.width-100, parent.height);
         build.setRoundness(3);
         build.setColor(ColorLib.getBackground());
@@ -109,7 +97,7 @@ public class TabFunction extends UITab {
         field.setDisplayName("Function name");
         field.setText(function.getName());
 
-        Canvas functionCanvas = new Canvas(1);
+        UICanvas functionCanvas = new UICanvas(1);
         functionCanvas.setDimensions(midX - w / 2, 30, w, 100);
         functionCanvas.setColor(ColorLib.getDarker(ColorLib.getBackground()));
         functionCanvas.setRoundness(4);
@@ -138,7 +126,7 @@ public class TabFunction extends UITab {
     }
 
 
-    public void initFromFunction(Canvas canvas, UniformFunction function) {
+    public void initFromFunction(UICanvas canvas, UniformFunction function) {
         canvas.clear();
         int index = 0;
         for (Variable var : function.variableArrayList()) {
@@ -161,10 +149,12 @@ public class TabFunction extends UITab {
 
 
     //TODO replace draw keypressed mouseClicked ... with interface
+
+
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
         canvas.draw(mouseX, mouseY);
-        super.draw(mouseX, mouseY);
+        drawOutline();
     }
 
     @Override
@@ -185,64 +175,4 @@ public class TabFunction extends UITab {
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-    public static class UIVariable extends UISpinner {
-
-        int number = 0;
-        Variable var;
-        UniformFunction function;
-        public UIVariable(int id, Variable var, UniformFunction function) {
-            super(id);
-            this.var = var;
-            this.function = function;
-        }
-
-        @Override
-        public void otherButton(int id) {
-            if (id == 0) {
-                number -= 1;
-            } else {
-                number += 1;
-            }
-            //    TextFormatting lvt_10_1_ = TextFormatting.fromFormattingCode(type.getColor());
-        }
-
-        @Override
-        public void setDimensions(float x, float y, float width, float height) {
-            super.setDimensions(x, y, width, height);
-            this.field.setText(var.name);
-            number = var.type.ordinal();
-        }
-
-        public VariableType getType() {
-            return VariableType.values()[Math.abs(number % VariableType.values().length)];
-        }
-
-        @Override
-        public void draw(float mouseX, float mouseY) {
-            VariableType type = getType();
-            int color = type.getColor();
-            this.field.setTextColor(color);
-            this.setDisplayName(type.name());
-            super.draw(mouseX, mouseY);
-        }
-
-        @Override
-        public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-            super.mouseClicked(mouseX, mouseY, mouseButton);
-            if (hovered(mouseX, mouseY) && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
-                if(function.variableArrayList().contains(var)) {
-                    function.variableArrayList().remove(var);
-                }
-            }
-            var.type = getType();
-        }
-
-        @Override
-        public void keyTyped(char typedChar, int keyCode) {
-            if (field != null) {
-                field.charTyped(typedChar, keyCode);
-                var.name = field.getText();
-            }
-        }
-    }
 }

@@ -6,8 +6,8 @@ Description: mouseClicked event handler
 
 java.lang.NullPointerException: mouseClicked event handler
 	at net.plixo.paper.client.editor.tabs.TabFunction$UIVariable.mouseClicked(TabFunction.java:221) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.mouseClicked(Canvas.java:94) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.mouseClicked(Canvas.java:94) ~[main/:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.mouseClicked(Canvas.java:94) ~[main/:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.mouseClicked(Canvas.java:94) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction.mouseClicked(TabFunction.java:179) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.UI.TabbedUI.mouseClicked(TabbedUI.java:98) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.editor.ui.UIEditor.mouseClicked(UIEditor.java:161) ~[main/:?] {re:classloading}
@@ -45,8 +45,8 @@ A detailed walkthrough of the error, its code path and all known details is as f
 Thread: Render thread
 Stacktrace:
 	at net.plixo.paper.client.editor.tabs.TabFunction$UIVariable.mouseClicked(TabFunction.java:221) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.mouseClicked(Canvas.java:94) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.mouseClicked(Canvas.java:94) ~[?:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.mouseClicked(Canvas.java:94) ~[?:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.mouseClicked(Canvas.java:94) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction.mouseClicked(TabFunction.java:179) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.UI.TabbedUI.mouseClicked(TabbedUI.java:98) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.editor.ui.UIEditor.mouseClicked(UIEditor.java:161) ~[?:?] {re:classloading}

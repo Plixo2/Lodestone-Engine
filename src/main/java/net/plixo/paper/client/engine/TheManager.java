@@ -10,13 +10,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.Paper;
 import net.plixo.paper.client.engine.buildIn.blueprint.Blueprint;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.VariableType;
 import net.plixo.paper.client.engine.buildIn.scripting.Script;
 import net.plixo.paper.client.engine.ecs.Behavior;
-import net.plixo.paper.client.engine.ecs.Entity;
+import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
@@ -27,7 +26,7 @@ public class TheManager {
     public static JsonParser parser;
     public static ArrayList<Behavior> standartBehavior = new ArrayList<>();
     public static ArrayList<Variable> globals = new ArrayList<>();
-    public static ArrayList<Entity> allEntitys = new ArrayList<>();
+    public static ArrayList<GameObject> allEntitys = new ArrayList<>();
     public static ArrayList<UniformFunction> functions = new ArrayList<>();
 
 
@@ -50,12 +49,12 @@ public class TheManager {
         standartBehavior.add(new Blueprint());
     }
 
-    public static void addEntity(Entity entity) {
+    public static void addEntity(GameObject entity) {
         allEntitys.add(entity);
         entity.init();
     }
 
-    public static boolean removeEntity(Entity entity) {
+    public static boolean removeEntity(GameObject entity) {
         if (!allEntitys.contains(entity)) {
             return false;
         }
@@ -86,7 +85,7 @@ public class TheManager {
                 if (entity instanceof JsonObject) {
                     JsonObject customObj = (JsonObject) entity;
                     String name = customObj.get("Entity").getAsString();
-                    Entity e = new Entity(name);
+                    GameObject e = new GameObject(name);
                     JsonArray behaviors = customObj.get("Behaviors").getAsJsonArray();
                     for (int j = 0; j < behaviors.size(); j++) {
                         JsonElement behavior = behaviors.get(j);
@@ -155,7 +154,7 @@ public class TheManager {
 
         if (element instanceof JsonObject) {
             JsonObject mainObj = (JsonObject) element;
-            for (Entity var : allEntitys) {
+            for (GameObject var : allEntitys) {
                 JsonElement entityElement = mainObj.get(var.name);
                 if (entityElement instanceof JsonObject) {
                     JsonObject entityObj = (JsonObject) entityElement;
@@ -259,7 +258,7 @@ public class TheManager {
         JsonObject obj = new JsonObject();
         JsonArray array = new JsonArray();
 
-        for (Entity var : allEntitys) {
+        for (GameObject var : allEntitys) {
             JsonObject custom = new JsonObject();
             custom.addProperty("Entity", var.name);
 
@@ -299,7 +298,7 @@ public class TheManager {
         File file = SaveUtil.getFileFromName("resources", SaveUtil.FileFormat.Other);
         JsonObject array = new JsonObject();
 
-        for (Entity var : allEntitys) {
+        for (GameObject var : allEntitys) {
             JsonObject entityObj = new JsonObject();
             for (Behavior behavior : var.components) {
                 JsonObject behaviorObj = new JsonObject();

@@ -57,7 +57,7 @@ public class UIEditor extends Screen {
 			float newMx = mouseX - tab.x;
 			float newMy = mouseY - tab.y;
 
-			tab.draw(newMx, newMy);
+			tab.drawScreen(mouseX,mouseY);
 
 			GL11.glPopMatrix();
 		}
@@ -178,7 +178,7 @@ public class UIEditor extends Screen {
 	@Override
 	public void onClose() {
 		for (TabbedUI tab : tabs) {
-			tab.exit();
+			tab.close();
 		}
 		Paper.save();
 		super.onClose();
@@ -188,7 +188,7 @@ public class UIEditor extends Screen {
 	public void tick() {
 
 		for (TabbedUI tab : tabs) {
-			tab.updateScreen();
+			tab.onTick();
 		}
 		Paper.update("onTick", null);
 		super.tick();

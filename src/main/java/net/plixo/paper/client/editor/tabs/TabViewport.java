@@ -29,7 +29,7 @@ public class TabViewport extends UITab {
 
     Rect resetRect;
 
- //   Rect startEngine;
+    //   Rect startEngine;
 
     UIButton uiToggleButton;
 
@@ -49,26 +49,25 @@ public class TabViewport extends UITab {
         resetRect = new Rect(0, 0, 30, 30, -1, -1);
 
 
-
         uiToggleButton = new UIButton(0) {
             @Override
             public void actionPerformed() {
-                    if (Paper.paperEngine.isRunning) {
-                       setDisplayName("Start");
-                       setColor(ColorLib.getDarker(ColorLib.getButtonColor()));
-                        Paper.paperEngine.stopEngine();
-                    } else {
-                        setDisplayName("Stop");
-                        setColor(ColorLib.getOffButtonColor());
-                        Paper.paperEngine.startEngine();
-                    }
+                if (Paper.paperEngine.isRunning) {
+                    setDisplayName("Start");
+                    setColor(ColorLib.getDarker(ColorLib.getButtonColor()));
+                    Paper.paperEngine.stopEngine();
+                } else {
+                    setDisplayName("Stop");
+                    setColor(ColorLib.getOffButtonColor());
+                    Paper.paperEngine.startEngine();
+                }
                 super.actionPerformed();
             }
         };
         uiToggleButton.setDimensions(parent.width / 2 - 25, 0, 50, 15);
         uiToggleButton.setDisplayName("Start");
 
-        if(Paper.paperEngine.isRunning) {
+        if (Paper.paperEngine.isRunning) {
             uiToggleButton.setColor(ColorLib.getOffButtonColor());
             uiToggleButton.setDisplayName("Stop");
         }
@@ -76,17 +75,13 @@ public class TabViewport extends UITab {
         //uiToggleButton.setState(true);
 
 
-
         super.init();
     }
 
-    void background() {
-        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground());
-    }
 
     @Override
-    public void draw(float mouseX, float mouseY) {
-        background();
+    public void drawScreen(float mouseX, float mouseY) {
+        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground());
 
         if (dragging) {
             x += (mouseX - dragX);
@@ -151,10 +146,9 @@ public class TabViewport extends UITab {
         }
 
         uiToggleButton.draw(mouseX, mouseY);
-
-        super.draw(mouseX, mouseY);
-
+        drawOutline();
     }
+
 
     void drawLines() {
 
@@ -268,15 +262,16 @@ public class TabViewport extends UITab {
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
 
         hideMenu();
-        if (mouseButton == 1) {
-            startX = mouseX;
-            startY = mouseY;
-        }
-        uiToggleButton.mouseClicked(mouseX,mouseY,mouseButton);
+
+        uiToggleButton.mouseClicked(mouseX, mouseY, mouseButton);
         if (!parent.isMouseInside(mouseX, mouseY)) {
             return;
         }
 
+        if (mouseButton == 1) {
+            startX = mouseX;
+            startY = mouseY;
+        }
 
         if (resetRect.id == 1 && resetRect.mouseInside(mouseX, mouseY, -1)) {
 
@@ -297,6 +292,7 @@ public class TabViewport extends UITab {
 
 
         if (mouseButton == 0 && mouseX < 7) {
+            System.out.println("sliderDrag");
             dragedSlider = true;
             return;
         }
@@ -316,7 +312,7 @@ public class TabViewport extends UITab {
             }
         }
 
-        super.mouseClicked(mouseX, mouseY, mouseButton);
+
     }
 
     @Override
@@ -338,7 +334,7 @@ public class TabViewport extends UITab {
             if (tab != null) {
 
 
-                if (state == 1 && parent.isMouseInside(mouseX,mouseY)) {
+                if (state == 1 && parent.isMouseInside(mouseX, mouseY)) {
                     float dx = startX - mouseX;
                     float dy = startY - mouseY;
                     if (dx * dx + dy * dy < 2) {
@@ -355,7 +351,7 @@ public class TabViewport extends UITab {
             }
         }
 
-        super.mouseReleased(mouseX, mouseY, state);
+
     }
 
     @Override
@@ -391,11 +387,6 @@ public class TabViewport extends UITab {
         return new Vector3d(x, y, 1);
     }
 
-    @Override
-    public void updateScreen() {
-
-        super.updateScreen();
-    }
 
     Vector3d worldToScreen(float x, float y) {
 

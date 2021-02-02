@@ -9,7 +9,7 @@ java.lang.IllegalStateException: Not a JSON Object: "sin"
 	at net.plixo.paper.client.editor.tabs.TabFunction.load(TabFunction.java:124) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction$2.actionPerformed(TabFunction.java:68) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.UI.UIElement.mouseClicked(UIElement.java:78) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.mouseClicked(Canvas.java:94) ~[main/:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.mouseClicked(Canvas.java:94) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction.mouseClicked(TabFunction.java:184) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.UI.TabbedUI.mouseClicked(TabbedUI.java:98) ~[main/:?] {re:classloading}
 	at net.plixo.paper.client.editor.ui.UIEditor.mouseClicked(UIEditor.java:161) ~[main/:?] {re:classloading}
@@ -50,7 +50,7 @@ Stacktrace:
 	at net.plixo.paper.client.editor.tabs.TabFunction.load(TabFunction.java:124) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction$2.actionPerformed(TabFunction.java:68) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.UI.UIElement.mouseClicked(UIElement.java:78) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.UI.Canvas.mouseClicked(Canvas.java:94) ~[?:?] {re:classloading}
+	at net.plixo.paper.client.UI.elements.UICanvas.mouseClicked(Canvas.java:94) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.editor.tabs.TabFunction.mouseClicked(TabFunction.java:184) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.UI.TabbedUI.mouseClicked(TabbedUI.java:98) ~[?:?] {re:classloading}
 	at net.plixo.paper.client.editor.ui.UIEditor.mouseClicked(UIEditor.java:161) ~[?:?] {re:classloading}

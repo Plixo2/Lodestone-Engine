@@ -1,12 +1,10 @@
 package net.plixo.paper.client.engine;
 
-import java.util.ArrayList;
-
 import javax.script.ScriptEngineManager;
 
 import net.plixo.paper.Paper;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
-import net.plixo.paper.client.engine.ecs.Entity;
+import net.plixo.paper.client.engine.ecs.GameObject;
 
 public class PaperEngine {
 
@@ -18,7 +16,7 @@ public class PaperEngine {
 
 	public void onEvent(String name , Variable var) {
 		if (isRunning) {
-			for (Entity e : TheManager.allEntitys) {
+			for (GameObject e : TheManager.allEntitys) {
 				e.onEvent(name , var);
 			}
 		}
@@ -30,7 +28,7 @@ public class PaperEngine {
 			System.out.println("Starting Engine");
 			Paper.save();
 
-			for (Entity e : TheManager.allEntitys) {
+			for (GameObject e : TheManager.allEntitys) {
 				e.start();
 			}
 
@@ -41,7 +39,7 @@ public class PaperEngine {
 		if (isRunning) {
 			isRunning = false;
 			System.out.println("Stoping Engine");
-			for (Entity e : TheManager.allEntitys) {
+			for (GameObject e : TheManager.allEntitys) {
 				e.stop();
 			}
 

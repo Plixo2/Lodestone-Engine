@@ -2,25 +2,23 @@ package net.plixo.paper.client.editor.tabs;
 
 
 import net.plixo.paper.Paper;
-import net.plixo.paper.client.UI.AbstractAction;
-import net.plixo.paper.client.UI.Canvas;
-import net.plixo.paper.client.UI.UIElement;
+import net.plixo.paper.client.UI.IAbstractAction;
+import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.UI.elements.*;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.engine.TheManager;
 import net.plixo.paper.client.engine.ecs.Behavior;
-import net.plixo.paper.client.engine.ecs.Entity;
+import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.util.ColorLib;
-import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.KeyboardUtil;
 import org.lwjgl.glfw.GLFW;
 
 public class TabInspector extends UITab {
 
-    Entity lastEntity;
-    Canvas UI;
+    GameObject lastEntity;
+    UICanvas UI;
     float yStart = 0;
 
     public TabInspector(int id) {
@@ -29,30 +27,25 @@ public class TabInspector extends UITab {
     }
 
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
 
-        // Gui.drawRect(0, 0, parent.width, parent.height, 0xFF1B1F26);
+
 
         UI.draw(mouseX, mouseY);
 
-        int lineColor = ColorLib.getMainColor();
-        int width = 2;
-        Gui.drawLine(0, 0, parent.width, 0, lineColor, width);
-        Gui.drawLine(0, 0, 0, parent.height, lineColor, width);
-        Gui.drawLine(0, parent.height, parent.width, parent.height, lineColor, width);
-        Gui.drawLine(parent.width, 0, parent.width, parent.height, lineColor, width);
+        drawOutline();
     }
 
     @Override
     public void init() {
-        UI = new Canvas(0);
+        UI = new UICanvas(0);
         UI.setDimensions(0, 0, parent.width, parent.height);
         UI.setRoundness(0);
         UI.setColor(ColorLib.getBackground());
         super.init();
     }
 
-    public void initInspector(Entity entity) {
+    public void initInspector(GameObject entity) {
 
         try {
             UI.clear();
@@ -74,7 +67,7 @@ public class TabInspector extends UITab {
             for (Behavior b : entity.components) {
 
                 // BehaviorCanvas
-                Canvas EntityCanvas = new Canvas(behaviorIndex);
+                UICanvas EntityCanvas = new UICanvas(behaviorIndex);
                 EntityCanvas.setRoundness(5);
                 EntityCanvas.setColor(ColorLib.getBrighter(ColorLib.getBackground()));
 
@@ -133,7 +126,7 @@ public class TabInspector extends UITab {
                     Resindex += 1;
                 }
 
-                AbstractAction execution = (int parent, int id, Object element) -> {
+                IAbstractAction execution = (int parent, int id, Object element) -> {
                     if (parent >= 0 && parent < entity.components.size()) {
                         if (id >= 0) {
                             Behavior behavior = entity.components.get(parent);
@@ -234,8 +227,7 @@ public class TabInspector extends UITab {
     }
 
     @Override
-    public void updateScreen() {
+    public void onTick() {
         UI.update();
-        super.updateScreen();
     }
 }
