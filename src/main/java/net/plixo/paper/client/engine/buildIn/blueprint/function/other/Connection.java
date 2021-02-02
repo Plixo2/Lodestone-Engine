@@ -1,9 +1,7 @@
 package net.plixo.paper.client.engine.buildIn.blueprint.function.other;
 
-
 import net.plixo.paper.client.engine.buildIn.blueprint.function.Function;
 import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
-
 public class Connection {
 
 	public int connectionIndex;

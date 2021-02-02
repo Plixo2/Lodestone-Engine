@@ -5,6 +5,7 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.math.vector.Vector3i;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.tabs.TabViewport;
+import net.plixo.paper.client.engine.TheManager;
 import net.plixo.paper.client.engine.buildIn.blueprint.BlueprintManager;
 import net.plixo.paper.client.engine.buildIn.blueprint.Module;
 import net.plixo.paper.client.engine.buildIn.blueprint.event.Event;
@@ -17,10 +18,9 @@ import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.KeyboardUtil;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-
 import java.util.ArrayList;
 
-public class DrawFuntion {
+public class DrawFunction {
 
     static float connectionButtonWidth = 10f;
     static float headerHeight = 20;
@@ -41,7 +41,7 @@ public class DrawFuntion {
     ArrayList<Rect> rights = new ArrayList<Rect>();
     public float x = 0, y = 0;
 
-    public DrawFuntion(Function function) {
+    public DrawFunction(Function function) {
         this.function = function;
         function.setDrawFunction(this);
     }
@@ -102,6 +102,9 @@ public class DrawFuntion {
 
             Execute execute = (Execute) function;
             if (execute.nextConnection != null)
+                if(!TheManager.functions.contains(function)){
+
+                }
                 for (int i = 0; i < execute.size; i++) {
                     Execute next = execute.nextConnection[i];
                     if (next == null) {
@@ -141,7 +144,7 @@ public class DrawFuntion {
                     start = new Vector2f(start.x, start.y + l.height / 2);
 
 
-                    DrawFuntion draw = function.inputs[i].function.drawFunction;
+                    DrawFunction draw = function.inputs[i].function.drawFunction;
                     int index = function.inputs[i].connectionIndex;
                     // Vector2f end = new Vector2f(draw.x + getWidth() / 2,draw.y + headerHeight +
                     // function.inputs[i].connectionIndex * IOHeight);
@@ -303,7 +306,6 @@ public class DrawFuntion {
         try {
             if (function instanceof Execute) {
                 Execute execute = (Execute) function;
-
                 for (Rect rect : rights) {
                     if (rect.mouseInside(mouseX - x, mouseY - y, mouseButton)) {
                         if (!KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {

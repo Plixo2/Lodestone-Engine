@@ -3,10 +3,7 @@ package net.plixo.paper.client.editor.tabs;
 
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.Paper;
 import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.UI.elements.UIButton;
-import net.plixo.paper.client.UI.elements.UIToggleButton;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.blueprint.Canvas;
 import net.plixo.paper.client.editor.blueprint.Rect;
@@ -46,8 +43,6 @@ public class TabViewport extends UITab {
         resetRect = new Rect(0, 0, 30, 30, -1, -1);
 
 
-
-
         //uiToggleButton.setState(true);
 
 
@@ -70,26 +65,18 @@ public class TabViewport extends UITab {
         if (mod != null) {
             Canvas tab = mod.getTab();
             if (tab != null) {
-
-
                 GL11.glPushMatrix();
                 GL11.glTranslated(x, y, 0);
                 GL11.glScaled(zoom, zoom, 1);
                 drawLines();
-
                 if (parent.isMouseInside(mouseX, mouseY)) {
                     mouse(mouseX, mouseY);
                 }
-
                 Vector3d mouseToWorld = screenToWorld(mouseX, mouseY);
-
                 tab.drawScreen((float) mouseToWorld.x, (float) mouseToWorld.y);
-
                 GL11.glPopMatrix();
-
                 int toH = Math.round((zoom) * 100.0f);
                 Gui.drawStringwithShadow("Zoom: " + toH + "%", parent.width - 60, 10, -1);
-
                 GL11.glPushMatrix();
                 float nameX = parent.width - Gui.getStringWidth("§l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format) * 2 - 20;
                 GL11.glTranslated(nameX, parent.height - 20, 0);
@@ -97,14 +84,11 @@ public class TabViewport extends UITab {
                 Gui.drawString("§l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format, 0, 0, 0xFF000000);
                 Gui.drawString("§l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format, -1, -1, -1);
                 GL11.glPopMatrix();
-
                 drawPoint();
-
                 float z = (zoom - 0.2f) / (2 - 0.2f);
                 float yS = 15 + (z * (parent.height - 30));
                 Gui.drawRect(3, 1, 4, parent.height - 1, -1);
                 Gui.drawRect(2, yS - 15, 5, yS + 15, ColorLib.getMainColor());
-
                 if (dragedSlider) {
                     float px = parent.width / 2;
                     float py = parent.height / 2;
@@ -117,7 +101,6 @@ public class TabViewport extends UITab {
                     x -= diff.x * zoom;
                     y -= diff.y * zoom;
                 }
-
             }
         }
 
@@ -127,8 +110,7 @@ public class TabViewport extends UITab {
     void drawLines() {
 
         int i = 50;
-
-        int toI = ((int) (zoom * 50.0f));
+        float toI = zoom * 50.0f;
         if (toI > 0) {
             float w = 10 / toI;
             if (w > 0)
@@ -221,7 +203,6 @@ public class TabViewport extends UITab {
 
         if (dir != 0) {
             Vector3d pre = screenToWorld(mouseX, mouseY);
-            float pZoom = zoom;
             zoom *= 1 + (0.1f * dir);
             zoom = Math.min(Math.max(zoom, 0.2f), 2);
             Vector3d post = screenToWorld(mouseX, mouseY);

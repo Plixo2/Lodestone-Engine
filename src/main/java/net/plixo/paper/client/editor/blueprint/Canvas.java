@@ -10,7 +10,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.engine.buildIn.blueprint.BlueprintManager;
 import net.plixo.paper.client.engine.buildIn.blueprint.Module;
 import net.plixo.paper.client.engine.buildIn.blueprint.event.Event;
@@ -26,7 +25,7 @@ import net.plixo.paper.client.util.Util;
 public class Canvas {
 
 
-    public ArrayList<DrawFuntion> functions = new ArrayList<>();
+    public ArrayList<DrawFunction> functions = new ArrayList<>();
 
     Module mod;
 
@@ -41,7 +40,7 @@ public class Canvas {
 
     public void addFunction(Function function, float x, float y) {
 
-        DrawFuntion draw = new DrawFuntion(function);
+        DrawFunction draw = new DrawFunction(function);
         function.setTypes();
         draw.x = x;
         draw.y = y;
@@ -50,8 +49,6 @@ public class Canvas {
     }
 
     public void drawScreen(float mouseX, float mouseY) {
-
-
         for (int i = functions.size() - 1; i >= 0; i--) {
             functions.get(i).drawOnScreen(mouseX, mouseY);
         }
@@ -60,11 +57,11 @@ public class Canvas {
     public void execute(String eventName, Variable var) {
         try {
 
-            for (DrawFuntion function : functions) {
+            for (DrawFunction function : functions) {
                 function.function.hasCalculated = false;
             }
 
-            for (DrawFuntion function : functions) {
+            for (DrawFunction function : functions) {
                 if (function.function instanceof Event) {
                     Event event = (Event) function.function;
                     if (event.name.equalsIgnoreCase(eventName)) {
@@ -103,7 +100,7 @@ public class Canvas {
         try {
             parser = new JsonParser();
             // functions.clear();
-            ArrayList<DrawFuntion> newFunc = new ArrayList<>();
+            ArrayList<DrawFunction> newFunc = new ArrayList<>();
 
             File file = mod.location;
 
@@ -133,7 +130,7 @@ public class Canvas {
                                Util.print("The loading system might fail completely");
                                 continue;
                             }
-                            DrawFuntion drawFunc = new DrawFuntion(function);
+                            DrawFunction drawFunc = new DrawFunction(function);
                             drawFunc.x = x;
                             drawFunc.y = y;
 
@@ -240,26 +237,59 @@ public class Canvas {
     }
 
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-
-
         int i = 0;
-        for (DrawFuntion function : functions) {
+        for (DrawFunction function : functions) {
             if (function.mouseClicked(this, i, mouseX, mouseY, mouseButton)) {
                 break;
             }
             i += 1;
         }
-
     }
 
     public void mouseReleased(float mouseX, float mouseY, int state) {
-        for (DrawFuntion function : functions) {
+        for (DrawFunction function : functions) {
             function.mouseReleased(mouseX, mouseY, state);
         }
     }
 
-    public void removeFunction(DrawFuntion function) {
+    public void removeFunction(DrawFunction function) {
         this.functions.remove(function);
+        for(DrawFunction f : functions) {
+            if(f.function instanceof Execute) {
+                Execute execute = (Execute) f.function;
+                for (int i = 0; i < execute.size; i++) {
+                    Execute next = execute.nextConnection[i];
+                    if (next == null) {
+                        continue;
+                    }
+                    if(!containsFunction(next)) {
+                        Util.print("Remove Execute Function" + next);
+                        execute.nextConnection[i] = null;
+                    }
+                }
+            }
+
+            for (int i = 0; i < f.function.inputTypes.length; i++) {
+                if (f.function.inputs[i] != null) {
+
+                    Function connected = f.function.inputs[i].function;
+                    if (!containsFunction(connected)) {
+                        Util.print("Remove Normal Function" + connected);
+                        f.function.inputs[i] = null;
+                    }
+                }
+            }
+        }
+
+    }
+    public boolean containsFunction(Function function) {
+        for(DrawFunction f : functions) {
+            if(f.function.equals(function)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void saveToFile() {
@@ -268,7 +298,7 @@ public class Canvas {
         JsonObject head = new JsonObject();
 
         JsonArray names = new JsonArray();
-        for (DrawFuntion drawFunction : functions) {
+        for (DrawFunction drawFunction : functions) {
             Function function = drawFunction.function;
 
             JsonObject Object = new JsonObject();

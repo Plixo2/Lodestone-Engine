@@ -54,7 +54,7 @@ public class TabFunction extends UITab {
         };
         addFunction.setDimensions(0, parent.height - 20, 20, 20);
         addFunction.setDisplayName("+F");
-        build.add(addFunction);
+        search.add(addFunction);
 
         canvas.add(search);
         canvas.add(build);
