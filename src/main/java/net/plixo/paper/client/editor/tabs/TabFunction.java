@@ -27,18 +27,18 @@ public class TabFunction extends UITab {
         canvas = new UICanvas(0);
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
-        canvas.setColor(ColorLib.getBackground(0.7f));
+        canvas.setColor(ColorLib.getBackground(0.3f));
 
         search = new UICanvas(1);
         search.setDimensions(0, 0, 100, parent.height);
         search.setRoundness(3);
-        search.setColor(ColorLib.getDarker(ColorLib.getBackground(0.6f)));
+        search.setColor(ColorLib.getBackground(0.3f));
 
 
         build = new UICanvas(2);
         build.setDimensions(100,0, parent.width-100, parent.height);
         build.setRoundness(3);
-        build.setColor(ColorLib.getBackground(0.5f));
+        build.setColor(ColorLib.getBackground(0.3f));
 
 
         UIButton addFunction = new UIButton(0) {

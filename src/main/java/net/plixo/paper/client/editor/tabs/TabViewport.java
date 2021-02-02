@@ -29,9 +29,6 @@ public class TabViewport extends UITab {
 
     Rect resetRect;
 
-    //   Rect startEngine;
-
-    UIButton uiToggleButton;
 
     public float startX, startY;
 
@@ -49,28 +46,7 @@ public class TabViewport extends UITab {
         resetRect = new Rect(0, 0, 30, 30, -1, -1);
 
 
-        uiToggleButton = new UIButton(0) {
-            @Override
-            public void actionPerformed() {
-                if (Paper.paperEngine.isRunning) {
-                    setDisplayName("Start");
-                    setColor(ColorLib.getDarker(ColorLib.orange()));
-                    Paper.paperEngine.stopEngine();
-                } else {
-                    setDisplayName("Stop");
-                    setColor(ColorLib.getBackground(0.1f));
-                    Paper.paperEngine.startEngine();
-                }
-                super.actionPerformed();
-            }
-        };
-        uiToggleButton.setDimensions(parent.width / 2 - 25, 0, 50, 15);
-        uiToggleButton.setDisplayName("Start");
 
-        if (Paper.paperEngine.isRunning) {
-            uiToggleButton.setColor(ColorLib.getBackground(0.1f));
-            uiToggleButton.setDisplayName("Stop");
-        }
 
         //uiToggleButton.setState(true);
 
@@ -145,8 +121,6 @@ public class TabViewport extends UITab {
             }
         }
 
-        uiToggleButton.draw(mouseX, mouseY);
-      //  drawOutline();
     }
 
 
@@ -263,7 +237,6 @@ public class TabViewport extends UITab {
 
         hideMenu();
 
-        uiToggleButton.mouseClicked(mouseX, mouseY, mouseButton);
         if (!parent.isMouseInside(mouseX, mouseY)) {
             return;
         }

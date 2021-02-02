@@ -15,6 +15,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.Paper;
 import net.plixo.paper.client.UI.TabbedUI;
 import net.plixo.paper.client.UI.UITab;
+import net.plixo.paper.client.UI.other.Toolbar;
 import net.plixo.paper.client.editor.tabs.*;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
@@ -34,6 +35,7 @@ public class UIEditor extends Screen {
 	static Minecraft mc = Minecraft.getInstance();
 
 	ArrayList<TabbedUI> tabs = new ArrayList<TabbedUI>();
+	Toolbar toolbar;
 
 	@Override
 	public boolean isPauseScreen() {
@@ -46,7 +48,8 @@ public class UIEditor extends Screen {
 
 		Gui.setMatrix(p_230430_1_);
 
-
+		Gui.drawRect(0,0,width,height,ColorLib.getBackground(0.2f));
+		toolbar.draw(mouseX,mouseY);
 
 		for (TabbedUI tab : tabs) {
 
@@ -71,23 +74,29 @@ public class UIEditor extends Screen {
 
 		tabs.clear();
 
-		TabbedUI background = new TabbedUI(super.width - 200, super.height - 200, "Project");
-		background.y = 20;
-		background.x = 200;
+		float side = width*0.2f;
+		float heightSide = height*0.33f;
+
+		toolbar = new Toolbar(0);
+		toolbar.setDimensions(0,0,width,20);
+
+		TabbedUI background = new TabbedUI(super.width - side, super.height - (heightSide+10), "Project");
+		background.y = 30;
+		background.x = side;
 
 		background.addTab(new TabViewport(0));
 
-		TabbedUI explorer = new TabbedUI(200, this.height /2f +10, "Test0");
-		explorer.y = 20;
+		TabbedUI explorer = new TabbedUI(side, this.height/2f, "Test0");
+		explorer.y = 30;
 
 		// Tab b0 = new TabEvents(0);
 		UITab b2 = new TabExplorer(0);
 		// explorer.addTab(b0);
 		explorer.addTab(b2);
 
-		TabbedUI console = new TabbedUI(this.width - 200, 160, "Test0");
-		console.y = this.height - 160;
-		console.x = 200;
+		TabbedUI console = new TabbedUI(this.width - side, heightSide-30, "Test0");
+		console.y = this.height - (heightSide-30);
+		console.x = side;
 
 		UITab b3 = new TabFiles(0);
 		UITab b7 = new TabConsole(1);
@@ -96,8 +105,7 @@ public class UIEditor extends Screen {
 		console.addTab(b7);
 		console.addTab(b8);
 
-		TabbedUI modules = new TabbedUI(200, this.height/2 - 30, "Test0");
-		modules.x = 0;
+		TabbedUI modules = new TabbedUI(side, this.height/2 - 30, "Test0");
 		modules.y = this.height/2 + 30;
 
 		UITab b4 = new TabInspector(0);
@@ -113,10 +121,8 @@ public class UIEditor extends Screen {
 		super.init();
 	}
 
-
 	@Override
 	public boolean mouseScrolled(double p_231043_1_, double p_231043_3_, double p_231043_5_) {
-
 		MouseUtil.addDWheel((float) p_231043_5_);
 		return false;
 	}
@@ -141,6 +147,7 @@ public class UIEditor extends Screen {
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+		toolbar.mouseClicked((float)mouseX,(float)mouseY,mouseButton);
 		if (mouseButton == 0) {
 			for (TabbedUI tab : tabs) {
 				float newMx = (float) (mouseX - tab.x);

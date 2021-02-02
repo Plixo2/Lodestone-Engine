@@ -36,13 +36,14 @@ public class TabbedUI implements IGuiEvent {
 
 	@Override
 	public void drawScreen(float mouseX, float mouseY) {
-
+		Gui.drawRect(0,-12,width, 0 , 0x55AAAAAA);
+		Gui.drawRect(0,-11.5f,width-0.5f, -0.5f , ColorLib.getBackground(0));
 	for (int i = 0; i < tabs.size(); i++) {
 			UITab tab = tabs.get(i);
 			tab.head.x = i * headWidth;
 
-			tab.head.color = ColorLib.getBackground(0);
-			tab.head.hoverColor = ColorLib.getBrighter(tab.head.color);
+			tab.head.color = 0;
+			tab.head.hoverColor = 0;
 
 			if (selectedIndex == i) {
 
@@ -55,12 +56,11 @@ public class TabbedUI implements IGuiEvent {
 
 				GL11.glPopMatrix();
 
-				tab.head.color = ColorLib.orange();
-				tab.head.hoverColor = ColorLib.getDarker(tab.head.color);
 			}
+			if(tabs.size() >= 1)
 			tab.head.draw(mouseX, mouseY);
 		}
-		//Gui.drawRect(tabs.size()*headWidth,-12,width, 0 , ColorLib.getBackground(0));
+
 
 
 		if (menu != null) {

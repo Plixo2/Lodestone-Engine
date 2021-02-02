@@ -15,7 +15,7 @@ public class UITab implements IGuiEvent {
 	String name;
 	public TabbedUI parent;
 	public UITab(int id , String name) {
-		this.head = new Rect(0, -12, TabbedUI.headWidth, 12, ColorLib.getBackground(0.5f), ColorLib.getBackground(0.4f));
+		this.head = new Rect(0, -12, TabbedUI.headWidth, 12, 0, 0);
 		this.head.roundness = 0;
 		this.head.id = id;
 		this.head.txt = name;
