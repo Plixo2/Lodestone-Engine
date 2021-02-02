@@ -18,7 +18,6 @@ public class Paper {
         TheEditor.init();
     }
 
-
     public static void save() {
         Module modToSave = TheEditor.activeMod;
         if (modToSave != null) {
@@ -26,7 +25,6 @@ public class Paper {
         }
         TheManager.save();
     }
-
 
     public static void startClient() {
         System.setProperty("java.awt.headless", "false");

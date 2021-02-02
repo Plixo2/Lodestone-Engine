@@ -111,7 +111,7 @@ public abstract class UIElement {
             delta = -delta;
         }
 
-        hoverProgress = Util.clampFloat(hoverProgress + delta, 100, 0);
+        hoverProgress = (float)Util.clampDouble(hoverProgress + delta, 100, 0);
 
         lastMs = System.currentTimeMillis();
     }

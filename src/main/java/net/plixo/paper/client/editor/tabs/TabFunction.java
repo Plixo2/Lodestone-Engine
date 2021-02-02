@@ -1,7 +1,10 @@
 package net.plixo.paper.client.editor.tabs;
 
-import net.plixo.paper.client.UI.elements.*;
 import net.plixo.paper.client.UI.UITab;
+import net.plixo.paper.client.UI.elements.UIButton;
+import net.plixo.paper.client.UI.elements.UICanvas;
+import net.plixo.paper.client.UI.elements.UITextbox;
+import net.plixo.paper.client.UI.elements.UIVariable;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.engine.TheManager;
 import net.plixo.paper.client.engine.UniformFunction;
@@ -36,7 +39,7 @@ public class TabFunction extends UITab {
 
 
         build = new UICanvas(2);
-        build.setDimensions(100,0, parent.width-100, parent.height);
+        build.setDimensions(100, 0, parent.width - 100, parent.height);
         build.setRoundness(3);
         build.setColor(ColorLib.getBackground(0.5f));
 
@@ -44,42 +47,51 @@ public class TabFunction extends UITab {
         UIButton addFunction = new UIButton(0) {
             @Override
             public void actionPerformed() {
-                TheManager.functions.add(new UniformFunction("" + (int)(Math.random()*100000.0)));
+                UniformFunction UniformFunction = new UniformFunction("" + (int) (Math.random() * 100000.0));
+                TheManager.functions.add(UniformFunction);
+                addFunctionToTab(UniformFunction, TheManager.functions.size() - 1);
             }
         };
-        addFunction.setDimensions(0, parent.height-20, 20,20);
+        addFunction.setDimensions(0, parent.height - 20, 20, 20);
         addFunction.setDisplayName("+F");
-        search.add(addFunction);
+        build.add(addFunction);
 
         canvas.add(search);
         canvas.add(build);
-
-        for (int i = 0; i < TheManager.functions.size(); i++) {
-            UniformFunction function = TheManager.functions.get(i);
-            UIButton functionButton = new UIButton(i) {
-                @Override
-                public void actionPerformed() {
-                    if(TheManager.functions.contains(function) && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
-                        TheManager.functions.remove(function);
-                        return;
-                    }
-                    initWithFunction(function);
-                }
-            };
-            functionButton.setDimensions(0,i*15 , 100 , 15);
-            functionButton.setDisplayName(function.getName());
-            search.add(functionButton);
-        }
-
-
-
+        updateTab();
         super.init();
+    }
+
+    private void addFunctionToTab(UniformFunction function, int id) {
+        UIButton functionButton = new UIButton(id) {
+            @Override
+            public void actionPerformed() {
+                if (TheManager.functions.contains(function) && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
+                    TheManager.functions.remove(function);
+                    //search.clear();
+                    //updateTab();
+                    return;
+                }
+                initWithFunction(function);
+            }
+        };
+        functionButton.setDimensions(0, id * 15, 100, 15);
+        functionButton.setDisplayName(function.getName());
+        search.add(functionButton);
+    }
+
+    private void updateTab() {
+        int i = 0;
+        for (UniformFunction function : TheManager.functions) {
+            addFunctionToTab(function, i);
+            i++;
+        }
     }
 
     //TODO redo load (save) system to exeption instead of statements
     public void initWithFunction(UniformFunction function) {
         build.clear();
-        float midX = (parent.width-100) / 2;
+        float midX = (parent.width - 100) / 2;
         float w = 100;
         UITextbox field = new UITextbox(0) {
             @Override
@@ -90,8 +102,8 @@ public class TabFunction extends UITab {
         };
         //TODO redo drawFunction with custom inputs with UIButtons? if possible ... or a resource system like the behaviors... dont .eval at runtime .... use invoke and compile before
 
-        UIVariable output = new UIVariable(3 , function.output , function);
-        output.setDimensions(5 , 5 , w , 20);
+        UIVariable output = new UIVariable(3, function.output, function);
+        output.setDimensions(5, 5, w, 20);
 
         field.setDimensions(midX - w / 2, 10, w, 20);
         field.setDisplayName("Function name");
@@ -116,7 +128,7 @@ public class TabFunction extends UITab {
                 }
             }
         };
-        uiButton.setDimensions(midX-w/2 - 20, 10, 20, 20);
+        uiButton.setDimensions(midX - w / 2 - 20, 10, 20, 20);
         uiButton.setDisplayName("+");
         build.add(uiButton);
         build.add(field);
@@ -130,12 +142,12 @@ public class TabFunction extends UITab {
         canvas.clear();
         int index = 0;
         for (Variable var : function.variableArrayList()) {
-            UIVariable button = new UIVariable(index, var , function) {
+            UIVariable button = new UIVariable(index, var, function) {
                 @Override
                 public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
                     super.mouseClicked(mouseX, mouseY, mouseButton);
-                    if(!function.variableArrayList().contains(var)) {
-                       // initFromFunction(canvas , function);
+                    if (!function.variableArrayList().contains(var)) {
+                        // initFromFunction(canvas , function);
                         initWithFunction(function);
                     }
                 }
