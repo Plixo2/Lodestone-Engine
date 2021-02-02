@@ -26,6 +26,5 @@ build/*
 *.gz
 .gradle/4.10.3/fileHashes/fileHashes.bin
 *.lock
-/run/crash-reports/
 /gradle/
 /run/
