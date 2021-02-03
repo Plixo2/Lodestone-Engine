@@ -158,12 +158,10 @@ public class TabFiles extends UITab {
                     } else {
                         SaveUtil.makeFile(f);
                     }
-
-
-                    //  update();
                 }
             }, (txt) -> {
             }, SaveUtil.FileFormat.values()[option].format);
+
             mc.displayGuiScreen(input);
 
 

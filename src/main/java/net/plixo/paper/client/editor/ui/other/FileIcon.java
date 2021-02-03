@@ -42,11 +42,11 @@ public class FileIcon extends Rect {
         }
 
         if (isFolder) {
-            Gui.drawRoundetRect(x + 5, y + 10, x + width - 5, y + height - 5, 4, first);
-            Gui.drawRoundetRect(x + 5, y + 15, x + width - 5, y + height - 5, 4, second);
+            Gui.drawRoundedRect(x + 5, y + 10, x + width - 5, y + height - 5, 4, first);
+            Gui.drawRoundedRect(x + 5, y + 15, x + width - 5, y + height - 5, 4, second);
 
-            Gui.drawRoundetRect(x + (width / 2) - 5, y + 12, x + width - 5, y + 20, 4, second);
-            Gui.drawRoundetRect(x + 5, y + 7, x + width / 2, y + 15, 4, first);
+            Gui.drawRoundedRect(x + (width / 2) - 5, y + 12, x + width - 5, y + 20, 4, second);
+            Gui.drawRoundedRect(x + 5, y + 7, x + width / 2, y + 15, 4, first);
         } else {
 
             Gui.drawLine(x + 10, y + 7, x + 10, y + height - 5, first, 2);
@@ -74,10 +74,10 @@ public class FileIcon extends Rect {
                 Gui.drawLine(x + (width / 2) - XDiff, y + (height / 2) + 8, x + (width / 2) + XDiff,
                         y + (height / 2) + 2, 0xFF8341FF, 3);
 
-                Gui.drawRoundetRect(x + (width / 2) - 7 + dX, y + (height / 2) - 3 + dY, x + (width / 2) + 7 + dX,
+                Gui.drawRoundedRect(x + (width / 2) - 7 + dX, y + (height / 2) - 3 + dY, x + (width / 2) + 7 + dX,
                         y + (height / 2) + 4 + dY, 3f, 0xFF101010);
 
-                Gui.drawRoundetRect(x + (width / 2) - 7, y + (height / 2) + 7, x + (width / 2) + 7,
+                Gui.drawRoundedRect(x + (width / 2) - 7, y + (height / 2) + 7, x + (width / 2) + 7,
                         y + (height / 2) + 14, 3f, 0xFF101010);
 
             } else if (extenstion.equals(SaveUtil.FileFormat.Code.format)) {
@@ -130,10 +130,10 @@ public class FileIcon extends Rect {
         if(!name.equals(in)) {
             name += "...";
         }
-        Gui.drawCenteredStringwithShadow(name, (x + width / 2), (this.y + this.height),
+        Gui.drawCenteredStringWithShadow(name, (x + width / 2), (this.y + this.height),
                 -1);
         if(!extension.isEmpty())
-        Gui.drawCenteredStringwithShadow("."+extension, (x + width / 2), (this.y + this.height + 10),
+        Gui.drawCenteredStringWithShadow("."+extension, (x + width / 2), (this.y + this.height + 10),
                 -1);
 
 

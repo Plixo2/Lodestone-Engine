@@ -63,7 +63,7 @@ public class JavaScriptFunction extends Execute {
                 Util.print(e.getMessage());
             }
         } else {
-            out.setValue(0);
+
         }
     }
 

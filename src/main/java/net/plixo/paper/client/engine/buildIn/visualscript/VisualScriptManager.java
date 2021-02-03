@@ -158,4 +158,17 @@ public class VisualScriptManager {
 		*/
 
     }
+    public static void listf(String directoryName, ArrayList<File> files) {
+        File directory = new File(directoryName);
+        // Get all files from a directory.
+        File[] fList = directory.listFiles();
+        if(fList != null)
+            for (File file : fList) {
+                if (file.isFile() && file.getName().endsWith(SaveUtil.FileFormat.Code.format)) {
+                    files.add(file);
+                } else if (file.isDirectory()) {
+                    listf(file.getAbsolutePath(), files);
+                }
+            }
+    }
 }
