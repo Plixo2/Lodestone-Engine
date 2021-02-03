@@ -45,6 +45,13 @@ public class TabExplorer extends UITab {
         for(GameObject obj : TheManager.allEntitys) {
             UIButton button = new UIButton(0) {
                 @Override
+                public void drawStringCentered(float mouseX, float mouseY) {
+                    if (displayName != null) {
+                        Gui.drawString(displayName, x + 5, y + height / 2, textColor);
+                    }
+                }
+
+                @Override
                 public void actionPerformed() {
                     if(KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
                         TheManager.allEntitys.remove(obj);
@@ -57,7 +64,7 @@ public class TabExplorer extends UITab {
             button.setDimensions(0,y, parent.width,20);
             button.setDisplayName(obj.name);
             button.setRoundness(0);
-            button.setColor(y % 40 == 0 ? ColorLib.blue() : ColorLib.getDarker(ColorLib.blue()));
+            button.setColor(0);
 
             canvas.add(button);
              y+= 20;

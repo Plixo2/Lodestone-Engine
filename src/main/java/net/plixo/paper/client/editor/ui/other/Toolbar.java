@@ -1,4 +1,4 @@
-package net.plixo.paper.client.editor.ui;
+package net.plixo.paper.client.editor.ui.other;
 
 import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.UI.elements.UIButton;

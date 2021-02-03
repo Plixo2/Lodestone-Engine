@@ -5,9 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.sun.jna.platform.FileUtils;
 import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.editor.ui.FileIcon;
+import net.plixo.paper.client.editor.ui.UIAccept;
+import net.plixo.paper.client.editor.ui.other.FileIcon;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.visualscript.Canvas;
 import net.plixo.paper.client.engine.buildIn.visualscript.Module;
@@ -134,14 +134,7 @@ public class TabFiles extends UITab {
                         e.printStackTrace();
                     }
                 } else if (option == 3) {
-                    if(KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
-                        if(lastSelected.exists()) {
-                            lastSelected.delete();
-                            update();
-                        }
-                    } else {
-                        Util.print("Press Left Shift to delete");
-                    }
+                    mc.displayGuiScreen(new UIAccept(yes -> {lastSelected.delete(); update();} , no -> {} , "Sure?" ));
                 }
 
             } else if (id == -1) {
