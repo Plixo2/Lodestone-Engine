@@ -10,9 +10,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.client.engine.buildIn.blueprint.Blueprint;
-import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
-import net.plixo.paper.client.engine.buildIn.blueprint.variable.VariableType;
+import net.plixo.paper.client.engine.buildIn.visualscript.VisualScript;
+import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
+import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
 import net.plixo.paper.client.engine.buildIn.scripting.Script;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.GameObject;
@@ -46,7 +46,7 @@ public class TheManager {
     public static void register() {
         standartBehavior.clear();
         standartBehavior.add(new Script());
-        standartBehavior.add(new Blueprint());
+        standartBehavior.add(new VisualScript());
     }
 
     public static void addEntity(GameObject entity) {

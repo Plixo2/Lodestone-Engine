@@ -1,7 +1,7 @@
 package net.plixo.paper.client.editor.tabs;
 
 
-import net.plixo.paper.Paper;
+import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.UI.IAbstractAction;
 import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.UI.UITab;
@@ -78,7 +78,7 @@ public class TabInspector extends UITab {
                     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
                         super.mouseClicked(mouseX, mouseY, mouseButton);
 
-                        if (hovered(mouseX,mouseY) && !Paper.paperEngine.isRunning && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
+                        if (hovered(mouseX,mouseY) && !Lodestone.paperEngine.isRunning && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
                                 entity.components.remove(b);
                                 init();
                                 initInspector(lastEntity);
@@ -209,7 +209,7 @@ public class TabInspector extends UITab {
 
     @Override
     public void optionsSelected(int id, int option) {
-        if (lastEntity != null && !Paper.paperEngine.isRunning) {
+        if (lastEntity != null && !Lodestone.paperEngine.isRunning) {
             if (id == 0) {
                 Behavior instance = TheManager.newInstanceByName(parent.menu.options[option]);
                 if (instance == null) {

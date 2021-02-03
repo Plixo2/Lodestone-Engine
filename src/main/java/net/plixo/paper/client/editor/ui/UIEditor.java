@@ -1,27 +1,18 @@
 package net.plixo.paper.client.editor.ui;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor4f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glVertex2f;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
-import net.plixo.paper.Paper;
+import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.UI.TabbedUI;
 import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.UI.other.Toolbar;
 import net.plixo.paper.client.editor.tabs.*;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.MouseUtil;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
 
 import net.minecraft.client.Minecraft;
 
@@ -185,7 +176,7 @@ public class UIEditor extends Screen {
 		for (TabbedUI tab : tabs) {
 			tab.close();
 		}
-		Paper.save();
+		Lodestone.save();
 		super.onClose();
 	}
 
@@ -195,7 +186,7 @@ public class UIEditor extends Screen {
 		for (TabbedUI tab : tabs) {
 			tab.onTick();
 		}
-		Paper.update("onTick", null);
+		Lodestone.update("onTick", null);
 		super.tick();
 	}
 

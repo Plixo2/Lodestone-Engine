@@ -3,7 +3,7 @@ package net.plixo.paper.client.editor;
 
 import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.editor.tabs.*;
-import net.plixo.paper.client.engine.buildIn.blueprint.Module;
+import net.plixo.paper.client.engine.buildIn.visualscript.Module;
 
 public class TheEditor {
 

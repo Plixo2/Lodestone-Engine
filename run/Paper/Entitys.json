@@ -1,1 +1,1 @@
-{"List":[{"Entity":"NewEntity0","Behaviors":[{"Name":"Script"},{"Name":"Blueprint"},{"Name":"Blueprint"},{"Name":"Script"}]}]}
+{"List":[{"Entity":"StartDebugScript","Behaviors":[{"Name":"Script"}]},{"Entity":"exampleBlueprint","Behaviors":[{"Name":"Visual Script"}]}]}

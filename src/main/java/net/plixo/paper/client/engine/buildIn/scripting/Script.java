@@ -8,8 +8,8 @@ import javax.script.Invocable;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 
-import net.plixo.paper.Paper;
-import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
+import net.plixo.paper.Lodestone;
+import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.util.SaveUtil;
@@ -40,7 +40,7 @@ public class Script extends Behavior {
 	public void start() {
 
 		Resource res = getResource(0);
-		engine = Paper.paperEngine.scriptEngineManager.getEngineByName("nashorn");
+		engine = Lodestone.paperEngine.scriptEngineManager.getEngineByName("nashorn");
 		
 		if (res.hasValue()) {
 			try {
@@ -48,7 +48,7 @@ public class Script extends Behavior {
 				String extension = FilenameUtils.getExtension(file.getName());
 				if(!extension.equalsIgnoreCase(SaveUtil.FileFormat.Code.format)) {
 					System.out.println("Wrong Format");
-					Paper.paperEngine.stopEngine();
+					Lodestone.paperEngine.stopEngine();
 					return;
 				}
 				engine.eval(new FileReader(file));
@@ -58,7 +58,7 @@ public class Script extends Behavior {
 				execute("onStart" , null);
 
 			} catch (Exception e) {
-				Paper.paperEngine.stopEngine();
+				Lodestone.paperEngine.stopEngine();
 				e.printStackTrace();
 			}
 		}
@@ -80,7 +80,7 @@ public class Script extends Behavior {
 			if (obj != null) invocable.invokeFunction(name, mc);
 		}
 		catch (Exception e) {
-			Paper.paperEngine.stopEngine();
+			Lodestone.paperEngine.stopEngine();
 			e.printStackTrace();
 		}
 	}

@@ -3,9 +3,8 @@ package net.plixo.paper.client.util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
-import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.tabs.TabConsole;
-import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
+import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 
 import java.util.regex.Pattern;
 
@@ -69,8 +68,8 @@ public class Util {
             }
         }
 
-		return !str.endsWith("-") && !str.endsWith(".");
-	}
+        return !str.endsWith("-") && !str.endsWith(".");
+    }
 
 
     public static void loadIntoVar(Variable var, String name) {
@@ -140,4 +139,6 @@ public class Util {
         }
         return str;
     }
+
+
 }

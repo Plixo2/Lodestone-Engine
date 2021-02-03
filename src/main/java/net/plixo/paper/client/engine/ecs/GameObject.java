@@ -1,8 +1,7 @@
 package net.plixo.paper.client.engine.ecs;
 
-import net.plixo.paper.client.engine.buildIn.blueprint.variable.Variable;
+import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameObject {

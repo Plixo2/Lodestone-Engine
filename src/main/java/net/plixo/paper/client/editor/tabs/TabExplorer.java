@@ -1,19 +1,16 @@
 package net.plixo.paper.client.editor.tabs;
 
-import net.plixo.paper.Paper;
+import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.UI.elements.UIButton;
 import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.TheEditor;
-import net.plixo.paper.client.editor.blueprint.Rect;
 import net.plixo.paper.client.engine.TheManager;
 import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.KeyboardUtil;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.ArrayList;
 
 
 public class TabExplorer extends UITab {
@@ -49,11 +46,12 @@ public class TabExplorer extends UITab {
             UIButton button = new UIButton(0) {
                 @Override
                 public void actionPerformed() {
-                    TheEditor.inspector.initInspector(obj);
                     if(KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
                         TheManager.allEntitys.remove(obj);
                         init();
+                        return;
                     }
+                    TheEditor.inspector.initInspector(obj);
                 }
             };
             button.setDimensions(0,y, parent.width,20);
@@ -82,7 +80,7 @@ public class TabExplorer extends UITab {
 
     @Override
     public void optionsSelected(int id, int option) {
-        if (id == 0 && option == 0 && !Paper.paperEngine.isRunning) {
+        if (id == 0 && option == 0 && !Lodestone.paperEngine.isRunning) {
             GameObject entity = new GameObject("NewEntity" + TheManager.allEntitys.size());
             TheManager.addEntity(entity);
             init();
