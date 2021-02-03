@@ -5,6 +5,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.plixo.paper.client.engine.TheManager;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.other.Execute;
 
+@SuppressWarnings("unused")
 public class SetGlobalVariable extends Execute {
 
     public SetGlobalVariable() {

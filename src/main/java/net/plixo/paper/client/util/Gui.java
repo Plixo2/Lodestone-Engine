@@ -3,15 +3,17 @@ package net.plixo.paper.client.util;
 import net.minecraft.util.math.vector.Vector3d;
 import org.lwjgl.opengl.GL11;
 
+@SuppressWarnings("CommentedOutCode")
 public class Gui extends Lib2D {
 
-//TODO redo besier functions lol
-public static void besier(double xCoord, double zCoord, double xCoord2, double zCoord2, int color, int dir,
-                          float width) {
-    besier(xCoord, zCoord, xCoord2, zCoord2, color, dir, GL11.GL_LINE_STRIP, true, width, color, 10, 10, 10);
-}
+    //TODO redo bezier functions lol
+    @SuppressWarnings("unused")
+    public static void Bezier(double xCoord, double zCoord, double xCoord2, double zCoord2, int color, int dir,
+                              float width) {
+        Bezier(xCoord, zCoord, xCoord2, zCoord2, color, dir, GL11.GL_LINE_STRIP, true, width, color, 10, 10, 10);
+    }
 
-    public static void besier(double xCoord, double zCoord, double xCoord2, double zCoord2, int color, int dir,
+    public static void Bezier(double xCoord, double zCoord, double xCoord2, double zCoord2, int color, int dir,
                               int mode, boolean blend, float width, int otherColor, int animationOffset, int animationSize,
                               int animationWidth) {
 
@@ -25,7 +27,7 @@ public static void besier(double xCoord, double zCoord, double xCoord2, double z
         // GL11.GL_LINE_STRIP
         // GL11.GL_POINTS
 
-        int i = (int) (Math.abs(iy) + Math.abs(ix)) / 2;
+        @SuppressWarnings("UnusedAssignment") int i = (int) (Math.abs(iy) + Math.abs(ix)) / 2;
 
         i = 30;
 
@@ -82,7 +84,7 @@ public static void besier(double xCoord, double zCoord, double xCoord2, double z
 
     }
 
-    static public Vector3d[] points = { new Vector3d(0, 0, 0), new Vector3d(0, 0, 0), new Vector3d(0, 0, 0) };
+    static public Vector3d[] points = {new Vector3d(0, 0, 0), new Vector3d(0, 0, 0), new Vector3d(0, 0, 0)};
     static int pointCount = 3;
     static int index = 0;
     static int pColor = 0;
@@ -96,7 +98,7 @@ public static void besier(double xCoord, double zCoord, double xCoord2, double z
         if (pointCount > 1) {
             float t = 0;
             while (t <= 1) {
-                besierCurvePixel(t);
+                bezierCurvePixel(t);
                 t += precision;
             }
         }
@@ -117,9 +119,9 @@ public static void besier(double xCoord, double zCoord, double xCoord2, double z
         return (float) ((fact(n) / (fact(i) * fact(n - i))) * Math.pow(1 - t, n - i) * Math.pow(t, i));
     }
 
-    private static void besierCurvePixel(float t) {
+    private static void bezierCurvePixel(float t) {
 
-        float bPoly[] = new float[pointCount];
+        float[] bPoly = new float[pointCount];
 
         for (int i = 0; i < pointCount; i++) {
             bPoly[i] = bernstein(t, pointCount, i + 1);
@@ -133,7 +135,7 @@ public static void besier(double xCoord, double zCoord, double xCoord2, double z
             sumY += bPoly[i] * points[i].y;
         }
 
-        float x, y;
+        @SuppressWarnings("unused") float x, y;
         // x = Math.round(sumX);
         // y = Math.round(sumY);
 

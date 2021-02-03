@@ -5,7 +5,6 @@ import net.plixo.paper.client.engine.buildIn.visualscript.event.buildIn.EventOnK
 import net.plixo.paper.client.engine.buildIn.visualscript.event.buildIn.EventOnStart;
 import net.plixo.paper.client.engine.buildIn.visualscript.event.buildIn.EventOnTick;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.Function;
-
 import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.custom.JavaScriptFunction;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.io.ELog;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.other.EBranch;
@@ -15,14 +14,13 @@ import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 
 public class VisualScriptManager {
 
-    public static ArrayList<Function> allFunctions = new ArrayList<Function>();
+    public static ArrayList<Function> allFunctions = new ArrayList<>();
     public static int draggedType = 0;
     public static int dragIndex = -1;
 
@@ -35,19 +33,19 @@ public class VisualScriptManager {
             Class<?> c;
             try {
                 c = fun.getClass();
-                Constructor<?> construct = null;
+                @SuppressWarnings("unused") Constructor<?> construct = null;
                 for (Constructor<?> aw : c.getConstructors()) {
                     if (aw.getParameterCount() == 0) {
                         Object object = aw.newInstance();
                         Function function = (Function) object;
-                        if(function instanceof  JavaScriptFunction) {
+                        if (function instanceof JavaScriptFunction) {
                             JavaScriptFunction parent = (JavaScriptFunction) fun;
                             JavaScriptFunction child = (JavaScriptFunction) function;
                             child.set(parent.file);
                         }
                         functions.add(function);
                         break;
-                    } else  {
+                    } else {
                         Util.print("Error at loading a class" + fun.name);
                     }
                 }
@@ -70,6 +68,7 @@ public class VisualScriptManager {
         return null;
     }
 
+    @SuppressWarnings("CommentedOutCode")
     public static void register() {
         allFunctions.clear();
         allFunctions.add(new EventOnKey());
@@ -83,16 +82,12 @@ public class VisualScriptManager {
         allFunctions.add(new ELoop());
 
         File library = SaveUtil.getFolderFromName("library");
-        if(!library.exists()) {
+        if (!library.exists()) {
             SaveUtil.makeFolder(library);
         }
-        File[] directories = library.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                return !file.isDirectory() && file.getName().endsWith(SaveUtil.FileFormat.Code.format);
-            }
-        });
-        for(File f : directories) {
+        File[] directories = library.listFiles(file -> !file.isDirectory() && file.getName().endsWith(SaveUtil.FileFormat.Code.format));
+        assert directories != null;
+        for (File f : directories) {
             JavaScriptFunction jsFunction = new JavaScriptFunction();
             jsFunction.set(f);
             allFunctions.add(jsFunction);

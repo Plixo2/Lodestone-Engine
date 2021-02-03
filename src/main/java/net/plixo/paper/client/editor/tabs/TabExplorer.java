@@ -42,7 +42,7 @@ public class TabExplorer extends UITab {
         canvas = new UICanvas(0);
 
         int y = 0;
-        for(GameObject obj : TheManager.allEntitys) {
+        for(GameObject obj : TheManager.allEntities) {
             UIButton button = new UIButton(0) {
                 @Override
                 public void drawStringCentered(float mouseX, float mouseY) {
@@ -54,7 +54,7 @@ public class TabExplorer extends UITab {
                 @Override
                 public void actionPerformed() {
                     if(KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
-                        TheManager.allEntitys.remove(obj);
+                        TheManager.allEntities.remove(obj);
                         init();
                         return;
                     }
@@ -88,7 +88,7 @@ public class TabExplorer extends UITab {
     @Override
     public void optionsSelected(int id, int option) {
         if (id == 0 && option == 0 && !Lodestone.paperEngine.isRunning) {
-            GameObject entity = new GameObject("NewEntity" + TheManager.allEntitys.size());
+            GameObject entity = new GameObject("NewEntity" + TheManager.allEntities.size());
             TheManager.addEntity(entity);
             init();
         }

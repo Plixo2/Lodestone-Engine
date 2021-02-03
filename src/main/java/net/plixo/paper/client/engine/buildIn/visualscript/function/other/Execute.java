@@ -5,32 +5,33 @@ import net.plixo.paper.client.engine.buildIn.visualscript.function.Function;
 
 public abstract class Execute extends Function {
 
-	public Execute[] nextConnection;
+    public Execute[] nextConnection;
 
-	public int size;
-	public Execute(String name) {
-		super(name);
-	}
+    public int size;
 
-	public void postExecute() {
-		hasCalculated = true;
-		if (nextConnection != null) {
-			for (Execute next : nextConnection) {
+    public Execute(String name) {
+        super(name);
+    }
 
-				if (next != null) {
-					next.hasCalculated = true;
-					next.reTrace();
-					next.execute();
-					next.postExecute();
-				}
-			}
-		}
-	}
+    public void postExecute() {
+        hasCalculated = true;
+        if (nextConnection != null) {
+            for (Execute next : nextConnection) {
 
-	@Override
-	public void setTypes() {
-		nextConnection = new Execute[size];
-		super.setTypes();
-	}
+                if (next != null) {
+                    next.hasCalculated = true;
+                    next.reTrace();
+                    next.execute();
+                    next.postExecute();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void setTypes() {
+        nextConnection = new Execute[size];
+        super.setTypes();
+    }
 
 }

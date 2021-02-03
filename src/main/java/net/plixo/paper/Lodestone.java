@@ -3,8 +3,8 @@ package net.plixo.paper;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.engine.PaperEngine;
 import net.plixo.paper.client.engine.TheManager;
-import net.plixo.paper.client.engine.buildIn.visualscript.VisualScriptManager;
 import net.plixo.paper.client.engine.buildIn.visualscript.Module;
+import net.plixo.paper.client.engine.buildIn.visualscript.VisualScriptManager;
 import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 
 public class Lodestone {

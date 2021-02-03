@@ -3,12 +3,10 @@ package net.plixo.paper.client.util;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
 
 import static org.lwjgl.opengl.GL11.*;
 
+@SuppressWarnings({"DuplicatedCode", "unused"})
 public class Lib2D {
 
     public static Minecraft mc = Minecraft.getInstance();
@@ -45,7 +43,7 @@ public class Lib2D {
 
     }
 
-    public static void drawLinedRoundetRect(double left, double top, double right, double bottom, float radius, int color, float width) {
+    public static void drawLinedRoundedRect(double left, double top, double right, double bottom, float radius, int color, float width) {
 
         if (radius <= 0.4f) {
             drawLinedRect(left, top, right, bottom, color, width);
@@ -53,7 +51,6 @@ public class Lib2D {
         }
 
         double var5;
-        double half = radius;
 
         if (left < right) {
             var5 = left;
@@ -67,15 +64,15 @@ public class Lib2D {
             bottom = var5;
         }
 
-        circleLinedSection(left - half, top - half, radius, color, 0, 45, width);
-        circleLinedSection(left - half, bottom + half, radius, color, 45, 90, width);
-        circleLinedSection(right + half, top - half, radius, color, 135, 180, width);
-        circleLinedSection(right + half, bottom + half, radius, color, 90, 135, width);
+        circleLinedSection(left - (double) radius, top - (double) radius, radius, color, 0, 45, width);
+        circleLinedSection(left - (double) radius, bottom + (double) radius, radius, color, 45, 90, width);
+        circleLinedSection(right + (double) radius, top - (double) radius, radius, color, 135, 180, width);
+        circleLinedSection(right + (double) radius, bottom + (double) radius, radius, color, 90, 135, width);
 
-        drawLine(left - half, top, right + half, top, color, width);
-        drawLine(left - half, bottom, right + half, bottom, color, width);
-        drawLine(left, top - half, left, bottom + half, color, width);
-        drawLine(right, top - half, right, bottom + half, color, width);
+        drawLine(left - (double) radius, top, right + (double) radius, top, color, width);
+        drawLine(left - (double) radius, bottom, right + (double) radius, bottom, color, width);
+        drawLine(left, top - (double) radius, left, bottom + (double) radius, color, width);
+        drawLine(right, top - (double) radius, right, bottom + (double) radius, color, width);
     }
 
     public static void drawLine(double left, double top, double right, double bottom, int color, float width) {
@@ -125,7 +122,7 @@ public class Lib2D {
 
     public static void drawCircle(double x, double y, double radius, int color) {
         set(color);
-        glBegin((int) 9);
+        glBegin(9);
         int i = 0;
         glVertex2d(x, y);
         while (i <= 360) {
@@ -136,7 +133,7 @@ public class Lib2D {
         reset();
     }
 
-    public static void drawRoundetRect(double left, double top, double right, double bottom, float radius, int color) {
+    public static void drawRoundedRect(double left, double top, double right, double bottom, float radius, int color) {
 
         if (radius <= 0.4f) {
             drawRect(left, top, right, bottom, color);
@@ -144,7 +141,6 @@ public class Lib2D {
         }
 
         double temp;
-        double half = radius;
 
         if (left < right) {
             temp = left;
@@ -158,18 +154,18 @@ public class Lib2D {
             bottom = temp;
         }
 
-        drawCircle(left - half, top - half, radius, color, 0, 45);
-        drawCircle(left - half, bottom + half, radius, color, 45, 90);
-        drawCircle(right + half, top - half, radius, color, 135, 180);
-        drawCircle(right + half, bottom + half, radius, color, 90, 135);
-        drawRect(left - half, top, right + half, bottom, color);
-        drawRect(left, top - half, left - half, bottom + half, color);
-        drawRect(right + half, top - half, right, bottom + half, color);
+        drawCircle(left - (double) radius, top - (double) radius, radius, color, 0, 45);
+        drawCircle(left - (double) radius, bottom + (double) radius, radius, color, 45, 90);
+        drawCircle(right + (double) radius, top - (double) radius, radius, color, 135, 180);
+        drawCircle(right + (double) radius, bottom + (double) radius, radius, color, 90, 135);
+        drawRect(left - (double) radius, top, right + (double) radius, bottom, color);
+        drawRect(left, top - (double) radius, left - (double) radius, bottom + (double) radius, color);
+        drawRect(right + (double) radius, top - (double) radius, right, bottom + (double) radius, color);
     }
 
     public static void drawCircle(double x, double y, double radius, int color, int from, int to) {
         set(color);
-        glBegin((int) 9);
+        glBegin(9);
         int i = from;
         glVertex2d(x, y);
         while (i <= to) {
@@ -193,7 +189,7 @@ public class Lib2D {
         while (i <= to) {
             glVertex2d(x + Math.sin(i * toRadiant) * radius, y + Math.cos(i * toRadiant) * radius);
 
-            i+= 9;
+            i += 9;
             glVertex2d(x + Math.sin(i * toRadiant) * radius, y + Math.cos(i * toRadiant) * radius);
 
         }
@@ -211,7 +207,7 @@ public class Lib2D {
         float red = (float) (color >> 16 & 255) / 255.0f;
         float green = (float) (color >> 8 & 255) / 255.0f;
         float blue = (float) (color & 255) / 255.0f;
-        glColor4f((float) red, (float) green, (float) blue, (float) alpha);
+        glColor4f(red, green, blue, alpha);
     }
 
     private static void reset() {
@@ -224,16 +220,19 @@ public class Lib2D {
     public static void activateScissor() {
         glEnable(GL_SCISSOR_TEST);
     }
+
     public static void deactivateScissor() {
         glDisable(GL_SCISSOR_TEST);
     }
+
     public static void createScissorBox(float x, float y, float x2, float y2) {
 
-        float wdiff = x2 - x;
-        float hdiff = y2 - y;
+        float wDiff = x2 - x;
+        float hDiff = y2 - y;
         double factor = mc.getMainWindow().getGuiScaleFactor();
+        assert mc.currentScreen != null;
         float bottomY = mc.currentScreen.height - y2;
-        glScissor((int) (x * factor), (int) (bottomY * factor), (int) (wdiff * factor), (int) (hdiff * factor));
+        glScissor((int) (x * factor), (int) (bottomY * factor), (int) (wDiff * factor), (int) (hDiff * factor));
     }
 
 
@@ -242,21 +241,27 @@ public class Lib2D {
     public static void drawCenteredString(String text, double x, double y, int color) {
         fontRenderer.drawString(matrixStack, text, (float) x - getStringWidth(text) / 2f, (float) y - 4, color);
     }
-    public static void drawCenteredStringwithShadow(String text, double x, double y, int color) {
+
+    public static void drawCenteredStringWithShadow(String text, double x, double y, int color) {
         fontRenderer.drawStringWithShadow(matrixStack, text, (float) x - getStringWidth(text) / 2f, (float) y - 4, color);
     }
+
     public static void drawCenteredString(String text, double x, double y, int color, float width, float height) {
         fontRenderer.drawString(matrixStack, text, (float) x - getStringWidth(text) / 2f + width / 2, (float) y - 4 + height / 2, color);
     }
-    public static void drawCenteredStringwithShadow(String text, double x, double y, int color, float width, float height) {
+
+    public static void drawCenteredStringWithShadow(String text, double x, double y, int color, float width, float height) {
         fontRenderer.drawStringWithShadow(matrixStack, text, (float) x - getStringWidth(text) / 2f + width / 2, (float) y - 4 + height / 2, color);
     }
+
     public static void drawString(String text, double x, double y, int color) {
         fontRenderer.drawString(matrixStack, text, (float) x, (float) y - 4, color);
     }
-    public static void drawStringwithShadow(String text, double x, double y, int color) {
+
+    public static void drawStringWithShadow(String text, double x, double y, int color) {
         fontRenderer.drawStringWithShadow(matrixStack, text, (float) x, (float) y - 4, color);
     }
+
     public static float getStringWidth(String text) {
         try {
             return fontRenderer.getStringWidth(text);

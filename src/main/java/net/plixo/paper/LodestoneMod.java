@@ -13,13 +13,14 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.plixo.paper.client.forge.Keybinds;
+import net.plixo.paper.client.forge.KeyBinds;
 import net.plixo.paper.client.forge.events.KeyInput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unused")
 @Mod(LodestoneMod.Mod_ID)
 public class LodestoneMod {
     public final static String Mod_ID = "lodestone";
@@ -35,10 +36,10 @@ public class LodestoneMod {
 
 
     private void setup(final FMLCommonSetupEvent event) {
-        Keybinds.register();
+        KeyBinds.register();
         MinecraftForge.EVENT_BUS.register(new KeyInput());
 
-        LOGGER.info("HELLO FROM PREINIT");
+        LOGGER.info("HELLO FROM PRE-INIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
 
@@ -47,6 +48,7 @@ public class LodestoneMod {
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     private void enqueueIMC(final InterModEnqueueEvent event) {
         InterModComms.sendTo("examplemod", "helloworld", () -> {
             LOGGER.info("Hello world from the MDK");

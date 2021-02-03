@@ -6,6 +6,7 @@ import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
 import net.plixo.paper.client.util.KeyboardUtil;
 import org.lwjgl.glfw.GLFW;
 
+@SuppressWarnings("unused")
 public class UIVariable extends UISpinner {
 
     int number = 0;
@@ -52,9 +53,7 @@ public class UIVariable extends UISpinner {
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
         super.mouseClicked(mouseX, mouseY, mouseButton);
         if (hovered(mouseX, mouseY) && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
-            if (function.variableArrayList().contains(var)) {
-                function.variableArrayList().remove(var);
-            }
+            function.variableArrayList().remove(var);
         }
         var.type = getType();
     }

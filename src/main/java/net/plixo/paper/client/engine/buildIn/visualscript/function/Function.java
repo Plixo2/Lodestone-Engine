@@ -8,57 +8,55 @@ import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
 
 public class Function {
 
-	public static Minecraft mc = Minecraft.getInstance();
-	public Variable customData;
+    @SuppressWarnings("unused")
+    public static Minecraft mc = Minecraft.getInstance();
+    public Variable customData;
+    public DrawFunction drawFunction;
+    public boolean hasCalculated = false;
+    public Connection[] inputs = new Connection[0];
+    public VariableType[] inputTypes = new VariableType[0];
+    public String name;
+    public String[] names;
+    public Variable[] outputs = new Variable[0];
 
-	public DrawFunction drawFunction;
+    public Function(String name) {
+        this.name = name;
+    }
 
-	public boolean hasCalculated = false;
-	public Connection[] inputs = new Connection[0];
-	public VariableType[] inputTypes = new VariableType[0];
-	public String name;
-	public String[] names;
-	public Variable[] outputs = new Variable[0];
+    public void execute() {
+    }
 
-	public Function(String name) {
-		this.name = name;
-	}
+    public boolean isNotNull(int... i) {
+        for (int j : i) {
+            if (inputs[j] == null) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	public void execute() {
-	}
+    public void reTrace() {
+        for (Connection supFunctions : inputs) {
+            if (supFunctions != null && !supFunctions.function.hasCalculated) {
+                if (supFunctions.function.inputTypes.length > 0) {
+                    supFunctions.function.reTrace();
+                }
+                supFunctions.function.execute();
+                supFunctions.function.hasCalculated = true;
+            }
+        }
+    }
 
-	public boolean isNotNull(int... i) {
-		for (int index = 0; index < i.length; index++) {
-			if (inputs[i[index]] == null) {
-				return false;
-			}
-		}
-		return true;
-	}
+    public void setDrawFunction(DrawFunction drawFunction) {
+        this.drawFunction = drawFunction;
+    }
 
-	public void reTrace() {
-		for (Connection supFunctions : inputs) {
-			if (supFunctions != null && !supFunctions.function.hasCalculated) {
-				if (supFunctions.function.inputTypes.length > 0) {
-					supFunctions.function.reTrace();
-				}
-				supFunctions.function.execute();
-				supFunctions.function.hasCalculated = true;
-			}
-		}
-	}
+    public void setTypes() {
+        drawFunction.init();
+        this.inputs = new Connection[inputTypes.length];
+    }
 
-	public void setDrawFunction(DrawFunction drawFunction) {
-		this.drawFunction = drawFunction;
-	}
-
-	public void setTypes() {
-		drawFunction.init();
-		this.inputs = new Connection[inputTypes.length];
-	}
-
-	public Variable value(int index) {
-		return inputs[index].variable;
-	};
-
+    public Variable value(int index) {
+        return inputs[index].variable;
+    }
 }

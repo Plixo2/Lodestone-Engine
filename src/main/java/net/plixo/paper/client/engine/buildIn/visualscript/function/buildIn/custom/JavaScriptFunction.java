@@ -1,25 +1,18 @@
 package net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.custom;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import jdk.nashorn.api.scripting.ScriptUtils;
-import net.minecraft.util.math.vector.Vector3d;
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.engine.buildIn.visualscript.function.Function;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.other.Execute;
 import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
-import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
 import org.apache.commons.io.FilenameUtils;
-
 import javax.script.Bindings;
 import javax.script.Invocable;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import java.io.File;
 import java.io.FileReader;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public class JavaScriptFunction extends Execute {
 
@@ -69,13 +62,15 @@ public class JavaScriptFunction extends Execute {
             } catch (Exception e) {
                 Util.print(e.getMessage());
             }
+        } else {
+            out.setValue(0);
         }
     }
 
 
     public boolean isFull() {
-        for (int index = 0; index < inputs.length; index++) {
-            if (inputs[index] == null) {
+        for (net.plixo.paper.client.engine.buildIn.visualscript.function.other.Connection input : inputs) {
+            if (input == null) {
                 return false;
             }
         }
@@ -103,7 +98,7 @@ public class JavaScriptFunction extends Execute {
                     typeOut = VariableType.getType((String) output);
                     if (typeOut == null) {
                         typeOut = VariableType.INT;
-                        msg = "\"" + ((String) output) + "\" is not a Variable type.";
+                        msg = "\"" + output + "\" is not a Variable type.";
                         Util.print("\u00A7c" + msg);
                     }
                 } else {
@@ -126,11 +121,10 @@ public class JavaScriptFunction extends Execute {
                 } else {
                     if (input == null) {
                         msg = ("\"input\" not found.");
-                        Util.print("\u00A7c" + msg);
                     } else {
                         msg = ("\"input\" not valid.");
-                        Util.print("\u00A7c" + msg);
                     }
+                    Util.print("\u00A7c" + msg);
                 }
 
                 Object obj = engine.get("execute");
@@ -140,14 +134,12 @@ public class JavaScriptFunction extends Execute {
                 }
 
                 Object exe = find("execution", b);
-                if(!(exe instanceof Boolean)) {
+                if (!(exe instanceof Boolean)) {
                     exe = find("hasPin", b);
                 }
-                if(exe instanceof Boolean) {
-                    boolean bool = (Boolean) exe;
-                    isExecute = bool;
+                if (exe instanceof Boolean) {
+                    isExecute = (boolean) (Boolean) exe;
                 }
-
 
 
             } catch (Exception e) {
@@ -167,7 +159,7 @@ public class JavaScriptFunction extends Execute {
         this.names = args.clone();
 
 //TODO isExecution Variable
-        if(isExecute) {
+        if (isExecute) {
             this.size = 1;
         }
         super.setTypes();

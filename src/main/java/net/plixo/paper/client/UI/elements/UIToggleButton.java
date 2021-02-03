@@ -26,15 +26,15 @@ public class UIToggleButton extends UIElement {
     @Override
     public void draw(float mouseX, float mouseY) {
 
-        int Bcolor = color;
+        int BColor = color;
         if (!state) {
-            Bcolor = ColorLib.getBackground(0.2f);
-            Gui.drawLinedRoundetRect(x, y, x + width, y + height, roundness, -1, 1);
+            BColor = ColorLib.getBackground(0.2f);
+            Gui.drawLinedRoundedRect(x, y, x + width, y + height, roundness, -1, 1);
         }
 
-        int color = ColorLib.interpolateColor(0x00000000, 0x33000000, hoverProgress / 100f);
+        @SuppressWarnings("unused") int color = ColorLib.interpolateColor(0x00000000, 0x33000000, hoverProgress / 100f);
 
-        Gui.drawRoundetRect(x, y, x + width, y + height, roundness, Bcolor);
+        Gui.drawRoundedRect(x, y, x + width, y + height, roundness, BColor);
 
         Gui.drawCenteredString(state ? StrTrue : StrFalse, x + width / 2, y + height / 2, textColor);
 

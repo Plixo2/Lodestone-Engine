@@ -15,7 +15,7 @@ apply plugin: 'maven-publish'
 
 version = '1.0'
 group = 'net.plixo.paper' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'paper'
+archivesBaseName = 'lodestone'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -44,7 +44,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                paper {
+                lodestone {
                     source sourceSets.main
                 }
             }
@@ -60,7 +60,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                paper {
+                lodestone {
                     source sourceSets.main
                 }
             }
@@ -76,12 +76,12 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'paper', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'lodestone', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
 
 
             mods {
-                paper {
+                lodestone {
                     source sourceSets.main
                 }
             }
@@ -122,7 +122,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "paper",
+            "Specification-Title": "lodestone",
             "Specification-Vendor": "examplemodsareus",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
@@ -141,7 +141,9 @@ jar.finalizedBy('reobfJar')
 
 publishing {
     publications {
+        //noinspection GroovyAssignabilityCheck
         mavenJava(MavenPublication) {
+            //noinspection GroovyAssignabilityCheck
             artifact jar
         }
     }

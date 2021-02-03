@@ -1,37 +1,33 @@
 package net.plixo.paper.client.engine;
 
-import java.io.File;
-import java.util.ArrayList;
-
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import net.minecraft.util.math.vector.Vector3d;
+import net.plixo.paper.client.engine.buildIn.scripting.Script;
 import net.plixo.paper.client.engine.buildIn.visualscript.VisualScript;
 import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
-import net.plixo.paper.client.engine.buildIn.scripting.Script;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
 
+import java.io.File;
+import java.util.ArrayList;
 
+
+@SuppressWarnings("DuplicatedCode")
 public class TheManager {
 
     public static JsonParser parser;
-    public static ArrayList<Behavior> standartBehavior = new ArrayList<>();
+    public static ArrayList<Behavior> standardBehavior = new ArrayList<>();
     public static ArrayList<Variable> globals = new ArrayList<>();
-    public static ArrayList<GameObject> allEntitys = new ArrayList<>();
+    public static ArrayList<GameObject> allEntities = new ArrayList<>();
     public static ArrayList<UniformFunction> functions = new ArrayList<>();
 
 
     public static Behavior newInstanceByName(String name) {
-        for (Behavior b : standartBehavior) {
+        for (Behavior b : standardBehavior) {
             if (b.name.equalsIgnoreCase(name)) {
                 try {
                     return (Behavior) b.getClass().getConstructors()[0].newInstance();
@@ -44,36 +40,38 @@ public class TheManager {
     }
 
     public static void register() {
-        standartBehavior.clear();
-        standartBehavior.add(new Script());
-        standartBehavior.add(new VisualScript());
+        standardBehavior.clear();
+        standardBehavior.add(new Script());
+        standardBehavior.add(new VisualScript());
     }
 
     public static void addEntity(GameObject entity) {
-        allEntitys.add(entity);
+        allEntities.add(entity);
         entity.init();
     }
 
+    @SuppressWarnings("unused")
     public static boolean removeEntity(GameObject entity) {
-        if (!allEntitys.contains(entity)) {
+        if (!allEntities.contains(entity)) {
             return false;
         }
-        TheManager.allEntitys.remove(entity);
+        TheManager.allEntities.remove(entity);
         return true;
 
     }
 
-    public static void load(){
-        loadEntiys();
+    public static void load() {
+        loadEntities();
         loadGlobals();
         loadResources();
         loadFunctions();
     }
-    public static void loadEntiys() {
-        parser = new JsonParser();
-        allEntitys.clear();
 
-        File load = SaveUtil.getFileFromName("entitys", SaveUtil.FileFormat.Other);
+    public static void loadEntities() {
+        parser = new JsonParser();
+        allEntities.clear();
+
+        File load = SaveUtil.getFileFromName("entities", SaveUtil.FileFormat.Other);
         JsonElement element = SaveUtil.loadFromJson(parser, load);
 
         if (element instanceof JsonObject) {
@@ -91,12 +89,12 @@ public class TheManager {
                         JsonElement behavior = behaviors.get(j);
                         if (behavior instanceof JsonObject) {
                             JsonObject behaviorObj = (JsonObject) behavior;
-                            String behaviorname = behaviorObj.get("Name").getAsString();
-                            Behavior instance = newInstanceByName(behaviorname);
+                            String behaviorName = behaviorObj.get("Name").getAsString();
+                            Behavior instance = newInstanceByName(behaviorName);
                             if (instance != null) {
                                 e.components.add(instance);
                             } else {
-                                System.out.println("Error:" + behaviorname);
+                                System.out.println("Error:" + behaviorName);
                             }
                         }
                     }
@@ -105,6 +103,7 @@ public class TheManager {
             }
         }
     }
+
     public static void loadGlobals() {
         parser = new JsonParser();
         globals.clear();
@@ -131,7 +130,7 @@ public class TheManager {
                     varVector = Util.replace(varVector, "(", "");
                     String[] args = Util.getAllStringArgument(varVector, ",");
 
-                    Vector3d vec = new Vector3d(Float.valueOf(args[0]), Float.valueOf(args[1]), Float.valueOf(args[2]));
+                    Vector3d vec = new Vector3d(Float.parseFloat(args[0]), Float.parseFloat(args[1]), Float.parseFloat(args[2]));
 
                     VariableType type = VariableType.valueOf(VarType);
 
@@ -147,6 +146,7 @@ public class TheManager {
 
         }
     }
+
     public static void loadResources() {
         parser = new JsonParser();
         File load = SaveUtil.getFileFromName("resources", SaveUtil.FileFormat.Other);
@@ -154,7 +154,7 @@ public class TheManager {
 
         if (element instanceof JsonObject) {
             JsonObject mainObj = (JsonObject) element;
-            for (GameObject var : allEntitys) {
+            for (GameObject var : allEntities) {
                 JsonElement entityElement = mainObj.get(var.name);
                 if (entityElement instanceof JsonObject) {
                     JsonObject entityObj = (JsonObject) entityElement;
@@ -179,6 +179,7 @@ public class TheManager {
 
         }
     }
+
     public static void loadFunctions() {
 
         functions.clear();
@@ -194,11 +195,10 @@ public class TheManager {
                     JsonObject obj = (JsonObject) ele;
                     UniformFunction function = new UniformFunction(obj.get("Name").getAsString());
                     JsonElement output = obj.get("Output");
-                    if(output instanceof  JsonObject) {
+                    if (output instanceof JsonObject) {
                         JsonObject outObj = (JsonObject) output;
                         VariableType variableType = VariableType.getType(outObj.get("Type").getAsString());
-                        Variable var = new Variable(variableType, outObj.get("Name").getAsString());
-                        function.output = var;
+                        function.output = new Variable(variableType, outObj.get("Name").getAsString());
                     }
 
                     JsonArray array = obj.get("List").getAsJsonArray();
@@ -220,12 +220,13 @@ public class TheManager {
 
     }
 
-    public static void save(){
+    public static void save() {
         saveFunctions();
-        saveEntitys();
+        saveEntities();
         saveGlobals();
         saveResources();
     }
+
     public static void saveFunctions() {
 
         File file = SaveUtil.getFileFromName("functions", SaveUtil.FileFormat.Other);
@@ -243,8 +244,8 @@ public class TheManager {
             }
             custom.addProperty("Name", function.getName());
             JsonObject output = new JsonObject();
-            output.addProperty("Name" , function.output.name);
-            output.addProperty("Type" , function.output.type.name());
+            output.addProperty("Name", function.output.name);
+            output.addProperty("Type", function.output.type.name());
             custom.add("Output", output);
             custom.add("List", array);
             jsonArray.add(custom);
@@ -253,12 +254,13 @@ public class TheManager {
         SaveUtil.saveJsonObj(file, jsonArray);
 
     }
-    public static void saveEntitys() {
-        File file = SaveUtil.getFileFromName("entitys", SaveUtil.FileFormat.Other);
+
+    public static void saveEntities() {
+        File file = SaveUtil.getFileFromName("entities", SaveUtil.FileFormat.Other);
         JsonObject obj = new JsonObject();
         JsonArray array = new JsonArray();
 
-        for (GameObject var : allEntitys) {
+        for (GameObject var : allEntities) {
             JsonObject custom = new JsonObject();
             custom.addProperty("Entity", var.name);
 
@@ -275,6 +277,7 @@ public class TheManager {
         obj.add("List", array);
         SaveUtil.saveJsonObj(file, obj);
     }
+
     public static void saveGlobals() {
         File file = SaveUtil.getFileFromName("globals", SaveUtil.FileFormat.Other);
         JsonObject obj = new JsonObject();
@@ -294,11 +297,12 @@ public class TheManager {
         obj.add("List", array);
         SaveUtil.saveJsonObj(file, obj);
     }
+
     public static void saveResources() {
         File file = SaveUtil.getFileFromName("resources", SaveUtil.FileFormat.Other);
         JsonObject array = new JsonObject();
 
-        for (GameObject var : allEntitys) {
+        for (GameObject var : allEntities) {
             JsonObject entityObj = new JsonObject();
             for (Behavior behavior : var.components) {
                 JsonObject behaviorObj = new JsonObject();
