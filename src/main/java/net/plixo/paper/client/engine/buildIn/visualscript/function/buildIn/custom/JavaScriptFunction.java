@@ -148,7 +148,7 @@ public class JavaScriptFunction extends Function {
         this.inputTypes = varTypes.clone();
         this.names = args.clone();
 
-
+//TODO isExecution Variable
     //    this.size = 1;
         super.setTypes();
     }

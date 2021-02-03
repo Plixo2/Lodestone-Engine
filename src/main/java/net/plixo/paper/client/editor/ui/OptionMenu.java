@@ -15,7 +15,7 @@ public class OptionMenu {
 
 	public int id;
 	public String[] options;
-	ArrayList<Rect> rects = new ArrayList<Rect>();
+	ArrayList<Rect> rects = new ArrayList<>();
 	public UITab tab;
 	
 	float x, y;
