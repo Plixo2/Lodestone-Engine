@@ -37,15 +37,15 @@ public enum VariableType {
 	public String getStringColor() {
 		switch (this) {
 		case FLOAT:
-			return "§2";
+			return "\u00A72";
 		case INT:
-			return "§9";
+			return "\u00A79";
 		case BOOLEAN:
-			return "§4";
+			return "\u00A74";
 		case STRING:
-			return "§6";
+			return "\u00A76";
 		case VECTOR:
-			return "§e";
+			return "\u00A7e";
 
 		default:
 			return "";

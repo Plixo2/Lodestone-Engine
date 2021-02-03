@@ -6,9 +6,13 @@ import net.plixo.paper.client.engine.buildIn.visualscript.event.buildIn.EventOnS
 import net.plixo.paper.client.engine.buildIn.visualscript.event.buildIn.EventOnTick;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.Function;
 
+import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.custom.JavaScriptFunction;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.io.ELog;
+import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
@@ -22,7 +26,7 @@ public class VisualScriptManager {
     public static int dragTab = -1;
 
     public static Function getFromList(String name, String textBox) {
-        ArrayList<Function> functions = new ArrayList<Function>();
+        ArrayList<Function> functions = new ArrayList<>();
 
         for (Function fun : allFunctions) {
             Class<?> c;
@@ -32,10 +36,16 @@ public class VisualScriptManager {
                 for (Constructor<?> aw : c.getConstructors()) {
                     if (aw.getParameterCount() == 0) {
                         Object object = aw.newInstance();
-                        functions.add((Function) object);
+                        Function function = (Function) object;
+                        if(function instanceof  JavaScriptFunction) {
+                            JavaScriptFunction parent = (JavaScriptFunction) fun;
+                            JavaScriptFunction child = (JavaScriptFunction) function;
+                            child.set(parent.file);
+                        }
+                        functions.add(function);
                         break;
-                    } else if (aw.getParameterCount() >= 1) {
-                        System.out.println("Error!!!");
+                    } else  {
+                        Util.print("Error at loading a class" + fun.name);
                     }
                 }
             } catch (Exception e) {
@@ -44,6 +54,7 @@ public class VisualScriptManager {
         }
 
         for (Function function : functions) {
+
             if (function.name.equalsIgnoreCase(name)) {
 
                 if (!textBox.isEmpty() && function.customData != null) {
@@ -57,12 +68,30 @@ public class VisualScriptManager {
     }
 
     public static void register() {
-
+        allFunctions.clear();
         allFunctions.add(new EventOnKey());
         allFunctions.add(new EventOnTick());
         allFunctions.add(new EventOnStart());
         allFunctions.add(new EventOnEnd());
         allFunctions.add(new ELog());
+
+        File library = SaveUtil.getFolderFromName("library");
+        if(!library.exists()) {
+            SaveUtil.makeFolder(library);
+        }
+        File[] directories = library.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return !file.isDirectory() && file.getName().endsWith(SaveUtil.FileFormat.Code.format);
+            }
+        });
+        for(File f : directories) {
+            JavaScriptFunction jsFunction = new JavaScriptFunction();
+            jsFunction.set(f);
+            allFunctions.add(jsFunction);
+            Util.print("Loaded js Function \"" + jsFunction.name + "\"");
+        }
+
 		/*
 		allFunctions.add(new getKey());
 

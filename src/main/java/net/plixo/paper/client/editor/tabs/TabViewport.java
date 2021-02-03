@@ -78,11 +78,11 @@ public class TabViewport extends UITab {
                 int toH = Math.round((zoom) * 100.0f);
                 Gui.drawStringwithShadow("Zoom: " + toH + "%", parent.width - 60, 10, -1);
                 GL11.glPushMatrix();
-                float nameX = parent.width - Gui.getStringWidth("§l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format) * 2 - 20;
+                float nameX = parent.width - Gui.getStringWidth("\u00A7l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format) * 2 - 20;
                 GL11.glTranslated(nameX, parent.height - 20, 0);
                 GL11.glScaled(2, 2, 0);
-                Gui.drawString("§l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format, 0, 0, 0xFF000000);
-                Gui.drawString("§l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format, -1, -1, -1);
+                Gui.drawString("\u00A7l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format, 0, 0, 0xFF000000);
+                Gui.drawString("\u00A7l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format, -1, -1, -1);
                 GL11.glPopMatrix();
                 drawPoint();
                 float z = (zoom - 0.2f) / (2 - 0.2f);

@@ -20,8 +20,6 @@ public class Variable {
 	}
 
 	public void setValue(Object obj) {
-
-		
 		switch (type) {
 		case FLOAT:
 			floatValue = (obj instanceof Double) ? (float) ((double) obj) : (float) obj;
@@ -61,6 +59,32 @@ public class Variable {
 		default:
 			return "";
 		}
+	}
+
+	public Object asJavaObject()  {
+		Object obj = 0;
+
+		switch (type) {
+			case FLOAT:
+				obj = floatValue;
+				break;
+			case INT:
+				obj =intValue;
+				break;
+			case BOOLEAN:
+				obj = booleanValue;
+				break;
+			case STRING:
+				obj =stringValue;
+				break;
+			case VECTOR:
+				obj = vectorValue;
+				break;
+
+			default:
+				break;
+		}
+		return obj;
 	}
 	
 	

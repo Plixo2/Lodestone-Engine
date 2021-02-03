@@ -15,7 +15,6 @@ public class ELog extends Execute {
 	@Override
 	public void execute() {
 
-		
 		for(int i = 0; i< this.inputTypes.length; i++) {
 			if(isNotNull(i)) {
 				log(value(i));

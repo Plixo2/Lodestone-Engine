@@ -14,6 +14,8 @@ public class Lodestone {
     public static PaperEngine paperEngine;
 
     public static void load() {
+        VisualScriptManager.register();
+        TheManager.register();
         TheManager.load();
         TheEditor.init();
     }
@@ -29,8 +31,6 @@ public class Lodestone {
     public static void startClient() {
         System.setProperty("java.awt.headless", "false");
         paperEngine = new PaperEngine();
-        VisualScriptManager.register();
-        TheManager.register();
         load();
     }
 

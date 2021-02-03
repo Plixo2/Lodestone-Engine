@@ -68,8 +68,8 @@ public class Util {
             }
         }
 
-		return !str.endsWith("-") && !str.endsWith(".");
-	}
+        return !str.endsWith("-") && !str.endsWith(".");
+    }
 
 
     public static void loadIntoVar(Variable var, String name) {
@@ -139,4 +139,6 @@ public class Util {
         }
         return str;
     }
+
+
 }

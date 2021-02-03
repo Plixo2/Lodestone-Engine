@@ -5,15 +5,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.sun.jna.platform.FileUtils;
 import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.editor.ui.FileIcon;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.visualscript.Canvas;
 import net.plixo.paper.client.engine.buildIn.visualscript.Module;
-import net.plixo.paper.client.util.ColorLib;
-import net.plixo.paper.client.util.SaveUtil;
-import net.plixo.paper.client.util.Gui;
+import net.plixo.paper.client.util.*;
 import org.apache.commons.io.FilenameUtils;
+import org.lwjgl.glfw.GLFW;
 
 public class TabFiles extends UITab {
 
@@ -33,12 +33,12 @@ public class TabFiles extends UITab {
     @Override
     public void drawScreen(float mouseX, float mouseY) {
 
-     Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.3f));
+        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.3f));
 
         for (FileIcon icon : icons) {
             icon.draw(mouseX, mouseY);
         }
-    //  drawOutline();
+        //  drawOutline();
     }
 
     @Override
@@ -57,8 +57,16 @@ public class TabFiles extends UITab {
         }
 
         for (FileIcon icon : icons) {
-
             if (icon.mouseInside(mouseX, mouseY, mouseButton)) {
+
+                if(KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE) && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT))  {
+                    FileUtils fileUtils = FileUtils.getInstance();
+                    if (fileUtils.hasTrash()) {
+
+                       //TODO.... Move to Trash
+
+                    }
+                }
 
                 if (icon.isFolder) {
                     if (mouseButton == 0) {
@@ -84,12 +92,16 @@ public class TabFiles extends UITab {
                     }
 
                     lastSelected = icon.file;
-                    showMenu(id, mouseX, mouseY, "Open", "Edit" , "Explorer");
+                    showMenu(id, mouseX, mouseY, "Open", "Edit", "Explorer");
                 }
 
                 return;
             }
         }
+
+        if(parent.isMouseInside(mouseX,mouseY))
+        showMenu(-1, mouseX, mouseY, "Create Javascript", "Create Hud", "Create Json", "Create Visualscript");
+
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
@@ -106,30 +118,39 @@ public class TabFiles extends UITab {
 
     @Override
     public void optionsSelected(int id, int option) {
-        if (id >= 0 && lastSelected != null) {
-            if (option == 0) {
-                if (id == 0) {
-                    openVs(lastSelected);
-                } else if (id == 5) {
-                    home = lastSelected;
+
+            if (id >= 0 && lastSelected != null)  {
+                if (option == 0) {
+                    if (id == 0) {
+                        openVs(lastSelected);
+                    } else if (id == 5) {
+                        home = lastSelected;
+                        update();
+                    }
+                } else if (option == 1) {
+                    try {
+                        Desktop.getDesktop().open(lastSelected);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else if (option == 2) {
+                    try {
+                        // Desktop.getDesktop().open(lastSelected.getParentFile());
+                        Runtime.getRuntime().exec("explorer.exe /select," + lastSelected);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } else if (id == -1) {
+                File f = new File(home.getAbsolutePath() +"\\" + Math.random()+"." + SaveUtil.FileFormat.values()[option].format);
+
+                if(!f.exists()) {
+                    SaveUtil.makeFile(f);
                     update();
-                }
-            } else if (option == 1) {
-                try {
-                    Desktop.getDesktop().open(lastSelected);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else if(option == 2) {
-                try {
-                   // Desktop.getDesktop().open(lastSelected.getParentFile());
-                    Runtime.getRuntime().exec("explorer.exe /select," + lastSelected);
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 
-        }
 
         super.optionsSelected(id, option);
 
