@@ -21,7 +21,7 @@ import java.io.FileReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class JavaScriptFunction extends Function {
+public class JavaScriptFunction extends Execute {
 
     Variable out;
     public File file;
@@ -89,57 +89,75 @@ public class JavaScriptFunction extends Function {
         String[] args = new String[0];
         VariableType typeOut = VariableType.INT;
         String msg = "";
+        boolean isExecute = false;
 
-        try {
-            set(file);
-            engine = Lodestone.paperEngine.scriptEngineManager.getEngineByName("nashorn");
-            engine.eval(new FileReader(file));
+        if (file.exists()) {
+            try {
+                set(file);
+                engine = Lodestone.paperEngine.scriptEngineManager.getEngineByName("nashorn");
+                engine.eval(new FileReader(file));
 
-            Bindings b = engine.getBindings(ScriptContext.ENGINE_SCOPE);
-            Object output = find("output", b);
-            if (output instanceof String) {
-                typeOut = VariableType.getType((String) output);
-                if (typeOut == null) {
-                    typeOut = VariableType.INT;
-                    msg = "\"" + ((String) output) + "\" is not a Variable type.";
-                    Util.print("\u00A7c" + msg);
-                }
-            } else {
-                msg = ("\"output\" not found or not a String.");
-                Util.print("\u00A7c" + msg);
-            }
-            Object input = find("input", b);
-            if (input instanceof ScriptObjectMirror) {
-                try {
-                    ScriptObjectMirror result = (ScriptObjectMirror) input;
-                    args = result.to(String[].class);
-                    varTypes = new VariableType[args.length];
-                    for (int i = 0; i < args.length; i++) {
-                        varTypes[i] = VariableType.getType(args[i]);
+                Bindings b = engine.getBindings(ScriptContext.ENGINE_SCOPE);
+                Object output = find("output", b);
+                if (output instanceof String) {
+                    typeOut = VariableType.getType((String) output);
+                    if (typeOut == null) {
+                        typeOut = VariableType.INT;
+                        msg = "\"" + ((String) output) + "\" is not a Variable type.";
+                        Util.print("\u00A7c" + msg);
                     }
-                } catch (Exception e) {
-                    msg = ("\"input\" is not a string array.");
-                    Util.print("\u00A7c" + msg);
-                }
-            } else {
-                if (input == null) {
-                    msg = ("\"input\" not found.");
-                    Util.print("\u00A7c" + msg);
                 } else {
-                    msg = ("\"input\" not valid.");
+                    msg = ("\"output\" not found or not a String.");
                     Util.print("\u00A7c" + msg);
                 }
-            }
+                Object input = find("input", b);
+                if (input instanceof ScriptObjectMirror) {
+                    try {
+                        ScriptObjectMirror result = (ScriptObjectMirror) input;
+                        args = result.to(String[].class);
+                        varTypes = new VariableType[args.length];
+                        for (int i = 0; i < args.length; i++) {
+                            varTypes[i] = VariableType.getType(args[i]);
+                        }
+                    } catch (Exception e) {
+                        msg = ("\"input\" is not a string array.");
+                        Util.print("\u00A7c" + msg);
+                    }
+                } else {
+                    if (input == null) {
+                        msg = ("\"input\" not found.");
+                        Util.print("\u00A7c" + msg);
+                    } else {
+                        msg = ("\"input\" not valid.");
+                        Util.print("\u00A7c" + msg);
+                    }
+                }
 
-            Object obj = engine.get("execute");
-            if (obj == null) {
-                msg = ("\"execute\" Function not found");
-                Util.print("\u00A7c" + msg);
+                Object obj = engine.get("execute");
+                if (obj == null) {
+                    msg = ("\"execute\" Function not found");
+                    Util.print("\u00A7c" + msg);
+                }
+
+                Object exe = find("execution", b);
+                if(!(exe instanceof Boolean)) {
+                    exe = find("hasPin", b);
+                }
+                if(exe instanceof Boolean) {
+                    boolean bool = (Boolean) exe;
+                    isExecute = bool;
+                }
+
+
+
+            } catch (Exception e) {
+                Util.print("\u00A7c" + e.getMessage());
+                printInstruction();
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            Util.print("\u00A7c" + e.getMessage());
-            printInstruction();
-            e.printStackTrace();
+        } else {
+            msg = ("File does not exist");
+            Util.print("\u00A7c" + msg);
         }
         if (!msg.isEmpty()) {
             printInstruction();
@@ -149,7 +167,9 @@ public class JavaScriptFunction extends Function {
         this.names = args.clone();
 
 //TODO isExecution Variable
-    //    this.size = 1;
+        if(isExecute) {
+            this.size = 1;
+        }
         super.setTypes();
     }
 
@@ -180,6 +200,10 @@ public class JavaScriptFunction extends Function {
         Util.print("var product = multiplicand * multiplier;");
         Util.print("return product;");
         Util.print("}");
+        Util.print("<");
+        Util.print("Use");
+        Util.print("var execution = true; or var \"hasPin\" = true;");
+        Util.print("for execution input and output");
         Util.print("<");
     }
 

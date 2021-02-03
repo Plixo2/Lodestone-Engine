@@ -59,14 +59,7 @@ public class TabFiles extends UITab {
         for (FileIcon icon : icons) {
             if (icon.mouseInside(mouseX, mouseY, mouseButton)) {
 
-                if(KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE) && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT))  {
-                    FileUtils fileUtils = FileUtils.getInstance();
-                    if (fileUtils.hasTrash()) {
 
-                       //TODO.... Move to Trash
-
-                    }
-                }
 
                 if (icon.isFolder) {
                     if (mouseButton == 0) {
@@ -92,14 +85,14 @@ public class TabFiles extends UITab {
                     }
 
                     lastSelected = icon.file;
-                    showMenu(id, mouseX, mouseY, "Open", "Edit", "Explorer");
+                    showMenu(id, mouseX, mouseY, "Open", "Edit", "Explorer" ,"Delete");
                 }
 
                 return;
             }
         }
 
-        if(parent.isMouseInside(mouseX,mouseY))
+        if(parent.isMouseInside(mouseX,mouseY) && mouseButton == 1)
         showMenu(-1, mouseX, mouseY, "Create Javascript", "Create Hud", "Create Json", "Create Visualscript");
 
         super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -139,6 +132,15 @@ public class TabFiles extends UITab {
                         Runtime.getRuntime().exec("explorer.exe /select," + lastSelected);
                     } catch (IOException e) {
                         e.printStackTrace();
+                    }
+                } else if (option == 3) {
+                    if(KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
+                        if(lastSelected.exists()) {
+                            lastSelected.delete();
+                            update();
+                        }
+                    } else {
+                        Util.print("Press Left Shift to delete");
                     }
                 }
 

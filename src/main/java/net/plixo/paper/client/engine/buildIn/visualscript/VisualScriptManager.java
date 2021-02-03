@@ -8,6 +8,9 @@ import net.plixo.paper.client.engine.buildIn.visualscript.function.Function;
 
 import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.custom.JavaScriptFunction;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.io.ELog;
+import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.other.EBranch;
+import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.other.EIf;
+import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.other.ELoop;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
 
@@ -74,6 +77,10 @@ public class VisualScriptManager {
         allFunctions.add(new EventOnStart());
         allFunctions.add(new EventOnEnd());
         allFunctions.add(new ELog());
+
+        allFunctions.add(new EIf());
+        allFunctions.add(new EBranch());
+        allFunctions.add(new ELoop());
 
         File library = SaveUtil.getFolderFromName("library");
         if(!library.exists()) {

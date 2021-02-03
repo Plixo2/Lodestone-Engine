@@ -5,13 +5,11 @@ import net.minecraft.util.math.vector.Vector3d;
 public class Variable {
 
 	public boolean booleanValue = false;
-
 	public float floatValue = 0;
 	public int intValue = 0;
-	public String name;
 	public String stringValue = "";
 	public VariableType type;
-
+	public String name;
 	public Vector3d vectorValue = new Vector3d(0, 0, 0);
 
 	public Variable(VariableType type, String name) {
@@ -40,7 +38,6 @@ public class Variable {
 		default:
 			break;
 		}
-
 	}
 
 	@Override
@@ -60,7 +57,6 @@ public class Variable {
 			return "";
 		}
 	}
-
 	public Object asJavaObject()  {
 		Object obj = 0;
 
@@ -86,7 +82,4 @@ public class Variable {
 		}
 		return obj;
 	}
-	
-	
-
 }
