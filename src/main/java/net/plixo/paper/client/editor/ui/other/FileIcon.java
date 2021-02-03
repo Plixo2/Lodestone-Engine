@@ -119,8 +119,6 @@ public class FileIcon extends Rect {
     void drawMuliLineText(String toDraw, float maxWidth, boolean hover) {
 
 
-
-
         String name = FilenameUtils.removeExtension(toDraw);
         String in = name;
         String extension = FilenameUtils.getExtension(toDraw);

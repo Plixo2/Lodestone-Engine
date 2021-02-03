@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.editor.ui.UIAccept;
+import net.plixo.paper.client.editor.ui.accept.UIAccept;
+import net.plixo.paper.client.editor.ui.accept.UITextInput;
 import net.plixo.paper.client.editor.ui.other.FileIcon;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.visualscript.Canvas;
 import net.plixo.paper.client.engine.buildIn.visualscript.Module;
 import net.plixo.paper.client.util.*;
 import org.apache.commons.io.FilenameUtils;
-import org.lwjgl.glfw.GLFW;
 
 public class TabFiles extends UITab {
 
@@ -60,7 +60,6 @@ public class TabFiles extends UITab {
             if (icon.mouseInside(mouseX, mouseY, mouseButton)) {
 
 
-
                 if (icon.isFolder) {
                     if (mouseButton == 0) {
                         home = icon.file;
@@ -85,15 +84,15 @@ public class TabFiles extends UITab {
                     }
 
                     lastSelected = icon.file;
-                    showMenu(id, mouseX, mouseY, "Open", "Edit", "Explorer" ,"Delete");
+                    showMenu(id, mouseX, mouseY, "Open", "Edit", "Explorer", "Delete");
                 }
 
                 return;
             }
         }
 
-        if(parent.isMouseInside(mouseX,mouseY) && mouseButton == 1)
-        showMenu(-1, mouseX, mouseY, "Create Javascript", "Create Hud", "Create Json", "Create Visualscript");
+        if (parent.isMouseInside(mouseX, mouseY) && mouseButton == 1)
+            showMenu(-1, mouseX, mouseY, "new .js", "new .hud", "new .json", "new .vs");
 
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
@@ -112,39 +111,63 @@ public class TabFiles extends UITab {
     @Override
     public void optionsSelected(int id, int option) {
 
-            if (id >= 0 && lastSelected != null)  {
-                if (option == 0) {
-                    if (id == 0) {
-                        openVs(lastSelected);
-                    } else if (id == 5) {
-                        home = lastSelected;
-                        update();
-                    }
-                } else if (option == 1) {
-                    try {
-                        Desktop.getDesktop().open(lastSelected);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else if (option == 2) {
-                    try {
-                        // Desktop.getDesktop().open(lastSelected.getParentFile());
-                        Runtime.getRuntime().exec("explorer.exe /select," + lastSelected);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else if (option == 3) {
-                    mc.displayGuiScreen(new UIAccept(yes -> {lastSelected.delete(); update();} , no -> {} , "Sure?" ));
-                }
-
-            } else if (id == -1) {
-                File f = new File(home.getAbsolutePath() +"\\" + Math.random()+"." + SaveUtil.FileFormat.values()[option].format);
-
-                if(!f.exists()) {
-                    SaveUtil.makeFile(f);
+        if (id >= 0 && lastSelected != null) {
+            if (option == 0) {
+                if (id == 0) {
+                    openVs(lastSelected);
+                } else if (id == 5) {
+                    home = lastSelected;
                     update();
                 }
+            } else if (option == 1) {
+                try {
+                    Desktop.getDesktop().open(lastSelected);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (option == 2) {
+                try {
+                    // Desktop.getDesktop().open(lastSelected.getParentFile());
+                    Runtime.getRuntime().exec("explorer.exe /select," + lastSelected);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (option == 3) {
+                mc.displayGuiScreen(new UIAccept(() -> {
+                    lastSelected.delete(); //update();
+                }, () -> {
+                }, "Sure?"));
             }
+
+        } else if (id == -1) {
+
+            UITextInput input = new UITextInput((txt) -> {
+                File f = new File(home.getAbsolutePath() + "\\" + txt + "." + SaveUtil.FileFormat.values()[option].format);
+                if (!f.exists()) {
+                    if (SaveUtil.FileFormat.values()[option] == SaveUtil.FileFormat.Code) {
+                        ArrayList<String> lines = new ArrayList<>();
+                        lines.add("var output = \"float\";");
+                        lines.add("var input = [\"float\" , \"float\"];");
+                        lines.add("var execution = false;");
+                        lines.add("");
+                        lines.add("//multiplies two floating point numbers together");
+                        lines.add("function execute(m1, m2) {");
+                        lines.add("    return m1 * m2;");
+                        lines.add("}");
+                        SaveUtil.save(f, lines, true);
+                    } else {
+                        SaveUtil.makeFile(f);
+                    }
+
+
+                    //  update();
+                }
+            }, (txt) -> {
+            }, SaveUtil.FileFormat.values()[option].format);
+            mc.displayGuiScreen(input);
+
+
+        }
 
 
         super.optionsSelected(id, option);
