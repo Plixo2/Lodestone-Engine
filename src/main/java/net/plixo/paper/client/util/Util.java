@@ -9,6 +9,7 @@ import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 import java.util.regex.Pattern;
 
 
+@SuppressWarnings("unused")
 public class Util {
 
     public static Minecraft mc = Minecraft.getInstance();

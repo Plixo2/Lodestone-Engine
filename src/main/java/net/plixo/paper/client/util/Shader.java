@@ -1,105 +1,88 @@
 package net.plixo.paper.client.util;
 
-import static org.lwjgl.opengl.GL20.GL_COMPILE_STATUS;
-import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
-import static org.lwjgl.opengl.GL20.GL_INFO_LOG_LENGTH;
-import static org.lwjgl.opengl.GL20.GL_LINK_STATUS;
-import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
-import static org.lwjgl.opengl.GL20.glAttachShader;
-import static org.lwjgl.opengl.GL20.glCompileShader;
-import static org.lwjgl.opengl.GL20.glCreateProgram;
-import static org.lwjgl.opengl.GL20.glCreateShader;
-import static org.lwjgl.opengl.GL20.glGetProgramInfoLog;
-import static org.lwjgl.opengl.GL20.glGetProgrami;
-import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
-import static org.lwjgl.opengl.GL20.glGetShaderi;
-import static org.lwjgl.opengl.GL20.glGetUniformLocation;
-import static org.lwjgl.opengl.GL20.glLinkProgram;
-import static org.lwjgl.opengl.GL20.glShaderSource;
-import static org.lwjgl.opengl.GL20.glUniform1f;
-import static org.lwjgl.opengl.GL20.glUniform2f;
-import static org.lwjgl.opengl.GL20.glUseProgram;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+import static org.lwjgl.opengl.GL20.*;
+
+@SuppressWarnings("unused")
 public class Shader {
-	int mouseUniform;
-	int programId;
-	int resolutionUniform;
-	int timeUniform;
-	
+    int mouseUniform;
+    int programId;
+    int resolutionUniform;
+    int timeUniform;
 
-	public Shader(String fragmentShaderLocation) throws IOException {
-		int program = glCreateProgram();
 
-		glAttachShader(program, createShader(Shader.class.getResourceAsStream("/pass.vsh"), GL_VERTEX_SHADER));
-		glAttachShader(program,
-				createShader(Shader.class.getResourceAsStream(fragmentShaderLocation), GL_FRAGMENT_SHADER));
+    public Shader(String fragmentShaderLocation) throws IOException {
+        int program = glCreateProgram();
 
-		glLinkProgram(program);
+        glAttachShader(program, createShader(Shader.class.getResourceAsStream("/pass.vsh"), GL_VERTEX_SHADER));
+        glAttachShader(program,
+                createShader(Shader.class.getResourceAsStream(fragmentShaderLocation), GL_FRAGMENT_SHADER));
 
-		int linked = glGetProgrami(program, GL_LINK_STATUS);
+        glLinkProgram(program);
 
-		// If linking failed
-		if (linked == 0) {
-			System.err.println(glGetProgramInfoLog(program, glGetProgrami(program, GL_INFO_LOG_LENGTH)));
+        int linked = glGetProgrami(program, GL_LINK_STATUS);
 
-			//throw new IllegalStateException("Shader failed to link");
-		}
+        // If linking failed
+        if (linked == 0) {
+            System.err.println(glGetProgramInfoLog(program, glGetProgrami(program, GL_INFO_LOG_LENGTH)));
 
-		this.programId = program;
+            //throw new IllegalStateException("Shader failed to link");
+        }
 
-		// Setup uniforms
-		glUseProgram(program);
+        this.programId = program;
 
-		this.timeUniform = glGetUniformLocation(program, "time");
-		this.mouseUniform = glGetUniformLocation(program, "mouse");
-		this.resolutionUniform = glGetUniformLocation(program, "resolution");
+        // Setup uniforms
+        glUseProgram(program);
 
-		glUseProgram(0);
-	}
+        this.timeUniform = glGetUniformLocation(program, "time");
+        this.mouseUniform = glGetUniformLocation(program, "mouse");
+        this.resolutionUniform = glGetUniformLocation(program, "resolution");
 
-	private int createShader(InputStream inputStream, int shaderType) throws IOException {
-		int shader = glCreateShader(shaderType);
+        glUseProgram(0);
+    }
 
-		glShaderSource(shader, readStreamToString(inputStream));
+    private int createShader(InputStream inputStream, int shaderType) throws IOException {
+        int shader = glCreateShader(shaderType);
 
-		glCompileShader(shader);
+        glShaderSource(shader, readStreamToString(inputStream));
 
-		int compiled = glGetShaderi(shader, GL_COMPILE_STATUS);
+        glCompileShader(shader);
 
-		// If compilation failed
-		if (compiled == 0) {
-			System.err.println(glGetShaderInfoLog(shader, glGetShaderi(shader, GL_INFO_LOG_LENGTH)));
+        int compiled = glGetShaderi(shader, GL_COMPILE_STATUS);
 
-			//throw new IllegalStateException("Failed to compile shader");
-		}
+        // If compilation failed
+        if (compiled == 0) {
+            System.err.println(glGetShaderInfoLog(shader, glGetShaderi(shader, GL_INFO_LOG_LENGTH)));
 
-		return shader;
-	}
+            //throw new IllegalStateException("Failed to compile shader");
+        }
 
-	private String readStreamToString(InputStream inputStream) throws IOException {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
+        return shader;
+    }
 
-		byte[] buffer = new byte[512];
+    private String readStreamToString(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-		int read;
+        byte[] buffer = new byte[512];
 
-		while ((read = inputStream.read(buffer, 0, buffer.length)) != -1) {
-			out.write(buffer, 0, read);
-		}
+        int read;
 
-		return new String(out.toByteArray(), StandardCharsets.UTF_8);
-	}
+        while ((read = inputStream.read(buffer, 0, buffer.length)) != -1) {
+            out.write(buffer, 0, read);
+        }
 
-	public void useShader(int width, int height, float mouseX, float mouseY, float time) {
-		glUseProgram(this.programId);
+        return new String(out.toByteArray(), StandardCharsets.UTF_8);
+    }
 
-		glUniform2f(this.resolutionUniform, width, height);
-		glUniform2f(this.mouseUniform, mouseX / width, 1.0f - mouseY / height);
-		glUniform1f(this.timeUniform, time);
-	}
+    public void useShader(int width, int height, float mouseX, float mouseY, float time) {
+        glUseProgram(this.programId);
+
+        glUniform2f(this.resolutionUniform, width, height);
+        glUniform2f(this.mouseUniform, mouseX / width, 1.0f - mouseY / height);
+        glUniform1f(this.timeUniform, time);
+    }
 }

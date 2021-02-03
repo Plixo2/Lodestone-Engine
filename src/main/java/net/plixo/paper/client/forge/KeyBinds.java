@@ -4,7 +4,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
 
-public class Keybinds {
+public class KeyBinds {
     public static KeyBinding openUI;
 
     public static void register() {

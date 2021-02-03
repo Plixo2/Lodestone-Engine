@@ -7,28 +7,29 @@ import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.editor.ui.UIEditor;
 import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
-import net.plixo.paper.client.forge.Keybinds;
+import net.plixo.paper.client.forge.KeyBinds;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyInput {
 
+    @SuppressWarnings("unused")
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
 
         Variable keyVar = new Variable(VariableType.INT, "Key");
 
-        keyVar.booleanValue =   event.getAction() == GLFW.GLFW_PRESS;
-        keyVar.intValue =   event.getKey();
-    //    KeyBinding
-    //    TranslationTextComponent translationTextComponent = new TranslationTextComponent(keybinding.getKeyDescription());
+        keyVar.booleanValue = event.getAction() == GLFW.GLFW_PRESS;
+        keyVar.intValue = event.getKey();
+        //    KeyBinding
+        //    TranslationTextComponent translationTextComponent = new TranslationTextComponent(keybinding.getKeyDescription());
 
         Lodestone.update("OnKey", keyVar);
-     //   event.
-        if (Keybinds.openUI.isPressed()) {
+        //   event.
+        if (KeyBinds.openUI.isPressed()) {
             //   Minecraft.getInstance().player.abilities.isFlying = true;
             Minecraft.getInstance().displayGuiScreen(new UIEditor());
         }
-       // System.out.println("Hell");
+        // System.out.println("Hell");
         //Minecraft.getInstance().player.abilities.
     }
 }

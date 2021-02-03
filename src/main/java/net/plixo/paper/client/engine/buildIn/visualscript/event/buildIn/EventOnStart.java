@@ -8,6 +8,7 @@ import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
 public class EventOnStart extends Event {
 
     Variable str;
+
     public EventOnStart() {
         super("onStart");
     }
@@ -25,7 +26,7 @@ public class EventOnStart extends Event {
 
     @Override
     public void setTypes() {
-        this.outputs = new Variable[] {str = new Variable(VariableType.STRING , "Hello")};
+        this.outputs = new Variable[]{str = new Variable(VariableType.STRING, "Hello")};
         this.size = 1;
         super.setTypes();
     }

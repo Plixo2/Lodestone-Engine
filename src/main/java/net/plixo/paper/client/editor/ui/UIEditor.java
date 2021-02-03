@@ -15,8 +15,6 @@ import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.MouseUtil;
 import org.lwjgl.opengl.GL11;
 
-import net.minecraft.client.Minecraft;
-
 public class UIEditor extends Screen {
 
 	public UIEditor() {
@@ -24,9 +22,9 @@ public class UIEditor extends Screen {
 	}
 
 
-	static Minecraft mc = Minecraft.getInstance();
+	//static Minecraft mc = Minecraft.getInstance();
 
-	ArrayList<TabbedUI> tabs = new ArrayList<TabbedUI>();
+	ArrayList<TabbedUI> tabs = new ArrayList<>();
 	Toolbar toolbar;
 
 	@Override
@@ -35,6 +33,7 @@ public class UIEditor extends Screen {
 	}
 
 
+	@SuppressWarnings("NullableProblems")
 	@Override
 	public void render(MatrixStack p_230430_1_, int mouseX, int mouseY, float partialTicks) {
 
@@ -49,8 +48,8 @@ public class UIEditor extends Screen {
 
 			GL11.glTranslated(tab.x, tab.y, 0);
 
-			float newMx = mouseX - tab.x;
-			float newMy = mouseY - tab.y;
+			//float newMx = mouseX - tab.x;
+			//float newMy = mouseY - tab.y;
 
 			tab.drawScreen(mouseX,mouseY);
 
@@ -95,8 +94,8 @@ public class UIEditor extends Screen {
 		console.addTab(b3);
 		console.addTab(b7);
 
-		TabbedUI modules = new TabbedUI(side, this.height/2 - 30, "Test0");
-		modules.y = this.height/2 + 30;
+		TabbedUI modules = new TabbedUI(side, this.height/2.f - 30, "Test0");
+		modules.y = this.height/2.f + 30;
 
 		UITab b4 = new TabInspector(0);
 		modules.addTab(b4);
@@ -143,10 +142,10 @@ public class UIEditor extends Screen {
 				float newMx = (float) (mouseX - tab.x);
 				float newMy = (float) (mouseY - tab.y);
 
-				UITab Ctab = tab.getHoveredHead(newMx, newMy);
+				UITab CTab = tab.getHoveredHead(newMx, newMy);
 
-				if (Ctab != null) {
-					tab.selectedIndex = Ctab.head.id;
+				if (CTab != null) {
+					tab.selectedIndex = CTab.head.id;
 				}
 			}
 		}

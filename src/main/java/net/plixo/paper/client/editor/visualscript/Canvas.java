@@ -1,17 +1,12 @@
 package net.plixo.paper.client.editor.visualscript;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.client.engine.buildIn.visualscript.VisualScriptManager;
 import net.plixo.paper.client.engine.buildIn.visualscript.Module;
+import net.plixo.paper.client.engine.buildIn.visualscript.VisualScriptManager;
 import net.plixo.paper.client.engine.buildIn.visualscript.event.Event;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.Function;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.other.Connection;
@@ -21,15 +16,15 @@ import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
+
+@SuppressWarnings("DuplicatedCode")
 public class Canvas {
-
-
-    public ArrayList<DrawFunction> functions = new ArrayList<>();
-
     Module mod;
-
-
+    public ArrayList<DrawFunction> functions = new ArrayList<>();
     public String name;
     public JsonParser parser;
 
@@ -73,7 +68,7 @@ public class Canvas {
             }
 
         } catch (Exception e) {
-           Util.print(e.toString() + e.getMessage());
+            Util.print(e.toString() + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -126,8 +121,8 @@ public class Canvas {
 
                             Function function = VisualScriptManager.getFromList(name, "");
                             if (function == null) {
-                               Util.print("Cant find Function for \"" + name +"\"");
-                               Util.print("The loading system might fail completely");
+                                Util.print("Cant find Function for \"" + name + "\"");
+                                Util.print("The loading system might fail completely");
                                 continue;
                             }
                             DrawFunction drawFunc = new DrawFunction(function);
@@ -199,9 +194,9 @@ public class Canvas {
                                 int connectedIndex = value.get("from").getAsInt();
                                 int toConnectionIndex = value.get("at").getAsInt();
 
-                                Function tofunction = newFunc.get(toFunctionIndex).function;
+                                Function toFunction = newFunc.get(toFunctionIndex).function;
 
-                                function.inputs[connectedIndex] = new Connection(tofunction, toConnectionIndex, false);
+                                function.inputs[connectedIndex] = new Connection(toFunction, toConnectionIndex, false);
                             }
                         }
                     }
@@ -219,8 +214,8 @@ public class Canvas {
                                 int toConnectionIndex = value.get("at").getAsInt();
 
                                 Execute execute = (Execute) function;
-                                Execute tofunction = (Execute) newFunc.get(toFunctionIndex).function;
-                                execute.nextConnection[toConnectionIndex] = tofunction;
+                                Execute toFunction = (Execute) newFunc.get(toFunctionIndex).function;
+                                execute.nextConnection[toConnectionIndex] = toFunction;
 
                             }
                         }
@@ -254,27 +249,27 @@ public class Canvas {
 
     public void removeFunction(DrawFunction function) {
         this.functions.remove(function);
-        for(DrawFunction f : functions) {
-            if(f.function instanceof Execute) {
+        for (DrawFunction f : functions) {
+            if (f.function instanceof Execute) {
                 Execute execute = (Execute) f.function;
-
-                    for (int i = 0; i < execute.size; i++) {
-                        Execute next = execute.nextConnection[i];
-                        if (next == null) {
-                            continue;
-                        }
-                       if(!containsFunction(next)) {
-                           Util.print("Remove Execute Function" + next);
-                           execute.nextConnection[i] = null;
-                       }
-                    }
 
                 for (int i = 0; i < execute.size; i++) {
                     Execute next = execute.nextConnection[i];
                     if (next == null) {
                         continue;
                     }
-                    if(!containsFunction(next)) {
+                    if (!containsFunction(next)) {
+                        Util.print("Remove Execute Function" + next);
+                        execute.nextConnection[i] = null;
+                    }
+                }
+
+                for (int i = 0; i < execute.size; i++) {
+                    Execute next = execute.nextConnection[i];
+                    if (next == null) {
+                        continue;
+                    }
+                    if (!containsFunction(next)) {
                         Util.print("Remove Execute Function" + next);
                         execute.nextConnection[i] = null;
                     }
@@ -295,13 +290,15 @@ public class Canvas {
         }
 
     }
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean containsFunction(Function function) {
-        for(DrawFunction f : functions) {
-            if(f.function.equals(function)) {
+        for (DrawFunction f : functions) {
+            if (f.function.equals(function)) {
                 return true;
             }
         }
-            return false;
+        return false;
 
     }
 

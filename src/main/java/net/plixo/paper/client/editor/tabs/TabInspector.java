@@ -194,10 +194,10 @@ public class TabInspector extends UITab {
         }
 
         if (mouseButton == 1) {
-            String[] array = new String[TheManager.standartBehavior.size()];
+            String[] array = new String[TheManager.standardBehavior.size()];
 
             int index = 0;
-            for (Behavior b : TheManager.standartBehavior) {
+            for (Behavior b : TheManager.standardBehavior) {
                 array[index] = b.name;
                 index += 1;
             }

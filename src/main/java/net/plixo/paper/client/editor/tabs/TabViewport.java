@@ -76,7 +76,7 @@ public class TabViewport extends UITab {
                 tab.drawScreen((float) mouseToWorld.x, (float) mouseToWorld.y);
                 GL11.glPopMatrix();
                 int toH = Math.round((zoom) * 100.0f);
-                Gui.drawStringwithShadow("Zoom: " + toH + "%", parent.width - 60, 10, -1);
+                Gui.drawStringWithShadow("Zoom: " + toH + "%", parent.width - 60, 10, -1);
                 GL11.glPushMatrix();
                 float nameX = parent.width - Gui.getStringWidth("\u00A7l" + mod.name + "." + SaveUtil.FileFormat.VisualScript.format) * 2 - 20;
                 GL11.glTranslated(nameX, parent.height - 20, 0);
@@ -170,7 +170,7 @@ public class TabViewport extends UITab {
                     GL11.glPushMatrix();
                     GL11.glTranslated(x, y, 0);
 
-                    GL11.glTranslated(atBorder.x - (this.x), atBorder.y - (this.y), 0);
+                    GL11.glTranslated(atBorder.x - (x), atBorder.y - (y), 0);
 
                     GL11.glRotated(-degToTarget, 0, 0, 1);
 
@@ -337,8 +337,8 @@ public class TabViewport extends UITab {
 
     Vector3d screenToWorld(float x, float y) {
 
-        x -= this.x;
-        y -= this.y;
+        x -= TabViewport.x;
+        y -= TabViewport.y;
 
         x /= zoom;
         y /= zoom;
@@ -352,8 +352,8 @@ public class TabViewport extends UITab {
         x *= zoom;
         y *= zoom;
 
-        x += this.x;
-        y += this.y;
+        x += TabViewport.x;
+        y += TabViewport.y;
 
         return new Vector3d(x, y, 1);
     }

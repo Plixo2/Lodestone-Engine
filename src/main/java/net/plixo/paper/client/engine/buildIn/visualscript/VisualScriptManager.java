@@ -13,7 +13,6 @@ import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.other
 import net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.other.ELoop;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -88,7 +87,7 @@ public class VisualScriptManager {
             SaveUtil.makeFolder(library);
             return;
         }
-      //  Collection<File> files = FileUtils.listFiles(library, new String[] {SaveUtil.FileFormat.Code.format} , true);
+        //  Collection<File> files = FileUtils.listFiles(library, new String[] {SaveUtil.FileFormat.Code.format} , true);
         ArrayList<File> files = new ArrayList<>();
         listf(library.getAbsolutePath(),files);
         for(File f : files) {
@@ -159,18 +158,4 @@ public class VisualScriptManager {
 		*/
 
     }
-    public static void listf(String directoryName, ArrayList<File> files) {
-        File directory = new File(directoryName);
-        // Get all files from a directory.
-        File[] fList = directory.listFiles();
-        if(fList != null)
-            for (File file : fList) {
-                if (file.isFile() && file.getName().endsWith(SaveUtil.FileFormat.Code.format)) {
-                    files.add(file);
-                } else if (file.isDirectory()) {
-                    listf(file.getAbsolutePath(), files);
-                }
-            }
-    }
-
 }

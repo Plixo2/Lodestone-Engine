@@ -2,7 +2,6 @@ package net.plixo.paper.client.UI;
 
 
 import net.plixo.paper.client.util.ColorLib;
-import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.Util;
 
 public abstract class UIElement {
@@ -17,6 +16,7 @@ public abstract class UIElement {
     long lastMs = 0;
 
 
+    @SuppressWarnings("unused")
     UIElement parent;
     protected float roundness = 0;
 
@@ -32,8 +32,10 @@ public abstract class UIElement {
         setRoundness(2);
     }
 
-    public void actionPerformed() { }
+    public void actionPerformed() {
+    }
 
+    @SuppressWarnings("CommentedOutCode")
     public void draw(float mouseX, float mouseY) {
         updateHoverProgress(mouseX, mouseY);
 
@@ -113,7 +115,7 @@ public abstract class UIElement {
             delta = -delta;
         }
 
-        hoverProgress = (float)Util.clampDouble(hoverProgress + delta, 100, 0);
+        hoverProgress = (float) Util.clampDouble(hoverProgress + delta, 100, 0);
 
         lastMs = System.currentTimeMillis();
     }

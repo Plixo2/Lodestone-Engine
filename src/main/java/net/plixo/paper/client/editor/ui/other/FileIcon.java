@@ -25,7 +25,7 @@ public class FileIcon extends Rect {
 
         boolean hover = mouseInside(mouseX, mouseY, -1);
         drawIcon(hover);
-        drawMuliLineText(txt, width, hover);
+        drawText(txt, width);
     }
 
     void drawIcon(boolean hover) {
@@ -116,7 +116,9 @@ public class FileIcon extends Rect {
 
     }
 
-    void drawMuliLineText(String toDraw, float maxWidth, boolean hover) {
+    void drawText(String toDraw, float maxWidth) {
+
+
 
 
         String name = FilenameUtils.removeExtension(toDraw);

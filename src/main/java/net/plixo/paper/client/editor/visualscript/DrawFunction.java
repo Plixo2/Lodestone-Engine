@@ -5,9 +5,8 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.math.vector.Vector3i;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.tabs.TabViewport;
-import net.plixo.paper.client.engine.TheManager;
-import net.plixo.paper.client.engine.buildIn.visualscript.VisualScriptManager;
 import net.plixo.paper.client.engine.buildIn.visualscript.Module;
+import net.plixo.paper.client.engine.buildIn.visualscript.VisualScriptManager;
 import net.plixo.paper.client.engine.buildIn.visualscript.event.Event;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.Function;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.other.Connection;
@@ -18,15 +17,17 @@ import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.KeyboardUtil;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
+
 import java.util.ArrayList;
 
+@SuppressWarnings("CommentedOutCode")
 public class DrawFunction {
 
     static float connectionButtonWidth = 10f;
     static float headerHeight = 20;
     static float IOHeight = 15f;
 
-    ArrayList<Rect> bodies = new ArrayList<Rect>();
+    ArrayList<Rect> bodies = new ArrayList<>();
 
     float calcWidth = 0;
     boolean dragging = false;
@@ -38,7 +39,7 @@ public class DrawFunction {
     Rect head;
     Rect leftConnection;
 
-    ArrayList<Rect> rights = new ArrayList<Rect>();
+    ArrayList<Rect> rights = new ArrayList<>();
     public float x = 0, y = 0;
 
     public DrawFunction(Function function) {
@@ -95,44 +96,43 @@ public class DrawFunction {
         GL11.glTranslated(x, y, 0);
 
 
-
         if (function instanceof Execute) {
 
             Execute execute = (Execute) function;
             if (execute.nextConnection != null)
-                if(!TheManager.functions.contains(function)){
-
+                //if (!TheManager.functions.contains(function)) { }
+            for (int i = 0; i < execute.size; i++) {
+                Execute next = execute.nextConnection[i];
+                if (next == null) {
+                    continue;
                 }
-                for (int i = 0; i < execute.size; i++) {
-                    Execute next = execute.nextConnection[i];
-                    if (next == null) {
-                        continue;
-                    }
 
 
-                    float height = (headerHeight / execute.size);
-                    float h = i * height;
+                float height = (headerHeight / execute.size);
+                float h = i * height;
 
-                    float startY = y + h + height / 2;
-                    float startX = x + getWidth();
+                float startY = y + h + height / 2;
+                float startX = x + getWidth();
 
-                    float endY = next.drawFunction.y + headerHeight / 2;
-                    float endX = next.drawFunction.x;
+                float endY = next.drawFunction.y + headerHeight / 2;
+                float endX = next.drawFunction.x;
 
-                    float dX = startX - endX;
-                    float dY = startY - endY;
-                    double distance = Math.sqrt(dX * dX + dY * dY);
+                /*
+                float dX = startX - endX;
+                float dY = startY - endY;
+                double distance = Math.sqrt(dX * dX + dY * dY);
+                */
 
-                    GL11.glTranslated(-x, -y, 0);
+                GL11.glTranslated(-x, -y, 0);
 
-                    Gui.besier(startX, startY, endX, endY, 0xFF505050, 0, GL11.GL_LINE_STRIP, true,
-                            6f * TabViewport.zoom, 0xFF505050, 1, 4, 1);
-                    Gui.besier(startX, startY, endX, endY, 0xFF8341FF, 0, GL11.GL_LINE_STRIP, true,
-                            3f * TabViewport.zoom, 0xFF8341FF, 1, 4, 1);
+                Gui.Bezier(startX, startY, endX, endY, 0xFF505050, 0, GL11.GL_LINE_STRIP, true,
+                        6f * TabViewport.zoom, 0xFF505050, 1, 4, 1);
+                Gui.Bezier(startX, startY, endX, endY, 0xFF8341FF, 0, GL11.GL_LINE_STRIP, true,
+                        3f * TabViewport.zoom, 0xFF8341FF, 1, 4, 1);
 
 
-                    GL11.glTranslated(x, y, 0);
-                }
+                GL11.glTranslated(x, y, 0);
+            }
         }
         try {
             for (int i = 0; i < function.inputTypes.length; i++) {
@@ -179,7 +179,7 @@ public class DrawFunction {
                     double distance = Math.sqrt(dX * dX + dY * dY);
 
                     if (distance > 25) {
-                        Gui.besier(start.x, start.y, f.getX(), f.getY(), 0xFF505050, 1, GL11.GL_LINE_STRIP, true,
+                        Gui.Bezier(start.x, start.y, f.getX(), f.getY(), 0xFF505050, 1, GL11.GL_LINE_STRIP, true,
                                 3f * TabViewport.zoom, function.inputTypes[i].getColor(),
                                 (int) (10 - (System.currentTimeMillis() / 50) % 10), 10, 0);
 
@@ -314,7 +314,7 @@ public class DrawFunction {
                                 VisualScriptManager.draggedType = -1;
                             }
                         } else {
-                            Execute cast = (Execute) function;
+                            //Execute cast = (Execute) function;
                             execute.nextConnection[rect.custom.getX()] = null;
                         }
                         return true;
@@ -391,6 +391,7 @@ public class DrawFunction {
         return false;
     }
 
+    @SuppressWarnings("unused")
     void mouseReleased(float mouseX, float mouseY, int state) {
         if (state != 0)
             return;
