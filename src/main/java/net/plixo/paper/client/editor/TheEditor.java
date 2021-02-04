@@ -13,6 +13,7 @@ public class TheEditor {
     public static TabFiles files;
     public static TabInspector inspector;
     public static TabViewport viewport;
+    public static TabModelViewer modelViewer;
 
     public static void init() {
         initTab(console);
@@ -20,6 +21,7 @@ public class TheEditor {
         initTab(explorer);
         initTab(viewport);
         initTab(inspector);
+        initTab(modelViewer);
     }
 
     public static void initTab(UITab tab) {

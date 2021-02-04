@@ -29,6 +29,4 @@ build/*
 /gradle/
 /run/
 *.bin
-*.bin
-*.gz
 *.dat
