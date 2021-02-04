@@ -1,6 +1,6 @@
 package net.plixo.paper.client.util;
 
-@SuppressWarnings("unused")
+
 public class ColorLib {
 
     public static int getMainColor() {
@@ -10,7 +10,6 @@ public class ColorLib {
     public static int getBackground(float fraction) {
         return interpolateColor(0xFF202225, 0xFFFFFFFF, fraction * 0.3f);
     }
-
 
     public static int cyan() {
         return 0xFF1BBFAF;
@@ -31,7 +30,6 @@ public class ColorLib {
     public static int orange() {
         return 0xFFF25D27;
     }
-
 
     public static int utilLines() {
         return 0x6F000000;
