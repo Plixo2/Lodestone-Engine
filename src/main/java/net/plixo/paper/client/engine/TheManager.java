@@ -14,6 +14,7 @@ import net.plixo.paper.client.util.Util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 @SuppressWarnings("DuplicatedCode")
@@ -22,7 +23,7 @@ public class TheManager {
     public static JsonParser parser;
     public static ArrayList<Behavior> standardBehavior = new ArrayList<>();
     public static ArrayList<Variable> globals = new ArrayList<>();
-    public static ArrayList<GameObject> allEntities = new ArrayList<>();
+    public static CopyOnWriteArrayList<GameObject> allEntities = new CopyOnWriteArrayList<>();
     public static ArrayList<UniformFunction> functions = new ArrayList<>();
 
 

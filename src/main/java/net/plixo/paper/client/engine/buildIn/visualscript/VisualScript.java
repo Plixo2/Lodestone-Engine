@@ -6,6 +6,7 @@ import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.util.SaveUtil;
+import net.plixo.paper.client.util.Util;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class VisualScript extends Behavior {
                 mod.canvas.execute(name, var);
             }
         } catch (Exception e) {
+            Util.print(e.getMessage());
             Lodestone.paperEngine.stopEngine();
             e.printStackTrace();
         }
@@ -54,6 +56,7 @@ public class VisualScript extends Behavior {
                 mod.canvas.execute("onStart", null);
 
             } catch (Exception e) {
+                Util.print(e.getMessage());
                 Lodestone.paperEngine.stopEngine();
                 e.printStackTrace();
             }
@@ -68,6 +71,7 @@ public class VisualScript extends Behavior {
                 mod.canvas.execute("onStop", null);
             }
         } catch (Exception e) {
+            Util.print(e.getMessage());
             Lodestone.paperEngine.stopEngine();
             e.printStackTrace();
         }

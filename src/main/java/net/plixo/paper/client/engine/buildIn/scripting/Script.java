@@ -5,6 +5,7 @@ import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.util.SaveUtil;
+import net.plixo.paper.client.util.Util;
 import org.apache.commons.io.FilenameUtils;
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -43,7 +44,7 @@ public class Script extends Behavior {
                 File file = res.getAsFile();
                 String extension = FilenameUtils.getExtension(file.getName());
                 if (!extension.equalsIgnoreCase(SaveUtil.FileFormat.Code.format)) {
-                    System.out.println("Wrong Format");
+                    Util.print("Wrong Format");
                     Lodestone.paperEngine.stopEngine();
                     return;
                 }
@@ -54,6 +55,7 @@ public class Script extends Behavior {
                 execute("onStart", null);
 
             } catch (Exception e) {
+                Util.print(e.getMessage());
                 Lodestone.paperEngine.stopEngine();
                 e.printStackTrace();
             }
@@ -76,6 +78,7 @@ public class Script extends Behavior {
             Object obj = engine.get(name);
             if (obj != null) invocable.invokeFunction(name, mc);
         } catch (Exception e) {
+            Util.print(e.getMessage());
             Lodestone.paperEngine.stopEngine();
             e.printStackTrace();
         }

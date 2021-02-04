@@ -45,15 +45,23 @@ public class Toolbar extends UICanvas {
             @Override
             public void actionPerformed() {
                 if (Lodestone.paperEngine.isRunning) {
-                    setDisplayName("Start");
-                    setColor(0);
                     Lodestone.paperEngine.stopEngine();
                 } else {
-                    setDisplayName("Stop");
-                    setColor(ColorLib.cyan());
                     Lodestone.paperEngine.startEngine();
                 }
                 super.actionPerformed();
+            }
+
+            @Override
+            public void draw(float mouseX, float mouseY) {
+                if (Lodestone.paperEngine.isRunning) {
+                   setColor(ColorLib.cyan());
+                   setDisplayName("Stop");
+                } else {
+                    setDisplayName("Start");
+                    setColor(0);
+                }
+                super.draw(mouseX, mouseY);
             }
         };
         uiToggleButton.setDimensions(100, 0, 50, height);
@@ -61,10 +69,6 @@ public class Toolbar extends UICanvas {
         uiToggleButton.setRoundness(0);
         uiToggleButton.setColor(0);
 
-        if (Lodestone.paperEngine.isRunning) {
-            uiToggleButton.setColor(ColorLib.cyan());
-            uiToggleButton.setDisplayName("Stop");
-        }
 
         UIButton consoleOutput = new UIButton(0) {
             @Override

@@ -42,18 +42,16 @@ public class TabViewport extends UITab {
         x = parent.width / 2;
         y = parent.height / 2;
         resetRect = new Rect(0, 0, 30, 30, -1, -1);
-
-
-        //uiToggleButton.setState(true);
-
-
         super.init();
     }
 
 
     @Override
     public void drawScreen(float mouseX, float mouseY) {
+
         Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0));
+
+     //   Curs
 
         if (dragging) {
             x += (mouseX - dragX);
@@ -293,7 +291,6 @@ public class TabViewport extends UITab {
         if (mod != null) {
             Canvas tab = mod.getTab();
             if (tab != null) {
-
 
                 if (state == 1 && parent.isMouseInside(mouseX, mouseY)) {
                     float dx = startX - mouseX;
