@@ -3,9 +3,7 @@ package net.plixo.paper.client.editor.ui.accept;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.StringTextComponent;
-import net.plixo.paper.client.util.Util;
 
 public class UITextInput extends  UIAccept {
 
