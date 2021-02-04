@@ -5,6 +5,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.editor.TheEditor;
+import net.plixo.paper.client.editor.ui.other.OptionMenu;
 import net.plixo.paper.client.editor.visualscript.Canvas;
 import net.plixo.paper.client.editor.visualscript.Rect;
 import net.plixo.paper.client.engine.buildIn.visualscript.VisualScriptManager;
@@ -60,6 +61,7 @@ public class TabViewport extends UITab {
             dragX = mouseX;
             dragY = mouseY;
         }
+
 
         Module mod = TheEditor.activeMod;
         if (mod != null) {
@@ -195,9 +197,9 @@ public class TabViewport extends UITab {
         Vector3d nullPoint = worldToScreen(0, 0);
         float Nx = (float) nullPoint.x;
         float Ny = (float) nullPoint.y;
-        float w = 25 * zoom;
-        Gui.drawLine(Nx, Ny, Nx + w, Ny, ColorLib.getMainColor(), 3 * zoom);
-        Gui.drawLine(Nx, Ny, Nx, Ny + w, ColorLib.getMainColor(), 3 * zoom);
+        float w = 12 * zoom;
+        Gui.drawLine(Nx - w, Ny, Nx + w, Ny, ColorLib.getMainColor(), 3 * zoom);
+        Gui.drawLine(Nx, Ny - w, Nx, Ny + w, ColorLib.getMainColor(), 3 * zoom);
 
     }
 
@@ -297,11 +299,35 @@ public class TabViewport extends UITab {
                     float dx = startX - mouseX;
                     float dy = startY - mouseY;
                     if (dx * dx + dy * dy < 2) {
-                        String[] nameList = new String[VisualScriptManager.allFunctions.size()];
-                        for (int i = 0; i < nameList.length; i++) {
-                            nameList[i] = VisualScriptManager.allFunctions.get(i).name;
+                        OptionMenu.TxtRun[] array = new OptionMenu.TxtRun[VisualScriptManager.allFunctions.size()];
+
+                        int index = 0;
+                        for (Function f : VisualScriptManager.allFunctions) {
+                            OptionMenu.TxtRun run = new OptionMenu.TxtRun(f.name) {
+                                @Override
+                                protected void run() {
+                                    Module mod = TheEditor.activeMod;
+                                    if (mod != null) {
+                                        Canvas tab = mod.getTab();
+                                        if (tab != null) {
+                                            Function func = VisualScriptManager.getFromList(f.name, "");
+                                            if (func != null) {
+                                                Vector3d toWorld = TheEditor.viewport.screenToWorld(TheEditor.viewport.parent.width / 2,
+                                                        TheEditor.viewport.parent.height / 2);
+
+                                                tab.addFunction(func, (float) toWorld.x, (float) toWorld.y);
+                                            } else {
+                                                Util.print("Error at loading a new Function");
+                                            }
+                                        }
+                                    }
+                                }
+                            };
+                            array[index] = run;
+                            index += 1;
                         }
-                        showMenu(0, mouseX, mouseY, nameList);
+
+                        showMenu(0, mouseX, mouseY, array);
                     }
                 }
 
@@ -313,27 +339,6 @@ public class TabViewport extends UITab {
 
     }
 
-    @Override
-    public void optionsSelected(int id, int option) {
-
-        Module mod = TheEditor.activeMod;
-        if (mod != null) {
-            Canvas tab = mod.getTab();
-            if (tab != null) {
-                Function func = VisualScriptManager.getFromList(VisualScriptManager.allFunctions.get(option).name, "");
-                if (func != null) {
-                    Vector3d toWorld = TheEditor.viewport.screenToWorld(TheEditor.viewport.parent.width / 2,
-                            TheEditor.viewport.parent.height / 2);
-
-                    tab.addFunction(func, (float) toWorld.x, (float) toWorld.y);
-                } else {
-                    Util.print("Error at loading a new Function");
-                }
-            }
-        }
-
-        super.optionsSelected(id, option);
-    }
 
     Vector3d screenToWorld(float x, float y) {
 

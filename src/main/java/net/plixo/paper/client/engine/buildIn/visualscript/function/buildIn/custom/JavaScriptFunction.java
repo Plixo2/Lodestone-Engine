@@ -2,6 +2,7 @@ package net.plixo.paper.client.engine.buildIn.visualscript.function.buildIn.cust
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import net.plixo.paper.Lodestone;
+import net.plixo.paper.client.engine.buildIn.visualscript.function.other.Connection;
 import net.plixo.paper.client.engine.buildIn.visualscript.function.other.Execute;
 import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
 import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
@@ -34,7 +35,6 @@ public class JavaScriptFunction extends Execute {
     @Override
     public void execute() {
 
-
         if (isFull()) {
 
             try {
@@ -62,14 +62,12 @@ public class JavaScriptFunction extends Execute {
             } catch (Exception e) {
                 Util.print(e.getMessage());
             }
-        } else {
-
         }
     }
 
 
     public boolean isFull() {
-        for (net.plixo.paper.client.engine.buildIn.visualscript.function.other.Connection input : inputs) {
+        for (Connection input : inputs) {
             if (input == null) {
                 return false;
             }

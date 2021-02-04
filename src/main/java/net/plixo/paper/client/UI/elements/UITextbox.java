@@ -23,7 +23,7 @@ public class UITextbox extends UIElement {
 
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, ColorLib.getBackground(0.3f));
 
-        int color = ColorLib.interpolateColor(0x00000000, 0x23000000, hoverProgress / 100f);
+        int color = ColorLib.interpolateColorAlpha(0x00000000, 0x23000000, hoverProgress / 100f);
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, color);
         Gui.drawLinedRoundedRect(x, y, x + width, y + height, roundness, ColorLib.utilLines(), 1);
 

@@ -117,10 +117,6 @@ public class FileIcon extends Rect {
     }
 
     void drawText(String toDraw, float maxWidth) {
-
-
-
-
         String name = FilenameUtils.removeExtension(toDraw);
         String in = name;
         String extension = FilenameUtils.getExtension(toDraw);
@@ -130,10 +126,10 @@ public class FileIcon extends Rect {
         if(!name.equals(in)) {
             name += "...";
         }
-        Gui.drawCenteredStringWithShadow(name, (x + width / 2), (this.y + this.height),
+        Gui.drawCenteredString(name, (x + width / 2), (this.y + this.height),
                 -1);
         if(!extension.isEmpty())
-        Gui.drawCenteredStringWithShadow("."+extension, (x + width / 2), (this.y + this.height + 10),
+        Gui.drawCenteredString("."+extension, (x + width / 2), (this.y + this.height + 10),
                 -1);
 
 

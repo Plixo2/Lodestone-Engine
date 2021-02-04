@@ -1,7 +1,10 @@
 package net.plixo.paper.client.editor.ui.other;
 
 
+import net.plixo.paper.client.UI.IGuiEvent;
 import net.plixo.paper.client.UI.UITab;
+import net.plixo.paper.client.UI.elements.UIButton;
+import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.visualscript.Rect;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
@@ -10,59 +13,64 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 
 
-public class OptionMenu {
+public class OptionMenu implements IGuiEvent {
 
     public int id;
-    public String[] options;
-    ArrayList<Rect> rects = new ArrayList<>();
-    public UITab tab;
+    UICanvas canvas;
+    public TxtRun[] runnables;
 
     float x, y;
 
-    public OptionMenu(int id, UITab tab, float x, float y, String... options) {
-        int index = 0;
-        this.tab = tab;
+    public OptionMenu(int id,float x, float y, TxtRun... options) {
         this.x = x;
         this.y = y;
         this.id = id;
         float width = 0;
-        this.options = options;
-        for (String str : options) {
-            float w = Gui.getStringWidth(str);
+        for (TxtRun str : options) {
+            float w = Gui.getStringWidth(str.txt);
             if (w > width) {
                 width = w;
             }
         }
-        rects.clear();
-        for (String str : options) {
-            Rect rect = new Rect(0, index * 12, width + 5, 12, ColorLib.getBackground(0.4f), ColorLib.getBackground(0.3f));
-            rect.roundness = 0;
-            rect.setTxt(str, Rect.Alignment.LEFT);
-            rects.add(rect);
-            index += 1;
-        }
-    }
+        width += 5;
+        canvas = new UICanvas(0);
+        canvas.setDimensions(x-5, y-5, width+10, (options.length * 12)+10);
+        canvas.setRoundness(3);
+        canvas.setColor(ColorLib.getBackground(-0.1f));
 
-    public void draw(float mouseX, float mouseY) {
-        GL11.glTranslated(x, y, 0);
-        mouseX -= x;
-        mouseY -= y;
-        for (Rect r : rects) {
-            r.draw(mouseX, mouseY);
-        }
-        GL11.glTranslated(-x, -y, 0);
-    }
-
-    public int getIndex(float mouseX, float mouseY, int mouseButton) {
-        mouseX -= x;
-        mouseY -= y;
         int index = 0;
-        for (Rect r : rects) {
-            if (r.mouseInside(mouseX, mouseY, mouseButton)) {
-                return index;
-            }
+        for (TxtRun str : options) {
+            UIButton button = new UIButton(index) {
+                @Override
+                public void actionPerformed() {
+                   str.run();
+                }
+            };
+            button.setDimensions(5,5+(index*12),width,12);
+            button.setRoundness(0);
+            button.setDisplayName(str.txt);
+            button.setColor(ColorLib.getBackground(0.1f));
             index += 1;
+            canvas.add(button);
         }
-        return -1;
+    }
+
+    @Override
+    public void drawScreen(float mouseX, float mouseY) {
+        canvas.draw(mouseX,mouseY);
+    }
+
+    @Override
+    public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
+        canvas.mouseClicked(mouseX,mouseY,mouseButton);
+    }
+
+    public abstract static class TxtRun {
+        String txt;
+        public TxtRun(String txt) {
+            this.txt = txt;
+        }
+        protected abstract void run();
+
     }
 }

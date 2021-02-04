@@ -5,6 +5,7 @@ import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.UI.elements.UIButton;
 import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.TheEditor;
+import net.plixo.paper.client.editor.ui.other.OptionMenu;
 import net.plixo.paper.client.engine.TheManager;
 import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.util.ColorLib;
@@ -63,7 +64,7 @@ public class TabExplorer extends UITab {
             };
             button.setDimensions(0,y, parent.width,20);
             button.setDisplayName(obj.name);
-            button.setRoundness(0);
+            button.setRoundness(2);
             button.setColor(0);
 
             canvas.add(button);
@@ -80,18 +81,18 @@ public class TabExplorer extends UITab {
         canvas.mouseClicked(mouseX,mouseY,mouseButton);
 
         if (mouseButton == 1 && parent.isMouseInside(mouseX,mouseY)) {
-            showMenu(0, mouseX, mouseY, "New Entity");
+            OptionMenu.TxtRun run = new OptionMenu.TxtRun("New Entity") {
+                @Override
+                protected void run() {
+                    GameObject entity = new GameObject("NewEntity" + TheManager.allEntities.size());
+                    TheManager.addEntity(entity);
+                    init();
+                }
+            };
+            showMenu(0, mouseX, mouseY, run);
         }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-    @Override
-    public void optionsSelected(int id, int option) {
-        if (id == 0 && option == 0 && !Lodestone.paperEngine.isRunning) {
-            GameObject entity = new GameObject("NewEntity" + TheManager.allEntities.size());
-            TheManager.addEntity(entity);
-            init();
-        }
-        super.optionsSelected(id, option);
-    }
+
 }

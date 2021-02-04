@@ -37,15 +37,13 @@ public class UITab implements IGuiEvent {
         parent.menu = null;
     }
 
-    public void optionsSelected(int id, int option) {
-    }
 
     void setParent(TabbedUI parent) {
         this.parent = parent;
     }
 
-    public void showMenu(int id, float x, float y, String... options) {
-        parent.menu = new OptionMenu(id, this, x, y, options);
+    public void showMenu(int id, float x, float y, OptionMenu.TxtRun... options) {
+        parent.menu = new OptionMenu(id, x, y, options);
     }
 
 

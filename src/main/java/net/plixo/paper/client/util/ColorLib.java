@@ -66,6 +66,22 @@ public class ColorLib {
                 (int) ((g2 - g1) * fraction + g1) << 8 |
                 (int) ((b2 - b1) * fraction + b1);
     }
+    public static int interpolateColorAlpha(int color1, int color2, float fraction) {
+
+        int a1 = (color1 >> 24) & 0xff;
+        int a2 = (color2 >> 24) & 0xff;
+        int r1 = (color1 >> 16) & 0xff;
+        int r2 = (color2 >> 16) & 0xff;
+        int g1 = (color1 >> 8) & 0xff;
+        int g2 = (color2 >> 8) & 0xff;
+        int b1 = color1 & 0xff;
+        int b2 = color2 & 0xff;
+
+        return  (int) ((a2 - a1) * fraction + a1) << 24 |
+                (int) ((r2 - r1) * fraction + r1) << 16 |
+                (int) ((g2 - g1) * fraction + g1) << 8 |
+                (int) ((b2 - b1) * fraction + b1);
+    }
 
 
 }

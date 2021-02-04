@@ -67,7 +67,7 @@ public class TabbedUI implements IGuiEvent {
 
 
         if (menu != null) {
-            menu.draw(mouseX, mouseY);
+            menu.drawScreen(mouseX, mouseY);
         }
 
     }
@@ -80,6 +80,7 @@ public class TabbedUI implements IGuiEvent {
     public UITab getHoveredHead(float mouseX, float mouseY) {
         for (UITab tab : tabs) {
             if (tab.head.mouseInside(mouseX, mouseY, -1)) {
+                menu = null;
                 return tab;
             }
         }
@@ -103,7 +104,9 @@ public class TabbedUI implements IGuiEvent {
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-        optionsSelected(mouseX, mouseY, mouseButton);
+        if (menu != null) {
+            menu.mouseClicked(mouseX,mouseY,mouseButton);
+        }
         tabs.get(selectedIndex).mouseClicked(mouseX, mouseY, mouseButton);
     }
 
@@ -112,16 +115,6 @@ public class TabbedUI implements IGuiEvent {
         tabs.get(selectedIndex).mouseReleased(mouseX, mouseY, state);
     }
 
-    public void optionsSelected(float mouseX, float mouseY, int mouseButton) {
-
-        UITab tab = tabs.get(selectedIndex);
-        if (menu != null && tab == menu.tab) {
-
-            int index = menu.getIndex(mouseX, mouseY, mouseButton);
-            if (index >= 0)
-                tab.optionsSelected(menu.id, index);
-        }
-    }
 
     @Override
     public void onTick() {

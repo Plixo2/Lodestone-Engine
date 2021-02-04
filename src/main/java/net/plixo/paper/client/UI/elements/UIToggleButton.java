@@ -32,7 +32,7 @@ public class UIToggleButton extends UIElement {
             Gui.drawLinedRoundedRect(x, y, x + width, y + height, roundness, -1, 1);
         }
 
-        @SuppressWarnings("unused") int color = ColorLib.interpolateColor(0x00000000, 0x33000000, hoverProgress / 100f);
+        @SuppressWarnings("unused") int color = ColorLib.interpolateColorAlpha(0x00000000, 0x33000000, hoverProgress / 100f);
 
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, BColor);
 
