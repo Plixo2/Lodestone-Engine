@@ -1,6 +1,8 @@
 package net.plixo.paper.client.engine.ecs;
 
 import com.google.gson.JsonObject;
+import net.minecraft.util.math.vector.Vector3d;
+import net.plixo.paper.client.util.Util;
 
 import java.io.File;
 
@@ -32,8 +34,11 @@ public class Resource {
             setValue(Integer.valueOf(str));
         } else if (isString()) {
             setValue(str);
+        }else if (isVector()) {
+            setValue(Util.getVecFromString(str));
         }
     }
+
 
     public boolean getAsBoolean() {
         if (!hasValue()) {
@@ -69,6 +74,12 @@ public class Resource {
         }
         return (String) value;
     }
+    public Vector3d getAsVector() {
+        if (!hasValue()) {
+            return new Vector3d(0,0,0);
+        }
+        return (Vector3d) value;
+    }
 
     public boolean hasValue() {
         return value != null;
@@ -94,9 +105,12 @@ public class Resource {
         return clazz == String.class;
     }
 
+    public boolean isVector() {
+        return clazz == Vector3d.class;
+    }
+
     public JsonObject serialize() {
         JsonObject obj = new JsonObject();
-        //obj.addProperty("Class", clazz.toString());
         obj.addProperty("Value", toTxt());
         return obj;
     }
@@ -119,6 +133,9 @@ public class Resource {
             return getAsInteger() + "";
         } else if (isString()) {
             return getAsString();
+        } else if (isVector()) {
+
+            return   Util.getStringFromVector(getAsVector());
         }
         return "";
     }

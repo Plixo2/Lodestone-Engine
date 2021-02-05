@@ -51,6 +51,12 @@ public class UIFileChooser extends UIMultiButton {
     }
 
     @Override
+    public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
+        Util.print("Open");
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+    }
+
+    @Override
     public void otherButton(int id) {
 
         if (lastFrame != null && lastFrame.isVisible()) {
@@ -65,11 +71,13 @@ public class UIFileChooser extends UIMultiButton {
         FileNameExtensionFilter Hud = new FileNameExtensionFilter("Hud", SaveUtil.FileFormat.Hud.format);
         FileNameExtensionFilter other = new FileNameExtensionFilter("JSON", SaveUtil.FileFormat.Other.format);
         FileNameExtensionFilter Visual = new FileNameExtensionFilter("VisualScript", SaveUtil.FileFormat.VisualScript.format);
+        FileNameExtensionFilter Model = new FileNameExtensionFilter("Model", SaveUtil.FileFormat.Model.format);
 
         chooser.addChoosableFileFilter(Code);
         chooser.addChoosableFileFilter(Hud);
         chooser.addChoosableFileFilter(other);
         chooser.addChoosableFileFilter(Visual);
+        chooser.addChoosableFileFilter(Model);
 
         chooser.setCurrentDirectory(SaveUtil.getFolderFromName(""));
         frame.add(chooser, BorderLayout.CENTER);
@@ -103,7 +111,6 @@ public class UIFileChooser extends UIMultiButton {
 
     @Override
     public void setDimensions(float x, float y, float width, float height) {
-		//noinspection SuspiciousNameCombination
 		others[0].setDimensions(width - height, 0, height, height);
         super.setDimensions(x, y, width, height);
     }

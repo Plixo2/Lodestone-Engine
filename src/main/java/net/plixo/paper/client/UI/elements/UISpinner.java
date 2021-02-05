@@ -82,7 +82,6 @@ public class UISpinner extends UIMultiButton {
 
     @Override
     public void otherButton(int id) {
-
         if (id == 0) {
             setNumber(getNumber() + 1);
         } else {

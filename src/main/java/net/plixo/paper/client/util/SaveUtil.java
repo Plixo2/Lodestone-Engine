@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class SaveUtil {
 
     public enum FileFormat {
-        Code("js"), Hud("hud"), Other("json"), VisualScript("vs");
+        Code("js"), Hud("hud"), Other("json"), VisualScript("vs") , Model("obj");
 
         public String format;
 

@@ -1,5 +1,6 @@
 package net.plixo.paper.client.editor.ui.other;
 
+import java.awt.*;
 import java.io.File;
 
 import net.plixo.paper.client.editor.visualscript.Rect;
@@ -8,6 +9,7 @@ import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.Util;
 import org.apache.commons.io.FilenameUtils;
+import org.lwjgl.opengl.GL11;
 
 public class FileIcon extends Rect {
 
@@ -99,6 +101,20 @@ public class FileIcon extends Rect {
                 time = time % 180;
 
                 Gui.drawCircle(x + width / 2, y + height / 2 + 5, 4, -1, 0, (int) time);
+
+            } else if (extenstion.equals(SaveUtil.FileFormat.Model.format)) {
+
+
+                GL11.glPushMatrix();
+                GL11.glTranslated(x+width/2 , y +height/2 + 5,0);
+                long rot = System.currentTimeMillis() / 10;
+                rot = rot % 360;
+                Gui.drawRect(-5,-5,5,5 , Color.HSBtoRGB(rot/360f,1,1));
+                GL11.glRotated(rot,Math.sin(Math.toRadians(rot)),0,1);
+                Gui.drawRect(-5,-5,5,5 , -1);
+
+
+                GL11.glPopMatrix();
 
             } else if (extenstion.equals(SaveUtil.FileFormat.Other.format)) {
 

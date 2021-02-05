@@ -9,12 +9,13 @@ import org.lwjgl.opengl.GL11;
 public abstract class UIMultiButton extends UIElement {
 
 
-    UIButton[] others;
+    UIElement[] others;
 
-    public UIMultiButton(int id, UIButton... others) {
+    public UIMultiButton(int id, UIElement... others) {
         super(id);
         this.others = others;
     }
+
 
     @Override
     public void draw(float mouseX, float mouseY) {
@@ -24,7 +25,7 @@ public abstract class UIMultiButton extends UIElement {
         super.draw(mouseX, mouseY);
         GL11.glPushMatrix();
         GL11.glTranslated(x, y, 0);
-        for (UIButton button : others) {
+        for (UIElement button : others) {
             button.draw(mouseX - x, mouseY - y);
         }
         GL11.glPopMatrix();
@@ -38,7 +39,7 @@ public abstract class UIMultiButton extends UIElement {
             return false;
         }
 
-        for (UIButton button : others) {
+        for (UIElement button : others) {
             if (button.hovered(mouseX - x, mouseY - y)) {
                 return false;
             }
@@ -50,7 +51,7 @@ public abstract class UIMultiButton extends UIElement {
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
 
-        for (UIButton button : others) {
+        for (UIElement button : others) {
             button.mouseClicked(mouseX - x, mouseY - y, mouseButton);
             if (button.hovered(mouseX - x, mouseY - y)) {
                 otherButton(button.getId());

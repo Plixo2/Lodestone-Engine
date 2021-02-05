@@ -102,6 +102,13 @@ public class TabFiles extends UITab {
                                 openVs(file);
                             }
                         };
+                    } else if (extenstion.equals(SaveUtil.FileFormat.Model.format)) {
+                        open = new OptionMenu.TxtRun("View") {
+                            @Override
+                            public void run() {
+                                TheEditor.modelViewer.initViewer(file);
+                            }
+                        };
                     }
                     OptionMenu.TxtRun edit = new OptionMenu.TxtRun("Edit") {
                         @Override
@@ -144,7 +151,12 @@ public class TabFiles extends UITab {
         }
 
         if (parent.isMouseInside(mouseX, mouseY) && mouseButton == 1) {
-        showMenu(0, mouseX, mouseY, newRunnable(SaveUtil.FileFormat.Code), newRunnable(SaveUtil.FileFormat.VisualScript), newRunnable(SaveUtil.FileFormat.Hud), newRunnable(SaveUtil.FileFormat.Other));
+            showMenu(0, mouseX, mouseY,
+                    newRunnable(SaveUtil.FileFormat.Code),
+                    newRunnable(SaveUtil.FileFormat.VisualScript),
+                    newRunnable(SaveUtil.FileFormat.Hud),
+                    newRunnable(SaveUtil.FileFormat.Other),
+                    newRunnable(SaveUtil.FileFormat.Model));
         }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }

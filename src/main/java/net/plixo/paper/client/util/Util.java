@@ -141,5 +141,25 @@ public class Util {
         return str;
     }
 
-
+    public static Vector3d getVecFromString(String str) {
+        if (str.contains(",")) {
+            String[] slits = str.split(",");
+            if (slits.length >= 3) {
+                if (Util.isNumeric(slits[0]) && Util.isNumeric(slits[1]) && Util.isNumeric(slits[2])) {
+                    try {
+                        double arg0 = Double.parseDouble(slits[0]);
+                        double arg1 = Double.parseDouble(slits[1]);
+                        double arg2 = Double.parseDouble(slits[2]);
+                        return new Vector3d(arg0, arg1, arg2);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return new Vector3d(0,0,0);
+    }
+    public static String getStringFromVector(Vector3d vec) {
+        return vec.x + "," + vec.y + "," + vec.z;
+    }
 }

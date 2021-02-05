@@ -20,21 +20,21 @@ public class UIPointNumber extends UIElement {
 
     public UIPointNumber(int id) {
         super(id);
-
+        color = ColorLib.getBackground(0.3f);
     }
 
     @Override
     public void draw(float mouseX, float mouseY) {
 
-        Gui.drawRoundedRect(x, y, x + width, y + height, roundness, ColorLib.getBackground(0.3f));
+        Gui.drawRoundedRect(x, y, x + width, y + height, roundness, color);
 
         int color = ColorLib.interpolateColorAlpha(0x00000000, 0x23000000, hoverProgress / 100f);
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, color);
         Gui.drawLinedRoundedRect(x, y, x + width, y + height, roundness, ColorLib.utilLines(), 1);
 
-        String toDraw = lastComputedValue;
-        toDraw = Util.displayTrim(toDraw, 40);
-        Gui.drawString(toDraw, x + width - Gui.getStringWidth(toDraw), y + height - 4, textColor);
+      //  String toDraw = lastComputedValue;
+     //   toDraw = Util.displayTrim(toDraw, 40);
+      //  Gui.drawString(toDraw, x + width - Gui.getStringWidth(toDraw), y + height - 4, textColor);
 
         long ms = System.currentTimeMillis();
         if (ms - lastComMS > 1000) {

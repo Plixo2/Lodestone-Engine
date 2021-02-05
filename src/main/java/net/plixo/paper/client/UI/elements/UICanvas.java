@@ -1,6 +1,5 @@
 package net.plixo.paper.client.UI.elements;
 
-import net.plixo.paper.client.UI.IAbstractAction;
 import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.util.Gui;
 import org.lwjgl.opengl.GL11;
@@ -11,7 +10,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class UICanvas extends UIElement {
 
 
-    IAbstractAction action;
     CopyOnWriteArrayList<UIElement> elements = new CopyOnWriteArrayList<>();
 
     UIElement lastElement;
@@ -64,9 +62,6 @@ public class UICanvas extends UIElement {
     public void keyTyped(char typedChar, int keyCode) {
         for (UIElement element : elements) {
             element.keyTyped(typedChar, keyCode);
-            if (action != null) {
-                action.run(this.getId(), element.getId(), element);
-            }
         }
         super.keyTyped(typedChar, keyCode);
     }
@@ -75,9 +70,6 @@ public class UICanvas extends UIElement {
     public void keyPressed(int key, int scanCode, int action) {
         for (UIElement element : elements) {
             element.keyPressed(key, scanCode, action);
-            if (this.action != null) {
-                this.action.run(this.getId(), element.getId(), element);
-            }
         }
         super.keyPressed(key, scanCode, action);
     }
@@ -87,30 +79,14 @@ public class UICanvas extends UIElement {
 
         for (UIElement element : elements) {
             element.mouseClicked(mouseX - x, mouseY - y, mouseButton);
-            if (action != null) {
-                action.run(this.getId(), element.getId(), element);
-            }
         }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-    public void setButtonAction(IAbstractAction buttonAction) {
-        this.action = buttonAction;
-    }
-
-
     @Override
     public void update() {
-        ticks += 1;
-        boolean update = ticks > 10;
         for (UIElement element : elements) {
             element.update();
-
-
-            if (update && action != null) {
-                ticks = 0;
-                action.run(this.getId(), element.getId(), element);
-            }
         }
 
 

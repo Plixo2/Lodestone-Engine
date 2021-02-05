@@ -71,7 +71,7 @@ public class Script extends Behavior {
         super.stop();
     }
 
-    @SuppressWarnings("unused")
+
 	public void execute(String name, Variable var) {
         try {
             Invocable invocable = (Invocable) engine;

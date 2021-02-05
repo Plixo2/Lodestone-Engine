@@ -40,6 +40,7 @@ public class EIf extends Execute {
     public void setTypes() {
         this.inputTypes = new VariableType[1];
         this.inputTypes[0] = VariableType.BOOLEAN;
+        this.names = new String[] {"condition"};
         this.size = 2;
         super.setTypes();
     }

@@ -2,6 +2,7 @@ package net.plixo.paper.client.engine;
 
 import com.google.gson.*;
 import net.minecraft.util.math.vector.Vector3d;
+import net.plixo.paper.client.engine.buildIn.mesh.MeshBehavior;
 import net.plixo.paper.client.engine.buildIn.scripting.Script;
 import net.plixo.paper.client.engine.buildIn.visualscript.VisualScript;
 import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
@@ -44,6 +45,7 @@ public class TheManager {
         standardBehavior.clear();
         standardBehavior.add(new Script());
         standardBehavior.add(new VisualScript());
+        standardBehavior.add(new MeshBehavior());
     }
 
     public static void addEntity(GameObject entity) {
@@ -62,10 +64,26 @@ public class TheManager {
     }
 
     public static void load() {
-        loadEntities();
-        loadGlobals();
-        loadResources();
-        loadFunctions();
+        try {
+            loadEntities();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            loadGlobals();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            loadResources();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            loadFunctions();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void loadEntities() {
@@ -85,6 +103,15 @@ public class TheManager {
                     JsonObject customObj = (JsonObject) entity;
                     String name = customObj.get("Entity").getAsString();
                     GameObject e = new GameObject(name);
+
+                    String pos = customObj.get("Position").getAsString();
+                    String size = customObj.get("Scale").getAsString();
+                    String rot = customObj.get("Rotation").getAsString();
+
+                    e.position = Util.getVecFromString(pos);
+                    e.scale = Util.getVecFromString(size);
+                    e.rotation = Util.getVecFromString(rot);
+
                     JsonArray behaviors = customObj.get("Behaviors").getAsJsonArray();
                     for (int j = 0; j < behaviors.size(); j++) {
                         JsonElement behavior = behaviors.get(j);
@@ -264,6 +291,10 @@ public class TheManager {
         for (GameObject var : allEntities) {
             JsonObject custom = new JsonObject();
             custom.addProperty("Entity", var.name);
+
+            custom.addProperty("Position", Util.getStringFromVector(var.position));
+            custom.addProperty("Scale", Util.getStringFromVector(var.scale));
+            custom.addProperty("Rotation", Util.getStringFromVector(var.rotation));
 
             JsonArray behaviors = new JsonArray();
             for (Behavior behavior : var.components) {

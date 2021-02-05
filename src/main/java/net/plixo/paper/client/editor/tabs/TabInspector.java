@@ -2,7 +2,7 @@ package net.plixo.paper.client.editor.tabs;
 
 
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.UI.IAbstractAction;
+import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.UI.elements.*;
@@ -15,13 +15,13 @@ import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.KeyboardUtil;
+import net.plixo.paper.client.util.Util;
 import org.lwjgl.glfw.GLFW;
 
 public class TabInspector extends UITab {
 
     GameObject lastEntity;
     UICanvas UI;
-    float yStart = 0;
 
     public TabInspector(int id) {
         super(id, "Inspector");
@@ -30,11 +30,7 @@ public class TabInspector extends UITab {
 
     @Override
     public void drawScreen(float mouseX, float mouseY) {
-
-
         UI.draw(mouseX, mouseY);
-
-//        drawOutline();
     }
 
     @Override
@@ -52,125 +48,176 @@ public class TabInspector extends UITab {
         try {
             UI.clear();
 
-            UI.add(new UITextbox(-1) {
+            UITextbox nameField = new UITextbox(-1) {
                 @Override
                 public void textFieldChanged() {
                     entity.name = getText();
                     TheEditor.initTab(TheEditor.explorer);
                     super.textFieldChanged();
                 }
-            });
+            };
+            UI.add(nameField);
 
-            UI.getLast().setDimensions(0, 0, parent.width, 20);
-            UI.getLast().setRoundness(0);
-            ((UITextbox) UI.getLast()).setText(entity.name);
+            nameField.setDimensions(0, 0, parent.width, 20);
+            nameField.setRoundness(0);
+            nameField.setText(entity.name);
 
-            float y = 20;
-            int behaviorIndex = 0;
+
+            int yBe = 20;
+
+
+            UIVector pos = new UIVector(0) {
+                @Override
+                public void update() {
+                    entity.position = getAsVector();
+                    super.update();
+                }
+            };
+            pos.setDimensions(0, yBe, parent.width, 20);
+            pos.setVector(entity.position);
+            pos.setDisplayName("Position");
+
+
+            yBe += 20;
+
+            UIVector scale = new UIVector(0) {
+                @Override
+                public void update() {
+                    entity.scale = getAsVector();
+                    super.update();
+                }
+            };
+            scale.setDimensions(0, yBe, parent.width, 20);
+            scale.setVector(entity.scale);
+            scale.setDisplayName("Scale");
+            yBe += 20;
+
+            UIVector rot = new UIVector(0) {
+                @Override
+                public void update() {
+                    entity.rotation = getAsVector();
+                    super.update();
+                }
+            };
+            rot.setDimensions(0, yBe, parent.width, 20);
+            rot.setVector(entity.rotation);
+            rot.setDisplayName("Rotation");
+            yBe += 20;
+
+            UI.add(pos);
+            UI.add(scale);
+            UI.add(rot);
+
+
             for (Behavior b : entity.components) {
 
-                // BehaviorCanvas
-                UICanvas EntityCanvas = new UICanvas(behaviorIndex);
-                EntityCanvas.setRoundness(0);
-                EntityCanvas.setColor(0);
-
-                // Head
-                EntityCanvas.add(new UIHead(-(1 + behaviorIndex)) {
+                UICanvas behaviorCanvas = new UICanvas(0) {
                     @Override
                     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-                        super.mouseClicked(mouseX, mouseY, mouseButton);
-
                         if (hovered(mouseX, mouseY) && !Lodestone.paperEngine.isRunning && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
                             entity.components.remove(b);
                             init();
                             initInspector(lastEntity);
-                            //	entity.components.get(index);
+                        } else {
+                            super.mouseClicked(mouseX,mouseY,mouseButton);
                         }
-                        //showMenu(id, EntityCanvas.getX()+mouseX, EntityCanvas.getY()+mouseY, "Remove");
                     }
+                };
+                behaviorCanvas.setRoundness(0);
+                behaviorCanvas.setColor(0);
 
+
+                UIHead head = new UIHead(0) {
                     @Override
                     public void drawStringCentered() {
                         if (displayName != null) {
                             Gui.drawStringWithShadow("-" + displayName, x + 5, y + height / 2, textColor);
                         }
-                    }
-                });
-                EntityCanvas.getLast().setDimensions(0, 0, parent.width - 10, 20);
-                EntityCanvas.getLast().setDisplayName(b.name);
 
-                float cY = 20;
-                int Resindex = 0;
-                for (Resource res : b.serializable) {
-                    if (res.isFile()) {
-                        EntityCanvas.add(new UIFileChooser(Resindex));
-                        EntityCanvas.getLast().setDimensions(2, cY, parent.width - 4, 20);
-                        ((UIFileChooser) EntityCanvas.getLast()).setFile(res.getAsFile());
-                    } else if (res.isInteger()) {
-                        EntityCanvas.add(new UISpinner(Resindex));
-                        EntityCanvas.getLast().setDimensions(2, cY, parent.width - 4, 20);
-                        ((UISpinner) EntityCanvas.getLast()).setNumber(res.getAsInteger());
-                    } else if (res.isBoolean()) {
-                        EntityCanvas.add(new UIToggleButton(Resindex));
-                        EntityCanvas.getLast().setDimensions(2, cY, parent.width - 4, 20);
-                        ((UIToggleButton) EntityCanvas.getLast()).setState(res.getAsBoolean());
-                        ((UIToggleButton) EntityCanvas.getLast()).setYesNo("True", "False");
-                    } else if (res.isString()) {
-                        EntityCanvas.add(new UITextbox(Resindex));
-                        EntityCanvas.getLast().setDimensions(2, cY, parent.width - 4, 20);
-                        ((UITextbox) EntityCanvas.getLast()).setText(res.getAsString());
-                    } else if (res.isFloat()) {
-                        EntityCanvas.add(new UIPointNumber(Resindex));
-                        EntityCanvas.getLast().setDimensions(2, cY, parent.width - 4, 20);
-                        ((UIPointNumber) EntityCanvas.getLast()).setValue(res.getAsFloat());
-                    } else {
-                        EntityCanvas.add(new UIHead(Resindex));
-                        EntityCanvas.getLast().setDimensions(2, cY, parent.width - 4, 20);
-                    }
-                    EntityCanvas.getLast().setDisplayName(res.name);
-
-                    cY += 22;
-                    Resindex += 1;
-                }
-
-                IAbstractAction execution = (int parent, int id, Object element) -> {
-                    if (parent >= 0 && parent < entity.components.size()) {
-                        if (id >= 0) {
-                            Behavior behavior = entity.components.get(parent);
-                            if (behavior != null && id < behavior.serializable.length) {
-                                Resource res = behavior.serializable[id];
-                                if (res.isFile()) {
-                                    UIFileChooser el = (UIFileChooser) element;
-                                    res.setValue(el.getFile());
-                                } else if (res.isInteger()) {
-                                    UISpinner el = (UISpinner) element;
-                                    res.setValue(el.getNumber());
-                                } else if (res.isBoolean()) {
-                                    UIToggleButton el = (UIToggleButton) element;
-                                    res.setValue(el.getState());
-                                } else if (res.isString()) {
-                                    UITextbox el = (UITextbox) element;
-                                    res.setValue(el.getText());
-                                } else if (res.isFloat()) {
-                                    UIPointNumber el = (UIPointNumber) element;
-                                    res.setValue((float) el.getAsDouble());
-                                } else {
-                                    System.out.println("Wrong Type");
-                                }
-                            }
-                        }
                     }
                 };
+                head.setDimensions(0, 0, parent.width - 10, 20);
+                head.setDisplayName(b.name);
+                behaviorCanvas.add(head);
 
-                // for height
-                EntityCanvas.setDimensions(0, y, parent.width, cY + 5);
 
-                EntityCanvas.setButtonAction(execution);
+                int yRes = 20;
+                for (Resource res : b.serializable) {
+                    UIElement element = null;
+                    if (res.isFile()) {
+                        UIFileChooser chooser = new UIFileChooser(0) {
+                            @Override
+                            public void update() {
+                                res.setValue(getFile());
+                                super.update();
+                            }
+                        };
+                        chooser.setFile(res.getAsFile());
+                        element = chooser;
+                    } else if (res.isInteger()) {
+                        UISpinner spinner = new UISpinner(0) {
+                            @Override
+                            public void update() {
+                                res.setValue(getNumber());
+                                super.update();
+                            }
+                        };
+                        element = spinner;
+                        spinner.setNumber(res.getAsInteger());
+                    } else if (res.isBoolean()) {
+                        UIToggleButton toggleButton = new UIToggleButton(0) {
+                            @Override
+                            public void update() {
+                                res.setValue(getState());
+                                super.update();
+                            }
+                        };
+                        element = toggleButton;
+                        toggleButton.setYesNo("True", "False");
+                        toggleButton.setState(res.getAsBoolean());
+                    } else if (res.isString()) {
+                        UITextbox txt = new UITextbox(0) {
+                            @Override
+                            public void update() {
+                                res.setValue(getText());
+                                super.update();
+                            }
+                        };
+                        element = txt;
+                        txt.setText(res.getAsString());
+                    } else if (res.isFloat()) {
+                        UIPointNumber number = new UIPointNumber(0) {
+                            @Override
+                            public void update() {
+                                res.setValue(getAsDouble());
+                                super.update();
+                            }
+                        };
+                        element = number;
+                        number.setValue(res.getAsFloat());
+                    } else if (res.isVector()) {
+                        UIVector vec = new UIVector(0) {
+                            @Override
+                            public void update() {
+                                res.setValue(getAsVector());
+                                super.update();
+                            }
+                        };
+                        element = vec;
+                        vec.setVector(res.getAsVector());
+                    }
 
-                UI.add(EntityCanvas);
-                y += cY + 7;
-                behaviorIndex += 1;
+                    element.setDimensions(2, yRes, parent.width - 4, 20);
+                    element.setDisplayName(res.name);
+                    behaviorCanvas.add(element);
+                    yRes += 22;
+                }
+
+                behaviorCanvas.setDimensions(0, yBe, parent.width, yRes);
+                UI.add(behaviorCanvas);
+                yBe += yRes + 7;
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -205,14 +252,11 @@ public class TabInspector extends UITab {
                     @Override
                     protected void run() {
                         Behavior instance = TheManager.newInstanceByName(b.name);
-                        if (instance == null) {
-                            System.out.println("Error!!!");
-                            return;
-                        }
-                        if (lastEntity != null) {
+                        if (instance != null && lastEntity != null) {
                             lastEntity.addBehavior(instance);
                             initInspector(lastEntity);
                         }
+
                     }
                 };
                 array[index] = run;
