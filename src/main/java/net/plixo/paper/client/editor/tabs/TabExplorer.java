@@ -1,7 +1,10 @@
 package net.plixo.paper.client.editor.tabs;
 
+import net.minecraft.util.math.vector.Vector3d;
 import net.plixo.paper.Lodestone;
+import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.UI.UITab;
+import net.plixo.paper.client.UI.elements.UIArray;
 import net.plixo.paper.client.UI.elements.UIButton;
 import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.TheEditor;
@@ -11,14 +14,14 @@ import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.KeyboardUtil;
+import net.plixo.paper.client.util.MouseUtil;
 import org.lwjgl.glfw.GLFW;
 
 
 public class TabExplorer extends UITab {
 
 
-
-    UICanvas canvas;
+    UIArray canvas;
 
     GameObject selectedEntity;
 
@@ -27,23 +30,51 @@ public class TabExplorer extends UITab {
         TheEditor.explorer = this;
     }
 
+
     @Override
     public void drawScreen(float mouseX, float mouseY) {
 
         Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.2f));
 
-        canvas.draw(mouseX,mouseY);
+        canvas.draw(mouseX, mouseY);
 
-     //  drawOutline();
     }
 
     @Override
     public void init() {
+        canvas = new UIArray(0) {
+            @Override
+            public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
 
-        canvas = new UICanvas(0);
+                for (UIElement element : elements) {
+                    if(element.hovered(mouseX-x,mouseY-y)) {
+                        super.mouseClicked(mouseX, mouseY, mouseButton);
+                        return;
+                    }
+                }
 
-        int y = 0;
-        for(GameObject obj : TheManager.allEntities) {
+                if(mouseButton == 1 && hovered(mouseX,mouseY)) {
+                    OptionMenu.TxtRun run = new OptionMenu.TxtRun("New Entity") {
+                        @Override
+                        protected void run() {
+                            GameObject entity = new GameObject("NewEntity" + TheManager.allEntities.size());
+                            TheManager.addEntity(entity);
+                            reCalc();
+                        }
+                    };
+                    showMenu(0, mouseX, mouseY, run);
+                }
+            }
+        };
+        canvas.setDimensions(0, 0, parent.width, parent.height);
+        canvas.setRoundness(0);
+        reCalc();
+        super.init();
+    }
+
+    void reCalc() {
+        canvas.clear();
+        for (GameObject obj : TheManager.allEntities) {
             UIButton button = new UIButton(0) {
                 @Override
                 public void drawStringCentered(float mouseX, float mouseY) {
@@ -54,43 +85,42 @@ public class TabExplorer extends UITab {
 
                 @Override
                 public void actionPerformed() {
-                    if(KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
-                        TheManager.allEntities.remove(obj);
-                        init();
-                        return;
-                    }
                     TheEditor.inspector.initInspector(obj);
                 }
-            };
-            button.setDimensions(0,y, parent.width,20);
-            button.setDisplayName(obj.name);
-            button.setRoundness(2);
-            button.setColor(0);
 
+                @Override
+                public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
+                    if(mouseButton == 1 && hovered(mouseX,mouseY)) {
+                        UIButton b = this;
+                        OptionMenu.TxtRun run = new OptionMenu.TxtRun("Delete") {
+                            @Override
+                            protected void run() {
+                                TheManager.allEntities.remove(obj);
+                                canvas.remove(b);
+                                TheEditor.inspector.initInspector(null);
+                            }
+                        };
+                        showMenu(0, mouseX, mouseY, run);
+                        return;
+                    }
+                    super.mouseClicked(mouseX, mouseY, mouseButton);
+                }
+            };
+            button.setDisplayName(obj.name);
+            button.setRoundness(3);
+            button.setColor(0);
             canvas.add(button);
-             y+= 20;
         }
 
-
-            super.init();
     }
+
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
         hideMenu();
-        canvas.mouseClicked(mouseX,mouseY,mouseButton);
+        canvas.mouseClicked(mouseX, mouseY, mouseButton);
 
-        if (mouseButton == 1 && parent.isMouseInside(mouseX,mouseY)) {
-            OptionMenu.TxtRun run = new OptionMenu.TxtRun("New Entity") {
-                @Override
-                protected void run() {
-                    GameObject entity = new GameObject("NewEntity" + TheManager.allEntities.size());
-                    TheManager.addEntity(entity);
-                    init();
-                }
-            };
-            showMenu(0, mouseX, mouseY, run);
-        }
+
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 

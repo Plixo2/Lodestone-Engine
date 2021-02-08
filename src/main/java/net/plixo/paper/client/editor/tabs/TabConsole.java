@@ -15,14 +15,15 @@ public class TabConsole extends UITab {
 
     public static class ConsoleLine {
         public String line;
-        long timeMS;
+        public String time;
 
         public ConsoleLine(String line) {
             this.line = line;
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-            this.line = formatter.format(calendar.getTime()) + (":" + System.currentTimeMillis() % 1000) + " " + line;
-            timeMS = System.currentTimeMillis();
+            this.line =  line;
+            time = formatter.format(calendar.getTime());
+
         }
     }
 
@@ -45,14 +46,14 @@ public class TabConsole extends UITab {
         if (aw > parent.height) {
             y = 10 + (-(aw - (parent.height - 5))) * zoom;
         }
-        int index = 0;
 
         for (int i = 0; i < size; i++) {
-            index = i;
             if (i < consoleLines.size()) {
                 ConsoleLine line = consoleLines.get(i);
                 if (line != null && line.line != null) {
                     Gui.drawString("" + line.line, 8, y, -1);
+                    float strWidth = Gui.getStringWidth(line.time);
+                    Gui.drawString(line.time, parent.width-strWidth-5 , y , ColorLib.yellow());
                 }
             }
 

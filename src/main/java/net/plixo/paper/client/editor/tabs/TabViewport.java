@@ -8,9 +8,9 @@ import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.ui.other.OptionMenu;
 import net.plixo.paper.client.editor.visualscript.Canvas;
 import net.plixo.paper.client.editor.visualscript.Rect;
-import net.plixo.paper.client.engine.buildIn.visualscript.VisualScriptManager;
-import net.plixo.paper.client.engine.buildIn.visualscript.Module;
-import net.plixo.paper.client.engine.buildIn.visualscript.function.Function;
+import net.plixo.paper.client.engine.components.visualscript.VisualScriptManager;
+import net.plixo.paper.client.engine.components.visualscript.Module;
+import net.plixo.paper.client.engine.components.visualscript.function.Function;
 import net.plixo.paper.client.util.*;
 import org.lwjgl.opengl.GL11;
 

@@ -1,8 +1,7 @@
 package net.plixo.paper.client.engine.ecs;
 
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
+import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -48,6 +47,12 @@ public class GameObject {
     public void stop() {
         for (Behavior b : components) {
             b.stop();
+        }
+    }
+
+    public void render() {
+        for (Behavior b : components) {
+            b.render();
         }
     }
 

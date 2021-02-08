@@ -12,7 +12,7 @@ import net.plixo.paper.client.editor.ui.other.FileIcon;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.ui.other.OptionMenu;
 import net.plixo.paper.client.editor.visualscript.Canvas;
-import net.plixo.paper.client.engine.buildIn.visualscript.Module;
+import net.plixo.paper.client.engine.components.visualscript.Module;
 import net.plixo.paper.client.util.*;
 import org.apache.commons.io.FilenameUtils;
 
@@ -20,7 +20,7 @@ public class TabFiles extends UITab {
 
     File[] files = new File[0];
 
-    File home;
+    static File home;
 
     ArrayList<FileIcon> icons = new ArrayList<FileIcon>();
 
@@ -42,7 +42,7 @@ public class TabFiles extends UITab {
 
     @Override
     public void init() {
-        home = SaveUtil.getFolderFromName("");
+        if (home == null) home = SaveUtil.getFolderFromName("");
         update();
         super.init();
     }
@@ -109,6 +109,13 @@ public class TabFiles extends UITab {
                                 TheEditor.modelViewer.initViewer(file);
                             }
                         };
+                    } else if (extenstion.equals(SaveUtil.FileFormat.Timeline.format)) {
+                        open = new OptionMenu.TxtRun("Timeline") {
+                            @Override
+                            public void run() {
+                                TheEditor.timeline.initTimeline(file);
+                            }
+                        };
                     }
                     OptionMenu.TxtRun edit = new OptionMenu.TxtRun("Edit") {
                         @Override
@@ -141,9 +148,30 @@ public class TabFiles extends UITab {
                             }, "Sure?"));
                         }
                     };
+                    OptionMenu.TxtRun rename = new OptionMenu.TxtRun("Rename") {
+                        @Override
+                        public void run() {
+                            UITextInput input = new UITextInput((txt) -> {
+                               if(!txt.isEmpty()) {
+                                   String fileFormat = FilenameUtils.getExtension(file.getName());
+                                   File oldFile = new File(file.getParent()+"/"+txt+"."+fileFormat);
+                                   if(!oldFile.exists()) {
+                                      boolean status = file.renameTo(oldFile);
+                                       if(!status) {
+                                           Util.print("Failed to rename");
+                                       }
+                                   } else {
+                                       Util.print("File already exists");
+                                   }
+                               }
+                            }, (txt) -> {
+                            }, FilenameUtils.removeExtension(file.getName()));
+                            mc.displayGuiScreen(input);
+                        }
+                    };
 
                     //lastSelected = icon.file;
-                    showMenu(0, mouseX, mouseY, open, edit, explorer, delete);
+                    showMenu(0, mouseX, mouseY, open, edit, explorer, delete , rename);
                 }
 
                 return;
@@ -156,7 +184,9 @@ public class TabFiles extends UITab {
                     newRunnable(SaveUtil.FileFormat.VisualScript),
                     newRunnable(SaveUtil.FileFormat.Hud),
                     newRunnable(SaveUtil.FileFormat.Other),
-                    newRunnable(SaveUtil.FileFormat.Model));
+                    newRunnable(SaveUtil.FileFormat.Model),
+                    newRunnable(SaveUtil.FileFormat.Timeline))
+            ;
         }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
@@ -189,74 +219,10 @@ public class TabFiles extends UITab {
         loadedMod.canvas = new Canvas(loadedMod);
         loadedMod.canvas.init();
     }
-    /*
-
-    @Override
-    public void optionsSelected(int id, int option) {
-
-        if (id >= 0 && lastSelected != null) {
-            if (option == 0) {
-                if (id == 0) {
-                    openVs(lastSelected);
-                } else if (id == 5) {
-                    home = lastSelected;
-                    update();
-                }
-            } else if (option == 1) {
-                try {
-                    Desktop.getDesktop().open(lastSelected);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else if (option == 2) {
-                try {
-                    // Desktop.getDesktop().open(lastSelected.getParentFile());
-                    Runtime.getRuntime().exec("explorer.exe /select," + lastSelected);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else if (option == 3) {
-
-            }
-
-        } else if (id == -1) {
-
-
-            UITextInput input = new UITextInput((txt) -> {
-                File f = new File(home.getAbsolutePath() + "\\" + txt + "." + SaveUtil.FileFormat.values()[option].format);
-                if (!f.exists()) {
-                    if (SaveUtil.FileFormat.values()[option] == SaveUtil.FileFormat.Code) {
-                        ArrayList<String> lines = new ArrayList<>();
-                        lines.add("var output = \"float\";");
-                        lines.add("var input = [\"float\" , \"float\"];");
-                        lines.add("var execution = false;");
-                        lines.add("");
-                        lines.add("//multiplies two floating point numbers together");
-                        lines.add("function execute(m1, m2) {");
-                        lines.add("    return m1 * m2;");
-                        lines.add("}");
-                        SaveUtil.save(f, lines, true);
-                    } else {
-                        SaveUtil.makeFile(f);
-                    }
-                }
-            }, (txt) -> {
-            }, SaveUtil.FileFormat.values()[option].format);
-
-            mc.displayGuiScreen(input);
-
-        }
-
-
-        super.optionsSelected(id, option);
-
-    }
-
-     */
 
 
     void update() {
-
+        if (home == null) home = SaveUtil.getFolderFromName("");
         icons.clear();
         files = home.listFiles();
         int y = 0;

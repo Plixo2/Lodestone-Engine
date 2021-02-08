@@ -3,17 +3,17 @@ package net.plixo.paper.client.util;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 @SuppressWarnings("unused")
 public class SaveUtil {
 
+
+
     public enum FileFormat {
-        Code("js"), Hud("hud"), Other("json"), VisualScript("vs") , Model("obj");
+        Code("js"), Hud("hud"), Other("json"), VisualScript("vs") , Model("obj") , Timeline("tl");
 
         public String format;
 
@@ -158,6 +158,21 @@ public class SaveUtil {
         }
         return true;
 
+    }
+
+    public static String loadAsString(String path) {
+        StringBuilder result = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                result.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            System.err.println("Couldn't find the file at " + path);
+        }
+
+        return result.toString();
     }
 
 }

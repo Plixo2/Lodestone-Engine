@@ -8,7 +8,7 @@ public abstract class UIElement {
 
 
     public String displayName;
-    protected float height;
+    protected float height , width;
     protected float hoverProgress = 0;
 
 
@@ -22,10 +22,8 @@ public abstract class UIElement {
 
     protected int textColor = -1;
     public int color = ColorLib.getBackground(0.5f);
-    protected float width;
 
-
-    protected float x, y;
+    public float x, y;
 
     public UIElement(int id) {
         this.id = id;
@@ -51,14 +49,6 @@ public abstract class UIElement {
 
     public int getId() {
         return id;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
     }
 
     public boolean hovered(float mouseX, float mouseY) {

@@ -3,9 +3,9 @@ package net.plixo.paper;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.engine.PaperEngine;
 import net.plixo.paper.client.engine.TheManager;
-import net.plixo.paper.client.engine.buildIn.visualscript.Module;
-import net.plixo.paper.client.engine.buildIn.visualscript.VisualScriptManager;
-import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
+import net.plixo.paper.client.engine.components.visualscript.Module;
+import net.plixo.paper.client.engine.components.visualscript.VisualScriptManager;
+import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
 
 public class Lodestone {
 
@@ -24,6 +24,9 @@ public class Lodestone {
         Module modToSave = TheEditor.activeMod;
         if (modToSave != null) {
             modToSave.canvas.saveToFile();
+        }
+        if(TheEditor.timeline != null && TheEditor.timeline.currentTimeline != null) {
+            TheEditor.timeline.currentTimeline.saveToFile();
         }
         TheManager.save();
     }
@@ -44,5 +47,9 @@ public class Lodestone {
             lastMS = System.currentTimeMillis();
         }
     }
+    public static void render() {
+        Lodestone.paperEngine.render();
+    }
+
 
 }

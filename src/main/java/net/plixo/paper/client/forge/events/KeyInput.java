@@ -5,14 +5,13 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.editor.ui.UIEditor;
-import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
-import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
+import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
+import net.plixo.paper.client.engine.components.visualscript.variable.VariableType;
 import net.plixo.paper.client.forge.KeyBinds;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyInput {
 
-    @SuppressWarnings("unused")
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
 

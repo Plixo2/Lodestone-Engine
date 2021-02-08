@@ -1,17 +1,23 @@
 package net.plixo.paper.client.editor.ui.other;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.math.vector.Matrix4f;
 import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.UI.elements.UIButton;
 import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.tabs.TabConsole;
 import net.plixo.paper.client.util.ColorLib;
+import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.Util;
 
 public class Toolbar extends UICanvas {
     public Toolbar(int id) {
         super(id);
         setRoundness(0);
-        setColor(0);
+        setColor(ColorLib.getBackground(-0.2f));
     }
 
     @Override
@@ -55,8 +61,8 @@ public class Toolbar extends UICanvas {
             @Override
             public void draw(float mouseX, float mouseY) {
                 if (Lodestone.paperEngine.isRunning) {
-                   setColor(ColorLib.cyan());
-                   setDisplayName("Stop");
+                    setColor(ColorLib.cyan());
+                    setDisplayName("Stop");
                 } else {
                     setDisplayName("Start");
                     setColor(0);
@@ -90,4 +96,15 @@ public class Toolbar extends UICanvas {
         add(fileButton);
         add(settingsButton);
     }
+
+    @Override
+    public void draw(float mouseX, float mouseY) {
+
+        super.draw(mouseX, mouseY);
+        Gui.drawSideGradientRect(0,0,5,height , 0x80000000,0x00000000);
+        Gui.drawSideGradientRect(width-5,0,width,height , 0,0x80000000);
+
+    }
+
+
 }

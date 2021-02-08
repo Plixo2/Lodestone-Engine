@@ -102,9 +102,19 @@ dependencies {
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
 
+   // compile "slick-util3.jar"
+  //  compile fileTree(dir: 'lib', includes: ['*.jar'])
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
+
+   // compile files('libs/lwjgl-assimp.jar')
+   // compile files('libs/lwjgl-assimp-javadoc.jar')
+  //  compile files('libs/lwjgl-assimp-natives-windows.jar')
+  //  compile files('slick-util3.jar')
+
+
+
 
     // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
     // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'

@@ -1,8 +1,14 @@
 package net.plixo.paper.client.util;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.math.vector.Matrix4f;
+import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -197,7 +203,62 @@ public class Lib2D {
         reset();
     }
 
-    private static void set(int color) {
+    public static void drawGradientRect(double left, double top, double right, double bottom, int startColor, int endColor) {
+        Matrix4f mat = matrixStack.getLast().getMatrix();
+        float startAlpha = (float)(startColor >> 24 & 255) / 255.0F;
+        float startRed = (float)(startColor >> 16 & 255) / 255.0F;
+        float startGreen = (float)(startColor >> 8 & 255) / 255.0F;
+        float startBlue = (float)(startColor & 255) / 255.0F;
+        float endAlpha = (float)(endColor >> 24 & 255) / 255.0F;
+        float endRed = (float)(endColor >> 16 & 255) / 255.0F;
+        float endGreen = (float)(endColor >> 8 & 255) / 255.0F;
+        float endBlue = (float)(endColor & 255) / 255.0F;
+        RenderSystem.enableDepthTest();
+        RenderSystem.disableTexture();
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.shadeModel(7425);
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuffer();
+        buffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        buffer.pos(mat, (float)right, (float)top, (float)0).color(startRed, startGreen, startBlue, startAlpha).endVertex();
+        buffer.pos(mat, (float)left, (float)top, (float)0).color(startRed, startGreen, startBlue, startAlpha).endVertex();
+        buffer.pos(mat, (float)left, (float)bottom, (float)0).color(endRed, endGreen, endBlue, endAlpha).endVertex();
+        buffer.pos(mat, (float)right, (float)bottom, (float)0).color(endRed, endGreen, endBlue, endAlpha).endVertex();
+        tessellator.draw();
+        RenderSystem.shadeModel(7424);
+        RenderSystem.disableBlend();
+        RenderSystem.enableTexture();
+    }
+
+    public static void drawSideGradientRect(double left, double top, double right, double bottom, int startColor, int endColor) {
+        Matrix4f mat = matrixStack.getLast().getMatrix();
+        float startAlpha = (float) (startColor >> 24 & 255) / 255.0F;
+        float startRed = (float) (startColor >> 16 & 255) / 255.0F;
+        float startGreen = (float) (startColor >> 8 & 255) / 255.0F;
+        float startBlue = (float) (startColor & 255) / 255.0F;
+        float endAlpha = (float) (endColor >> 24 & 255) / 255.0F;
+        float endRed = (float) (endColor >> 16 & 255) / 255.0F;
+        float endGreen = (float) (endColor >> 8 & 255) / 255.0F;
+        float endBlue = (float) (endColor & 255) / 255.0F;
+        RenderSystem.enableDepthTest();
+        RenderSystem.disableTexture();
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.shadeModel(7425);
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuffer();
+        buffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        buffer.pos(mat, (float) right, (float) top, (float) 0).color(endRed, endGreen, endBlue, endAlpha).endVertex();
+        buffer.pos(mat, (float) left, (float) top, (float) 0).color(startRed, startGreen, startBlue, startAlpha).endVertex();
+        buffer.pos(mat, (float) left, (float) bottom, (float) 0).color(startRed, startGreen, startBlue, startAlpha).endVertex();
+        buffer.pos(mat, (float) right, (float) bottom, (float) 0).color(endRed, endGreen, endBlue, endAlpha).endVertex();
+        tessellator.draw();
+        RenderSystem.shadeModel(7424);
+        RenderSystem.disableBlend();
+        RenderSystem.enableTexture();
+    }
+    public static void set(int color) {
         glDisable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
@@ -210,7 +271,7 @@ public class Lib2D {
         glColor4f(red, green, blue, alpha);
     }
 
-    private static void reset() {
+    public static void reset() {
         glDisable(GL_BLEND);
         glEnable(GL_TEXTURE_2D);
         glEnable(GL_DEPTH_TEST);

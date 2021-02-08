@@ -2,11 +2,11 @@ package net.plixo.paper.client.engine;
 
 import com.google.gson.*;
 import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.client.engine.buildIn.mesh.MeshBehavior;
-import net.plixo.paper.client.engine.buildIn.scripting.Script;
-import net.plixo.paper.client.engine.buildIn.visualscript.VisualScript;
-import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
-import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
+import net.plixo.paper.client.engine.behaviors.OutlineRender;
+import net.plixo.paper.client.engine.behaviors.Script;
+import net.plixo.paper.client.engine.behaviors.VisualScript;
+import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
+import net.plixo.paper.client.engine.components.visualscript.variable.VariableType;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.engine.ecs.Resource;
@@ -45,7 +45,7 @@ public class TheManager {
         standardBehavior.clear();
         standardBehavior.add(new Script());
         standardBehavior.add(new VisualScript());
-        standardBehavior.add(new MeshBehavior());
+        standardBehavior.add(new OutlineRender());
     }
 
     public static void addEntity(GameObject entity) {

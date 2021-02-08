@@ -9,6 +9,7 @@ import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.UI.TabbedUI;
 import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.editor.tabs.*;
+import net.plixo.paper.client.editor.tabs.TabModelViewer;
 import net.plixo.paper.client.editor.ui.other.Toolbar;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
@@ -79,7 +80,7 @@ public class UIEditor extends Screen {
 		background.addTab(new TabModelViewer(1));
 
 
-		TabbedUI explorer = new TabbedUI(side, this.height/2f, "Test0");
+		TabbedUI explorer = new TabbedUI(side, (this.height/2f)-12, "Test0");
 		explorer.y = 30;
 
 		// Tab b0 = new TabEvents(0);
@@ -93,8 +94,10 @@ public class UIEditor extends Screen {
 
 		UITab b3 = new TabFiles(0);
 		UITab b7 = new TabConsole(1);
+		UITab b9 = new TabTimeline(2);
 		console.addTab(b3);
 		console.addTab(b7);
+		console.addTab(b9);
 
 		TabbedUI modules = new TabbedUI(side, this.height/2.f - 30, "Test0");
 		modules.y = this.height/2.f + 30;

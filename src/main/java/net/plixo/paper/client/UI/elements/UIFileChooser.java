@@ -51,12 +51,6 @@ public class UIFileChooser extends UIMultiButton {
     }
 
     @Override
-    public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-        Util.print("Open");
-        super.mouseClicked(mouseX, mouseY, mouseButton);
-    }
-
-    @Override
     public void otherButton(int id) {
 
         if (lastFrame != null && lastFrame.isVisible()) {

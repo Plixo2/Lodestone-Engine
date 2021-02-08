@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.client.editor.tabs.TabConsole;
-import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
+import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
 
 import java.util.regex.Pattern;
 

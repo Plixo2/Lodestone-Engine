@@ -1,5 +1,7 @@
 package net.plixo.paper.client.UI.elements;
 
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.util.Gui;
 import org.lwjgl.opengl.GL11;
@@ -10,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class UICanvas extends UIElement {
 
 
-    CopyOnWriteArrayList<UIElement> elements = new CopyOnWriteArrayList<>();
+    public CopyOnWriteArrayList<UIElement> elements = new CopyOnWriteArrayList<>();
 
     UIElement lastElement;
 
@@ -32,7 +34,11 @@ public class UICanvas extends UIElement {
 
     @Override
     public void draw(float mouseX, float mouseY) {
+
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, this.color);
+        if( this.color != 0 && roundness < 0.4f) {
+            Gui.drawGradientRect(x,y+height,x+width,y+height+5,0x80000000,0);
+        }
 
         GL11.glPushMatrix();
         GL11.glTranslated(x, y, 0);

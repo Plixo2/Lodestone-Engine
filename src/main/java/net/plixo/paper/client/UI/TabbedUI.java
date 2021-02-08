@@ -37,7 +37,7 @@ public class TabbedUI implements IGuiEvent {
     @Override
     public void drawScreen(float mouseX, float mouseY) {
         Gui.drawRect(0, -12, width, 0, 0x55AAAAAA);
-        Gui.drawRect(0, -11.5f, width - 0.5f, -0.5f, ColorLib.getBackground(0));
+        Gui.drawRect(0.5f, -11.5f, width - 0.5f, -0.5f, ColorLib.getBackground(0));
         for (int i = 0; i < tabs.size(); i++) {
             UITab tab = tabs.get(i);
             tab.head.x = i * headWidth;
@@ -64,7 +64,8 @@ public class TabbedUI implements IGuiEvent {
 
             tab.head.draw(mouseX, mouseY);
         }
-
+        Gui.drawGradientRect(0,0,width,5,0x80000000,0);
+        Gui.drawRect(width , 0,width+0.5f , height , 0x55AAAAAA);
 
         if (menu != null) {
             menu.drawScreen(mouseX, mouseY);

@@ -1,9 +1,8 @@
 package net.plixo.paper.client.engine;
 
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
+import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
 import net.plixo.paper.client.engine.ecs.GameObject;
-import net.plixo.paper.client.util.Util;
 
 import javax.script.ScriptEngineManager;
 
@@ -22,6 +21,13 @@ public class PaperEngine {
             }
         }
     }
+    public void render() {
+        if (isRunning) {
+            for (GameObject e : TheManager.allEntities) {
+                e.render();
+            }
+        }
+    }
 
     public void startEngine() {
         if (!isRunning) {
@@ -32,6 +38,7 @@ public class PaperEngine {
             for (GameObject e : TheManager.allEntities) {
                 e.start();
             }
+
         }
     }
 

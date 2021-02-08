@@ -1,8 +1,8 @@
 package net.plixo.paper.client.UI.elements;
 
 import net.plixo.paper.client.engine.UniformFunction;
-import net.plixo.paper.client.engine.buildIn.visualscript.variable.Variable;
-import net.plixo.paper.client.engine.buildIn.visualscript.variable.VariableType;
+import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
+import net.plixo.paper.client.engine.components.visualscript.variable.VariableType;
 import net.plixo.paper.client.util.KeyboardUtil;
 import org.lwjgl.glfw.GLFW;
 

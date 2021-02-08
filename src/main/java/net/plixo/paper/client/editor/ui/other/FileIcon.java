@@ -11,6 +11,9 @@ import net.plixo.paper.client.util.Util;
 import org.apache.commons.io.FilenameUtils;
 import org.lwjgl.opengl.GL11;
 
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glVertex2d;
+
 public class FileIcon extends Rect {
 
     public File file;
@@ -88,6 +91,26 @@ public class FileIcon extends Rect {
                 } else {
                     Gui.drawCenteredString("< >", x + width / 2, y + height / 2 + 5, -1);
                 }
+            } else if (extenstion.equals(SaveUtil.FileFormat.Timeline.format)) {
+
+
+                GL11.glPushMatrix();
+                GL11.glTranslated((x+width/2) -5,(y+height/2)-2,0);
+                Gui.set(hover ? ColorLib.orange() : -1);
+
+                GL11.glBegin(GL11.GL_TRIANGLES);
+
+                float Wx = x+5;
+
+                GL11.glVertex2f(0,0);
+                GL11.glVertex2f(0,10);
+                GL11. glVertex2f(10,5);
+
+                GL11.glEnd();
+                Gui.reset();
+
+                GL11.glPopMatrix();
+
             } else if (extenstion.equals(SaveUtil.FileFormat.Hud.format)) {
 
                 long time2 = System.currentTimeMillis() / 100;
@@ -106,12 +129,12 @@ public class FileIcon extends Rect {
 
 
                 GL11.glPushMatrix();
-                GL11.glTranslated(x+width/2 , y +height/2 + 5,0);
+                GL11.glTranslated(x + width / 2, y + height / 2 + 5, 0);
                 long rot = System.currentTimeMillis() / 10;
                 rot = rot % 360;
-                Gui.drawRect(-5,-5,5,5 , Color.HSBtoRGB(rot/360f,1,1));
-                GL11.glRotated(rot,Math.sin(Math.toRadians(rot)),0,1);
-                Gui.drawRect(-5,-5,5,5 , -1);
+                Gui.drawRect(-5, -5, 5, 5, Color.HSBtoRGB(rot / 360f, 1, 1));
+                GL11.glRotated(rot, Math.sin(Math.toRadians(rot)), 0, 1);
+                Gui.drawRect(-5, -5, 5, 5, -1);
 
 
                 GL11.glPopMatrix();
@@ -139,14 +162,14 @@ public class FileIcon extends Rect {
 
         name = Util.displayTrim(name, maxWidth);
 
-        if(!name.equals(in)) {
+        if (!name.equals(in)) {
             name += "...";
         }
         Gui.drawCenteredString(name, (x + width / 2), (this.y + this.height),
                 -1);
-        if(!extension.isEmpty())
-        Gui.drawCenteredString("."+extension, (x + width / 2), (this.y + this.height + 10),
-                -1);
+        if (!extension.isEmpty())
+            Gui.drawCenteredString("." + extension, (x + width / 2), (this.y + this.height + 10),
+                    -1);
 
 
     }

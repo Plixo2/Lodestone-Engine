@@ -44,10 +44,12 @@ public class TabInspector extends UITab {
     }
 
     public void initInspector(GameObject entity) {
+        UI.clear();
+        if(entity == null) {
+            return;
+        }
 
         try {
-            UI.clear();
-
             UITextbox nameField = new UITextbox(-1) {
                 @Override
                 public void textFieldChanged() {
@@ -102,6 +104,7 @@ public class TabInspector extends UITab {
             rot.setDimensions(0, yBe, parent.width, 20);
             rot.setVector(entity.rotation);
             rot.setDisplayName("Rotation");
+            rot.setRoundness(0);
             yBe += 20;
 
             UI.add(pos);
