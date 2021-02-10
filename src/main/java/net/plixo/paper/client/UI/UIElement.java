@@ -4,7 +4,7 @@ package net.plixo.paper.client.UI;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Util;
 
-public abstract class UIElement {
+public abstract class UIElement implements IGuiEvent {
 
 
     public String displayName;
@@ -16,8 +16,6 @@ public abstract class UIElement {
     long lastMs = 0;
 
 
-    @SuppressWarnings("unused")
-    UIElement parent;
     protected float roundness = 0;
 
     protected int textColor = -1;
@@ -33,18 +31,8 @@ public abstract class UIElement {
     public void actionPerformed() {
     }
 
-    @SuppressWarnings("CommentedOutCode")
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
         updateHoverProgress(mouseX, mouseY);
-
-        /*
-        if (hovered(mouseX, mouseY) && displayName != null) {
-            String txt = displayName;
-           // Gui.drawLinedRoundetRect(mouseX + 8, mouseY - 5, mouseX + Gui.getStringWidth(txt) + 16, mouseY + 5, 3, ColorLib.utilLines(), 2);
-          //  Gui.drawRoundetRect(mouseX + 8, mouseY - 5, mouseX + Gui.getStringWidth(txt) + 16, mouseY + 5, 3, ColorLib.getBackground(0.4f));
-          //  Gui.drawString(txt, mouseX + 12, mouseY, textColor);
-        }
-        */
     }
 
     public int getId() {
@@ -53,12 +41,6 @@ public abstract class UIElement {
 
     public boolean hovered(float mouseX, float mouseY) {
         return mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height;
-    }
-
-    public void keyTyped(char typedChar, int keyCode) {
-    }
-
-    public void keyPressed(int key, int scanCode, int action) {
     }
 
 
@@ -92,12 +74,6 @@ public abstract class UIElement {
         this.textColor = color;
     }
 
-    public void update() {
-
-    }
-
-//	0xFF1f2d40
-//	0xFF17212f
 
     public void updateHoverProgress(float mouseX, float mouseY) {
         long delta = System.currentTimeMillis() - lastMs;

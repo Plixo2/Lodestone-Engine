@@ -1,12 +1,12 @@
 package net.plixo.paper.client.UI.elements;
 
 import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.client.editor.visualscript.Canvas;
 import net.plixo.paper.client.util.ColorLib;
 
 public class UIVector extends UICanvas {
 
 
+    //UIPointNumber for XYZ components
     public UIPointNumber spinnerX;
     public UIPointNumber spinnerY;
     public UIPointNumber spinnerZ;
@@ -15,6 +15,7 @@ public class UIVector extends UICanvas {
         super(id);
     }
 
+    //set number field position
     @Override
     public void setDimensions(float x, float y, float width, float height) {
         super.setDimensions(x, y, width, height);
@@ -42,14 +43,14 @@ public class UIVector extends UICanvas {
         elements.add(spinnerZ);
     }
 
+    //set XYZ values
     public void setVector(Vector3d vector3d) {
         spinnerX.setValue(vector3d.x);
         spinnerY.setValue(vector3d.y);
         spinnerZ.setValue(vector3d.z);
     }
 
-    //TODO remove UIMulibutton with UiCanvas
-    //TODO add Float option in UISpinner
+    //builds the vector
     public Vector3d getAsVector() {
         return new Vector3d(spinnerX.getAsDouble(), spinnerY.getAsDouble(), spinnerZ.getAsDouble());
     }

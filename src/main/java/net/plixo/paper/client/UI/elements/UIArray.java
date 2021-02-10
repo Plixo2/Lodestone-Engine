@@ -4,7 +4,6 @@ import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.MouseUtil;
-import net.plixo.paper.client.util.Util;
 
 public class UIArray extends UICanvas {
 
@@ -16,21 +15,17 @@ public class UIArray extends UICanvas {
     public UIArray(int id) {
         super(id);
     }
-
-
+    
     @Override
-    public void draw(float mouseX, float mouseY) {
-
+    public void drawScreen(float mouseX, float mouseY) {
 
         if (hovered(mouseX, mouseY)) {
             mouse();
         }
 
-
-
         sort();
 
-        super.draw(mouseX, mouseY);
+        super.drawScreen(mouseX, mouseY);
 
         int size = elements.size();
         float maxOffset = ((size*arrayheight)+10f)-height;
@@ -75,9 +70,6 @@ public class UIArray extends UICanvas {
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-    public void remove(UIElement element) {
-        elements.remove(element);
-    }
 
     public void sort() {
 

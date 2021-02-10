@@ -1,6 +1,8 @@
 package net.plixo.paper.client.engine.components.visualscript.function.buildIn.other;
 
 
+import net.plixo.paper.client.engine.components.visualscript.function.Function;
+import net.plixo.paper.client.engine.components.visualscript.function.other.Connection;
 import net.plixo.paper.client.engine.components.visualscript.function.other.Execute;
 import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
 import net.plixo.paper.client.engine.components.visualscript.variable.VariableType;
@@ -19,7 +21,7 @@ public class ELoop extends Execute {
     }
 
 
-    @SuppressWarnings("SameParameterValue")
+
 	void last(int index) {
         if (nextConnection != null) {
 
@@ -34,7 +36,7 @@ public class ELoop extends Execute {
         }
     }
 
-    @SuppressWarnings("SameParameterValue")
+
 	void next(int index) {
         if (nextConnection != null) {
             Execute next = nextConnection[index];
@@ -57,6 +59,7 @@ public class ELoop extends Execute {
             for (int i = 0; i < value(0).intValue; i++) {
 
                 reset(this);
+                resetNormal(this);
 
                 index.setValue(i);
                 next(1);
@@ -68,13 +71,23 @@ public class ELoop extends Execute {
 
     void reset(Execute fun) {
 
-
-        //TODO recursion with error at length
+        //TODO test recursion
         for (int i = 0; i < fun.nextConnection.length; i++) {
             Execute next = fun.nextConnection[i];
             if (next != null) {
                 next.hasCalculated = false;
                 reset(next);
+                resetNormal(next);
+            }
+        }
+    }
+    void resetNormal(Function function) {
+
+        for(int i = 0; i < function.inputs.length; i++) {
+            Connection connection = function.inputs[i];
+            if(connection != null) {
+                connection.function.hasCalculated = false;
+                resetNormal(function);
             }
         }
     }

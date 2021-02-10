@@ -9,14 +9,11 @@ import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.Util;
 
-@SuppressWarnings("DuplicatedCode")
+
 public class UIPointNumber extends UIElement {
 
     TextFieldWidget field;
 
-    long lastComMS = 0;
-
-    String lastComputedValue = "";
 
     public UIPointNumber(int id) {
         super(id);
@@ -24,30 +21,19 @@ public class UIPointNumber extends UIElement {
     }
 
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
 
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, color);
-
-        int color = ColorLib.interpolateColorAlpha(0x00000000, 0x23000000, hoverProgress / 100f);
-        Gui.drawRoundedRect(x, y, x + width, y + height, roundness, color);
+        Gui.drawRoundedRect(x, y, x + width, y + height, roundness, ColorLib.interpolateColorAlpha(0x00000000, 0x23000000, hoverProgress / 100f));
         Gui.drawLinedRoundedRect(x, y, x + width, y + height, roundness, ColorLib.utilLines(), 1);
 
-      //  String toDraw = lastComputedValue;
-     //   toDraw = Util.displayTrim(toDraw, 40);
-      //  Gui.drawString(toDraw, x + width - Gui.getStringWidth(toDraw), y + height - 4, textColor);
 
-        long ms = System.currentTimeMillis();
-        if (ms - lastComMS > 1000) {
-            lastComputedValue = getAsDouble() + "";
-            lastComMS = ms;
-        }
+        field.render(Gui.matrixStack, (int) mouseX, (int) mouseY, 0);
 
-        if (field != null)
-            field.render(Gui.matrixStack, (int) mouseX, (int) mouseY, 0);
-
-        super.draw(mouseX, mouseY);
+        super.drawScreen(mouseX, mouseY);
     }
 
+    //returns the content as Double
     public double getAsDouble() {
         String txt = getText();
         if (Util.isNumeric(txt)) {
@@ -57,55 +43,40 @@ public class UIPointNumber extends UIElement {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } /*else {
-
-			Argument arg = new Argument("val", txt);
-			double val = arg.getArgumentValue();
-			String newVal = "" + arg.getArgumentValue();
-			if (Util.isNumeric(newVal)) {
-				try {
-					if (newVal.length() > 0)
-						return Double.valueOf(newVal);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-
-		}*/
-        return 0;
-
-    }
-
-    public String getText() {
-        if (field != null) {
-            return field.getText();
         }
-        return "";
+        return 0;
     }
 
+    //returns the field content
+    public String getText() {
+        return field.getText();
+    }
+
+    //set the field content
+    public void setValue(Object value) {
+        field.setText(String.valueOf(value));
+    }
+
+    //inputs
     @Override
     public void keyPressed(int key, int scanCode, int action) {
-        if (field != null) {
-            field.keyPressed(key, scanCode, action);
-        }
+        field.keyPressed(key, scanCode, action);
         super.keyPressed(key, scanCode, action);
     }
 
     @Override
     public void keyTyped(char typedChar, int keyCode) {
-        if (field != null) {
-            field.charTyped(typedChar, keyCode);
-        }
+        field.charTyped(typedChar, keyCode);
         super.keyTyped(typedChar, keyCode);
     }
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-        if (field != null)
-            field.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
+        field.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
+    //set dimensions for text field
     @Override
     public void setDimensions(float x, float y, float width, float height) {
         field = new TextFieldWidget(Minecraft.getInstance().fontRenderer, (int) x + 4, (int) (y + height / 2) - 4,
@@ -114,14 +85,5 @@ public class UIPointNumber extends UIElement {
         super.setDimensions(x, y, width, height);
     }
 
-    @SuppressWarnings("unused")
-    public void setText(String txt) {
-        if (field != null)
-            field.setText(txt);
-    }
 
-    public void setValue(Object value) {
-        if (field != null)
-            field.setText(String.valueOf(value));
-    }
 }

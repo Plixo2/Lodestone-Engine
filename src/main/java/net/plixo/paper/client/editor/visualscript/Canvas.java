@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.util.math.vector.Vector3d;
+import net.plixo.paper.client.UI.IGuiEvent;
 import net.plixo.paper.client.engine.components.visualscript.Module;
 import net.plixo.paper.client.engine.components.visualscript.VisualScriptManager;
 import net.plixo.paper.client.engine.components.visualscript.event.Event;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 
 
 @SuppressWarnings("DuplicatedCode")
-public class Canvas {
+public class Canvas implements IGuiEvent {
     Module mod;
     public ArrayList<DrawFunction> functions = new ArrayList<>();
     public String name;
@@ -43,6 +44,7 @@ public class Canvas {
         functions.add(draw);
     }
 
+    @Override
     public void drawScreen(float mouseX, float mouseY) {
         for (int i = functions.size() - 1; i >= 0; i--) {
             functions.get(i).drawOnScreen(mouseX, mouseY);
@@ -85,6 +87,7 @@ public class Canvas {
         return functions.get(VisualScriptManager.dragTab).function;
     }
 
+    @Override
     public void init() {
 
         parser = new JsonParser();
@@ -231,6 +234,7 @@ public class Canvas {
         }
     }
 
+    @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
         int i = 0;
         for (DrawFunction function : functions) {
@@ -240,7 +244,7 @@ public class Canvas {
             i += 1;
         }
     }
-
+    @Override
     public void mouseReleased(float mouseX, float mouseY, int state) {
         for (DrawFunction function : functions) {
             function.mouseReleased(mouseX, mouseY, state);
@@ -291,7 +295,6 @@ public class Canvas {
 
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean containsFunction(Function function) {
         for (DrawFunction f : functions) {
             if (f.function.equals(function)) {
@@ -366,7 +369,6 @@ public class Canvas {
             Object.add("Execution", arrayListExe);
 
             names.add(Object);
-            // Object.addProperty(property, value);
         }
         head.add("List", names);
 

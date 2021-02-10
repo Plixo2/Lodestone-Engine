@@ -16,16 +16,15 @@ public class UIButton extends UIElement {
     }
 
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, this.color);
         Gui.drawLinedRoundedRect(x, y, x + width, y + height, roundness, ColorLib.getDarker(this.color), 1);
         int color = ColorLib.interpolateColorAlpha(0x00000000, 0x23000000, hoverProgress / 100f);
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, color);
         drawStringCentered(mouseX, mouseY);
-        super.draw(mouseX, mouseY);
+        super.drawScreen(mouseX, mouseY);
     }
 
-    @SuppressWarnings("unused")
 	public void setHoverName(String name) {
         this.hoverName = name;
     }

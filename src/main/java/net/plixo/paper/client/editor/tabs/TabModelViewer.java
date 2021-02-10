@@ -1,6 +1,7 @@
 package net.plixo.paper.client.editor.tabs;
 
 import net.plixo.paper.client.UI.UITab;
+import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.util.*;
 import org.lwjgl.opengl.GL11;
@@ -18,15 +19,19 @@ public class TabModelViewer extends UITab {
     }
 
     @Override
+    public void init() {
+        canvas = new UICanvas(0);
+        canvas.setDimensions(0, 0, parent.width, parent.height);
+        canvas.setRoundness(0);
+        canvas.setColor(ColorLib.getBackground(0.1f));
+    }
+
+    @Override
     public void drawScreen(float mouseX, float mouseY) {
-
-        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(obj == null ? 0 : 0.5f));
-
-
         if (obj != null) {
             drawName();
         }
-
+        super.drawScreen(mouseX,mouseY);
     }
 
     private void drawName() {

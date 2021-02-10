@@ -60,18 +60,5 @@ public class Script extends Behavior {
         super.stop();
     }
 
-/*
-	public void execute(String name, Variable var) {
-        try {
-            Invocable invocable = (Invocable) engine;
-            Object obj = engine.get(name);
-            if (obj != null) invocable.invokeFunction(name, mc);
-        } catch (Exception e) {
-            Util.print(e.getMessage());
-            Lodestone.paperEngine.stopEngine();
-            e.printStackTrace();
-        }
-    }
-    */
     //TODO redo variable system to javascript
 }

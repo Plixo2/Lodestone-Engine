@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.plixo.paper.client.editor.tabs.TabTimeline;
 import net.plixo.paper.client.util.SaveUtil;
+import net.plixo.paper.client.util.Util;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -32,7 +33,7 @@ public class Timeline {
         sort();
     }
 
-    void sort() {
+    public void sort() {
         timepoints.sort(Comparator.comparingDouble(point -> point.progess));
     }
 
@@ -83,8 +84,9 @@ public class Timeline {
         public float yLevel = 0;
 
         public Timepoint(float progess, float level) {
-            this.progess = progess;
-            this.yLevel = level;
+
+            this.progess = (float) Util.clampDouble(progess, 1 , 0);;
+            this.yLevel = (float) Util.clampDouble(level, 1 , 0);;;
         }
     }
 }

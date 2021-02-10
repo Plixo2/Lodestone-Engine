@@ -2,15 +2,10 @@ package net.plixo.paper.client.editor.ui.other;
 
 
 import net.plixo.paper.client.UI.IGuiEvent;
-import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.UI.elements.UIButton;
 import net.plixo.paper.client.UI.elements.UICanvas;
-import net.plixo.paper.client.editor.visualscript.Rect;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
-import org.lwjgl.opengl.GL11;
-
-import java.util.ArrayList;
 
 
 public class OptionMenu implements IGuiEvent {
@@ -57,7 +52,7 @@ public class OptionMenu implements IGuiEvent {
 
     @Override
     public void drawScreen(float mouseX, float mouseY) {
-        canvas.draw(mouseX,mouseY);
+        canvas.drawScreen(mouseX,mouseY);
     }
 
     @Override

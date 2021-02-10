@@ -1,44 +1,25 @@
 package net.plixo.paper.client.editor.tabs;
 
-import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.UI.elements.UIArray;
 import net.plixo.paper.client.UI.elements.UIButton;
-import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.ui.other.OptionMenu;
 import net.plixo.paper.client.engine.TheManager;
 import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
-import net.plixo.paper.client.util.KeyboardUtil;
-import net.plixo.paper.client.util.MouseUtil;
-import org.lwjgl.glfw.GLFW;
 
 
 public class TabExplorer extends UITab {
 
-
-    UIArray canvas;
-
-    GameObject selectedEntity;
 
     public TabExplorer(int id) {
         super(id, "Explorer");
         TheEditor.explorer = this;
     }
 
-
-    @Override
-    public void drawScreen(float mouseX, float mouseY) {
-
-        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.2f));
-
-        canvas.draw(mouseX, mouseY);
-
-    }
 
     @Override
     public void init() {
@@ -68,6 +49,7 @@ public class TabExplorer extends UITab {
         };
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
+        canvas.setColor(ColorLib.getBackground(0.2f));
         reCalc();
         super.init();
     }
@@ -118,9 +100,6 @@ public class TabExplorer extends UITab {
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
         hideMenu();
-        canvas.mouseClicked(mouseX, mouseY, mouseButton);
-
-
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 

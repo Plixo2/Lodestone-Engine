@@ -41,7 +41,7 @@ public class UIEditor extends Screen {
 		Gui.setMatrix(p_230430_1_);
 
 		Gui.drawRect(0,0,width,height,ColorLib.getBackground(0.2f));
-		toolbar.draw(mouseX,mouseY);
+		toolbar.drawScreen(mouseX,mouseY);
 
 		for (TabbedUI tab : tabs) {
 

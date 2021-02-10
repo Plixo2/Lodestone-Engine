@@ -78,19 +78,4 @@ public class OutlineRender extends Behavior {
     }
 
 
-//TODO Fix loading ...
-    /*
-    public Mesh getMeshToRender() {
-        Resource res = getResource(0);
-        Util.print(res.getAsFile());
-        if (res.hasValue()) {
-
-            File file = res.getAsFile();
-            if(file.exists() && file.getName().endsWith(SaveUtil.FileFormat.Model.format)) {
-                return MeshUtil.loadFromFile(file);
-            }
-        }
-        return null;
-    }
-*/
 }

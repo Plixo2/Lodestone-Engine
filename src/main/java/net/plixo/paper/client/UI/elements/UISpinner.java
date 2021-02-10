@@ -13,6 +13,7 @@ public class UISpinner extends UIMultiButton {
 
     public TextFieldWidget field;
 
+
     public UISpinner(int id) {
         super(id, new UIButton(0), new UIButton(1));
         others[0].displayName = "+";
@@ -22,64 +23,58 @@ public class UISpinner extends UIMultiButton {
     }
 
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
 
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, ColorLib.getBackground(0.3f));
         int color = ColorLib.interpolateColorAlpha(0x00000000, 0x23000000, hoverProgress / 100f);
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, color);
 
 
-        if (field != null) {
-            field.render(Gui.matrixStack, (int) mouseX, (int) mouseY, 0);
-        }
+        field.render(Gui.matrixStack, (int) mouseX, (int) mouseY, 0);
 
-
-        super.draw(mouseX, mouseY);
+        super.drawScreen(mouseX, mouseY);
     }
 
+    //returns the field content as number
     public int getNumber() {
-        if (field == null) {
-            return 0;
-        }
-
         String txt = field.getText();
         if (Util.isNumeric(txt)) {
             try {
                 return Integer.parseInt(txt);
             } catch (Exception e) {
                 setNumber(0);
-                //e.printStackTrace();
+                e.printStackTrace();
             }
         }
         return 0;
     }
+    //set the value
+    public void setNumber(int value) {
+        field.setText(value + "");
+    }
 
+    //inputs
     @Override
     public void keyPressed(int key, int scanCode, int action) {
-        if (field != null) {
-            field.keyPressed(key, scanCode, action);
-        }
+        field.keyPressed(key, scanCode, action);
         super.keyPressed(key, scanCode, action);
     }
 
     @Override
     public void keyTyped(char typedChar, int keyCode) {
-        if (field != null) {
-            if (Character.isDigit(typedChar) || keyCode == GLFW.GLFW_KEY_LEFT || keyCode == GLFW.GLFW_KEY_RIGHT || keyCode == GLFW.GLFW_KEY_BACKSPACE) {
-                field.charTyped(typedChar, keyCode);
-            }
+        if (Character.isDigit(typedChar)) {
+            field.charTyped(typedChar, keyCode);
         }
         super.keyTyped(typedChar, keyCode);
     }
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-        if (field != null) {
-            field.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
-        }
+        field.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
+    //triggered from UIMultiButton for the + and - button
     @Override
     public void otherButton(int id) {
         if (id == 0) {
@@ -89,7 +84,7 @@ public class UISpinner extends UIMultiButton {
         }
     }
 
-    @SuppressWarnings("SuspiciousNameCombination")
+    //set dimensions of + and - button
     @Override
     public void setDimensions(float x, float y, float width, float height) {
         others[0].setDimensions(width - height, 0, height, height / 2);
@@ -100,8 +95,5 @@ public class UISpinner extends UIMultiButton {
         super.setDimensions(x, y, width, height);
     }
 
-    public void setNumber(int value) {
-        field.setText(value + "");
-    }
 
 }

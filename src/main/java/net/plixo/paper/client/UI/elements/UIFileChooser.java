@@ -16,7 +16,9 @@ import java.io.File;
 
 public class UIFileChooser extends UIMultiButton {
 
+    //JFileChooser is multi threaded.. i think
     volatile File file;
+    //for checking if the window is open
     JFrame lastFrame;
 
     public UIFileChooser(int id) {
@@ -25,8 +27,9 @@ public class UIFileChooser extends UIMultiButton {
         others[0].setRoundness(2);
     }
 
+
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
 
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, ColorLib.getBackground(0.3f));
         int color = ColorLib.interpolateColorAlpha(0x00000000, 0x23000000, hoverProgress / 100f);
@@ -43,16 +46,22 @@ public class UIFileChooser extends UIMultiButton {
 
             Gui.drawString(newStr, x + 4, y + height / 2, textColor);
         }
-        super.draw(mouseX, mouseY);
+        super.drawScreen(mouseX, mouseY);
     }
 
+    //returns the File with existence test
     public File getFile() {
+        if (!file.exists()) {
+            return null;
+        }
         return file;
     }
 
+    //choose button pressed
     @Override
     public void otherButton(int id) {
 
+        //returns if the window is still open
         if (lastFrame != null && lastFrame.isVisible()) {
             return;
         }
@@ -84,7 +93,7 @@ public class UIFileChooser extends UIMultiButton {
         chooser.addActionListener((ActionEvent e) -> {
             if (e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)) {
                 closeFrame.run();
-				file = chooser.getSelectedFile();
+                file = chooser.getSelectedFile();
             } else if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)) {
                 closeFrame.run();
                 file = null;
@@ -98,17 +107,20 @@ public class UIFileChooser extends UIMultiButton {
                 closeFrame.run();
             }
         });
-
         frame.setVisible(true);
 
     }
 
+
+
+    //set dimensions for the choose button
     @Override
     public void setDimensions(float x, float y, float width, float height) {
-		others[0].setDimensions(width - height, 0, height, height);
+        others[0].setDimensions(width - height, 0, height, height);
         super.setDimensions(x, y, width, height);
     }
 
+    //set current file
     public void setFile(File file) {
         this.file = file;
     }

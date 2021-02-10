@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.plixo.paper.client.UI.UITab;
+import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.ui.accept.UIAccept;
 import net.plixo.paper.client.editor.ui.accept.UITextInput;
 import net.plixo.paper.client.editor.ui.other.FileIcon;
@@ -32,7 +33,6 @@ public class TabFiles extends UITab {
     @Override
     public void drawScreen(float mouseX, float mouseY) {
 
-        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.3f));
 
         for (FileIcon icon : icons) {
             icon.draw(mouseX, mouseY);
@@ -42,8 +42,15 @@ public class TabFiles extends UITab {
 
     @Override
     public void init() {
-        if (home == null) home = SaveUtil.getFolderFromName("");
+        if (home == null) {home = SaveUtil.getFolderFromName("");}
         update();
+
+        canvas = new UICanvas(0);
+        canvas.setDimensions(0, 0, parent.width, parent.height);
+        canvas.setRoundness(0);
+        canvas.setColor(ColorLib.getBackground(0.3f));
+
+
         super.init();
     }
 

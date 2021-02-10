@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL11;
 public abstract class UIMultiButton extends UIElement {
 
 
+    //array of other Elements
     UIElement[] others;
 
     public UIMultiButton(int id, UIElement... others) {
@@ -17,21 +18,23 @@ public abstract class UIMultiButton extends UIElement {
     }
 
 
+    //for drawing relative to the main button;
     @Override
-    public void draw(float mouseX, float mouseY) {
-
+    public void drawScreen(float mouseX, float mouseY) {
 
         Gui.drawLinedRoundedRect(x, y, x + width, y + height, roundness, ColorLib.utilLines(), 1);
-        super.draw(mouseX, mouseY);
+        super.drawScreen(mouseX, mouseY);
         GL11.glPushMatrix();
         GL11.glTranslated(x, y, 0);
         for (UIElement button : others) {
-            button.draw(mouseX - x, mouseY - y);
+            button.drawScreen(mouseX - x, mouseY - y);
         }
         GL11.glPopMatrix();
 
     }
 
+
+    //hovering fix
     @Override
     public boolean hovered(float mouseX, float mouseY) {
 
@@ -48,6 +51,7 @@ public abstract class UIMultiButton extends UIElement {
         return true;
     }
 
+    //input
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
 
@@ -60,5 +64,6 @@ public abstract class UIMultiButton extends UIElement {
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
+    //for triggering other buttons
     public abstract void otherButton(int id);
 }

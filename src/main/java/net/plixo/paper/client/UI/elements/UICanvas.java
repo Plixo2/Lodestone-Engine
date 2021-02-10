@@ -1,7 +1,5 @@
 package net.plixo.paper.client.UI.elements;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.util.Gui;
 import org.lwjgl.opengl.GL11;
@@ -27,13 +25,17 @@ public class UICanvas extends UIElement {
         elements.add(element);
     }
 
+    public void remove(UIElement element) {
+        elements.remove(element);
+    }
+
     public void clear() {
         lastElement = null;
         elements.clear();
     }
 
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
 
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, this.color);
         if( this.color != 0 && roundness < 0.4f) {
@@ -43,11 +45,11 @@ public class UICanvas extends UIElement {
         GL11.glPushMatrix();
         GL11.glTranslated(x, y, 0);
         for (UIElement element : elements) {
-            element.draw(mouseX - x, mouseY - y);
+            element.drawScreen(mouseX - x, mouseY - y);
         }
         GL11.glPopMatrix();
 
-        super.draw(mouseX, mouseY);
+        super.drawScreen(mouseX, mouseY);
     }
 
 
@@ -90,13 +92,13 @@ public class UICanvas extends UIElement {
     }
 
     @Override
-    public void update() {
+    public void onTick() {
         for (UIElement element : elements) {
-            element.update();
+            element.onTick();
         }
 
 
-        super.update();
+        super.onTick();
     }
 
 }

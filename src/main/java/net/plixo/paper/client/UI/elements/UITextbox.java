@@ -7,7 +7,6 @@ import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 
-@SuppressWarnings("DuplicatedCode")
 public class UITextbox extends UIElement {
 
 
@@ -15,11 +14,10 @@ public class UITextbox extends UIElement {
 
     public UITextbox(int id) {
         super(id);
-
     }
 
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
 
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, ColorLib.getBackground(0.3f));
 
@@ -27,58 +25,52 @@ public class UITextbox extends UIElement {
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, color);
         Gui.drawLinedRoundedRect(x, y, x + width, y + height, roundness, ColorLib.utilLines(), 1);
 
-        if (field != null)
-            field.render(Gui.matrixStack, (int) mouseX, (int) mouseY, 0);
+        field.render(Gui.matrixStack, (int) mouseX, (int) mouseY, 0);
 
-        super.draw(mouseX, mouseY);
+        super.drawScreen(mouseX, mouseY);
     }
 
+
+    //get the field context
     public String getText() {
-        if (field != null)
-            return field.getText();
-
-        return "";
+        return field.getText();
     }
 
+    //inputs
     @Override
     public void keyTyped(char typedChar, int keyCode) {
-        if (field != null) {
-            field.charTyped(typedChar, keyCode);
-            textFieldChanged();
-        }
+        field.charTyped(typedChar, keyCode);
+        textFieldChanged();
         super.keyTyped(typedChar, keyCode);
     }
 
     @Override
     public void keyPressed(int key, int scanCode, int action) {
-        if (field != null) {
-            field.keyPressed(key, scanCode, action);
-            textFieldChanged();
-        }
-
+        field.keyPressed(key, scanCode, action);
+        textFieldChanged();
         super.keyPressed(key, scanCode, action);
     }
 
+    //triggered after text field has changed (for abstract use)
     public void textFieldChanged() {
-
     }
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-        if (field != null)
-            field.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
+        field.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
+    //set text field dimensions
     @Override
     public void setDimensions(float x, float y, float width, float height) {
         field = new TextFieldWidget(Minecraft.getInstance().fontRenderer, (int) x + 4, (int) (y + height / 2) - 4, (int) width - 8, (int) height / 2, new StringTextComponent(""));
+        //disable background
         field.setEnableBackgroundDrawing(false);
         super.setDimensions(x, y, width, height);
     }
 
     public void setText(String txt) {
-        if (field != null)
-            field.setText(txt);
+        field.setText(txt);
     }
 }

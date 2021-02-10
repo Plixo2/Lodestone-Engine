@@ -157,7 +157,6 @@ public class JavaScriptFunction extends Execute {
         this.inputTypes = varTypes.clone();
         this.names = args.clone();
 
-//TODO isExecution Variable
         if (isExecute) {
             this.size = 1;
         }

@@ -18,14 +18,12 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
-@SuppressWarnings("DuplicatedCode")
 public class TheManager {
 
     public static JsonParser parser;
     public static ArrayList<Behavior> standardBehavior = new ArrayList<>();
     public static ArrayList<Variable> globals = new ArrayList<>();
     public static CopyOnWriteArrayList<GameObject> allEntities = new CopyOnWriteArrayList<>();
-    public static ArrayList<UniformFunction> functions = new ArrayList<>();
 
 
     public static Behavior newInstanceByName(String name) {
@@ -76,11 +74,6 @@ public class TheManager {
         }
         try {
             loadResources();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            loadFunctions();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -208,79 +201,10 @@ public class TheManager {
         }
     }
 
-    public static void loadFunctions() {
-
-        functions.clear();
-        File file = SaveUtil.getFileFromName("functions", SaveUtil.FileFormat.Other);
-        JsonElement element = SaveUtil.loadFromJson(TheManager.parser, file);
-
-
-        if (element instanceof JsonArray) {
-            JsonArray arr = (JsonArray) element;
-            for (int j = 0; j < arr.size(); j++) {
-                JsonElement ele = arr.get(j);
-                if (ele instanceof JsonObject) {
-                    JsonObject obj = (JsonObject) ele;
-                    UniformFunction function = new UniformFunction(obj.get("Name").getAsString());
-                    JsonElement output = obj.get("Output");
-                    if (output instanceof JsonObject) {
-                        JsonObject outObj = (JsonObject) output;
-                        VariableType variableType = VariableType.getType(outObj.get("Type").getAsString());
-                        function.output = new Variable(variableType, outObj.get("Name").getAsString());
-                    }
-
-                    JsonArray array = obj.get("List").getAsJsonArray();
-                    for (int i = 0; i < array.size(); i++) {
-                        JsonElement variable = array.get(i);
-                        if (variable instanceof JsonObject) {
-                            JsonObject customObj = (JsonObject) variable;
-                            String type = customObj.get("Type").getAsString();
-                            String varName = customObj.get("Name").getAsString();
-                            VariableType variableType = VariableType.getType(type);
-                            Variable var = new Variable(variableType, varName);
-                            function.addVariable(var);
-                        }
-                    }
-                    functions.add(function);
-                }
-            }
-        }
-
-    }
-
     public static void save() {
-        saveFunctions();
         saveEntities();
         saveGlobals();
         saveResources();
-    }
-
-    public static void saveFunctions() {
-
-        File file = SaveUtil.getFileFromName("functions", SaveUtil.FileFormat.Other);
-        JsonArray jsonArray = new JsonArray();
-
-        for (UniformFunction function : functions) {
-            JsonObject custom = new JsonObject();
-            JsonArray array = new JsonArray();
-
-            for (Variable var : function.variableArrayList()) {
-                JsonObject varObj = new JsonObject();
-                varObj.addProperty("Name", var.name);
-                varObj.addProperty("Type", var.type.name());
-                array.add(varObj);
-            }
-            custom.addProperty("Name", function.getName());
-            JsonObject output = new JsonObject();
-            output.addProperty("Name", function.output.name);
-            output.addProperty("Type", function.output.type.name());
-            custom.add("Output", output);
-            custom.add("List", array);
-            jsonArray.add(custom);
-        }
-
-        SaveUtil.saveJsonObj(file, jsonArray);
-
     }
 
     public static void saveEntities() {

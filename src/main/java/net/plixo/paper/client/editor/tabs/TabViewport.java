@@ -4,6 +4,7 @@ package net.plixo.paper.client.editor.tabs;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.plixo.paper.client.UI.UITab;
+import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.ui.other.OptionMenu;
 import net.plixo.paper.client.editor.visualscript.Canvas;
@@ -38,10 +39,17 @@ public class TabViewport extends UITab {
 
     @Override
     public void init() {
-        zoom = 1;
-        x = parent.width / 2;
-        y = parent.height / 2;
+       // zoom = 1;
+       // x = parent.width / 2;
+       // y = parent.height / 2;
         resetRect = new Rect(0, 0, 30, 30, -1, -1);
+
+        canvas = new UICanvas(0);
+        canvas.setDimensions(0, 0, parent.width, parent.height);
+        canvas.setRoundness(0);
+        canvas.setColor(ColorLib.getBackground(0.0f));
+
+
         super.init();
     }
 
@@ -49,9 +57,8 @@ public class TabViewport extends UITab {
     @Override
     public void drawScreen(float mouseX, float mouseY) {
 
-        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0));
-
      //   Curs
+        super.drawScreen(mouseX,mouseY);
 
         if (dragging) {
             x += (mouseX - dragX);
@@ -110,17 +117,6 @@ public class TabViewport extends UITab {
     void drawLines() {
 
         int i = 50;
-        /*
-        float toI = zoom * 50.0f;
-        if (toI > 0) {
-            float w = 10 / toI;
-            if (w > 0)
-                i *= w;
-        }
-
-         */
-
-
         Vector3d top = screenToWorld(0, 0);
         Vector3d bottom = screenToWorld(parent.width, parent.height);
 
@@ -146,7 +142,6 @@ public class TabViewport extends UITab {
     }
 
     void drawPoint() {
-
         Module mod = TheEditor.activeMod;
         if (mod != null) {
             Canvas tab = mod.getTab();
@@ -271,12 +266,11 @@ public class TabViewport extends UITab {
             }
         }
 
-
+        super.mouseClicked(mouseX,mouseY,mouseButton);
     }
 
     @Override
     public void mouseReleased(float mouseX, float mouseY, int state) {
-
 
         if (state == 0) {
             dragedSlider = false;
@@ -333,7 +327,7 @@ public class TabViewport extends UITab {
             }
         }
 
-
+        super.mouseReleased(mouseX,mouseY,state);
     }
 
 

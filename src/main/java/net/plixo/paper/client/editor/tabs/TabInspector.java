@@ -15,36 +15,30 @@ import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.KeyboardUtil;
-import net.plixo.paper.client.util.Util;
 import org.lwjgl.glfw.GLFW;
 
 public class TabInspector extends UITab {
 
     GameObject lastEntity;
-    UICanvas UI;
 
     public TabInspector(int id) {
         super(id, "Inspector");
         TheEditor.inspector = this;
     }
 
-    @Override
-    public void drawScreen(float mouseX, float mouseY) {
-        UI.draw(mouseX, mouseY);
-    }
 
     @Override
     public void init() {
-        UI = new UICanvas(0);
-        UI.setDimensions(0, 0, parent.width, parent.height);
-        UI.setRoundness(0);
-        UI.setColor(ColorLib.getBackground(0.05f));
+        canvas = new UICanvas(0);
+        canvas.setDimensions(0, 0, parent.width, parent.height);
+        canvas.setRoundness(0);
+        canvas.setColor(ColorLib.getBackground(0.05f));
 
         super.init();
     }
 
     public void initInspector(GameObject entity) {
-        UI.clear();
+        canvas.clear();
         if(entity == null) {
             return;
         }
@@ -58,7 +52,7 @@ public class TabInspector extends UITab {
                     super.textFieldChanged();
                 }
             };
-            UI.add(nameField);
+            canvas.add(nameField);
 
             nameField.setDimensions(0, 0, parent.width, 20);
             nameField.setRoundness(0);
@@ -70,9 +64,9 @@ public class TabInspector extends UITab {
 
             UIVector pos = new UIVector(0) {
                 @Override
-                public void update() {
+                public void onTick() {
                     entity.position = getAsVector();
-                    super.update();
+                    super.onTick();
                 }
             };
             pos.setDimensions(0, yBe, parent.width, 20);
@@ -84,9 +78,9 @@ public class TabInspector extends UITab {
 
             UIVector scale = new UIVector(0) {
                 @Override
-                public void update() {
+                public void onTick() {
                     entity.scale = getAsVector();
-                    super.update();
+                    super.onTick();
                 }
             };
             scale.setDimensions(0, yBe, parent.width, 20);
@@ -96,9 +90,9 @@ public class TabInspector extends UITab {
 
             UIVector rot = new UIVector(0) {
                 @Override
-                public void update() {
+                public void onTick() {
                     entity.rotation = getAsVector();
-                    super.update();
+                    super.onTick();
                 }
             };
             rot.setDimensions(0, yBe, parent.width, 20);
@@ -107,9 +101,9 @@ public class TabInspector extends UITab {
             rot.setRoundness(0);
             yBe += 20;
 
-            UI.add(pos);
-            UI.add(scale);
-            UI.add(rot);
+            canvas.add(pos);
+            canvas.add(scale);
+            canvas.add(rot);
 
 
             for (Behavior b : entity.components) {
@@ -150,9 +144,9 @@ public class TabInspector extends UITab {
                     if (res.isFile()) {
                         UIFileChooser chooser = new UIFileChooser(0) {
                             @Override
-                            public void update() {
+                            public void onTick() {
                                 res.setValue(getFile());
-                                super.update();
+                                super.onTick();
                             }
                         };
                         chooser.setFile(res.getAsFile());
@@ -160,9 +154,9 @@ public class TabInspector extends UITab {
                     } else if (res.isInteger()) {
                         UISpinner spinner = new UISpinner(0) {
                             @Override
-                            public void update() {
+                            public void onTick() {
                                 res.setValue(getNumber());
-                                super.update();
+                                super.onTick();
                             }
                         };
                         element = spinner;
@@ -170,9 +164,9 @@ public class TabInspector extends UITab {
                     } else if (res.isBoolean()) {
                         UIToggleButton toggleButton = new UIToggleButton(0) {
                             @Override
-                            public void update() {
+                            public void onTick() {
                                 res.setValue(getState());
-                                super.update();
+                                super.onTick();
                             }
                         };
                         element = toggleButton;
@@ -181,9 +175,9 @@ public class TabInspector extends UITab {
                     } else if (res.isString()) {
                         UITextbox txt = new UITextbox(0) {
                             @Override
-                            public void update() {
+                            public void onTick() {
                                 res.setValue(getText());
-                                super.update();
+                                super.onTick();
                             }
                         };
                         element = txt;
@@ -191,9 +185,9 @@ public class TabInspector extends UITab {
                     } else if (res.isFloat()) {
                         UIPointNumber number = new UIPointNumber(0) {
                             @Override
-                            public void update() {
+                            public void onTick() {
                                 res.setValue(getAsDouble());
-                                super.update();
+                                super.onTick();
                             }
                         };
                         element = number;
@@ -201,9 +195,9 @@ public class TabInspector extends UITab {
                     } else if (res.isVector()) {
                         UIVector vec = new UIVector(0) {
                             @Override
-                            public void update() {
+                            public void onTick() {
                                 res.setValue(getAsVector());
-                                super.update();
+                                super.onTick();
                             }
                         };
                         element = vec;
@@ -217,7 +211,7 @@ public class TabInspector extends UITab {
                 }
 
                 behaviorCanvas.setDimensions(0, yBe, parent.width, yRes);
-                UI.add(behaviorCanvas);
+                canvas.add(behaviorCanvas);
                 yBe += yRes + 7;
             }
 
@@ -228,17 +222,9 @@ public class TabInspector extends UITab {
         lastEntity = entity;
     }
 
-    @Override
-    public void keyTyped(char typedChar, int keyCode) {
-        UI.keyTyped(typedChar, keyCode);
-        super.keyTyped(typedChar, keyCode);
-    }
 
-    @Override
-    public void keyPressed(int key, int scanCode, int action) {
-        UI.keyPressed(key, scanCode, action);
-        super.keyPressed(key, scanCode, action);
-    }
+
+
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
@@ -268,15 +254,8 @@ public class TabInspector extends UITab {
 
             showMenu(0, mouseX, mouseY, array);
         } else {
-            UI.mouseClicked(mouseX, mouseY, mouseButton);
+            super.mouseClicked(mouseX, mouseY, mouseButton);
         }
-
-        super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-
-    @Override
-    public void onTick() {
-        UI.update();
-    }
 }

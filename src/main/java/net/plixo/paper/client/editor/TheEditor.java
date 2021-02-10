@@ -31,7 +31,6 @@ public class TheEditor {
         if (tab != null) {
             tab.init();
         }
-        //TODO remove this lul
     }
 
 }

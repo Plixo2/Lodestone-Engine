@@ -1,6 +1,7 @@
 package net.plixo.paper.client.UI;
 
 import net.minecraft.client.Minecraft;
+import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.ui.other.OptionMenu;
 import net.plixo.paper.client.editor.visualscript.Rect;
 import net.plixo.paper.client.util.ColorLib;
@@ -13,6 +14,7 @@ public class UITab implements IGuiEvent {
     public Rect head;
     String name;
     public TabbedUI parent;
+    protected UICanvas canvas;
 
     public UITab(int id, String name) {
         this.head = new Rect(0, -12, TabbedUI.headWidth, 12, 0, 0);
@@ -23,7 +25,31 @@ public class UITab implements IGuiEvent {
     }
 
 
-    @SuppressWarnings("unused")
+    @Override
+    public void onTick() {
+        canvas.onTick();
+    }
+
+    @Override
+    public void drawScreen(float mouseX, float mouseY) {
+        canvas.drawScreen(mouseX, mouseY);
+    }
+
+    @Override
+    public void keyPressed(int key, int scanCode, int action) {
+        canvas.keyPressed(key, scanCode, action);
+    }
+
+    @Override
+    public void keyTyped(char typedChar, int keyCode) {
+        canvas.keyTyped(typedChar, keyCode);
+    }
+
+    @Override
+    public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
+        canvas.mouseClicked(mouseX, mouseY, mouseButton);
+    }
+
     public void drawOutline() {
         int lineColor = ColorLib.getMainColor();
         int width = 2;

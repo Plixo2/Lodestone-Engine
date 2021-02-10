@@ -1,10 +1,5 @@
 package net.plixo.paper.client.editor.ui.other;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.math.vector.Matrix4f;
 import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.UI.elements.UIButton;
 import net.plixo.paper.client.UI.elements.UICanvas;
@@ -59,7 +54,7 @@ public class Toolbar extends UICanvas {
             }
 
             @Override
-            public void draw(float mouseX, float mouseY) {
+            public void drawScreen(float mouseX, float mouseY) {
                 if (Lodestone.paperEngine.isRunning) {
                     setColor(ColorLib.cyan());
                     setDisplayName("Stop");
@@ -67,7 +62,7 @@ public class Toolbar extends UICanvas {
                     setDisplayName("Start");
                     setColor(0);
                 }
-                super.draw(mouseX, mouseY);
+                super.drawScreen(mouseX, mouseY);
             }
         };
         uiToggleButton.setDimensions(100, 0, 50, height);
@@ -78,13 +73,13 @@ public class Toolbar extends UICanvas {
 
         UIButton consoleOutput = new UIButton(0) {
             @Override
-            public void draw(float mouseX, float mouseY) {
+            public void drawScreen(float mouseX, float mouseY) {
                 if (TabConsole.consoleLines.size() > 0) {
                     TabConsole.ConsoleLine line = TabConsole.consoleLines.get(TabConsole.consoleLines.size() - 1);
                     displayName = line.line;
                 }
 
-                super.draw(mouseX, mouseY);
+                super.drawScreen(mouseX, mouseY);
             }
         };
         consoleOutput.setColor(0);
@@ -98,9 +93,9 @@ public class Toolbar extends UICanvas {
     }
 
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void drawScreen(float mouseX, float mouseY) {
 
-        super.draw(mouseX, mouseY);
+        super.drawScreen(mouseX, mouseY);
         Gui.drawSideGradientRect(0,0,5,height , 0x80000000,0x00000000);
         Gui.drawSideGradientRect(width-5,0,width,height , 0,0x80000000);
 

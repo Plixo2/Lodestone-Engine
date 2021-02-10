@@ -1,6 +1,7 @@
 package net.plixo.paper.client.editor.tabs;
 
 import net.plixo.paper.client.UI.UITab;
+import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
@@ -9,6 +10,7 @@ import net.plixo.paper.client.util.MouseUtil;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class TabConsole extends UITab {
@@ -27,7 +29,7 @@ public class TabConsole extends UITab {
         }
     }
 
-    public static ArrayList<ConsoleLine> consoleLines = new ArrayList<ConsoleLine>();
+    public static CopyOnWriteArrayList<ConsoleLine> consoleLines = new CopyOnWriteArrayList<>();
 
     float zoom = 1;
 
@@ -37,9 +39,17 @@ public class TabConsole extends UITab {
     }
 
     @Override
+    public void init() {
+        canvas = new UICanvas(0);
+        canvas.setDimensions(0, 0, parent.width, parent.height);
+        canvas.setRoundness(0);
+        canvas.setColor(ColorLib.getBackground(0.3f));
+    }
+
+    @Override
     public void drawScreen(float mouseX, float mouseY) {
 
-        Gui.drawRect(0, 0, parent.width, parent.height, ColorLib.getBackground(0.3f));
+        super.drawScreen(mouseX,mouseY);
         float y = 10;
         int size = consoleLines.size();
         int aw = size * 15;
@@ -80,17 +90,12 @@ public class TabConsole extends UITab {
 
     @Override
     public void onTick() {
-        ArrayList<ConsoleLine> toRemove = new ArrayList<>();
 
         if (consoleLines.size() > 400) {
             for (int i = 0; i < consoleLines.size() - 500; i++) {
-                toRemove.add(consoleLines.get(i));
+                consoleLines.remove(i);
             }
         }
-
-        for (ConsoleLine line : toRemove) {
-
-            consoleLines.remove(line);
-        }
+        super.onTick();
     }
 }
