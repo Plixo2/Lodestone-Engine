@@ -3,54 +3,44 @@ package net.plixo.paper.client.editor.tabs;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import net.plixo.paper.client.UI.UITab;
 import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.editor.ui.accept.UIAccept;
 import net.plixo.paper.client.editor.ui.accept.UITextInput;
-import net.plixo.paper.client.editor.ui.other.FileIcon;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.ui.other.OptionMenu;
+import net.plixo.paper.client.editor.ui.other.UIFileIcon;
 import net.plixo.paper.client.editor.visualscript.Canvas;
 import net.plixo.paper.client.engine.components.visualscript.Module;
 import net.plixo.paper.client.util.*;
 import org.apache.commons.io.FilenameUtils;
+import org.lwjgl.glfw.GLFW;
 
 public class TabFiles extends UITab {
 
     File[] files = new File[0];
-
     static File home;
-
-    ArrayList<FileIcon> icons = new ArrayList<FileIcon>();
 
     public TabFiles(int id) {
         super(id, "Files");
         TheEditor.files = this;
     }
 
-    @Override
-    public void drawScreen(float mouseX, float mouseY) {
-
-
-        for (FileIcon icon : icons) {
-            icon.draw(mouseX, mouseY);
-        }
-        //  drawOutline();
-    }
 
     @Override
     public void init() {
-        if (home == null) {home = SaveUtil.getFolderFromName("");}
-        update();
+
 
         canvas = new UICanvas(0);
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
         canvas.setColor(ColorLib.getBackground(0.3f));
 
-
+        if (home == null) {home = SaveUtil.getFolderFromName("");}
+        update();
         super.init();
     }
 
@@ -62,129 +52,6 @@ public class TabFiles extends UITab {
             return;
         }
 
-        for (FileIcon icon : icons) {
-            if (icon.mouseInside(mouseX, mouseY, mouseButton)) {
-
-                File file = icon.file;
-                if (icon.isFolder) {
-                    if (mouseButton == 0) {
-                        home = icon.file;
-                        update();
-                    } else if (mouseButton == 1) {
-                        OptionMenu.TxtRun open = new OptionMenu.TxtRun("Open") {
-                            @Override
-                            public void run() {
-                                home = file;
-                                update();
-                            }
-                        };
-                        OptionMenu.TxtRun explorer = new OptionMenu.TxtRun("Explorer") {
-                            @Override
-                            public void run() {
-                                try {
-                                    Desktop.getDesktop().open(file);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        };
-                        showMenu(0, mouseX, mouseY, open, explorer);
-
-
-                        //
-                    }
-                } else {
-                    String extenstion = FilenameUtils.getExtension(icon.file.getName());
-
-                    OptionMenu.TxtRun open = new OptionMenu.TxtRun("Open") {
-                        @Override
-                        public void run() {
-                        }
-                    };
-
-                    if (extenstion.equals(SaveUtil.FileFormat.VisualScript.format)) {
-                        open = new OptionMenu.TxtRun("Open") {
-                            @Override
-                            public void run() {
-                                openVs(file);
-                            }
-                        };
-                    } else if (extenstion.equals(SaveUtil.FileFormat.Model.format)) {
-                        open = new OptionMenu.TxtRun("View") {
-                            @Override
-                            public void run() {
-                                TheEditor.modelViewer.initViewer(file);
-                            }
-                        };
-                    } else if (extenstion.equals(SaveUtil.FileFormat.Timeline.format)) {
-                        open = new OptionMenu.TxtRun("Timeline") {
-                            @Override
-                            public void run() {
-                                TheEditor.timeline.initTimeline(file);
-                            }
-                        };
-                    }
-                    OptionMenu.TxtRun edit = new OptionMenu.TxtRun("Edit") {
-                        @Override
-                        public void run() {
-                            try {
-                                Desktop.getDesktop().open(file);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    };
-
-                    OptionMenu.TxtRun explorer = new OptionMenu.TxtRun("Explorer") {
-                        @Override
-                        public void run() {
-                            try {
-                                Runtime.getRuntime().exec("explorer.exe /select," + file);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    };
-
-                    OptionMenu.TxtRun delete = new OptionMenu.TxtRun("Delete") {
-                        @Override
-                        public void run() {
-                            mc.displayGuiScreen(new UIAccept(() -> {
-                                file.delete(); //update();
-                            }, () -> {
-                            }, "Sure?"));
-                        }
-                    };
-                    OptionMenu.TxtRun rename = new OptionMenu.TxtRun("Rename") {
-                        @Override
-                        public void run() {
-                            UITextInput input = new UITextInput((txt) -> {
-                               if(!txt.isEmpty()) {
-                                   String fileFormat = FilenameUtils.getExtension(file.getName());
-                                   File oldFile = new File(file.getParent()+"/"+txt+"."+fileFormat);
-                                   if(!oldFile.exists()) {
-                                      boolean status = file.renameTo(oldFile);
-                                       if(!status) {
-                                           Util.print("Failed to rename");
-                                       }
-                                   } else {
-                                       Util.print("File already exists");
-                                   }
-                               }
-                            }, (txt) -> {
-                            }, FilenameUtils.removeExtension(file.getName()));
-                            mc.displayGuiScreen(input);
-                        }
-                    };
-
-                    //lastSelected = icon.file;
-                    showMenu(0, mouseX, mouseY, open, edit, explorer, delete , rename);
-                }
-
-                return;
-            }
-        }
-
         if (parent.isMouseInside(mouseX, mouseY) && mouseButton == 1) {
             showMenu(0, mouseX, mouseY,
                     newRunnable(SaveUtil.FileFormat.Code),
@@ -192,8 +59,7 @@ public class TabFiles extends UITab {
                     newRunnable(SaveUtil.FileFormat.Hud),
                     newRunnable(SaveUtil.FileFormat.Other),
                     newRunnable(SaveUtil.FileFormat.Model),
-                    newRunnable(SaveUtil.FileFormat.Timeline))
-            ;
+                    newRunnable(SaveUtil.FileFormat.Timeline));
         }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
@@ -216,6 +82,15 @@ public class TabFiles extends UITab {
         };
     }
 
+    @Override
+    public void keyPressed(int key, int scanCode, int action) {
+        if(key == GLFW.GLFW_KEY_F5) {
+            update();
+        }
+
+        super.keyPressed(key, scanCode, action);
+    }
+
     void openVs(File file) {
         String name = FilenameUtils.removeExtension(file.getName());
         Module loadedMod = new Module(name, file);
@@ -229,28 +104,197 @@ public class TabFiles extends UITab {
 
 
     void update() {
-        if (home == null) home = SaveUtil.getFolderFromName("");
-        icons.clear();
+        if (home == null) {home = SaveUtil.getFolderFromName("");}
+        canvas.clear();
         files = home.listFiles();
+
+        Arrays.sort(files , Comparator.comparingInt(file -> file.isFile() ? 1 : 0));
         int y = 0;
-        int x = 20;
-        int yHeight = 40;
+        int x = 10;
+        int yHeight = 50;
         int xWidth = 40;
 
         if (home.getParentFile() != null) {
-            FileIcon doe = new FileIcon(x, y, xWidth, yHeight, 0xFF2a7abf, 0XFF2a5ebf, home.getParentFile());
-            doe.txt = "<";
-            icons.add(doe);
-            x += 60;
+            UIFileIcon icon = new UIFileIcon(home.getParentFile()) {
+                @Override
+                public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
+                    if(hovered(mouseX,mouseY)) {
+                        if (mouseButton == 0) {
+                            home = file;
+                            update();
+                        }
+                    }
+                    super.mouseClicked(mouseX, mouseY, mouseButton);
+                }
+            };
+            icon.setDimensions(x,y,xWidth,yHeight);
+            icon.getList().get(1).setDisplayName("<");
+            icon.setRoundness(0);
+            icon.setColor(0);
+            canvas.add(icon);
+            x += xWidth+10;
         }
 
         for (File f : files) {
 
-            FileIcon icon = new FileIcon(x, y, xWidth, yHeight, 0xFF2a7abf, 0XFF2a5ebf, f);
-            icon.txt = f.getName();
-            icons.add(icon);
+            UIFileIcon icon = new UIFileIcon(f) {
+                @Override
+                public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
+                    if(!hovered(mouseX,mouseY) || !file.exists()) {
+                        return;
+                    }
+                    if (isFolder()) {
+                        if (mouseButton == 0) {
+                            home = file;
+                            update();
+                        } else if (mouseButton == 1) {
+                            OptionMenu.TxtRun open = new OptionMenu.TxtRun("Open") {
+                                @Override
+                                public void run() {
+                                    home = file;
+                                    update();
+                                }
+                            };
+                            OptionMenu.TxtRun explorer = new OptionMenu.TxtRun("Explorer") {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Desktop.getDesktop().open(file);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            };
+                            OptionMenu.TxtRun delete = new OptionMenu.TxtRun("Delete") {
+                                @Override
+                                public void run() {
+                                    mc.displayGuiScreen(new UIAccept(() -> {
+                                        file.delete(); //update();
+                                    }, () -> {
+                                    }, "Sure?"));
+                                }
+                            };
+                            OptionMenu.TxtRun rename = new OptionMenu.TxtRun("Rename") {
+                                @Override
+                                public void run() {
+                                    UITextInput input = new UITextInput((txt) -> {
+                                        if(!txt.isEmpty()) {
+                                            String fileFormat = FilenameUtils.getExtension(file.getName());
+                                            File oldFile = new File(file.getParent()+"/"+txt+"."+fileFormat);
+                                            if(!oldFile.exists()) {
+                                                boolean status = file.renameTo(oldFile);
+                                                if(!status) {
+                                                    Util.print("Failed to rename");
+                                                }
+                                            } else {
+                                                Util.print("File already exists");
+                                            }
+                                        }
+                                    }, (txt) -> {
+                                    }, FilenameUtils.removeExtension(file.getName()));
+                                    mc.displayGuiScreen(input);
+                                }
+                            };
+                            showMenu(0, mouseX, mouseY, open, explorer , delete , rename);
+                        }
+                    } else {
+                        String extenstion = FilenameUtils.getExtension(file.getName());
 
-            x += xWidth + 20;
+                        OptionMenu.TxtRun open = new OptionMenu.TxtRun("Open") {
+                            @Override
+                            public void run() {
+                            }
+                        };
+
+                        if (extenstion.equals(SaveUtil.FileFormat.VisualScript.format)) {
+                            open = new OptionMenu.TxtRun("Open") {
+                                @Override
+                                public void run() {
+                                    openVs(file);
+                                }
+                            };
+                        } else if (extenstion.equals(SaveUtil.FileFormat.Model.format)) {
+                            open = new OptionMenu.TxtRun("View") {
+                                @Override
+                                public void run() {
+                                    TheEditor.modelViewer.initViewer(file);
+                                }
+                            };
+                        } else if (extenstion.equals(SaveUtil.FileFormat.Timeline.format)) {
+                            open = new OptionMenu.TxtRun("Timeline") {
+                                @Override
+                                public void run() {
+                                    TheEditor.timeline.initTimeline(file);
+                                }
+                            };
+                        }
+                        OptionMenu.TxtRun edit = new OptionMenu.TxtRun("Edit") {
+                            @Override
+                            public void run() {
+                                try {
+                                    Desktop.getDesktop().open(file);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+
+                        OptionMenu.TxtRun explorer = new OptionMenu.TxtRun("Explorer") {
+                            @Override
+                            public void run() {
+                                try {
+                                    Runtime.getRuntime().exec("explorer.exe /select," + file);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+
+                        OptionMenu.TxtRun delete = new OptionMenu.TxtRun("Delete") {
+                            @Override
+                            public void run() {
+                                mc.displayGuiScreen(new UIAccept(() -> {
+                                    file.delete(); //update();
+                                }, () -> {
+                                }, "Sure?"));
+                            }
+                        };
+                        OptionMenu.TxtRun rename = new OptionMenu.TxtRun("Rename") {
+                            @Override
+                            public void run() {
+                                UITextInput input = new UITextInput((txt) -> {
+                                    if(!txt.isEmpty()) {
+                                        String fileFormat = FilenameUtils.getExtension(file.getName());
+                                        File oldFile = new File(file.getParent()+"/"+txt+"."+fileFormat);
+                                        if(!oldFile.exists()) {
+                                            boolean status = file.renameTo(oldFile);
+                                            if(!status) {
+                                                Util.print("Failed to rename");
+                                            }
+                                        } else {
+                                            Util.print("File already exists");
+                                        }
+                                    }
+                                }, (txt) -> {
+                                }, FilenameUtils.removeExtension(file.getName()));
+                                mc.displayGuiScreen(input);
+                            }
+                        };
+
+                        //lastSelected = icon.file;
+                        showMenu(0, mouseX, mouseY, open, edit, explorer, delete , rename);
+                    }
+
+
+                    super.mouseClicked(mouseX, mouseY, mouseButton);
+                }
+            };
+            icon.setDimensions(x,y,xWidth,yHeight);
+            icon.setRoundness(0);
+            icon.setColor(0);
+            canvas.add(icon);
+
+            x += xWidth + 10;
             if (xWidth + xWidth >= parent.width) {
                 x = 0;
                 y += yHeight;

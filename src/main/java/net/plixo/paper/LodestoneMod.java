@@ -20,7 +20,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Collectors;
 
-@SuppressWarnings({"unused", "CommentedOutCode"})
 @Mod(LodestoneMod.Mod_ID)
 public class LodestoneMod {
     public final static String Mod_ID = "lodestone";

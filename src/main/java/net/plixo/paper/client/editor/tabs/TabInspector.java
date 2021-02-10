@@ -126,11 +126,10 @@ public class TabInspector extends UITab {
 
                 UIHead head = new UIHead(0) {
                     @Override
-                    public void drawScreen(float mouseX, float mouseY) {
+                    public void drawDisplayString() {
                         if (displayName != null) {
                             Gui.drawStringWithShadow("-" + displayName, x + 5, y + height / 2, textColor);
                         }
-                        super.drawScreen(mouseX, mouseY);
                     }
                 };
                 head.setDimensions(0, 0, parent.width - 10, 20);

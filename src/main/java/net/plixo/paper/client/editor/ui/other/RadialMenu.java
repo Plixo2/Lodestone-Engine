@@ -4,8 +4,8 @@ import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import org.lwjgl.opengl.GL11;
 
-
-@SuppressWarnings({"DuplicatedCode", "unused"})
+//TODO extract Functions...
+@Deprecated
 public class RadialMenu {
 
     public String name;
@@ -93,7 +93,6 @@ public class RadialMenu {
 
     }
 
-    @SuppressWarnings("SameParameterValue")
     void drawCircle(double x, double y, double radius, int color) {
 
         GL11.glBlendFunc(770, 771);

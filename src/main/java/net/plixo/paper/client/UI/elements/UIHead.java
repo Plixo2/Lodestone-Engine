@@ -18,11 +18,13 @@ public class UIHead extends UIElement {
     //simple space or text (without function)
     @Override
     public void drawScreen(float mouseX, float mouseY) {
+      drawDisplayString();
+        super.drawScreen(mouseX, mouseY);
+    }
+    public void drawDisplayString() {
         if (displayName != null) {
             Gui.drawCenteredString(displayName, x + width / 2, y + height / 2, textColor);
         }
-        super.drawScreen(mouseX, mouseY);
     }
-
 
 }

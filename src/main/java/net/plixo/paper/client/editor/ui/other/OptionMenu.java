@@ -28,10 +28,16 @@ public class OptionMenu implements IGuiEvent {
             }
         }
         width += 5;
-        canvas = new UICanvas(0);
-        canvas.setDimensions(x-5, y-5, width+10, (options.length * 12)+10);
-        canvas.setRoundness(3);
-        canvas.setColor(ColorLib.getBackground(-0.1f));
+        canvas = new UICanvas(0) {
+            @Override
+            public void drawScreen(float mouseX, float mouseY) {
+                super.drawScreen(mouseX, mouseY);
+                Gui.drawLinedRoundedRect(x, y, x + width, y + height, roundness, ColorLib.getDarker(this.color), 1);
+            }
+        };
+        canvas.setDimensions(x-2, y-2, width+4, (options.length * 12)+4);
+        canvas.setRoundness(2);
+        canvas.setColor(ColorLib.getBackground(0.3f));
 
         int index = 0;
         for (TxtRun str : options) {
@@ -41,10 +47,10 @@ public class OptionMenu implements IGuiEvent {
                    str.run();
                 }
             };
-            button.setDimensions(5,5+(index*12),width,12);
-            button.setRoundness(0);
+            button.setDimensions(2,2+(index*12),width,12);
+            button.setRoundness(1);
             button.setDisplayName(str.txt);
-            button.setColor(ColorLib.getBackground(0.1f));
+            button.setColor(ColorLib.getBackground(0.2f));
             index += 1;
             canvas.add(button);
         }

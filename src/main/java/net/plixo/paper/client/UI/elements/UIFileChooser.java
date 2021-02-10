@@ -53,7 +53,7 @@ public class UIFileChooser extends UIMultiButton {
 
     //returns the File with existence test
     public File getFile() {
-        if (!file.exists()) {
+        if (file != null && !file.exists()) {
             return null;
         }
         return file;
