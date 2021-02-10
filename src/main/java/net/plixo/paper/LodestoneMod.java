@@ -41,17 +41,6 @@ public class LodestoneMod {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    /*public  class render extends TileEntityRenderer {
-
-        public render(TileEntityRendererDispatcher p_i226006_1_) {
-            super(p_i226006_1_);
-        }
-
-        @Override
-        public void render(TileEntity tileEntity, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
-
-        }
-    }*/
 
     /**
      * Setup function that registers key-input-events.

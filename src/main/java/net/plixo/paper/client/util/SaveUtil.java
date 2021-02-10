@@ -7,41 +7,55 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-@SuppressWarnings("unused")
+/**
+ * Used for Input and output File handling
+ */
 public class SaveUtil {
 
-
-
+    /**
+     * Used to have different formats separately and globally
+     */
     public enum FileFormat {
-        Code("js"), Hud("hud"), Other("json"), VisualScript("vs") , Model("obj") , Timeline("tl");
+        Code("js"), Hud("hud"), Other("json"), VisualScript("vs"), Model("obj"), Timeline("tl");
 
         public String format;
 
+        /**
+         * @param format File extension for File use
+         */
         FileFormat(String format) {
             this.format = format;
         }
 
     }
 
-    static String format = ".json";
-
+    /**
+     * @param name File name
+     * @param format {@link FileFormat} as extension
+     * @return constructed File
+     */
     public static File getFileFromName(String name, FileFormat format) {
-
         return new File("Paper/" + name + "." + format.format);
     }
 
+    /**
+     * @param name Folder name
+     * @return constructed File from Folder
+     */
     public static File getFolderFromName(String name) {
-
         return new File("Paper/" + name);
     }
 
+    /**
+     * @param file Folder location
+     * @return array of all Folders in File
+     */
     public static ArrayList<String> listFolders(File file) {
         try {
             ArrayList<String> names = new ArrayList<>();
 
             if (!file.exists()) {
                 try {
-                    //noinspection ResultOfMethodCallIgnored
                     file.mkdirs();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -60,6 +74,10 @@ public class SaveUtil {
         }
     }
 
+    /**
+     * @param file File to read
+     * @return String array for lines
+     */
     public static ArrayList<String> loadFromFile(File file) {
         try {
             if (!file.exists()) {
@@ -80,6 +98,11 @@ public class SaveUtil {
         }
     }
 
+    /**
+     * @param parser {@link JsonParser} to parse (can be {@code new JsonParser()})
+     * @param file File to read
+     * @return constructed {@link JsonElement}
+     */
     public static JsonElement loadFromJson(JsonParser parser, File file) {
         try {
             if (!file.exists()) {
@@ -93,7 +116,9 @@ public class SaveUtil {
         }
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
+    /**
+     * @param file the File to construct
+     */
     public static void makeFile(File file) {
 
         if (!file.exists()) {
@@ -107,6 +132,9 @@ public class SaveUtil {
 
     }
 
+    /**
+     * @param file to Folder to construct
+     */
     public static void makeFolder(File file) {
 
         if (!file.exists()) {
@@ -119,6 +147,12 @@ public class SaveUtil {
         }
     }
 
+    /**
+     * @param file File to save the Array
+     * @param lines array of the lines
+     * @param extra should add extra line breakJsonParser?
+     * @return was save successful?
+     */
     public static boolean save(File file, ArrayList<String> lines, boolean extra) {
         try {
 
@@ -141,7 +175,12 @@ public class SaveUtil {
         }
     }
 
-    @SuppressWarnings("UnusedReturnValue")
+    /**
+     *
+     * @param file  File to save the Element
+     * @param json {@link JsonElement} to save
+     * @return was save successful?
+     */
     public static boolean saveJsonObj(File file, JsonElement json) {
 
         try {
@@ -160,6 +199,10 @@ public class SaveUtil {
 
     }
 
+    /**
+     * @param path Path to File
+     * @return String with linebreak chars
+     */
     public static String loadAsString(String path) {
         StringBuilder result = new StringBuilder();
 
