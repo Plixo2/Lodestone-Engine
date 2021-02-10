@@ -1,11 +1,17 @@
 package net.plixo.paper.client.UI.elements;
 
+
+import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.fml.Logging;
 import net.plixo.paper.client.util.ColorLib;
 
+
+/**
+ *  for editing and displaying a vector in the UI
+ *  using three {@code UIPointNumber}
+ **/
 public class UIVector extends UICanvas {
-
-
     //UIPointNumber for XYZ components
     public UIPointNumber spinnerX;
     public UIPointNumber spinnerY;

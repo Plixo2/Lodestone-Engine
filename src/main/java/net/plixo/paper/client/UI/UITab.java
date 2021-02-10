@@ -6,9 +6,16 @@ import net.plixo.paper.client.editor.ui.other.OptionMenu;
 import net.plixo.paper.client.editor.visualscript.Rect;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
+import org.lwjgl.opengl.GL11;
 
 
+/**
+ * a Class for handling the drawing of a tab
+ * with right offset and clipping (using {@code GL11.glScissor()})
+ * UITab is inside of {@code TabbedUI}
+ **/
 public class UITab implements IGuiEvent {
+
 
     public static Minecraft mc = Minecraft.getInstance();
     public Rect head;
@@ -25,6 +32,7 @@ public class UITab implements IGuiEvent {
     }
 
 
+    //Event passing for the default UICanvas
     @Override
     public void onTick() {
         canvas.onTick();
@@ -50,6 +58,7 @@ public class UITab implements IGuiEvent {
         canvas.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
+    //simple outline using lines
     public void drawOutline() {
         int lineColor = ColorLib.getMainColor();
         int width = 2;
@@ -59,15 +68,17 @@ public class UITab implements IGuiEvent {
         Gui.drawLine(parent.width, 0, parent.width, parent.height, lineColor, width);
     }
 
-    public void hideMenu() {
-        parent.menu = null;
-    }
-
 
     void setParent(TabbedUI parent) {
         this.parent = parent;
     }
 
+    //TODO do this global
+    //for hiding the option Menu
+    public void hideMenu() {
+        parent.menu = null;
+    }
+    //displaying and creating a new options menu
     public void showMenu(int id, float x, float y, OptionMenu.TxtRun... options) {
         parent.menu = new OptionMenu(id, x, y, options);
     }

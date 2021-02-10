@@ -1,6 +1,10 @@
 package net.plixo.paper.client.UI;
 
+/**
+ *  Event interface for standard event handling in Guis
+ **/
 public interface IGuiEvent {
+
     default void drawScreen(float mouseX, float mouseY) {
     }
 

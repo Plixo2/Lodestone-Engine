@@ -4,9 +4,11 @@ package net.plixo.paper.client.UI.elements;
 import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.util.Gui;
 
+/**
+ *  for  displaying empty space or double in the UI
+ *  using Minecraft {@code TextFieldWidget}
+ **/
 public class UIHead extends UIElement {
-
-
 
     public UIHead(int id) {
         super(id);

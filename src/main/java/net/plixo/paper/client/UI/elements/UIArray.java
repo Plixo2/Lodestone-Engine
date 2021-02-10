@@ -5,9 +5,13 @@ import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.MouseUtil;
 
+/**
+ * UICanvas with scroll support and easy (vertical) layout handling
+ */
 public class UIArray extends UICanvas {
 
 
+    //fixed array height
     public float arrayheight = 20;
     float yOffset = 0;
     int lineColor = ColorLib.orange();
@@ -41,6 +45,7 @@ public class UIArray extends UICanvas {
         }
     }
 
+    //Scroll support
     void mouse() {
         float dir = Math.signum(MouseUtil.getDWheel());
         if (dir != 0) {
@@ -58,11 +63,13 @@ public class UIArray extends UICanvas {
         }
     }
 
+    //set right dimensions
     @Override
     public void add(UIElement element) {
         element.setDimensions(0, 0, width, arrayheight);
         super.add(element);
     }
+
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
@@ -70,7 +77,7 @@ public class UIArray extends UICanvas {
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-
+    //set the right height for each element
     public void sort() {
 
         int index = 0;

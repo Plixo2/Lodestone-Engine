@@ -13,7 +13,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-
+/**
+ * for displaying and choosing a file with {@code JFileChooser}
+ **/
 public class UIFileChooser extends UIMultiButton {
 
     //JFileChooser is multi threaded.. i think

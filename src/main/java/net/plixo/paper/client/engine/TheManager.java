@@ -2,6 +2,7 @@ package net.plixo.paper.client.engine;
 
 import com.google.gson.*;
 import net.minecraft.util.math.vector.Vector3d;
+import net.plixo.paper.client.UI.elements.UICanvas;
 import net.plixo.paper.client.engine.behaviors.OutlineRender;
 import net.plixo.paper.client.engine.behaviors.Script;
 import net.plixo.paper.client.engine.behaviors.VisualScript;
@@ -51,7 +52,6 @@ public class TheManager {
         entity.init();
     }
 
-    @SuppressWarnings("unused")
     public static boolean removeEntity(GameObject entity) {
         if (!allEntities.contains(entity)) {
             return false;

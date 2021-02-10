@@ -5,6 +5,10 @@ import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 
+/**
+ * for editing and displaying a boolean in the UI
+ * with different names for the two states
+ **/
 public class UIToggleButton extends UIElement {
 
 

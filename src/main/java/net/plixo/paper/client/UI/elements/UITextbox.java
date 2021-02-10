@@ -7,6 +7,11 @@ import net.plixo.paper.client.UI.UIElement;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 
+
+/**
+ *  for editing and displaying text in the UI
+ *  using Minecraft {@code TextFieldWidget}
+ **/
 public class UITextbox extends UIElement {
 
 

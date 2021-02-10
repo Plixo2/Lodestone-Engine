@@ -9,9 +9,11 @@ import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.Util;
 
-
+/**
+ *  for editing and displaying a float or double in the UI
+ *  using Minecraft {@code TextFieldWidget}
+ **/
 public class UIPointNumber extends UIElement {
-
     TextFieldWidget field;
 
 

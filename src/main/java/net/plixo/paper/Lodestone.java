@@ -25,7 +25,7 @@ public class Lodestone {
         if (modToSave != null) {
             modToSave.canvas.saveToFile();
         }
-        if(TheEditor.timeline != null && TheEditor.timeline.currentTimeline != null) {
+        if (TheEditor.timeline != null && TheEditor.timeline.currentTimeline != null) {
             TheEditor.timeline.currentTimeline.saveToFile();
         }
         TheManager.save();
@@ -38,7 +38,6 @@ public class Lodestone {
     }
 
     public static void update(String name, Variable var) {
-
         Lodestone.paperEngine.onEvent(name, var);
         if (System.currentTimeMillis() - lastMS > 60000) {
             if (!paperEngine.isRunning) {
@@ -47,6 +46,7 @@ public class Lodestone {
             lastMS = System.currentTimeMillis();
         }
     }
+
     public static void render() {
         Lodestone.paperEngine.render();
     }

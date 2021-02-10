@@ -7,7 +7,10 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 
-
+/**
+* holds a array of {@code UITab}
+ * handles input for the current tab;
+ **/
 public class TabbedUI implements IGuiEvent {
 
 

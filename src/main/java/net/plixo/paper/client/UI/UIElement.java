@@ -4,6 +4,10 @@ package net.plixo.paper.client.UI;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Util;
 
+/**
+ * Default ui class, updates
+ * hoverProgress and handles simple click action with {@code actionPerformed()}
+ **/
 public abstract class UIElement implements IGuiEvent {
 
 
@@ -82,7 +86,6 @@ public abstract class UIElement implements IGuiEvent {
         }
 
         hoverProgress = (float) Util.clampDouble(hoverProgress + delta, 100, 0);
-
         lastMs = System.currentTimeMillis();
     }
 }

@@ -5,7 +5,10 @@ import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import org.lwjgl.opengl.GL11;
 
-
+/**
+ * please use now {@code UICanvas} for multiple UIElement support
+ **/
+@Deprecated
 public abstract class UIMultiButton extends UIElement {
 
 

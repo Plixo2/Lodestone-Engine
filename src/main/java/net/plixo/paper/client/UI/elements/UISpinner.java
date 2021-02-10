@@ -8,7 +8,10 @@ import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.Util;
 import org.lwjgl.glfw.GLFW;
 
-
+/**
+ *  for editing and displaying a integer in the UI
+ *  using Minecraft {@code TextFieldWidget} and up and down buttons
+ **/
 public class UISpinner extends UIMultiButton {
 
     public TextFieldWidget field;
