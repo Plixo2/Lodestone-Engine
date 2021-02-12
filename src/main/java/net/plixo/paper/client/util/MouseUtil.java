@@ -1,5 +1,8 @@
 package net.plixo.paper.client.util;
 
+/**
+ * Mouse Util class or using wheel scrolling inside the UI
+ */
 public class MouseUtil {
 
     static float dWheel = 0;

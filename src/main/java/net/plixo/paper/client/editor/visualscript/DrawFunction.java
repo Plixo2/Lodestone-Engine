@@ -89,7 +89,6 @@ public class DrawFunction {
             y += (mouseY - dragY);
             dragX = mouseX;
             dragY = mouseY;
-
         }
 
         GL11.glPushMatrix();

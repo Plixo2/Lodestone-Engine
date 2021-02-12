@@ -15,6 +15,7 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.plixo.paper.client.forge.KeyBinds;
 import net.plixo.paper.client.forge.events.KeyInput;
+import net.plixo.paper.client.forge.events.Rendering;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,6 +50,9 @@ public class LodestoneMod {
     private void setup(final FMLCommonSetupEvent event) {
         KeyBinds.register();
         MinecraftForge.EVENT_BUS.register(new KeyInput());
+      //  MinecraftForge.EVENT_BUS.register(new Rendering());
+
+
         LOGGER.info("//PRE-INIT//");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }

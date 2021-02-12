@@ -49,7 +49,6 @@ public class TabbedUI implements IGuiEvent {
             tab.head.hoverColor = 0;
 
             if (selectedIndex == i) {
-
                 GL11.glPushMatrix();
                 Gui.createScissorBox(x, y, x + width, y + height + 1);
                 Gui.activateScissor();

@@ -131,8 +131,25 @@ public class Lib2D {
         glBegin(9);
         int i = 0;
         glVertex2d(x, y);
+        double theta = 0;
         while (i <= 360) {
-            glVertex2d((x + Math.sin((double) i * Math.PI / 90.0) * radius), (y + Math.cos(i * Math.PI / 90.0) * radius));
+            theta = i * Math.PI / 90.0;
+
+            glVertex2d((x + Math.sin(theta) * radius), (y + Math.cos(theta) * radius));
+            i += 3;
+        }
+        glEnd();
+        reset();
+    }
+    public static void drawOval(double x , double y , double width ,double height , int color ) {
+        set(color);
+        glBegin(9);
+        int i = 0;
+        double theta = 0;
+        glVertex2d(x, y);
+        while (i <= 360) {
+            theta = i * Math.PI / 90.0;
+            GL11.glVertex2d(x + (width/2 * Math.cos(theta)), (height/2 * Math.sin(theta)));
             i += 3;
         }
         glEnd();

@@ -59,6 +59,12 @@
     },
     "done": true
   },
+  "minecraft:recipes/building_blocks/stone_bricks": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
+    },
+    "done": true
+  },
   "minecraft:recipes/misc/wheat": {
     "criteria": {
       "has_hay_block": "2021-02-08 01:35:06 +0100"
@@ -161,6 +167,12 @@
     },
     "done": true
   },
+  "minecraft:recipes/building_blocks/smooth_stone": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
+    },
+    "done": true
+  },
   "minecraft:recipes/building_blocks/dark_prismarine_stairs_from_dark_prismarine_stonecutting": {
     "criteria": {
       "has_dark_prismarine": "2021-02-08 01:28:18 +0100"
@@ -191,9 +203,21 @@
     },
     "done": true
   },
+  "minecraft:recipes/building_blocks/stone_slab_from_stone_stonecutting": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
+    },
+    "done": true
+  },
   "minecraft:recipes/building_blocks/end_stone_brick_slab_from_end_stone_stonecutting": {
     "criteria": {
       "has_end_stone": "2021-02-08 01:04:00 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/chiseled_stone_bricks_stone_from_stonecutting": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
     },
     "done": true
   },
@@ -248,6 +272,12 @@
   "minecraft:recipes/redstone/redstone_lamp": {
     "criteria": {
       "has_glowstone": "2021-02-08 01:51:16 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/stone_brick_slab_from_stone_stonecutting": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
     },
     "done": true
   },
@@ -473,6 +503,12 @@
     },
     "done": true
   },
+  "minecraft:recipes/building_blocks/stone_stairs_from_stone_stonecutting": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
+    },
+    "done": true
+  },
   "minecraft:recipes/redstone/warped_fence_gate": {
     "criteria": {
       "has_planks": "2021-01-31 23:45:51 +0100"
@@ -641,6 +677,12 @@
     },
     "done": true
   },
+  "minecraft:recipes/building_blocks/stone_brick_stairs_from_stone_stonecutting": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
+    },
+    "done": true
+  },
   "minecraft:recipes/building_blocks/white_wool_from_string": {
     "criteria": {
       "has_string": "2021-01-28 00:42:18 +0100"
@@ -678,7 +720,8 @@
       "minecraft:spider": "2021-01-28 00:42:17 +0100",
       "minecraft:creeper": "2021-01-27 17:28:19 +0100",
       "minecraft:witch": "2021-01-30 00:41:10 +0100",
-      "minecraft:husk": "2021-01-27 17:56:03 +0100"
+      "minecraft:husk": "2021-01-27 17:56:03 +0100",
+      "minecraft:shulker": "2021-02-11 21:32:54 +0100"
     },
     "done": false
   },
@@ -880,6 +923,12 @@
     },
     "done": true
   },
+  "minecraft:recipes/building_blocks/stone_bricks_from_stone_stonecutting": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
+    },
+    "done": true
+  },
   "minecraft:recipes/decorations/loom": {
     "criteria": {
       "has_string": "2021-01-28 00:42:18 +0100"
@@ -967,6 +1016,12 @@
   "minecraft:recipes/misc/red_dye_from_poppy": {
     "criteria": {
       "has_red_flower": "2021-02-01 00:09:45 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/stone_slab": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
     },
     "done": true
   },
@@ -1120,6 +1175,12 @@
     },
     "done": true
   },
+  "minecraft:recipes/redstone/stone_button": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
+    },
+    "done": true
+  },
   "minecraft:recipes/building_blocks/sandstone_slab_from_sandstone_stonecutting": {
     "criteria": {
       "has_sandstone": "2021-01-27 17:19:10 +0100"
@@ -1228,6 +1289,12 @@
     },
     "done": true
   },
+  "minecraft:recipes/decorations/stonecutter": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
+    },
+    "done": true
+  },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
       "minecraft:desert": "2021-01-27 17:18:40 +0100"
@@ -1288,6 +1355,12 @@
     },
     "done": true
   },
+  "minecraft:recipes/redstone/stone_pressure_plate": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
+    },
+    "done": true
+  },
   "minecraft:recipes/decorations/purple_stained_glass_pane_from_glass_pane": {
     "criteria": {
       "has_glass_pane": "2021-01-31 23:43:32 +0100"
@@ -1327,6 +1400,12 @@
   "minecraft:recipes/building_blocks/polished_andesite_slab_from_polished_andesite_stonecutting": {
     "criteria": {
       "has_polished_andesite": "2021-02-08 01:12:00 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/stone_brick_walls_from_stone_stonecutting": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
     },
     "done": true
   },
@@ -1417,6 +1496,12 @@
   "minecraft:recipes/misc/stick_from_bamboo_item": {
     "criteria": {
       "has_bamboo": "2021-02-01 00:04:32 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/stone_stairs": {
+    "criteria": {
+      "has_stone": "2021-02-11 16:31:49 +0100"
     },
     "done": true
   },

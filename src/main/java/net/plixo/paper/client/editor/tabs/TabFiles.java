@@ -12,7 +12,7 @@ import net.plixo.paper.client.editor.ui.accept.UIAccept;
 import net.plixo.paper.client.editor.ui.accept.UITextInput;
 import net.plixo.paper.client.editor.TheEditor;
 import net.plixo.paper.client.editor.ui.other.OptionMenu;
-import net.plixo.paper.client.editor.ui.other.UIFileIcon;
+import net.plixo.paper.client.UI.elements.UIFileIcon;
 import net.plixo.paper.client.editor.visualscript.Canvas;
 import net.plixo.paper.client.engine.components.visualscript.Module;
 import net.plixo.paper.client.util.*;

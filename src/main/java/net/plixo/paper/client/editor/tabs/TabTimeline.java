@@ -15,8 +15,7 @@ import java.io.File;
 public class TabTimeline extends UITab {
 
 
-    public Timeline currentTimeline;
-    Timeline.Timepoint currentTimepoint = null;
+    public Timeline currentTimeline = null;
 
     public TabTimeline(int id) {
         super(id, "Timeline");
@@ -39,41 +38,8 @@ public class TabTimeline extends UITab {
         canvas.setRoundness(0);
         canvas.setColor(ColorLib.getBackground(0.1f));
 
-        UIPointNumber progressField = new UIPointNumber(0) {
-            @Override
-            public void onTick() {
-                if (currentTimeline != null && currentTimepoint != null) {
-                    double newVal = Util.clampDouble(getAsDouble() , 1 , 0);
-                    double diff =  currentTimepoint.progess- newVal;
 
-                    if(Math.abs(diff) > 0.005) {
-                        currentTimepoint.progess = (float) newVal;
-                        currentTimeline.sort();
-                    }
-                }
-            }
-        };
-        progressField.setDimensions(1,1,98,20);
-        progressField.setRoundness(0);
-        canvas.add(progressField);
 
-        UIPointNumber levelField = new UIPointNumber(0) {
-            @Override
-            public void onTick() {
-                if (currentTimeline != null && currentTimepoint != null) {
-                    double newVal = Util.clampDouble(getAsDouble() , 1 , 0);
-
-                    double diff =  currentTimepoint.yLevel- newVal;
-                    if(Math.abs(diff) > 0.005) {
-                       currentTimepoint.yLevel = (float) newVal;
-                        currentTimeline.sort();
-                    }
-                }
-            }
-        };
-        levelField.setDimensions(1,21,98,20);
-        levelField.setRoundness(0);
-        canvas.add(levelField);
 
         UICanvas time = new UICanvas(0) {
 
@@ -95,21 +61,6 @@ public class TabTimeline extends UITab {
                     };
                     if (mouseButton == 1) {
                         showMenu(0, mouseX, mouseY, runnable);
-                    } else {
-                        int size = currentTimeline.timepoints.size();
-                        for (int i = 0; i < size; i++) {
-                            Timeline.Timepoint point = currentTimeline.timepoints.get(i);
-                            float aspect = width/height;
-                            float dx = (point.progess - percentX)*aspect;
-                            float dy = point.yLevel - percentY;
-                            double distance = Math.sqrt(dx * dx + dy * dy);
-                            if (distance < 0.04) {
-                                currentTimepoint = point;
-                                progressField.setValue(currentTimepoint.progess);
-                                levelField.setValue(currentTimepoint.yLevel);
-                                break;
-                            }
-                        }
                     }
 
                 }
@@ -141,9 +92,7 @@ public class TabTimeline extends UITab {
                         Gui.drawCircle(pX, pY, 2, distance < 0.04 ? ColorLib.orange() : ColorLib.red());
                         if (i < size - 1) {
                             Timeline.Timepoint next = currentTimeline.timepoints.get(i + 1);
-                            float pnX = x + (width * next.progess);
-                            float pnY = y + (height * next.yLevel);
-                            Gui.drawLine(pX, pY, pnX, pnY, -1, 2);
+                            Gui.drawLine(pX, pY, x + (width * next.progess), y + (height * next.yLevel), -1, 2);
                         }
                     }
                 }

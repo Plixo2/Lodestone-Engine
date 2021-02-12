@@ -44,16 +44,9 @@ public class UIEditor extends Screen {
 		toolbar.drawScreen(mouseX,mouseY);
 
 		for (TabbedUI tab : tabs) {
-
 			GL11.glPushMatrix();
-
 			GL11.glTranslated(tab.x, tab.y, 0);
-
-			//float newMx = mouseX - tab.x;
-			//float newMy = mouseY - tab.y;
-
 			tab.drawScreen(mouseX,mouseY);
-
 			GL11.glPopMatrix();
 		}
 		MouseUtil.resetWheel();
