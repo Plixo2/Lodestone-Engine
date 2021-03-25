@@ -1,14 +1,13 @@
 package net.plixo.paper.client.editor.tabs;
 
-import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.UI.elements.UICanvas;
-import net.plixo.paper.client.editor.TheEditor;
+import net.plixo.paper.client.ui.UITab;
+import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.manager.TheEditor;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.MouseUtil;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.CopyOnWriteArrayList;
 

@@ -4,8 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.client.editor.tabs.TabConsole;
-import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
+import net.plixo.paper.client.avs.components.variable.Variable;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
@@ -20,9 +22,9 @@ public class Util {
     public static Minecraft mc = Minecraft.getInstance();
 
     /**
-     * @param value  value to clamp between two values
-     * @param max  max of the value
-     * @param min  min of the value
+     * @param value value to clamp between two values
+     * @param max   max of the value
+     * @param min   min of the value
      * @return clamped result
      */
     public static int clamp(int value, int max, int min) {
@@ -30,9 +32,9 @@ public class Util {
     }
 
     /**
-     * @param value  value to clamp between two values
-     * @param max  max of the value
-     * @param min  min of the value
+     * @param value value to clamp between two values
+     * @param max   max of the value
+     * @param min   min of the value
      * @return clamped result
      */
     public static double clampDouble(double value, double max, double min) {
@@ -41,10 +43,22 @@ public class Util {
     }
 
     /**
+     * @param value value to clamp between two values
+     * @param max   max of the value
+     * @param min   min of the value
+     * @return clamped result
+     */
+    public static float clampFloat(float value, float max, float min) {
+
+        return Math.max(min, Math.min(value, max));
+    }
+
+    /**
      * using {@code Gui.getStringWidth()} to cut a String a the max distance
-     * @param name  String to cut
+     *
+     * @param name String to cut
      * @param max  max display length
-     * @return  cut String
+     * @return cut String
      */
     public static String displayTrim(String name, float max) {
 
@@ -62,8 +76,7 @@ public class Util {
     }
 
     /**
-     *
-     * @param str  input
+     * @param str   input
      * @param split characters the split the String
      * @return String split
      */
@@ -75,7 +88,6 @@ public class Util {
     }
 
     /**
-     *
      * @param str number as String
      * @return is String a number
      */
@@ -107,8 +119,7 @@ public class Util {
 
 
     /**
-     *
-     * @param var Variable where custom data should get put in
+     * @param var  Variable where custom data should get put in
      * @param name data as String
      */
     public static void loadIntoVar(Variable var, String name) {
@@ -168,6 +179,7 @@ public class Util {
 
     /**
      * Standard print for System Console and {@link TabConsole} for debugging
+     *
      * @param obj String as Obj
      */
     public static void print(Object obj) {
@@ -177,11 +189,10 @@ public class Util {
     }
 
     /**
-     *
-     * @param str input
-     * @param arg String that should get replaced
+     * @param str     input
+     * @param arg     String that should get replaced
      * @param replace String that should be placed
-     * @return  replaced String
+     * @return replaced String
      */
     public static String replace(String str, String arg, String replace) {
         if (str.contains(arg)) {
@@ -192,6 +203,7 @@ public class Util {
 
     /**
      * Construct a Vector from a String (e.g. "1,2,3" for x=1, y = 2, z = 3)
+     *
      * @param str Input
      * @return constructed String
      */
@@ -211,11 +223,25 @@ public class Util {
                 }
             }
         }
-        return new Vector3d(0,0,0);
+        return new Vector3d(0, 0, 0);
+    }
+
+    public static void findFiles(String directoryName, ArrayList<File> files) {
+        File directory = new File(directoryName);
+        File[] fList = directory.listFiles();
+        if (fList != null)
+            for (File file : fList) {
+                if (file.isFile()) {
+                    files.add(file);
+                } else if (file.isDirectory()) {
+                    findFiles(file.getAbsolutePath(), files);
+                }
+            }
     }
 
     /**
      * revered Method of {@code getVecFromString()}
+     *
      * @param vec input
      * @return constructed String
      */

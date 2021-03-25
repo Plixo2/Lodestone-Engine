@@ -31,8 +31,8 @@ public class ColorLib {
         return 0xFFF25D27;
     }
 
-    public static int utilLines() {
-        return 0x6F000000;
+    public static int green() {
+        return 0xFF05A66B;
     }
 
     public static int getVisualScriptMainColor() {
@@ -80,6 +80,15 @@ public class ColorLib {
                 (int) ((g2 - g1) * fraction + g1) << 8 |
                 (int) ((b2 - b1) * fraction + b1);
     }
+    public static int setAlpha(int color1, int alpha) {
 
+        int r1 = (color1 >> 16) & 0xff;
+        int g1 = (color1 >> 8) & 0xff;
+        int b1 = color1 & 0xff;
+        return  alpha << 24 |
+                r1 << 16 |
+                b1 << 8 |
+                g1;
+    }
 
 }

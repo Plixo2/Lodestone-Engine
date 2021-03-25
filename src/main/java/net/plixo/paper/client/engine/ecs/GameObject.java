@@ -1,7 +1,7 @@
 package net.plixo.paper.client.engine.ecs;
 
 import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
+import net.plixo.paper.client.avs.components.variable.Variable;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 

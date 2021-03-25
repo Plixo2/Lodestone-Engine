@@ -1,12 +1,15 @@
 package net.plixo.paper.client.editor.tabs;
 
-import net.plixo.paper.client.UI.UIElement;
-import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.UI.elements.UIArray;
-import net.plixo.paper.client.UI.elements.UIButton;
-import net.plixo.paper.client.editor.TheEditor;
-import net.plixo.paper.client.editor.ui.other.OptionMenu;
-import net.plixo.paper.client.engine.TheManager;
+import net.plixo.paper.client.ui.GUI.GUIAccept;
+import net.plixo.paper.client.ui.UIElement;
+import net.plixo.paper.client.ui.UITab;
+import net.plixo.paper.client.ui.elements.UIArray;
+import net.plixo.paper.client.ui.elements.UIButton;
+import net.plixo.paper.client.manager.TheEditor;
+import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.ui.elements.UILabel;
+import net.plixo.paper.client.ui.other.OptionMenu;
+import net.plixo.paper.client.manager.TheManager;
 import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
@@ -23,40 +26,27 @@ public class TabExplorer extends UITab {
 
     @Override
     public void init() {
-        canvas = new UIArray(0) {
-            @Override
-            public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-
-                for (UIElement element : elements) {
-                    if(element.hovered(mouseX-x,mouseY-y)) {
-                        super.mouseClicked(mouseX, mouseY, mouseButton);
-                        return;
-                    }
-                }
-
-                if(mouseButton == 1 && hovered(mouseX,mouseY)) {
-                    OptionMenu.TxtRun run = new OptionMenu.TxtRun("New Entity") {
-                        @Override
-                        protected void run() {
-                            GameObject entity = new GameObject("NewEntity" + TheManager.allEntities.size());
-                            TheManager.addEntity(entity);
-                            reCalc();
-                        }
-                    };
-                    showMenu(0, mouseX, mouseY, run);
-                }
-            }
-        };
-        canvas.setDimensions(0, 0, parent.width, parent.height);
+        canvas = new UICanvas(0);
+        canvas.setDimensions(0,0, parent.width, parent.height);
         canvas.setRoundness(0);
-        canvas.setColor(ColorLib.getBackground(0.2f));
+
         reCalc();
         super.init();
     }
 
     void reCalc() {
         canvas.clear();
+        UIArray array = new UIArray(0);
+        array.setDimensions(0, 15, parent.width, parent.height-15);
+        array.setRoundness(0);
+        array.setColor(ColorLib.getBackground(0.2f));
+
         for (GameObject obj : TheManager.allEntities) {
+
+            UICanvas main = new UICanvas(0);
+            main.setDimensions(0,0, canvas.width-15, 20);
+
+
             UIButton button = new UIButton(0) {
                 @Override
                 public void drawStringCentered(float mouseX, float mouseY) {
@@ -70,30 +60,46 @@ public class TabExplorer extends UITab {
                     TheEditor.inspector.initInspector(obj);
                 }
 
-                @Override
-                public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-                    if(mouseButton == 1 && hovered(mouseX,mouseY)) {
-                        UIButton b = this;
-                        OptionMenu.TxtRun run = new OptionMenu.TxtRun("Delete") {
-                            @Override
-                            protected void run() {
-                                TheManager.allEntities.remove(obj);
-                                canvas.remove(b);
-                                TheEditor.inspector.initInspector(null);
-                            }
-                        };
-                        showMenu(0, mouseX, mouseY, run);
-                        return;
-                    }
-                    super.mouseClicked(mouseX, mouseY, mouseButton);
-                }
             };
+            button.setDimensions(0,0, main.width-20, 20);
             button.setDisplayName(obj.name);
             button.setRoundness(3);
             button.setColor(0);
-            canvas.add(button);
+
+            UIButton label = new UIButton(0) {
+                @Override
+                public void actionPerformed() {
+                    mc.displayGuiScreen(new GUIAccept(() -> {
+                        TheManager.removeEntity(obj);
+                        TheEditor.inspector.initInspector((GameObject) null);
+                        reCalc();
+                    }, () -> {
+                    }, "Delete?"));
+                }
+            };
+            label.setDimensions(main.width-20,0,20,20);
+            label.setDisplayName("-");
+
+            main.add(button);
+            main.add(label);
+
+            array.add(main);
         }
 
+        UIButton addEntity = new UIButton(0) {
+            @Override
+            public void actionPerformed() {
+                GameObject entity = new GameObject("NewEntity" + TheManager.allEntities.size());
+                TheManager.addEntity(entity);
+                reCalc();
+            }
+        };
+        addEntity.setDisplayName("+");
+        addEntity.setColor(ColorLib.blue());
+        addEntity.setDimensions(parent.width-15, 0,15,15);
+        canvas.add(addEntity);
+
+        canvas.add(array);
     }
 
 

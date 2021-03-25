@@ -1,11 +1,11 @@
 package net.plixo.paper;
 
-import net.plixo.paper.client.editor.TheEditor;
-import net.plixo.paper.client.engine.PaperEngine;
-import net.plixo.paper.client.engine.TheManager;
-import net.plixo.paper.client.engine.components.visualscript.Module;
-import net.plixo.paper.client.engine.components.visualscript.VisualScriptManager;
-import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
+import net.plixo.paper.client.manager.TheEditor;
+import net.plixo.paper.client.engine.LodestoneEngine;
+import net.plixo.paper.client.manager.TheManager;
+import net.plixo.paper.client.avs.components.Module;
+import net.plixo.paper.client.manager.VisualScriptManager;
+import net.plixo.paper.client.avs.components.variable.Variable;
 
 /**
  * Second main class.
@@ -13,17 +13,17 @@ import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
  */
 public class Lodestone {
     static long lastMS = 0;
-    public static PaperEngine paperEngine;
+    public static LodestoneEngine lodestoneEngine;
 
 
     /**
      * First function called.
-     * Initialises {@link PaperEngine} parameter.
+     * Initialises {@link LodestoneEngine} parameter.
      * Calls load function.
      */
     public static void startClient() {
         System.setProperty("java.awt.headless", "false");
-        paperEngine = new PaperEngine();
+        lodestoneEngine = new LodestoneEngine();
         load();
     }
 
@@ -42,13 +42,18 @@ public class Lodestone {
      * Calls the save function in {@link TheManager}.
      */
     public static void save() {
+        /*
         Module modToSave = TheEditor.activeMod;
         if (modToSave != null) {
             modToSave.canvas.saveToFile();
         }
+         */
+        /*
         if(TheEditor.timeline != null && TheEditor.timeline.currentTimeline != null) {
             TheEditor.timeline.currentTimeline.saveToFile();
         }
+
+         */
         TheManager.save();
     }
 
@@ -56,13 +61,13 @@ public class Lodestone {
      * Event handling.
      *
      * @param name Event name.
-     * @param var Event data.
+     * @param var  Event data.
      */
     public static void update(String name, Variable var) {
 
-        Lodestone.paperEngine.onEvent(name, var);
+        Lodestone.lodestoneEngine.onEvent(name, var);
         if (System.currentTimeMillis() - lastMS > 60000) {
-            if (!paperEngine.isRunning) {
+            if (!lodestoneEngine.isRunning) {
                 Lodestone.save();
             }
             lastMS = System.currentTimeMillis();
@@ -73,7 +78,7 @@ public class Lodestone {
      * Render handling.
      */
     public static void render() {
-        Lodestone.paperEngine.render();
+        Lodestone.lodestoneEngine.render();
     }
 
 

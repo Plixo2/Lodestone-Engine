@@ -2,18 +2,19 @@ package net.plixo.paper.client.engine.ecs;
 
 import com.google.gson.JsonObject;
 import net.minecraft.util.math.vector.Vector3d;
+import net.plixo.paper.client.ui.UIElement;
+import net.plixo.paper.client.ui.elements.*;
 import net.plixo.paper.client.util.Util;
 
 import java.io.File;
 
 public class Resource {
 
-    @SuppressWarnings("rawtypes")
     public Class clazz;
     public String name;
-    Object value;
+    public Object value;
 
-    @SuppressWarnings("rawtypes")
+
     public Resource(String name, Class clazz, Object initValue) {
         this.clazz = clazz;
         this.name = name;
@@ -34,7 +35,7 @@ public class Resource {
             setValue(Integer.valueOf(str));
         } else if (isString()) {
             setValue(str);
-        }else if (isVector()) {
+        } else if (isVector()) {
             setValue(Util.getVecFromString(str));
         }
     }
@@ -74,9 +75,10 @@ public class Resource {
         }
         return (String) value;
     }
+
     public Vector3d getAsVector() {
         if (!hasValue()) {
-            return new Vector3d(0,0,0);
+            return new Vector3d(0, 0, 0);
         }
         return (Vector3d) value;
     }
@@ -119,7 +121,7 @@ public class Resource {
         this.value = value;
     }
 
-    String toTxt() {
+    public String toTxt() {
         if (!hasValue()) {
             return "";
         }
@@ -135,9 +137,86 @@ public class Resource {
             return getAsString();
         } else if (isVector()) {
 
-            return   Util.getStringFromVector(getAsVector());
+            return Util.getStringFromVector(getAsVector());
         }
         return "";
     }
+    public static UIElement getUIElement(Resource res , float x, float y, float width, float height) {
+        UIElement element = null;
+        if (res.isFile()) {
+            UIFileChooser chooser = new UIFileChooser(0) {
+                @Override
+                public void onTick() {
+                    res.setValue(getFile());
+                    super.onTick();
+                }
+            };
+            element = chooser;
+            element.setDimensions(x,y,width,height);
+            chooser.setFile(res.getAsFile());
 
+        } else if (res.isInteger()) {
+            UISpinner spinner = new UISpinner(0) {
+                @Override
+                public void onTick() {
+                    res.setValue(getNumber());
+                    super.onTick();
+                }
+            };
+            element = spinner;
+            element.setDimensions(x,y,width,height);
+            spinner.setNumber(res.getAsInteger());
+        } else if (res.isBoolean()) {
+            UIToggleButton toggleButton = new UIToggleButton(0) {
+                @Override
+                public void onTick() {
+                    res.setValue(getState());
+                    super.onTick();
+                }
+            };
+            element = toggleButton;
+            element.setDimensions(x,y,width,height);
+            toggleButton.setYesNo("True", "False");
+            toggleButton.setState(res.getAsBoolean());
+        } else if (res.isString()) {
+            UITextbox txt = new UITextbox(0) {
+                @Override
+                public void onTick() {
+                    res.setValue(getText());
+                    super.onTick();
+                }
+            };
+            element = txt;
+            element.setDimensions(x,y,width,height);
+            txt.setText(res.getAsString());
+        } else if (res.isFloat()) {
+            UIPointNumber number = new UIPointNumber(0) {
+                @Override
+                public void onTick() {
+                    res.setValue((float)getAsDouble());
+                    super.onTick();
+                }
+            };
+            element = number;
+            element.setDimensions(x,y,width,height);
+            number.setValue(res.getAsFloat());
+        } else if (res.isVector()) {
+            UIVector vec = new UIVector(0) {
+                @Override
+                public void onTick() {
+                    res.setValue(getAsVector());
+                    super.onTick();
+                }
+            };
+            element = vec;
+            element.setDimensions(x,y,width,height);
+            vec.setVector(res.getAsVector());
+        }
+        return element;
+    }
+
+    @Override
+    public String toString() {
+        return "name="+name+ ", class=" + getClass() + ", data=" +toTxt();
+    }
 }

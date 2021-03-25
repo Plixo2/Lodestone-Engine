@@ -1,8 +1,8 @@
 package net.plixo.paper.client.editor.tabs;
 
-import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.UI.elements.UICanvas;
-import net.plixo.paper.client.editor.TheEditor;
+import net.plixo.paper.client.ui.UITab;
+import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.manager.TheEditor;
 import net.plixo.paper.client.util.*;
 import org.lwjgl.opengl.GL11;
 

@@ -1,9 +1,9 @@
 package net.plixo.paper.client.engine.behaviors;
 
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.editor.visualscript.Canvas;
-import net.plixo.paper.client.engine.components.visualscript.Module;
-import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
+import net.plixo.paper.client.avs.ui.Canvas;
+import net.plixo.paper.client.avs.components.Module;
+import net.plixo.paper.client.avs.components.variable.Variable;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.util.SaveUtil;
@@ -27,11 +27,11 @@ public class VisualScript extends Behavior {
     public void onEvent(String name, Variable var) {
         try {
             if (mod != null) {
-                mod.canvas.execute(name, var);
+              //  mod.canvas.execute(name, var);
             }
         } catch (Exception e) {
             Util.print(e.getMessage());
-            Lodestone.paperEngine.stopEngine();
+            Lodestone.lodestoneEngine.stopEngine();
             e.printStackTrace();
         }
         super.onEvent(name, var);
@@ -47,18 +47,18 @@ public class VisualScript extends Behavior {
                 String extension = FilenameUtils.getExtension(file.getName());
                 if (!extension.equals(SaveUtil.FileFormat.VisualScript.format)) {
                     System.out.println("Wrong Format");
-                    Lodestone.paperEngine.stopEngine();
+                    Lodestone.lodestoneEngine.stopEngine();
                     return;
                 }
                 String name = FilenameUtils.removeExtension(file.getName());
                 mod = new Module(name, file);
-                mod.canvas = new Canvas(mod);
-                mod.canvas.init();
-                mod.canvas.execute("onStart", null);
+              //  mod.canvas = new Canvas(mod);
+               // mod.canvas.init();
+              //  mod.canvas.execute("onStart", null);
 
             } catch (Exception e) {
                 Util.print(e.getMessage());
-                Lodestone.paperEngine.stopEngine();
+                Lodestone.lodestoneEngine.stopEngine();
                 e.printStackTrace();
             }
         }
@@ -69,11 +69,11 @@ public class VisualScript extends Behavior {
     public void stop() {
         try {
             if (mod != null) {
-                mod.canvas.execute("onEnd", null);
+              //  mod.canvas.execute("onEnd", null);
             }
         } catch (Exception e) {
             Util.print(e.getMessage());
-            Lodestone.paperEngine.stopEngine();
+            Lodestone.lodestoneEngine.stopEngine();
             e.printStackTrace();
         }
         super.stop();

@@ -12,7 +12,6 @@ import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.*;
 
-@SuppressWarnings({"DuplicatedCode", "unused"})
 public class Lib2D {
 
     public static Minecraft mc = Minecraft.getInstance();

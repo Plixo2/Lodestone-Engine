@@ -2,6 +2,7 @@ package net.plixo.paper.client.util;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class SaveUtil {
      * Used to have different formats separately and globally
      */
     public enum FileFormat {
-        Code("js"), Hud("hud"), Other("json"), VisualScript("vs"), Model("obj"), Timeline("tl");
+        Code("js"), Hud("hud"), Other("json"), VisualScript("vs"), Model("obj"), Asset("asset") , Meta("meta") ;
 
         public String format;
 
@@ -27,6 +28,15 @@ public class SaveUtil {
             this.format = format;
         }
 
+        public static FileFormat getFromFile(File file) {
+            String extension = FilenameUtils.getExtension(file.getAbsolutePath());
+            for (FileFormat value : FileFormat.values()) {
+                if(value.format.equals(extension)) {
+                    return value;
+                }
+            }
+            return null;
+        }
     }
 
     /**
@@ -181,7 +191,7 @@ public class SaveUtil {
      * @param json {@link JsonElement} to save
      * @return was save successful?
      */
-    public static boolean saveJsonObj(File file, JsonElement json) {
+    public static void saveJsonObj(File file, JsonElement json) {
 
         try {
             if (!file.exists()) {
@@ -193,10 +203,7 @@ public class SaveUtil {
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
-
     }
 
     /**

@@ -2,20 +2,20 @@ package net.plixo.paper.client.editor.tabs;
 
 
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.UI.UIElement;
-import net.plixo.paper.client.UI.elements.UICanvas;
-import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.UI.elements.*;
-import net.plixo.paper.client.editor.TheEditor;
-import net.plixo.paper.client.editor.ui.other.OptionMenu;
-import net.plixo.paper.client.engine.TheManager;
-import net.plixo.paper.client.engine.ecs.Behavior;
-import net.plixo.paper.client.engine.ecs.GameObject;
-import net.plixo.paper.client.engine.ecs.Resource;
-import net.plixo.paper.client.util.ColorLib;
-import net.plixo.paper.client.util.Gui;
-import net.plixo.paper.client.util.KeyboardUtil;
+import net.plixo.paper.Options;
+import net.plixo.paper.client.engine.meta.Meta;
+import net.plixo.paper.client.engine.ecs.*;
+import net.plixo.paper.client.ui.UIElement;
+import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.ui.UITab;
+import net.plixo.paper.client.ui.elements.*;
+import net.plixo.paper.client.manager.TheEditor;
+import net.plixo.paper.client.ui.other.OptionMenu;
+import net.plixo.paper.client.manager.TheManager;
+import net.plixo.paper.client.util.*;
 import org.lwjgl.glfw.GLFW;
+
+import java.io.File;
 
 public class TabInspector extends UITab {
 
@@ -37,9 +37,55 @@ public class TabInspector extends UITab {
         super.init();
     }
 
+   // ArrayList<Resource> savedList = null;
+    //File meta;
+    Meta meta;
+
+    public void initInspector(File origin) {
+        canvas.clear();
+        meta = null;
+        if (origin == null) {
+            return;
+        }
+        try {
+            meta = Meta.getMetaByFile(origin);
+
+            int yRes = 5;
+            if(meta != null)
+                for (Resource res : meta.serialized) {
+                UIElement element = Resource.getUIElement(res, 50, yRes, parent.width - 54, 20);
+                UILabel label = new UILabel(0) {
+                    @Override
+                    public void drawDisplayString() {
+                            Gui.drawString(displayName, x, y + height / 2, textColor);
+                    }
+                };
+                label.setDimensions(3,yRes,50,20);
+                label.setDisplayName(res.name);
+                canvas.add(label);
+                element.setDisplayName(res.name);
+                canvas.add(element);
+                yRes += 22;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Util.print(e.getMessage());
+        }
+    }
+
+    @Override
+    public void close() {
+        if (meta != null) {
+            meta.saveMeta();
+            Util.print("saved");
+        }
+    }
+
     public void initInspector(GameObject entity) {
         canvas.clear();
-        if(entity == null) {
+        meta = null;
+        if (entity == null) {
             return;
         }
 
@@ -51,15 +97,27 @@ public class TabInspector extends UITab {
                     TheEditor.initTab(TheEditor.explorer);
                     super.textFieldChanged();
                 }
+
+                @Override
+                public void drawScreen(float mouseX, float mouseY) {
+                    super.drawScreen(mouseX, mouseY);
+
+                    if (!field.isFocused() && Options.useUnicode) {
+                        Gui.drawString(" \u270E", x + width - 20, y + height / 2, textColor);
+                    }
+                }
             };
             canvas.add(nameField);
 
             nameField.setDimensions(0, 0, parent.width, 20);
             nameField.setRoundness(0);
+
             nameField.setText(entity.name);
 
 
             int yBe = 20;
+
+            float xStart = parent.width * 0.25f;
 
 
             UIVector pos = new UIVector(0) {
@@ -69,7 +127,7 @@ public class TabInspector extends UITab {
                     super.onTick();
                 }
             };
-            pos.setDimensions(0, yBe, parent.width, 20);
+            pos.setDimensions(xStart, yBe, parent.width - xStart, 20);
             pos.setVector(entity.position);
             pos.setDisplayName("Position");
 
@@ -83,9 +141,10 @@ public class TabInspector extends UITab {
                     super.onTick();
                 }
             };
-            scale.setDimensions(0, yBe, parent.width, 20);
+            scale.setDimensions(xStart, yBe, parent.width - xStart, 20);
             scale.setVector(entity.scale);
             scale.setDisplayName("Scale");
+
             yBe += 20;
 
             UIVector rot = new UIVector(0) {
@@ -95,28 +154,43 @@ public class TabInspector extends UITab {
                     super.onTick();
                 }
             };
-            rot.setDimensions(0, yBe, parent.width, 20);
+            rot.setDimensions(xStart, yBe, parent.width - xStart, 20);
             rot.setVector(entity.rotation);
             rot.setDisplayName("Rotation");
             rot.setRoundness(0);
             yBe += 20;
 
+            UILabel positionLabel = new UILabel(0);
+            positionLabel.setDimensions(0, pos.y, xStart, 20);
+            positionLabel.setDisplayName("Position");
+
+            UILabel scaleLabel = new UILabel(0);
+            scaleLabel.setDimensions(0, scale.y, xStart, 20);
+            scaleLabel.setDisplayName("Scale");
+
+            UILabel rotationLabel = new UILabel(0);
+            rotationLabel.setDimensions(0, rot.y, xStart, 20);
+            rotationLabel.setDisplayName("Rotation");
+
             canvas.add(pos);
             canvas.add(scale);
             canvas.add(rot);
 
+            canvas.add(positionLabel);
+            canvas.add(scaleLabel);
+            canvas.add(rotationLabel);
+
 
             for (Behavior b : entity.components) {
-
                 UICanvas behaviorCanvas = new UICanvas(0) {
                     @Override
                     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-                        if (hovered(mouseX, mouseY) && !Lodestone.paperEngine.isRunning && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
+                        if (hovered(mouseX, mouseY) && !Lodestone.lodestoneEngine.isRunning && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
                             entity.components.remove(b);
                             init();
                             initInspector(lastEntity);
                         } else {
-                            super.mouseClicked(mouseX,mouseY,mouseButton);
+                            super.mouseClicked(mouseX, mouseY, mouseButton);
                         }
                     }
                 };
@@ -124,7 +198,7 @@ public class TabInspector extends UITab {
                 behaviorCanvas.setColor(0);
 
 
-                UIHead head = new UIHead(0) {
+                UILabel head = new UILabel(0) {
                     @Override
                     public void drawDisplayString() {
                         if (displayName != null) {
@@ -139,71 +213,7 @@ public class TabInspector extends UITab {
 
                 int yRes = 20;
                 for (Resource res : b.serializable) {
-                    UIElement element = null;
-                    if (res.isFile()) {
-                        UIFileChooser chooser = new UIFileChooser(0) {
-                            @Override
-                            public void onTick() {
-                                res.setValue(getFile());
-                                super.onTick();
-                            }
-                        };
-                        chooser.setFile(res.getAsFile());
-                        element = chooser;
-                    } else if (res.isInteger()) {
-                        UISpinner spinner = new UISpinner(0) {
-                            @Override
-                            public void onTick() {
-                                res.setValue(getNumber());
-                                super.onTick();
-                            }
-                        };
-                        element = spinner;
-                        spinner.setNumber(res.getAsInteger());
-                    } else if (res.isBoolean()) {
-                        UIToggleButton toggleButton = new UIToggleButton(0) {
-                            @Override
-                            public void onTick() {
-                                res.setValue(getState());
-                                super.onTick();
-                            }
-                        };
-                        element = toggleButton;
-                        toggleButton.setYesNo("True", "False");
-                        toggleButton.setState(res.getAsBoolean());
-                    } else if (res.isString()) {
-                        UITextbox txt = new UITextbox(0) {
-                            @Override
-                            public void onTick() {
-                                res.setValue(getText());
-                                super.onTick();
-                            }
-                        };
-                        element = txt;
-                        txt.setText(res.getAsString());
-                    } else if (res.isFloat()) {
-                        UIPointNumber number = new UIPointNumber(0) {
-                            @Override
-                            public void onTick() {
-                                res.setValue(getAsDouble());
-                                super.onTick();
-                            }
-                        };
-                        element = number;
-                        number.setValue(res.getAsFloat());
-                    } else if (res.isVector()) {
-                        UIVector vec = new UIVector(0) {
-                            @Override
-                            public void onTick() {
-                                res.setValue(getAsVector());
-                                super.onTick();
-                            }
-                        };
-                        element = vec;
-                        vec.setVector(res.getAsVector());
-                    }
-
-                    element.setDimensions(2, yRes, parent.width - 4, 20);
+                    UIElement element = Resource.getUIElement(res, 2, yRes, parent.width - 4, 20);
                     element.setDisplayName(res.name);
                     behaviorCanvas.add(element);
                     yRes += 22;
@@ -221,15 +231,12 @@ public class TabInspector extends UITab {
         lastEntity = entity;
     }
 
-
-
-
-
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
 
         hideMenu();
         if (!parent.isMouseInside(mouseX, mouseY) || lastEntity == null) {
+            super.mouseClicked(mouseX, mouseY, mouseButton);
             return;
         }
         if (mouseButton == 1) {
@@ -238,7 +245,7 @@ public class TabInspector extends UITab {
             for (Behavior b : TheManager.standardBehavior) {
                 OptionMenu.TxtRun run = new OptionMenu.TxtRun(b.name) {
                     @Override
-                    protected void run() {
+                    public void run() {
                         Behavior instance = TheManager.newInstanceByName(b.name);
                         if (instance != null && lastEntity != null) {
                             lastEntity.addBehavior(instance);

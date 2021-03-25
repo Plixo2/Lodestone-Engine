@@ -1,7 +1,7 @@
 package net.plixo.paper.client.engine.ecs;
 
 import net.minecraft.client.Minecraft;
-import net.plixo.paper.client.engine.components.visualscript.variable.Variable;
+import net.plixo.paper.client.avs.components.variable.Variable;
 
 public abstract class Behavior {
 

@@ -3,18 +3,20 @@ package net.plixo.paper.client.editor.tabs;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
-import net.plixo.paper.client.UI.UITab;
-import net.plixo.paper.client.UI.elements.UICanvas;
-import net.plixo.paper.client.editor.ui.accept.UIAccept;
-import net.plixo.paper.client.editor.ui.accept.UITextInput;
-import net.plixo.paper.client.editor.TheEditor;
-import net.plixo.paper.client.editor.ui.other.OptionMenu;
-import net.plixo.paper.client.UI.elements.UIFileIcon;
-import net.plixo.paper.client.editor.visualscript.Canvas;
-import net.plixo.paper.client.engine.components.visualscript.Module;
+import net.plixo.paper.Lodestone;
+import net.plixo.paper.Options;
+import net.plixo.paper.client.manager.VisualScriptManager;
+import net.plixo.paper.client.ui.UITab;
+import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.ui.GUI.GUIAccept;
+import net.plixo.paper.client.ui.GUI.GUITextInput;
+import net.plixo.paper.client.manager.TheEditor;
+import net.plixo.paper.client.ui.other.OptionMenu;
+import net.plixo.paper.client.ui.elements.UIFileIcon;
+import net.plixo.paper.client.avs.ui.Canvas;
+import net.plixo.paper.client.avs.components.Module;
 import net.plixo.paper.client.util.*;
 import org.apache.commons.io.FilenameUtils;
 import org.lwjgl.glfw.GLFW;
@@ -33,16 +35,27 @@ public class TabFiles extends UITab {
     @Override
     public void init() {
 
-
+        ArrayList<File> allFiles = new ArrayList<>();
+        Util.findFiles(SaveUtil.getFolderFromName("").getAbsolutePath(), allFiles);
+        for (File file : allFiles) {
+            filesChanged.put(file,file.lastModified());
+        }
         canvas = new UICanvas(0);
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
         canvas.setColor(ColorLib.getBackground(0.3f));
 
-        if (home == null) {home = SaveUtil.getFolderFromName("");}
+        if (home == null) {
+            home = SaveUtil.getFolderFromName("");
+        }
         update();
+
+
+
+
         super.init();
     }
+
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
@@ -58,8 +71,7 @@ public class TabFiles extends UITab {
                     newRunnable(SaveUtil.FileFormat.VisualScript),
                     newRunnable(SaveUtil.FileFormat.Hud),
                     newRunnable(SaveUtil.FileFormat.Other),
-                    newRunnable(SaveUtil.FileFormat.Model),
-                    newRunnable(SaveUtil.FileFormat.Timeline));
+                    newRunnable(SaveUtil.FileFormat.Model));
         }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
@@ -68,7 +80,7 @@ public class TabFiles extends UITab {
         return new OptionMenu.TxtRun("New ." + format.format) {
             @Override
             public void run() {
-                UITextInput input = new UITextInput((txt) -> {
+                GUITextInput input = new GUITextInput((txt) -> {
                     File f = new File(home.getAbsolutePath() + "\\" + txt + "." + format.format);
                     if (!f.exists()) {
                         SaveUtil.makeFile(f);
@@ -84,14 +96,16 @@ public class TabFiles extends UITab {
 
     @Override
     public void keyPressed(int key, int scanCode, int action) {
-        if(key == GLFW.GLFW_KEY_F5) {
+        if (key == GLFW.GLFW_KEY_F5) {
             update();
         }
 
         super.keyPressed(key, scanCode, action);
     }
 
+
     void openVs(File file) {
+        /*
         String name = FilenameUtils.removeExtension(file.getName());
         Module loadedMod = new Module(name, file);
         if (TheEditor.activeMod != null) {
@@ -100,15 +114,24 @@ public class TabFiles extends UITab {
         TheEditor.activeMod = loadedMod;
         loadedMod.canvas = new Canvas(loadedMod);
         loadedMod.canvas.init();
+         */
+      //  TheEditor.viewport.loadFromFile(file);
     }
 
-
     void update() {
-        if (home == null) {home = SaveUtil.getFolderFromName("");}
+        if (home == null) {
+            home = SaveUtil.getFolderFromName("");
+        }
+
         canvas.clear();
         files = home.listFiles();
-
-        Arrays.sort(files , Comparator.comparingInt(file -> file.isFile() ? 1 : 0));
+        if (!Options.showMetadata) {
+            files = Arrays.stream(files).filter(file -> {
+                String name = FilenameUtils.getExtension(file.getAbsolutePath());
+                return !name.equals(SaveUtil.FileFormat.Meta.format);
+            }).toArray(File[]::new);
+        }
+        Arrays.sort(files, Comparator.comparingInt(file -> file.isFile() ? 1 : 0));
         int y = 0;
         int x = 10;
         int yHeight = 50;
@@ -118,7 +141,7 @@ public class TabFiles extends UITab {
             UIFileIcon icon = new UIFileIcon(home.getParentFile()) {
                 @Override
                 public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-                    if(hovered(mouseX,mouseY)) {
+                    if (hovered(mouseX, mouseY)) {
                         if (mouseButton == 0) {
                             home = file;
                             update();
@@ -127,20 +150,19 @@ public class TabFiles extends UITab {
                     super.mouseClicked(mouseX, mouseY, mouseButton);
                 }
             };
-            icon.setDimensions(x,y,xWidth,yHeight);
+            icon.setDimensions(x, y, xWidth, yHeight);
             icon.getList().get(1).setDisplayName("<");
             icon.setRoundness(0);
             icon.setColor(0);
             canvas.add(icon);
-            x += xWidth+10;
+            x += xWidth + 10;
         }
 
         for (File f : files) {
-
             UIFileIcon icon = new UIFileIcon(f) {
                 @Override
                 public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-                    if(!hovered(mouseX,mouseY) || !file.exists()) {
+                    if (!hovered(mouseX, mouseY) || !file.exists()) {
                         return;
                     }
                     if (isFolder()) {
@@ -168,7 +190,7 @@ public class TabFiles extends UITab {
                             OptionMenu.TxtRun delete = new OptionMenu.TxtRun("Delete") {
                                 @Override
                                 public void run() {
-                                    mc.displayGuiScreen(new UIAccept(() -> {
+                                    mc.displayGuiScreen(new GUIAccept(() -> {
                                         file.delete(); //update();
                                     }, () -> {
                                     }, "Sure?"));
@@ -177,13 +199,13 @@ public class TabFiles extends UITab {
                             OptionMenu.TxtRun rename = new OptionMenu.TxtRun("Rename") {
                                 @Override
                                 public void run() {
-                                    UITextInput input = new UITextInput((txt) -> {
-                                        if(!txt.isEmpty()) {
+                                    GUITextInput input = new GUITextInput((txt) -> {
+                                        if (!txt.isEmpty()) {
                                             String fileFormat = FilenameUtils.getExtension(file.getName());
-                                            File oldFile = new File(file.getParent()+"/"+txt+"."+fileFormat);
-                                            if(!oldFile.exists()) {
+                                            File oldFile = new File(file.getParent() + "/" + txt + "." + fileFormat);
+                                            if (!oldFile.exists()) {
                                                 boolean status = file.renameTo(oldFile);
-                                                if(!status) {
+                                                if (!status) {
                                                     Util.print("Failed to rename");
                                                 }
                                             } else {
@@ -195,19 +217,20 @@ public class TabFiles extends UITab {
                                     mc.displayGuiScreen(input);
                                 }
                             };
-                            showMenu(0, mouseX, mouseY, open, explorer , delete , rename);
+                            showMenu(0, mouseX, mouseY, open, explorer, delete, rename);
                         }
                     } else {
+
                         String extenstion = FilenameUtils.getExtension(file.getName());
 
-                        OptionMenu.TxtRun open = new OptionMenu.TxtRun("Open") {
+                        OptionMenu.TxtRun open = new OptionMenu.TxtRun("View") {
                             @Override
                             public void run() {
                             }
                         };
 
                         if (extenstion.equals(SaveUtil.FileFormat.VisualScript.format)) {
-                            open = new OptionMenu.TxtRun("Open") {
+                            open = new OptionMenu.TxtRun("View") {
                                 @Override
                                 public void run() {
                                     openVs(file);
@@ -218,13 +241,6 @@ public class TabFiles extends UITab {
                                 @Override
                                 public void run() {
                                     TheEditor.modelViewer.initViewer(file);
-                                }
-                            };
-                        } else if (extenstion.equals(SaveUtil.FileFormat.Timeline.format)) {
-                            open = new OptionMenu.TxtRun("Timeline") {
-                                @Override
-                                public void run() {
-                                    TheEditor.timeline.initTimeline(file);
                                 }
                             };
                         }
@@ -253,7 +269,7 @@ public class TabFiles extends UITab {
                         OptionMenu.TxtRun delete = new OptionMenu.TxtRun("Delete") {
                             @Override
                             public void run() {
-                                mc.displayGuiScreen(new UIAccept(() -> {
+                                mc.displayGuiScreen(new GUIAccept(() -> {
                                     file.delete(); //update();
                                 }, () -> {
                                 }, "Sure?"));
@@ -262,13 +278,13 @@ public class TabFiles extends UITab {
                         OptionMenu.TxtRun rename = new OptionMenu.TxtRun("Rename") {
                             @Override
                             public void run() {
-                                UITextInput input = new UITextInput((txt) -> {
-                                    if(!txt.isEmpty()) {
+                                GUITextInput input = new GUITextInput((txt) -> {
+                                    if (!txt.isEmpty()) {
                                         String fileFormat = FilenameUtils.getExtension(file.getName());
-                                        File oldFile = new File(file.getParent()+"/"+txt+"."+fileFormat);
-                                        if(!oldFile.exists()) {
+                                        File oldFile = new File(file.getParent() + "/" + txt + "." + fileFormat);
+                                        if (!oldFile.exists()) {
                                             boolean status = file.renameTo(oldFile);
-                                            if(!status) {
+                                            if (!status) {
                                                 Util.print("Failed to rename");
                                             }
                                         } else {
@@ -280,16 +296,23 @@ public class TabFiles extends UITab {
                                 mc.displayGuiScreen(input);
                             }
                         };
+                        try {
+                                TheEditor.inspector.initInspector(file);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-                        //lastSelected = icon.file;
-                        showMenu(0, mouseX, mouseY, open, edit, explorer, delete , rename);
+                        //  ArrayList<String> lines = SaveUtil.loadFromFile(file);
+                        //
+                        showMenu(0, mouseX, mouseY, open, edit, explorer, delete, rename);
+
                     }
 
 
                     super.mouseClicked(mouseX, mouseY, mouseButton);
                 }
             };
-            icon.setDimensions(x,y,xWidth,yHeight);
+            icon.setDimensions(x, y, xWidth, yHeight);
             icon.setRoundness(0);
             icon.setColor(0);
             canvas.add(icon);
@@ -303,4 +326,31 @@ public class TabFiles extends UITab {
 
     }
 
+    Map<File ,Long> filesChanged = new HashMap<>();
+    int ticks = 0;
+
+    @Override
+    public void onTick() {
+        ticks += 1;
+        if(!Lodestone.lodestoneEngine.isRunning) {
+            if(ticks % 80 == 0) {
+                boolean shouldReload = false;
+                ArrayList<File> allFiles = new ArrayList<>();
+                Util.findFiles(SaveUtil.getFolderFromName("").getAbsolutePath(), allFiles);
+                for (File file : allFiles) {
+                    long time = filesChanged.getOrDefault(file,0l);
+                    long delta = file.lastModified()-time;
+                    if(delta > 5000) {
+                        shouldReload = true;
+                        filesChanged.put(file,file.lastModified());
+                    }
+                }
+                if (shouldReload) {
+                    VisualScriptManager.register();
+                    Util.print("All Functions got reloaded");
+                }
+            }
+        }
+        super.onTick();
+    }
 }
