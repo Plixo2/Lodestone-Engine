@@ -7,6 +7,4 @@ public class CodeMeta extends Meta {
         super(origin);
         setSerializedResources(getResource("Output",String.class),getResource("Input",String.class),getResource("Execution",Boolean.class));
     }
-
-
 }

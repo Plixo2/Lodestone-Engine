@@ -6,12 +6,11 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.avs.TabViewport;
 import net.plixo.paper.client.avs.newVersion.Viewport;
+import net.plixo.paper.client.events.ClientEvent;
 import net.plixo.paper.client.ui.TabbedUI;
 import net.plixo.paper.client.ui.UITab;
 import net.plixo.paper.client.editor.tabs.*;
-import net.plixo.paper.client.editor.tabs.TabModelViewer;
 import net.plixo.paper.client.ui.other.Toolbar;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
@@ -71,7 +70,7 @@ public class GUIEditor extends Screen {
         background.x = side;
 
         background.addTab(new Viewport(0));
-        background.addTab(new TabModelViewer(1));
+        //background.addTab(new TabModelViewer(1));
 
 
         TabbedUI explorer = new TabbedUI(side, (this.height / 2f) - 12, "Test0");
@@ -182,7 +181,7 @@ public class GUIEditor extends Screen {
         for (TabbedUI tab : tabs) {
             tab.onTick();
         }
-        Lodestone.update("onTick", null);
+        Lodestone.update(ClientEvent.TickEvent.event);
         super.tick();
     }
 

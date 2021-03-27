@@ -50,8 +50,6 @@ public class LodestoneMod {
     private void setup(final FMLCommonSetupEvent event) {
         KeyBinds.register();
         MinecraftForge.EVENT_BUS.register(new KeyInput());
-      //  MinecraftForge.EVENT_BUS.register(new Rendering());
-
 
         LOGGER.info("//PRE-INIT//");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
@@ -72,7 +70,7 @@ public class LodestoneMod {
      *
      * @param event Parameter needed for function call. Is being ignored.
      */
-    @SuppressWarnings("SpellCheckingInspection")
+
     private void enqueueIMC(final InterModEnqueueEvent event) {
         InterModComms.sendTo("examplemod", "helloworld", () -> {
             LOGGER.info("//MDK//");

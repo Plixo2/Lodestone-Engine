@@ -6,17 +6,14 @@ import java.io.IOException;
 import java.util.*;
 
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.Options;
-import net.plixo.paper.client.manager.VisualScriptManager;
+import net.plixo.paper.client.manager.EditorManager;
+import net.plixo.paper.client.util.Options;
 import net.plixo.paper.client.ui.UITab;
 import net.plixo.paper.client.ui.elements.UICanvas;
 import net.plixo.paper.client.ui.GUI.GUIAccept;
 import net.plixo.paper.client.ui.GUI.GUITextInput;
-import net.plixo.paper.client.manager.TheEditor;
 import net.plixo.paper.client.ui.other.OptionMenu;
 import net.plixo.paper.client.ui.elements.UIFileIcon;
-import net.plixo.paper.client.avs.ui.Canvas;
-import net.plixo.paper.client.avs.components.Module;
 import net.plixo.paper.client.util.*;
 import org.apache.commons.io.FilenameUtils;
 import org.lwjgl.glfw.GLFW;
@@ -28,7 +25,7 @@ public class TabFiles extends UITab {
 
     public TabFiles(int id) {
         super(id, "Files");
-        TheEditor.files = this;
+        EditorManager.files = this;
     }
 
 
@@ -236,13 +233,6 @@ public class TabFiles extends UITab {
                                     openVs(file);
                                 }
                             };
-                        } else if (extenstion.equals(SaveUtil.FileFormat.Model.format)) {
-                            open = new OptionMenu.TxtRun("View") {
-                                @Override
-                                public void run() {
-                                    TheEditor.modelViewer.initViewer(file);
-                                }
-                            };
                         }
                         OptionMenu.TxtRun edit = new OptionMenu.TxtRun("Edit") {
                             @Override
@@ -297,7 +287,7 @@ public class TabFiles extends UITab {
                             }
                         };
                         try {
-                                TheEditor.inspector.initInspector(file);
+                                EditorManager.inspector.initInspector(file);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -346,8 +336,8 @@ public class TabFiles extends UITab {
                     }
                 }
                 if (shouldReload) {
-                    VisualScriptManager.register();
-                    Util.print("All Functions got reloaded");
+                //    VisualScriptManager.register();
+                    Util.print("All Functions got reloaded fix this pls...");
                 }
             }
         }

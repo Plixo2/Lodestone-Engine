@@ -3,7 +3,7 @@ package net.plixo.paper.client.ui.GUI;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
-import net.plixo.paper.Options;
+import net.plixo.paper.client.util.Options;
 import net.plixo.paper.client.ui.elements.UIArray;
 import net.plixo.paper.client.ui.elements.UIButton;
 import net.plixo.paper.client.ui.elements.UICanvas;
@@ -58,7 +58,7 @@ public class GUIOption extends Screen {
             @Override
             public void actionPerformed() {
                 super.actionPerformed();
-                VisualScriptManager.register();
+                //VisualScriptManager.register();
             }
         };
         reloadFunction.setDisplayName("reload Javascript");

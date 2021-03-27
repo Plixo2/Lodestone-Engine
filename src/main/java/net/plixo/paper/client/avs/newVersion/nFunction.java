@@ -30,33 +30,32 @@ public abstract class nFunction {
     public void run() {
     }
 
-    void output(int id, Object o) {
+    protected void output(int id, Object o) {
         output[id].value = o;
     }
 
-    Number input(int id, Number Default) {
+    protected Number input(int id, Number Default) {
         if (input[id] == null) {
             return Default;
         }
         return input[id].getAsNumber(Default);
     }
 
-    Boolean input(int id, Boolean Default) {
+    protected Boolean input(int id, Boolean Default) {
         if (input[id] == null) {
             return Default;
         }
         return input[id].getAsBoolean(Default);
     }
 
-    Object input(int id) {
+    protected Object input(int id) {
         if (input[id] == null) {
             return null;
         }
         return input[id].get();
     }
 
-
-    public void execute() {
+    protected void execute() {
         for (int i = 0; i < links.length; i++) {
             if (links[i] != null) {
                 links[i].run();
@@ -64,7 +63,7 @@ public abstract class nFunction {
         }
     }
 
-    public boolean execute(int id) {
+    protected boolean execute(int id) {
         if (links[id] != null) {
             links[id].run();
             return true;
@@ -72,7 +71,7 @@ public abstract class nFunction {
         return false;
     }
 
-    public void set(int inputs, int outputs, int links) {
+    protected void set(int inputs, int outputs, int links) {
         this.links = new nFunction[links];
         input = new Output[inputs];
         output = new Output[outputs];
@@ -81,16 +80,16 @@ public abstract class nFunction {
         }
     }
 
-    public void custom(Resource... res) {
+    protected void custom(Resource... res) {
         settings = res;
     }
 
-    public Resource setting(int id) {
+    protected Resource setting(int id) {
         return settings[id];
     }
 
 
-    public void pullInputs() {
+    protected void pullInputs() {
         for (Output output1 : input) {
             if (output1 != null) {
                 output1.calculate();
@@ -98,9 +97,12 @@ public abstract class nFunction {
         }
     }
 
-
-    boolean hasInput(int id) {
+    protected boolean hasInput(int id) {
         return input[id] != null;
+    }
+
+    public String getName() {
+        return this.getClass().getSimpleName();
     }
 
     public static class Output {

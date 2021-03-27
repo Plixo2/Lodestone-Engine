@@ -1,11 +1,8 @@
 package net.plixo.paper;
 
-import net.plixo.paper.client.manager.TheEditor;
-import net.plixo.paper.client.engine.LodestoneEngine;
-import net.plixo.paper.client.manager.TheManager;
-import net.plixo.paper.client.avs.components.Module;
-import net.plixo.paper.client.manager.VisualScriptManager;
-import net.plixo.paper.client.avs.components.variable.Variable;
+import net.plixo.paper.client.events.ClientEvent;
+import net.plixo.paper.client.manager.EditorManager;
+import net.plixo.paper.client.manager.ClientManager;
 
 /**
  * Second main class.
@@ -14,7 +11,6 @@ import net.plixo.paper.client.avs.components.variable.Variable;
 public class Lodestone {
     static long lastMS = 0;
     public static LodestoneEngine lodestoneEngine;
-
 
     /**
      * First function called.
@@ -28,58 +24,25 @@ public class Lodestone {
     }
 
     /**
-     * Calls different initialises and the load function of {@link TheManager}.
+     * Calls different initialises and the load function of {@link ClientManager}.
      */
     public static void load() {
-        VisualScriptManager.register();
-        TheManager.register();
-        TheManager.load();
-        TheEditor.init();
+        ClientManager.register();
+        ClientManager.load();
+        EditorManager.init();
     }
 
     /**
      * Setups the save function.
-     * Calls the save function in {@link TheManager}.
+     * Calls the save function in {@link ClientManager}.
      */
     public static void save() {
-        /*
-        Module modToSave = TheEditor.activeMod;
-        if (modToSave != null) {
-            modToSave.canvas.saveToFile();
-        }
-         */
-        /*
-        if(TheEditor.timeline != null && TheEditor.timeline.currentTimeline != null) {
-            TheEditor.timeline.currentTimeline.saveToFile();
-        }
-
-         */
-        TheManager.save();
+        ClientManager.save();
     }
 
-    /**
-     * Event handling.
-     *
-     * @param name Event name.
-     * @param var  Event data.
-     */
-    public static void update(String name, Variable var) {
+    public static void update(ClientEvent event) {
 
-        Lodestone.lodestoneEngine.onEvent(name, var);
-        if (System.currentTimeMillis() - lastMS > 60000) {
-            if (!lodestoneEngine.isRunning) {
-                Lodestone.save();
-            }
-            lastMS = System.currentTimeMillis();
-        }
+        Lodestone.lodestoneEngine.onEvent(event);
     }
-
-    /**
-     * Render handling.
-     */
-    public static void render() {
-        Lodestone.lodestoneEngine.render();
-    }
-
 
 }

@@ -74,24 +74,6 @@ public class Meta {
             jobj.addProperty("Type", name);
             obj.add(resource.name, jobj);
         }
-
         SaveUtil.saveJsonObj(meta, obj);
-    }
-
-    Class getClassByName(String name) {
-        Class[] classes = new Class[]{String.class, Float.class, Integer.class, Vector3d.class, Boolean.class,File.class};
-        for (Class aClass : classes) {
-            if (aClass.getName().equalsIgnoreCase(name)) {
-                return aClass;
-            }
-        }
-        return null;
-    }
-
-    public static Meta getMetaByFile(File file) {
-        if (SaveUtil.FileFormat.getFromFile(file) == SaveUtil.FileFormat.Code) {
-            return new CodeMeta(file);
-        }
-        return null;
     }
 }

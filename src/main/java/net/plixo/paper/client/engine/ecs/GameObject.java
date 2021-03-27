@@ -1,7 +1,8 @@
 package net.plixo.paper.client.engine.ecs;
 
 import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.client.avs.components.variable.Variable;
+import net.plixo.paper.client.avs.old.components.variable.Variable;
+import net.plixo.paper.client.events.ClientEvent;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -23,37 +24,14 @@ public class GameObject {
     public void addBehavior(Behavior behavior) {
         this.components.add(behavior);
         behavior.entity = this;
-        behavior.init();
+        behavior.onEvent(ClientEvent.InitEvent.event);
     }
 
-    public void init() {
+    public void onEvent(ClientEvent event) {
         for (Behavior b : components) {
-            b.init();
+            b.onEvent(event);
         }
     }
 
-    public void onEvent(String name, Variable var) {
-        for (Behavior b : components) {
-            b.onEvent(name, var);
-        }
-    }
-
-    public void start() {
-        for (Behavior b : components) {
-            b.start();
-        }
-    }
-
-    public void stop() {
-        for (Behavior b : components) {
-            b.stop();
-        }
-    }
-
-    public void render() {
-        for (Behavior b : components) {
-            b.render();
-        }
-    }
 
 }

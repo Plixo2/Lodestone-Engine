@@ -3,6 +3,8 @@ package net.plixo.paper.client.manager;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import net.plixo.paper.client.engine.meta.CodeMeta;
+import net.plixo.paper.client.engine.meta.Meta;
 import net.plixo.paper.client.util.SaveUtil;
 import org.apache.commons.io.FilenameUtils;
 
@@ -31,4 +33,10 @@ public class MetaManager {
         return obj.getAsJsonObject();
     }
 
+    public static Meta getMetaByFile(File file) {
+        if (SaveUtil.FileFormat.getFromFile(file) == SaveUtil.FileFormat.Code) {
+            return new CodeMeta(file);
+        }
+        return null;
+    }
 }

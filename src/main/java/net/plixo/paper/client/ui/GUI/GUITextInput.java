@@ -9,6 +9,7 @@ import net.minecraft.util.text.StringTextComponent;
 public class GUITextInput extends GUIAccept {
 
     TextFieldWidget widget;
+    public String Syes = "Rename",Sno = "Cancel";
     public GUITextInput(TxtRun yes, TxtRun no, String displayString) {
         super(null, null, displayString);
         super.yes = () -> yes.run(getText());
@@ -26,11 +27,11 @@ public class GUITextInput extends GUIAccept {
         addListener(widget);
 
 
-        addButton(new Button(wH - (10 + 50), hH+30, 50, buttonHeight, new StringTextComponent("Rename"), a -> {
+        addButton(new Button(wH - (10 + 50), hH+30, 50, buttonHeight, new StringTextComponent(Syes), a -> {
             yes.run();
             Minecraft.getInstance().displayGuiScreen(new GUIEditor());
         }));
-        addButton(new Button(wH + (10), hH+30, 50, buttonHeight, new StringTextComponent("Cancel"), b -> {
+        addButton(new Button(wH + (10), hH+30, 50, buttonHeight, new StringTextComponent(Sno), b -> {
             no.run();
             Minecraft.getInstance().displayGuiScreen(new GUIEditor());
         }));

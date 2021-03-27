@@ -1,7 +1,8 @@
 package net.plixo.paper.client.engine.ecs;
 
 import net.minecraft.client.Minecraft;
-import net.plixo.paper.client.avs.components.variable.Variable;
+import net.plixo.paper.client.avs.old.components.variable.Variable;
+import net.plixo.paper.client.events.ClientEvent;
 
 public abstract class Behavior {
 
@@ -15,7 +16,6 @@ public abstract class Behavior {
         this.name = name;
     }
 
-    @SuppressWarnings("unused")
     public void EditorUpdate() {
 
     }
@@ -24,11 +24,7 @@ public abstract class Behavior {
         return serializable[index];
     }
 
-    public void init() {
-
-    }
-
-    public void onEvent(String name, Variable var) {
+    public void onEvent(ClientEvent event) {
 
     }
 
@@ -36,14 +32,4 @@ public abstract class Behavior {
         serializable = res;
     }
 
-    public void start() {
-
-    }
-
-    public void stop() {
-
-    }
-
-    public void render() {
-    }
 }

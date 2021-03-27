@@ -2,16 +2,17 @@ package net.plixo.paper.client.editor.tabs;
 
 
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.Options;
+import net.plixo.paper.client.manager.ClientManager;
+import net.plixo.paper.client.manager.EditorManager;
+import net.plixo.paper.client.manager.MetaManager;
+import net.plixo.paper.client.util.Options;
 import net.plixo.paper.client.engine.meta.Meta;
 import net.plixo.paper.client.engine.ecs.*;
 import net.plixo.paper.client.ui.UIElement;
 import net.plixo.paper.client.ui.elements.UICanvas;
 import net.plixo.paper.client.ui.UITab;
 import net.plixo.paper.client.ui.elements.*;
-import net.plixo.paper.client.manager.TheEditor;
 import net.plixo.paper.client.ui.other.OptionMenu;
-import net.plixo.paper.client.manager.TheManager;
 import net.plixo.paper.client.util.*;
 import org.lwjgl.glfw.GLFW;
 
@@ -23,7 +24,7 @@ public class TabInspector extends UITab {
 
     public TabInspector(int id) {
         super(id, "Inspector");
-        TheEditor.inspector = this;
+        EditorManager.inspector = this;
     }
 
 
@@ -48,7 +49,7 @@ public class TabInspector extends UITab {
             return;
         }
         try {
-            meta = Meta.getMetaByFile(origin);
+            meta = MetaManager.getMetaByFile(origin);
 
             int yRes = 5;
             if(meta != null)
@@ -94,7 +95,7 @@ public class TabInspector extends UITab {
                 @Override
                 public void textFieldChanged() {
                     entity.name = getText();
-                    TheEditor.initTab(TheEditor.explorer);
+                    EditorManager.initTab(EditorManager.explorer);
                     super.textFieldChanged();
                 }
 
@@ -240,13 +241,13 @@ public class TabInspector extends UITab {
             return;
         }
         if (mouseButton == 1) {
-            OptionMenu.TxtRun[] array = new OptionMenu.TxtRun[TheManager.standardBehavior.size()];
+            OptionMenu.TxtRun[] array = new OptionMenu.TxtRun[ClientManager.standardBehavior.size()];
             int index = 0;
-            for (Behavior b : TheManager.standardBehavior) {
+            for (Behavior b : ClientManager.standardBehavior) {
                 OptionMenu.TxtRun run = new OptionMenu.TxtRun(b.name) {
                     @Override
                     public void run() {
-                        Behavior instance = TheManager.newInstanceByName(b.name);
+                        Behavior instance = ClientManager.newInstanceByName(b.name);
                         if (instance != null && lastEntity != null) {
                             lastEntity.addBehavior(instance);
                             initInspector(lastEntity);

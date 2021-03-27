@@ -1,45 +1,17 @@
 package net.plixo.paper.client.manager;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.client.avs.components.event.buildIn.EventOnEnd;
-import net.plixo.paper.client.avs.components.event.buildIn.EventOnKey;
-import net.plixo.paper.client.avs.components.event.buildIn.EventOnStart;
-import net.plixo.paper.client.avs.components.event.buildIn.EventOnTick;
-import net.plixo.paper.client.avs.components.function.Function;
 
-import net.plixo.paper.client.avs.components.function.buildIn.custom.JavaScriptFunction;
-import net.plixo.paper.client.avs.components.function.buildIn.io.ELog;
-import net.plixo.paper.client.avs.components.function.buildIn.other.EBranch;
-import net.plixo.paper.client.avs.components.function.buildIn.other.EIf;
-import net.plixo.paper.client.avs.components.function.buildIn.other.ELoop;
-import net.plixo.paper.client.avs.components.function.other.Connection;
-import net.plixo.paper.client.avs.components.function.other.Execute;
-import net.plixo.paper.client.avs.components.variable.Variable;
-import net.plixo.paper.client.avs.components.variable.VariableType;
-import net.plixo.paper.client.avs.newVersion.VisualScript;
-import net.plixo.paper.client.avs.ui.DrawFunction;
-import net.plixo.paper.client.util.SaveUtil;
-import net.plixo.paper.client.util.Util;
-
-import java.io.File;
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-
+@Deprecated
 public class VisualScriptManager {
 
+    /*
     public static ArrayList<Function> allFunctions = new ArrayList<>();
     /*
     public static int draggedType = 0;
     public static int dragIndex = -1;
 
     public static int dragTab = -1;
-    */
+
 
     public static Function getFromList(String name) {
         ArrayList<Function> functions = new ArrayList<>();
@@ -323,6 +295,7 @@ public class VisualScriptManager {
 
         SaveUtil.saveJsonObj(file, head);
     }
+    */
 
 }
 

@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.client.editor.tabs.TabConsole;
-import net.plixo.paper.client.avs.components.variable.Variable;
+import net.plixo.paper.client.avs.old.components.variable.Variable;
 
 import java.io.File;
 import java.util.ArrayList;

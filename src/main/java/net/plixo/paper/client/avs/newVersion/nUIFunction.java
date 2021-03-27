@@ -1,10 +1,13 @@
 package net.plixo.paper.client.avs.newVersion;
 
 import net.minecraft.util.math.vector.Vector2f;
+import net.plixo.paper.client.avs.newVersion.functions.Event;
 import net.plixo.paper.client.engine.ecs.Resource;
-import net.plixo.paper.client.manager.TheEditor;
+import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.ui.UIElement;
 import net.plixo.paper.client.ui.elements.UIArray;
+import net.plixo.paper.client.ui.elements.UICircle;
+import net.plixo.paper.client.ui.elements.UIDraggable;
 import net.plixo.paper.client.ui.elements.UILabel;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
@@ -31,7 +34,7 @@ public class nUIFunction extends UIDraggable {
 
         UILabel name = new UILabel(0);
         name.setDimensions(0, 0, width, 20);
-        name.setDisplayName(function.getClass().getSimpleName());
+        name.setDisplayName(function.getName());
 
         UIArray inputs = new UIArray(0);
         inputs.setDimensions(0, 20, 12, 100);
@@ -46,11 +49,11 @@ public class nUIFunction extends UIDraggable {
                 @Override
                 public void mouseReleased(float mouseX, float mouseY, int state) {
                     if (hovered(mouseX, mouseY) && state == 0) {
-                        CursorObject o = TheEditor.viewport.getDraggedObj();
+                        CursorObject o = EditorManager.viewport.getDraggedObj();
                         if (o.isLink()) {
                             nFunction nfunction = o.getLink();
                             nfunction.links[o.id] = function;
-                            TheEditor.viewport.setDraggedObj(null);
+                            EditorManager.viewport.setDraggedObj(null);
                         }
                     }
                     super.mouseReleased(mouseX, mouseY, state);
@@ -68,7 +71,7 @@ public class nUIFunction extends UIDraggable {
             UICircle element = new UICircle() {
                 @Override
                 public void actionPerformed() {
-                    TheEditor.viewport.setDraggedObj(finalI, CursorObject.DraggedType.LINK, function);
+                    EditorManager.viewport.setDraggedObj(finalI, CursorObject.DraggedType.LINK, function);
                 }
             };
             element.setDimensions(0, 0, 12, 12);
@@ -84,11 +87,11 @@ public class nUIFunction extends UIDraggable {
                 @Override
                 public void mouseReleased(float mouseX, float mouseY, int state) {
                     if (hovered(mouseX, mouseY) && state == 0) {
-                        CursorObject o = TheEditor.viewport.getDraggedObj();
+                        CursorObject o = EditorManager.viewport.getDraggedObj();
                         if (o.isOutput()) {
                             nFunction nfunction = o.getLink();
                             function.input[finalI] = nfunction.output[o.id];
-                            TheEditor.viewport.setDraggedObj(null);
+                            EditorManager.viewport.setDraggedObj(null);
                         }
                     }
                     super.mouseReleased(mouseX, mouseY, state);
@@ -106,7 +109,7 @@ public class nUIFunction extends UIDraggable {
             UICircle element = new UICircle() {
                 @Override
                 public void actionPerformed() {
-                    TheEditor.viewport.setDraggedObj(finalI, CursorObject.DraggedType.OUTPUT, function);
+                    EditorManager.viewport.setDraggedObj(finalI, CursorObject.DraggedType.OUTPUT, function);
                 }
             };
             outputList.put(function.output[i], element);
@@ -207,19 +210,8 @@ public class nUIFunction extends UIDraggable {
 
         Gui.drawGradientRect(x, y + 20, x + width, y + 23, 0x60000000, 0);
 
-        if (dragging) {
-            x += (mouseX - dragX);
-            y += (mouseY - dragY);
-            dragX = mouseX;
-            dragY = mouseY;
-        }
-
-
 
         super.drawScreen(mouseX, mouseY);
-
-
-
     }
 
 

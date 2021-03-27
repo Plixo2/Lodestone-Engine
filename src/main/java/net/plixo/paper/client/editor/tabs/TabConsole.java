@@ -2,7 +2,7 @@ package net.plixo.paper.client.editor.tabs;
 
 import net.plixo.paper.client.ui.UITab;
 import net.plixo.paper.client.ui.elements.UICanvas;
-import net.plixo.paper.client.manager.TheEditor;
+import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.MouseUtil;
@@ -34,7 +34,7 @@ public class TabConsole extends UITab {
 
     public TabConsole(int id) {
         super(id, "Console");
-        TheEditor.console = this;
+        EditorManager.console = this;
     }
 
     @Override

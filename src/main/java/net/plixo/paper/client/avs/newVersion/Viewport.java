@@ -1,7 +1,7 @@
 package net.plixo.paper.client.avs.newVersion;
 
 import net.minecraft.util.math.vector.Vector2f;
-import net.plixo.paper.client.manager.TheEditor;
+import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.ui.UIElement;
 import net.plixo.paper.client.ui.UITab;
 import net.plixo.paper.client.ui.elements.UICanvas;
@@ -11,11 +11,9 @@ import net.plixo.paper.client.util.MouseUtil;
 import net.plixo.paper.client.util.Util;
 import org.lwjgl.opengl.GL11;
 
-import java.util.ArrayList;
-
 public class Viewport extends UITab {
 
-    ArrayList<nFunction> functions = new ArrayList<>();
+    VisualScript script;
 
     public float x = 0, y = 0;
     public float zoom = 1;
@@ -24,7 +22,17 @@ public class Viewport extends UITab {
 
     public Viewport(int id) {
         super(id, "Viewport");
-        TheEditor.viewport = this;
+        EditorManager.viewport = this;
+    }
+
+    public void load(VisualScript script) {
+        this.script = script;
+        init();
+    }
+
+    @Override
+    public void close() {
+
     }
 
     @Override
@@ -34,41 +42,22 @@ public class Viewport extends UITab {
         canvas.setRoundness(0);
         canvas.setColor(0);
 
-        try {
-            functions.add(new Jump());
-            functions.add(new Event());
-            functions.add(new If());
-            functions.add(new getGround());
-
-            for (nFunction function : functions) {
+        if(script != null) {
+            for (nFunction function : script.functions) {
                 function.set();
                 nUIFunction f = new nUIFunction(function);
                 f.setDimensions(0, 0, 120, 20);
                 canvas.add(f);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    @Override
-    public void onTick() {
-        try {
-            for (nFunction function : functions) {
-                if (function instanceof Event) {
-                    function.run();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Util.print(e.getMessage());
-        }
-
-        super.onTick();
-    }
 
     @Override
     public void drawScreen(float mouseX, float mouseY) {
+        if(script == null) {
+            return;
+        }
         try {
             if (dragging) {
                 x += (mouseX - dragX);
@@ -146,6 +135,10 @@ public class Viewport extends UITab {
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
         hideMenu();
+        if(script == null) {
+            return;
+        }
+
         Vector2f mouseToWorld = screenToWorld(mouseX, mouseY);
         for (UIElement element : canvas.elements) {
             element.mouseClicked(mouseToWorld.x - canvas.x, mouseToWorld.y - canvas.y, mouseButton);
@@ -162,6 +155,9 @@ public class Viewport extends UITab {
 
     @Override
     public void mouseReleased(float mouseX, float mouseY, int state) {
+        if(script == null) {
+            return;
+        }
         if (state == 1) {
             dragging = false;
             dragX = 0;
