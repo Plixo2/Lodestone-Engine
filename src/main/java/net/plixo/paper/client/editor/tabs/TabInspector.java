@@ -38,8 +38,6 @@ public class TabInspector extends UITab {
         super.init();
     }
 
-   // ArrayList<Resource> savedList = null;
-    //File meta;
     Meta meta;
 
     public void initInspector(File origin) {

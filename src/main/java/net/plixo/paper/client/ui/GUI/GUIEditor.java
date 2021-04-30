@@ -6,7 +6,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.avs.newVersion.Viewport;
+import net.plixo.paper.client.avs.newVersion.TabViewport;
 import net.plixo.paper.client.events.ClientEvent;
 import net.plixo.paper.client.ui.TabbedUI;
 import net.plixo.paper.client.ui.UITab;
@@ -19,14 +19,17 @@ import org.lwjgl.opengl.GL11;
 
 public class GUIEditor extends Screen {
 
+    public static GUIEditor instance;
+
     public GUIEditor() {
         super(new StringTextComponent("UI"));
+        this.instance = this;
     }
 
 
     //static Minecraft mc = Minecraft.getInstance();
 
-    ArrayList<TabbedUI> tabs = new ArrayList<>();
+    public ArrayList<TabbedUI> tabs = new ArrayList<>();
     Toolbar toolbar;
 
     @Override
@@ -69,7 +72,7 @@ public class GUIEditor extends Screen {
         background.y = 30;
         background.x = side;
 
-        background.addTab(new Viewport(0));
+        background.addTab(new TabViewport(0));
         //background.addTab(new TabModelViewer(1));
 
 
@@ -168,20 +171,18 @@ public class GUIEditor extends Screen {
 
     @Override
     public void onClose() {
+        Lodestone.save();
         for (TabbedUI tab : tabs) {
             tab.close();
         }
-        Lodestone.save();
         super.onClose();
     }
 
     @Override
     public void tick() {
-
         for (TabbedUI tab : tabs) {
             tab.onTick();
         }
-        Lodestone.update(ClientEvent.TickEvent.event);
         super.tick();
     }
 

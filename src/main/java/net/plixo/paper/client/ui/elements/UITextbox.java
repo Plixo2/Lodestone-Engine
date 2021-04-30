@@ -73,6 +73,7 @@ public class UITextbox extends UIElement {
         //disable background
         field.setEnableBackgroundDrawing(false);
         field.setTextColor(textColor);
+        field.setMaxStringLength(100000);
         super.setDimensions(x, y, width, height);
     }
 

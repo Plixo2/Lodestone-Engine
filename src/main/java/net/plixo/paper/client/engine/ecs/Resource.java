@@ -22,21 +22,26 @@ public class Resource {
     }
 
     public void fromString(String str) {
-        if (str.isEmpty()) {
-            return;
-        }
-        if (isFile()) {
-            setValue(new File(str));
-        } else if (isBoolean()) {
-            setValue(Boolean.valueOf(str));
-        } else if (isFloat()) {
-            setValue(Float.valueOf(str));
-        } else if (isInteger()) {
-            setValue(Integer.valueOf(str));
-        } else if (isString()) {
-            setValue(str);
-        } else if (isVector()) {
-            setValue(Util.getVecFromString(str));
+        try {
+            if (str.isEmpty()) {
+                return;
+            }
+            if (isFile()) {
+                setValue(new File(str));
+            } else if (isBoolean()) {
+                setValue(Boolean.valueOf(str));
+            } else if (isFloat()) {
+                setValue(Float.valueOf(str));
+            } else if (isInteger()) {
+                setValue(Integer.valueOf(str));
+            } else if (isString()) {
+                setValue(str);
+            } else if (isVector()) {
+                setValue(Util.getVecFromString(str));
+            }
+        } catch (Exception e) {
+          Util.print(e.getMessage());
+          e.printStackTrace();
         }
     }
 
@@ -83,9 +88,11 @@ public class Resource {
         return (Vector3d) value;
     }
 
+
     public boolean hasValue() {
         return value != null;
     }
+
 
     public boolean isBoolean() {
         return clazz == Boolean.class;
@@ -110,6 +117,7 @@ public class Resource {
     public boolean isVector() {
         return clazz == Vector3d.class;
     }
+
 
     public JsonObject serialize() {
         JsonObject obj = new JsonObject();
@@ -141,6 +149,7 @@ public class Resource {
         }
         return "";
     }
+
     public static UIElement getUIElement(Resource res , float x, float y, float width, float height) {
         UIElement element = null;
         if (res.isFile()) {

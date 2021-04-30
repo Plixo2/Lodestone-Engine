@@ -105,7 +105,6 @@ public class TabExplorer extends UITab {
         canvas.add(array);
     }
 
-
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
         hideMenu();

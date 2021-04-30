@@ -12,6 +12,8 @@ public class Jump extends nFunction {
     public void run() {
         pullInputs();
         int speed = setting(0).getAsInteger();
+        Util.print(speed);
+
         for (int i = 0; i < speed; i++) {
             mc.player.jump();
         }

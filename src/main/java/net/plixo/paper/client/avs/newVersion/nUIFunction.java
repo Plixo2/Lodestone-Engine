@@ -22,7 +22,6 @@ public class nUIFunction extends UIDraggable {
     public nUIFunction(nFunction function) {
         super(0);
         this.function = function;
-        function.ui = this;
     }
 
     public HashMap<nFunction.Output, UIElement> outputList = new HashMap<>();
@@ -204,11 +203,18 @@ public class nUIFunction extends UIDraggable {
 
         int color = ColorLib.getBackground(0.5f);
 
+        if(isSelected) {
+            Gui.drawRoundedRect(x-1,y-1,x+width+1,y+20+1,4,-1);
+            Gui.drawRect(x-1,y+10-1,x+width+1,y+height-10+1,-1);
+            Gui.drawRoundedRect(x-1,y+height-20-1,x+width+1,y+height+1,4,-1);
+        }
+
         Gui.drawRoundedRect(x,y,x+width,y+20,4,color);
         Gui.drawRect(x,y+10,x+width,y+height-10,color);
         Gui.drawRoundedRect(x,y+height-20,x+width,y+height,4,color);
 
-        Gui.drawGradientRect(x, y + 20, x + width, y + 23, 0x60000000, 0);
+
+     //   Gui.drawGradientRect(x, y + 20, x + width, y + 23, 0x60000000, 0);
 
 
         super.drawScreen(mouseX, mouseY);

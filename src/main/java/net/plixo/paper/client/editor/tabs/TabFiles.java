@@ -1,22 +1,26 @@
 package net.plixo.paper.client.editor.tabs;
 
+import net.plixo.paper.Lodestone;
+import net.plixo.paper.client.avs.newVersion.FunctionManager;
+import net.plixo.paper.client.avs.newVersion.VisualScript;
+import net.plixo.paper.client.manager.EditorManager;
+import net.plixo.paper.client.ui.GUI.GUIAccept;
+import net.plixo.paper.client.ui.GUI.GUITextInput;
+import net.plixo.paper.client.ui.UITab;
+import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.ui.elements.UIFileIcon;
+import net.plixo.paper.client.ui.other.OptionMenu;
+import net.plixo.paper.client.util.ColorLib;
+import net.plixo.paper.client.util.Options;
+import net.plixo.paper.client.util.SaveUtil;
+import net.plixo.paper.client.util.Util;
+import org.apache.commons.io.FilenameUtils;
+import org.lwjgl.glfw.GLFW;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-
-import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.manager.EditorManager;
-import net.plixo.paper.client.util.Options;
-import net.plixo.paper.client.ui.UITab;
-import net.plixo.paper.client.ui.elements.UICanvas;
-import net.plixo.paper.client.ui.GUI.GUIAccept;
-import net.plixo.paper.client.ui.GUI.GUITextInput;
-import net.plixo.paper.client.ui.other.OptionMenu;
-import net.plixo.paper.client.ui.elements.UIFileIcon;
-import net.plixo.paper.client.util.*;
-import org.apache.commons.io.FilenameUtils;
-import org.lwjgl.glfw.GLFW;
 
 public class TabFiles extends UITab {
 
@@ -98,21 +102,6 @@ public class TabFiles extends UITab {
         }
 
         super.keyPressed(key, scanCode, action);
-    }
-
-
-    void openVs(File file) {
-        /*
-        String name = FilenameUtils.removeExtension(file.getName());
-        Module loadedMod = new Module(name, file);
-        if (TheEditor.activeMod != null) {
-            TheEditor.activeMod.canvas.saveToFile();
-        }
-        TheEditor.activeMod = loadedMod;
-        loadedMod.canvas = new Canvas(loadedMod);
-        loadedMod.canvas.init();
-         */
-      //  TheEditor.viewport.loadFromFile(file);
     }
 
     void update() {
@@ -230,7 +219,8 @@ public class TabFiles extends UITab {
                             open = new OptionMenu.TxtRun("View") {
                                 @Override
                                 public void run() {
-                                    openVs(file);
+                                     VisualScript script = FunctionManager.loadFromFile(file);
+                                     EditorManager.viewport.load(script);
                                 }
                             };
                         }
@@ -292,8 +282,6 @@ public class TabFiles extends UITab {
                             e.printStackTrace();
                         }
 
-                        //  ArrayList<String> lines = SaveUtil.loadFromFile(file);
-                        //
                         showMenu(0, mouseX, mouseY, open, edit, explorer, delete, rename);
 
                     }

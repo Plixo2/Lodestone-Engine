@@ -24,7 +24,6 @@ public class TabConsole extends UITab {
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
             this.line =  line;
             time = formatter.format(calendar.getTime());
-
         }
     }
 

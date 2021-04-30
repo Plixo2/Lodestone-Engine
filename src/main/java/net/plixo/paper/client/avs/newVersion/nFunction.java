@@ -4,15 +4,16 @@ import net.minecraft.client.Minecraft;
 import net.plixo.paper.client.engine.ecs.Resource;
 
 import java.util.Random;
+import java.util.UUID;
 
 public abstract class nFunction {
     public static Random random = new Random();
     public static Minecraft mc = Minecraft.getInstance();
 
-    public long id;
+    public UUID id;
 
     public nFunction() {
-        id = random.nextLong();
+        id = UUID.randomUUID();
     }
 
     Output[] output;

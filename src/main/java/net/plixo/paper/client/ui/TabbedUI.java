@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 
 /**
-* holds a array of {@code UITab}
+ * holds a array of {@code UITab}
  * handles input for the current tab;
  **/
 public class TabbedUI implements IGuiEvent {
@@ -66,8 +66,8 @@ public class TabbedUI implements IGuiEvent {
 
             tab.head.draw(mouseX, mouseY);
         }
-        Gui.drawGradientRect(0,0,width,5,0x80000000,0);
-        Gui.drawRect(width , 0,width+0.5f , height , 0x55AAAAAA);
+        Gui.drawGradientRect(0, 0, width, 5, 0x80000000, 0);
+        Gui.drawRect(width, 0, width + 0.5f, height, 0x55AAAAAA);
 
         if (menu != null) {
             menu.drawScreen(mouseX, mouseY);
@@ -78,6 +78,12 @@ public class TabbedUI implements IGuiEvent {
     @Override
     public void close() {
         tabs.get(selectedIndex).close();
+    }
+
+    public void save() {
+        for (UITab tab : tabs) {
+            tab.save();
+        }
     }
 
     public UITab getHoveredHead(float mouseX, float mouseY) {
@@ -108,7 +114,7 @@ public class TabbedUI implements IGuiEvent {
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
         if (menu != null) {
-            menu.mouseClicked(mouseX,mouseY,mouseButton);
+            menu.mouseClicked(mouseX, mouseY, mouseButton);
         }
         tabs.get(selectedIndex).mouseClicked(mouseX, mouseY, mouseButton);
     }

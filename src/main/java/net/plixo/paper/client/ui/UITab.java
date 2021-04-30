@@ -57,19 +57,11 @@ public class UITab implements IGuiEvent {
         canvas.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
+    public void save() {};
+
     @Override
     public void mouseReleased(float mouseX, float mouseY, int state) {
         canvas.mouseReleased(mouseX, mouseY, state);
-    }
-
-    //simple outline using lines
-    public void drawOutline() {
-        int lineColor = ColorLib.getMainColor();
-        int width = 2;
-        Gui.drawLine(0, 0, parent.width, 0, lineColor, width);
-        Gui.drawLine(0, 0, 0, parent.height, lineColor, width);
-        Gui.drawLine(0, parent.height, parent.width, parent.height, lineColor, width);
-        Gui.drawLine(parent.width, 0, parent.width, parent.height, lineColor, width);
     }
 
 

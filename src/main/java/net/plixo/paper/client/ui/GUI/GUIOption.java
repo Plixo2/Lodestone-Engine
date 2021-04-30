@@ -29,7 +29,8 @@ public class GUIOption extends Screen {
 
 
         UIArray settingsArray = new UIArray(0);
-        settingsArray.setDimensions(0, 0, 140, height);
+        settingsArray.setDimensions(0, 0, 140, 40);
+
        // settingsArray.arrayheight = 20;
 
 
@@ -42,6 +43,7 @@ public class GUIOption extends Screen {
         };
         unicode.setYesNo("true", "false");
         unicode.setState(Options.useUnicode);
+        unicode.setDimensions(0,0,140,30);
 
         UIToggleButton showMetadata = new UIToggleButton(0) {
             @Override
@@ -52,24 +54,26 @@ public class GUIOption extends Screen {
         };
         showMetadata.setYesNo("true", "false");
         showMetadata.setState(Options.showMetadata);
+        showMetadata.setDimensions(0,0,140,30);
 
-
-        UIButton reloadFunction = new UIButton(0) {
+        UIToggleButton button = new UIToggleButton(0) {
             @Override
             public void actionPerformed() {
                 super.actionPerformed();
-                //VisualScriptManager.register();
+                Options.usePreEvent = getState();
             }
         };
-        reloadFunction.setDisplayName("reload Javascript");
+        button.setYesNo("Pre","Post");
+        button.setState(Options.usePreEvent);
+        button.setDimensions(0,0,140,30);
 
 
 
         settingsArray.add(unicode);
         settingsArray.add(showMetadata);
-        settingsArray.add(reloadFunction);
+        settingsArray.add(button);
 
-      //  mainCanvas.add(settingsArray);
+        mainCanvas.add(settingsArray);
 
         super.init();
     }

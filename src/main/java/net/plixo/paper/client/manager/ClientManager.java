@@ -2,7 +2,7 @@ package net.plixo.paper.client.manager;
 
 import com.google.gson.*;
 import net.plixo.paper.client.engine.behaviors.Renderer;
-import net.plixo.paper.client.engine.behaviors.VisualScript;
+import net.plixo.paper.client.engine.behaviors.Visual_Script;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.engine.ecs.Resource;
@@ -48,7 +48,7 @@ public class ClientManager {
     }
     public static void register() {
         standardBehavior.clear();
-        standardBehavior.add(new VisualScript());
+        standardBehavior.add(new Visual_Script());
         standardBehavior.add(new Renderer());
     }
 

@@ -3,10 +3,7 @@ package net.plixo.paper.client.manager;
 import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.util.Util;
 
-import javax.script.Bindings;
-import javax.script.Invocable;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
+import javax.script.*;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -14,8 +11,9 @@ import java.util.List;
 
 public class ScriptManager {
 
+     static ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     public static ScriptEngine getNewEngine() {
-        return Lodestone.lodestoneEngine.scriptEngineManager.getEngineByName("nashorn");
+        return scriptEngineManager.getEngineByName("nashorn");
     }
 
     public static boolean setup(File file, ScriptEngine engine) {
