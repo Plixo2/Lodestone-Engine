@@ -15,8 +15,6 @@ public class GUITest extends nFunction {
             protected void init() {
                 super.init();
             }
-
-
         };
         UIButton button = new UIButton() {
             public void actionPerformed() {
