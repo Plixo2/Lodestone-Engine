@@ -17,9 +17,6 @@ public class UICanvas extends UIElement {
     UIElement lastElement;
 
 
-    public UICanvas(int id) {
-        super(id);
-    }
 
     //add a elements
     public void add(UIElement element) {

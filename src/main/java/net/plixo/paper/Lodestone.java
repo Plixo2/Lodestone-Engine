@@ -1,12 +1,11 @@
 package net.plixo.paper;
 
-import net.plixo.paper.client.avs.newVersion.FunctionManager;
+import net.plixo.paper.client.manager.FunctionManager;
 import net.plixo.paper.client.events.ClientEvent;
 import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.manager.ClientManager;
 import net.plixo.paper.client.ui.GUI.GUIEditor;
 import net.plixo.paper.client.ui.TabbedUI;
-import net.plixo.paper.client.util.Util;
 
 /**
  * Second main class.

@@ -248,4 +248,18 @@ public class Util {
     public static String getStringFromVector(Vector3d vec) {
         return vec.x + "," + vec.y + "," + vec.z;
     }
+
+
+    public static void findFiles(String directoryName, ArrayList<File> files , SaveUtil.FileFormat format) {
+        File directory = new File(directoryName);
+        File[] fList = directory.listFiles();
+        if (fList != null)
+            for (File file : fList) {
+                if (file.isFile() && SaveUtil.FileFormat.getFromFile(file) == format) {
+                    files.add(file);
+                } else if (file.isDirectory()) {
+                    findFiles(file.getAbsolutePath(), files,format);
+                }
+            }
+    }
 }

@@ -24,7 +24,7 @@ public class TabExplorer extends UITab {
 
     @Override
     public void init() {
-        canvas = new UICanvas(0);
+        canvas = new UICanvas();
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
 
@@ -34,18 +34,18 @@ public class TabExplorer extends UITab {
 
     void reCalc() {
         canvas.clear();
-        UIArray array = new UIArray(0);
+        UIArray array = new UIArray();
         array.setDimensions(0, 15, parent.width, parent.height - 15);
         array.setRoundness(0);
         array.setColor(ColorLib.getBackground(0.2f));
 
         for (GameObject obj : ClientManager.allEntities) {
 
-            UICanvas main = new UICanvas(0);
+            UICanvas main = new UICanvas();
             main.setDimensions(0, 0, canvas.width - 15, 20);
 
 
-            UIButton button = new UIButton(0) {
+            UIButton button = new UIButton() {
                 @Override
                 public void drawStringCentered(float mouseX, float mouseY) {
                     if (displayName != null) {
@@ -64,7 +64,7 @@ public class TabExplorer extends UITab {
             button.setRoundness(3);
             button.setColor(0);
 
-            UIButton label = new UIButton(0) {
+            UIButton label = new UIButton() {
                 @Override
                 public void actionPerformed() {
                     mc.displayGuiScreen(new GUIAccept(() -> {
@@ -84,7 +84,7 @@ public class TabExplorer extends UITab {
             array.add(main);
         }
 
-        UIButton addEntity = new UIButton(0) {
+        UIButton addEntity = new UIButton() {
             @Override
             public void actionPerformed() {
                 GUITextInput input = new GUITextInput((a) -> {

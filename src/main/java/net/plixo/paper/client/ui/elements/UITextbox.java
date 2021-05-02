@@ -17,9 +17,6 @@ public class UITextbox extends UIElement {
 
     public TextFieldWidget field;
 
-    public UITextbox(int id) {
-        super(id);
-    }
 
     @Override
     public void drawScreen(float mouseX, float mouseY) {

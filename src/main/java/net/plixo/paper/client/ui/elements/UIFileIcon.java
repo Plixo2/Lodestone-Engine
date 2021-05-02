@@ -21,7 +21,6 @@ public class UIFileIcon extends UICanvas {
     String extension;
 
     public UIFileIcon(File file) {
-        super(0);
         this.file = file;
     }
 
@@ -32,7 +31,7 @@ public class UIFileIcon extends UICanvas {
     public void setDimensions(float x, float y, float width, float height) {
         super.setDimensions(x, y, width, height);
         setDisplayString();
-        UIButton button = new UIButton(0) {
+        UIButton button = new UIButton() {
 
             /**
              * draw the Icon
@@ -118,7 +117,7 @@ public class UIFileIcon extends UICanvas {
         /**
          * Name button with hover name
          */
-        UIButton name = new UIButton(0) {
+        UIButton name = new UIButton() {
             /**
              * existence check or else color red
              */

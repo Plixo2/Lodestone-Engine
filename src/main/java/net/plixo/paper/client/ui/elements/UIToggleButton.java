@@ -18,9 +18,6 @@ public class UIToggleButton extends UIElement {
     protected String StrFalse = "No";
     protected String StrTrue = "Yes";
 
-    public UIToggleButton(int id) {
-        super(id);
-    }
 
     //triggered at mouseClicked if hovered
     @Override

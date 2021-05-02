@@ -7,9 +7,6 @@ import net.plixo.paper.client.util.Gui;
 public class UICircle extends UIElement {
 
     public float radius = 0;
-    public UICircle() {
-        super(0);
-    }
 
     @Override
     public void setDimensions(float x, float y, float width, float height) {

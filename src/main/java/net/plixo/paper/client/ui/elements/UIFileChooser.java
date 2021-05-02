@@ -23,8 +23,8 @@ public class UIFileChooser extends UIMultiButton {
     //for checking if the window is open
     JFrame lastFrame;
 
-    public UIFileChooser(int id) {
-        super(id, new UIButton(0));
+    public UIFileChooser() {
+        super(new UIButton());
         others[0].displayName = ">";
         others[0].setRoundness(2);
     }

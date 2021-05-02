@@ -20,7 +20,7 @@ public class nUIFunction extends UIDraggable {
     nFunction function;
 
     public nUIFunction(nFunction function) {
-        super(0);
+        super();
         this.function = function;
     }
 
@@ -31,14 +31,14 @@ public class nUIFunction extends UIDraggable {
     public void setDimensions(float x, float y, float width, float height) {
         super.setDimensions(x, y, width, height);
 
-        UILabel name = new UILabel(0);
+        UILabel name = new UILabel();
         name.setDimensions(0, 0, width, 20);
         name.setDisplayName(function.getName());
 
-        UIArray inputs = new UIArray(0);
+        UIArray inputs = new UIArray();
         inputs.setDimensions(0, 20, 12, 100);
 
-        UIArray outputs = new UIArray(0);
+        UIArray outputs = new UIArray();
         outputs.setDimensions(width - 12, 20, 12, 100);
 
         boolean hasExecutionInput = function.links.length > 0 && !(function instanceof Event);
@@ -120,7 +120,7 @@ public class nUIFunction extends UIDraggable {
 
         float IOHeight = 23 + Math.max(outputs.getMax(), inputs.getMax());
 
-        UIArray resources = new UIArray(0);
+        UIArray resources = new UIArray();
         resources.setDimensions(0, IOHeight, width, 100);
 
         if (function.settings != null)

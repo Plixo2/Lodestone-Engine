@@ -15,8 +15,7 @@ public abstract class UIMultiButton extends UIElement {
     //array of other Elements
     UIElement[] others;
 
-    public UIMultiButton(int id, UIElement... others) {
-        super(id);
+    public UIMultiButton(UIElement... others) {
         this.others = others;
     }
 
@@ -58,11 +57,13 @@ public abstract class UIMultiButton extends UIElement {
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
 
+        int i = 0;
         for (UIElement button : others) {
             button.mouseClicked(mouseX - x, mouseY - y, mouseButton);
             if (button.hovered(mouseX - x, mouseY - y)) {
-                otherButton(button.getId());
+                otherButton(i);
             }
+            i += 1;
         }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }

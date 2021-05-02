@@ -22,19 +22,19 @@ public class GUIOption extends Screen {
     @Override
     protected void init() {
 
-        mainCanvas = new UICanvas(0);
+        mainCanvas = new UICanvas();
         mainCanvas.setDimensions(0, 0, width, height);
         mainCanvas.setRoundness(0);
         mainCanvas.setColor(ColorLib.getBackground(0));
 
 
-        UIArray settingsArray = new UIArray(0);
+        UIArray settingsArray = new UIArray();
         settingsArray.setDimensions(0, 0, 140, 40);
 
        // settingsArray.arrayheight = 20;
 
 
-        UIToggleButton unicode = new UIToggleButton(0) {
+        UIToggleButton unicode = new UIToggleButton() {
             @Override
             public void actionPerformed() {
                 super.actionPerformed();
@@ -45,7 +45,7 @@ public class GUIOption extends Screen {
         unicode.setState(Options.useUnicode);
         unicode.setDimensions(0,0,140,30);
 
-        UIToggleButton showMetadata = new UIToggleButton(0) {
+        UIToggleButton showMetadata = new UIToggleButton() {
             @Override
             public void actionPerformed() {
                 super.actionPerformed();
@@ -56,7 +56,7 @@ public class GUIOption extends Screen {
         showMetadata.setState(Options.showMetadata);
         showMetadata.setDimensions(0,0,140,30);
 
-        UIToggleButton button = new UIToggleButton(0) {
+        UIToggleButton button = new UIToggleButton() {
             @Override
             public void actionPerformed() {
                 super.actionPerformed();

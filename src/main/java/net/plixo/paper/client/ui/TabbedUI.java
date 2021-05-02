@@ -113,7 +113,7 @@ public class TabbedUI implements IGuiEvent {
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-        if (menu != null) {
+        if (menu != null && isMouseInside(mouseX,mouseY)) {
             menu.mouseClicked(mouseX, mouseY, mouseButton);
         }
         tabs.get(selectedIndex).mouseClicked(mouseX, mouseY, mouseButton);

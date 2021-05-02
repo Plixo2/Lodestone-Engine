@@ -16,8 +16,8 @@ public class UISpinner extends UIMultiButton {
     public TextFieldWidget field;
 
 
-    public UISpinner(int id) {
-        super(id, new UIButton(0), new UIButton(1));
+    public UISpinner() {
+        super(new UIButton(), new UIButton());
         others[0].displayName = "+";
         others[0].setRoundness(1);
         others[1].displayName = "-";

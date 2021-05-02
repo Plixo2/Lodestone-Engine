@@ -15,9 +15,6 @@ public class UIVector extends UICanvas {
     public UIPointNumber spinnerY;
     public UIPointNumber spinnerZ;
 
-    public UIVector(int id) {
-        super(id);
-    }
 
     //set number field position
     @Override
@@ -26,15 +23,15 @@ public class UIVector extends UICanvas {
         float spinnerWidth = width / 3;
         elements.clear();
 
-        spinnerX = new UIPointNumber(0);
+        spinnerX = new UIPointNumber();
         spinnerX.setDimensions(0, 0, spinnerWidth, height);
         spinnerX.setRoundness(0);
 
-        spinnerY = new UIPointNumber(1);
+        spinnerY = new UIPointNumber();
         spinnerY.setDimensions(spinnerWidth, 0, spinnerWidth, height);
         spinnerY.setRoundness(0);
 
-        spinnerZ = new UIPointNumber(2);
+        spinnerZ = new UIPointNumber();
         spinnerZ.setDimensions(spinnerWidth * 2, 0, spinnerWidth, height);
         spinnerZ.setRoundness(0);
 

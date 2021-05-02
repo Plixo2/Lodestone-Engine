@@ -30,7 +30,7 @@ public class TabInspector extends UITab {
 
     @Override
     public void init() {
-        canvas = new UICanvas(0);
+        canvas = new UICanvas();
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
         canvas.setColor(ColorLib.getBackground(0.05f));
@@ -53,7 +53,7 @@ public class TabInspector extends UITab {
             if(meta != null)
                 for (Resource res : meta.serialized) {
                 UIElement element = Resource.getUIElement(res, 50, yRes, parent.width - 54, 20);
-                UILabel label = new UILabel(0) {
+                UILabel label = new UILabel() {
                     @Override
                     public void drawDisplayString() {
                             Gui.drawString(displayName, x, y + height / 2, textColor);
@@ -89,7 +89,7 @@ public class TabInspector extends UITab {
         }
 
         try {
-            UITextbox nameField = new UITextbox(-1) {
+            UITextbox nameField = new UITextbox() {
                 @Override
                 public void textFieldChanged() {
                     entity.name = getText();
@@ -119,7 +119,7 @@ public class TabInspector extends UITab {
             float xStart = parent.width * 0.25f;
 
 
-            UIVector pos = new UIVector(0) {
+            UIVector pos = new UIVector() {
                 @Override
                 public void onTick() {
                     entity.position = getAsVector();
@@ -133,7 +133,7 @@ public class TabInspector extends UITab {
 
             yBe += 20;
 
-            UIVector scale = new UIVector(0) {
+            UIVector scale = new UIVector() {
                 @Override
                 public void onTick() {
                     entity.scale = getAsVector();
@@ -146,7 +146,7 @@ public class TabInspector extends UITab {
 
             yBe += 20;
 
-            UIVector rot = new UIVector(0) {
+            UIVector rot = new UIVector() {
                 @Override
                 public void onTick() {
                     entity.rotation = getAsVector();
@@ -159,15 +159,15 @@ public class TabInspector extends UITab {
             rot.setRoundness(0);
             yBe += 20;
 
-            UILabel positionLabel = new UILabel(0);
+            UILabel positionLabel = new UILabel();
             positionLabel.setDimensions(0, pos.y, xStart, 20);
             positionLabel.setDisplayName("Position");
 
-            UILabel scaleLabel = new UILabel(0);
+            UILabel scaleLabel = new UILabel();
             scaleLabel.setDimensions(0, scale.y, xStart, 20);
             scaleLabel.setDisplayName("Scale");
 
-            UILabel rotationLabel = new UILabel(0);
+            UILabel rotationLabel = new UILabel();
             rotationLabel.setDimensions(0, rot.y, xStart, 20);
             rotationLabel.setDisplayName("Rotation");
 
@@ -181,7 +181,7 @@ public class TabInspector extends UITab {
 
 
             for (Behavior b : entity.components) {
-                UICanvas behaviorCanvas = new UICanvas(0) {
+                UICanvas behaviorCanvas = new UICanvas() {
                     @Override
                     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
                         if (hovered(mouseX, mouseY) && !Lodestone.lodestoneEngine.isRunning && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
@@ -197,7 +197,7 @@ public class TabInspector extends UITab {
                 behaviorCanvas.setColor(0);
 
 
-                UILabel head = new UILabel(0) {
+                UILabel head = new UILabel() {
                     @Override
                     public void drawDisplayString() {
                         if (displayName != null) {

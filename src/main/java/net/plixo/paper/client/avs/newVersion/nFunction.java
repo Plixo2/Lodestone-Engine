@@ -3,6 +3,7 @@ package net.plixo.paper.client.avs.newVersion;
 import net.minecraft.client.Minecraft;
 import net.plixo.paper.client.engine.ecs.Resource;
 
+
 import java.util.Random;
 import java.util.UUID;
 
@@ -16,10 +17,10 @@ public abstract class nFunction {
         id = UUID.randomUUID();
     }
 
-    Output[] output;
-    Output[] input;
-    Resource[] settings = new Resource[0];
-    nFunction[] links;
+    public Output[] output;
+    public Output[] input;
+    public Resource[] settings = new Resource[0];
+    public nFunction[] links;
 
     public nUIFunction ui;
 
@@ -31,32 +32,32 @@ public abstract class nFunction {
     public void run() {
     }
 
-    protected void output(int id, Object o) {
+    public void output(int id, Object o) {
         output[id].value = o;
     }
 
-    protected Number input(int id, Number Default) {
+    public Number input(int id, Number Default) {
         if (input[id] == null) {
             return Default;
         }
         return input[id].getAsNumber(Default);
     }
 
-    protected Boolean input(int id, Boolean Default) {
+    public Boolean input(int id, Boolean Default) {
         if (input[id] == null) {
             return Default;
         }
         return input[id].getAsBoolean(Default);
     }
 
-    protected Object input(int id) {
+    public Object input(int id) {
         if (input[id] == null) {
             return null;
         }
         return input[id].get();
     }
 
-    protected void execute() {
+    public void execute() {
         for (int i = 0; i < links.length; i++) {
             if (links[i] != null) {
                 links[i].run();
@@ -64,7 +65,7 @@ public abstract class nFunction {
         }
     }
 
-    protected boolean execute(int id) {
+    public boolean execute(int id) {
         if (links[id] != null) {
             links[id].run();
             return true;
@@ -72,7 +73,7 @@ public abstract class nFunction {
         return false;
     }
 
-    protected void set(int inputs, int outputs, int links) {
+    public void set(int inputs, int outputs, int links) {
         this.links = new nFunction[links];
         input = new Output[inputs];
         output = new Output[outputs];
@@ -81,16 +82,16 @@ public abstract class nFunction {
         }
     }
 
-    protected void custom(Resource... res) {
+    public void custom(Resource... res) {
         settings = res;
     }
 
-    protected Resource setting(int id) {
+    public Resource setting(int id) {
         return settings[id];
     }
 
 
-    protected void pullInputs() {
+    public void pullInputs() {
         for (Output output1 : input) {
             if (output1 != null) {
                 output1.calculate();
@@ -98,7 +99,7 @@ public abstract class nFunction {
         }
     }
 
-    protected boolean hasInput(int id) {
+    public boolean hasInput(int id) {
         return input[id] != null;
     }
 
@@ -145,7 +146,7 @@ public abstract class nFunction {
         }
 
         public boolean isNumber() {
-            return value instanceof Boolean;
+            return value instanceof Number;
         }
     }
 

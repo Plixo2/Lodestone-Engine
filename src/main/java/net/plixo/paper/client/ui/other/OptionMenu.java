@@ -28,7 +28,7 @@ public class OptionMenu implements IGuiEvent {
             }
         }
         width += 5;
-        canvas = new UICanvas(0) {
+        canvas = new UICanvas() {
             @Override
             public void drawScreen(float mouseX, float mouseY) {
                 super.drawScreen(mouseX, mouseY);
@@ -41,7 +41,7 @@ public class OptionMenu implements IGuiEvent {
 
         int index = 0;
         for (TxtRun str : options) {
-            UIButton button = new UIButton(index) {
+            UIButton button = new UIButton() {
                 @Override
                 public void actionPerformed() {
                    str.run();

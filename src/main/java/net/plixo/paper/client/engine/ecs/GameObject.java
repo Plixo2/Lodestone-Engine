@@ -25,12 +25,6 @@ public class GameObject {
     public void addBehavior(Behavior behavior) {
         this.components.add(behavior);
         behavior.entity = this;
-        try {
-            behavior.onEvent(ClientEvent.InitEvent.event);
-        } catch (Exception e) {
-          Util.print(e.getMessage());
-          e.printStackTrace();
-        }
     }
 
     public void onEvent(ClientEvent event) {

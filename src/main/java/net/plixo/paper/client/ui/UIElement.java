@@ -15,8 +15,6 @@ public abstract class UIElement implements IGuiEvent {
     public float height , width;
     protected float hoverProgress = 0;
 
-
-    protected int id;
     long lastMs = 0;
 
 
@@ -27,8 +25,7 @@ public abstract class UIElement implements IGuiEvent {
 
     public float x, y;
 
-    public UIElement(int id) {
-        this.id = id;
+    public UIElement() {
         setRoundness(2);
     }
 
@@ -39,9 +36,6 @@ public abstract class UIElement implements IGuiEvent {
         updateHoverProgress(mouseX, mouseY);
     }
 
-    public int getId() {
-        return id;
-    }
 
     public boolean hovered(float mouseX, float mouseY) {
         return mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height;

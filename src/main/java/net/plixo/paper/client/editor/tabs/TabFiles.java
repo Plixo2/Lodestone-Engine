@@ -1,7 +1,7 @@
 package net.plixo.paper.client.editor.tabs;
 
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.avs.newVersion.FunctionManager;
+import net.plixo.paper.client.manager.FunctionManager;
 import net.plixo.paper.client.avs.newVersion.VisualScript;
 import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.ui.GUI.GUIAccept;
@@ -41,7 +41,7 @@ public class TabFiles extends UITab {
         for (File file : allFiles) {
             filesChanged.put(file,file.lastModified());
         }
-        canvas = new UICanvas(0);
+        canvas = new UICanvas();
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
         canvas.setColor(ColorLib.getBackground(0.3f));
@@ -314,7 +314,7 @@ public class TabFiles extends UITab {
             if(ticks % 80 == 0) {
                 boolean shouldReload = false;
                 ArrayList<File> allFiles = new ArrayList<>();
-                Util.findFiles(SaveUtil.getFolderFromName("").getAbsolutePath(), allFiles);
+                Util.findFiles(SaveUtil.getFolderFromName("").getAbsolutePath(), allFiles, SaveUtil.FileFormat.Code);
                 for (File file : allFiles) {
                     long time = filesChanged.getOrDefault(file,0l);
                     long delta = file.lastModified()-time;
@@ -324,7 +324,7 @@ public class TabFiles extends UITab {
                     }
                 }
                 if (shouldReload) {
-                //    VisualScriptManager.register();
+                    FunctionManager.register();
                     Util.print("All Functions got reloaded fix this pls...");
                 }
             }

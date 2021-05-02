@@ -1,6 +1,7 @@
 package net.plixo.paper.client.avs.newVersion.functions;
 
 import net.plixo.paper.client.avs.newVersion.nFunction;
+import net.plixo.paper.client.util.KeyboardUtil;
 
 public class getGround extends nFunction {
 
@@ -8,6 +9,9 @@ public class getGround extends nFunction {
     public void calculate() {
         pullInputs();
         output(0,mc.player.isOnGround());
+      //  if(hasInput(0))
+      //  output(0,KeyboardUtil.isKeyDown(input(0,0).intValue()));
+
     }
 
     @Override

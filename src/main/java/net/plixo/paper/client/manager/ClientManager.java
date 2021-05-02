@@ -1,6 +1,7 @@
 package net.plixo.paper.client.manager;
 
 import com.google.gson.*;
+import net.plixo.paper.client.engine.behaviors.Java_Addon;
 import net.plixo.paper.client.engine.behaviors.Renderer;
 import net.plixo.paper.client.engine.behaviors.Visual_Script;
 import net.plixo.paper.client.engine.ecs.Behavior;
@@ -23,7 +24,6 @@ public class ClientManager {
 
     public static void addEntity(GameObject entity) {
         allEntities.add(entity);
-        entity.onEvent(ClientEvent.InitEvent.event);
     }
     public static boolean removeEntity(GameObject entity) {
         if (!allEntities.contains(entity)) {
@@ -50,6 +50,8 @@ public class ClientManager {
         standardBehavior.clear();
         standardBehavior.add(new Visual_Script());
         standardBehavior.add(new Renderer());
+        standardBehavior.add(new Java_Addon());
+
     }
 
     public static void load() {

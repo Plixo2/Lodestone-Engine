@@ -1,14 +1,12 @@
 package net.plixo.paper.client.engine.behaviors;
 
-import net.plixo.paper.client.avs.newVersion.FunctionManager;
+import net.plixo.paper.client.manager.FunctionManager;
 import net.plixo.paper.client.avs.newVersion.VisualScript;
-import net.plixo.paper.client.avs.newVersion.functions.Event;
 import net.plixo.paper.client.avs.newVersion.nFunction;
 import net.plixo.paper.client.avs.old.components.Module;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.events.ClientEvent;
-import net.plixo.paper.client.util.Util;
 
 import java.io.File;
 import java.util.Objects;

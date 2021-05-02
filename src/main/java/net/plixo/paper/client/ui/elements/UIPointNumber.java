@@ -17,8 +17,7 @@ public class UIPointNumber extends UIElement {
     TextFieldWidget field;
 
 
-    public UIPointNumber(int id) {
-        super(id);
+    public UIPointNumber() {
         color = ColorLib.getBackground(0.3f);
     }
 

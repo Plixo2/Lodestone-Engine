@@ -15,9 +15,6 @@ public class UIDraggable extends UICanvas {
     float dragX = 0;
     float dragY = 0;
     boolean dragging = false;
-    public UIDraggable(int id) {
-        super(id);
-    }
 
     /**
      * for calculation the offset

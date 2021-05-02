@@ -2,6 +2,7 @@ package net.plixo.paper.client.avs.newVersion;
 
 import net.minecraft.util.math.vector.Vector2f;
 import net.plixo.paper.client.manager.EditorManager;
+import net.plixo.paper.client.manager.FunctionManager;
 import net.plixo.paper.client.ui.UIElement;
 import net.plixo.paper.client.ui.UITab;
 import net.plixo.paper.client.ui.elements.UICanvas;
@@ -39,7 +40,7 @@ public class TabViewport extends UITab {
 
     @Override
     public void init() {
-        canvas = new UICanvas(0);
+        canvas = new UICanvas();
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
         canvas.setColor(0);

@@ -153,7 +153,7 @@ public class Resource {
     public static UIElement getUIElement(Resource res , float x, float y, float width, float height) {
         UIElement element = null;
         if (res.isFile()) {
-            UIFileChooser chooser = new UIFileChooser(0) {
+            UIFileChooser chooser = new UIFileChooser() {
                 @Override
                 public void onTick() {
                     res.setValue(getFile());
@@ -165,7 +165,7 @@ public class Resource {
             chooser.setFile(res.getAsFile());
 
         } else if (res.isInteger()) {
-            UISpinner spinner = new UISpinner(0) {
+            UISpinner spinner = new UISpinner() {
                 @Override
                 public void onTick() {
                     res.setValue(getNumber());
@@ -176,7 +176,7 @@ public class Resource {
             element.setDimensions(x,y,width,height);
             spinner.setNumber(res.getAsInteger());
         } else if (res.isBoolean()) {
-            UIToggleButton toggleButton = new UIToggleButton(0) {
+            UIToggleButton toggleButton = new UIToggleButton() {
                 @Override
                 public void onTick() {
                     res.setValue(getState());
@@ -188,7 +188,7 @@ public class Resource {
             toggleButton.setYesNo("True", "False");
             toggleButton.setState(res.getAsBoolean());
         } else if (res.isString()) {
-            UITextbox txt = new UITextbox(0) {
+            UITextbox txt = new UITextbox() {
                 @Override
                 public void onTick() {
                     res.setValue(getText());
@@ -199,7 +199,7 @@ public class Resource {
             element.setDimensions(x,y,width,height);
             txt.setText(res.getAsString());
         } else if (res.isFloat()) {
-            UIPointNumber number = new UIPointNumber(0) {
+            UIPointNumber number = new UIPointNumber() {
                 @Override
                 public void onTick() {
                     res.setValue((float)getAsDouble());
@@ -210,7 +210,7 @@ public class Resource {
             element.setDimensions(x,y,width,height);
             number.setValue(res.getAsFloat());
         } else if (res.isVector()) {
-            UIVector vec = new UIVector(0) {
+            UIVector vec = new UIVector() {
                 @Override
                 public void onTick() {
                     res.setValue(getAsVector());

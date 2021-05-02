@@ -14,9 +14,7 @@ public class UIButton extends UIElement {
     //optional hovering text
     String hoverName;
 
-    public UIButton(int id) {
-        super(id);
-        //default button color
+    public UIButton() {
         this.setColor(ColorLib.orange());
     }
 

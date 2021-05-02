@@ -13,21 +13,19 @@ public class Script extends nFunction {
     boolean firstTime = true;
     ScriptEngine engine;
     @Override
-    public void run() {
+    public void calculate() {
         pullInputs();
-
             try {
                 if(firstTime) {
-                    String input = setting(0).getAsString();
+                    String input = "function eval() { " + setting(0).getAsString() + " } ";
                     engine = ScriptManager.getNewEngine();
                     engine.eval(input);
                     firstTime = false;
                 }
-                Object obj = ScriptManager.invokeFunction("eval",engine,input(0),input(1),input(2),input(3),input(4),input(5));
+                Object obj = ScriptManager.invokeFunction("eval",engine);
                 output(0,obj);
             } catch (Exception e) {
-                e.printStackTrace();
-              Util.print(e.getMessage());
+              Util.print(e);
               e.printStackTrace();
             }
         execute();
@@ -35,8 +33,8 @@ public class Script extends nFunction {
 
     @Override
     public void set() {
-        set(6,1,1);
-        Resource resource = new Resource("Script",String.class,"function eval(a,b,c,d,e,f) { return !a; }");
+        set(0,1,0);
+        Resource resource = new Resource("Script",String.class,"return Math.random();");
         custom(resource);
     }
 }

@@ -38,7 +38,7 @@ public class TabConsole extends UITab {
 
     @Override
     public void init() {
-        canvas = new UICanvas(0);
+        canvas = new UICanvas();
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
         canvas.setColor(ColorLib.getBackground(0.3f));

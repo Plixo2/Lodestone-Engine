@@ -11,8 +11,8 @@ import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.Util;
 
 public class Toolbar extends UICanvas {
+
     public Toolbar(int id) {
-        super(id);
         setRoundness(0);
         setColor(ColorLib.getBackground(-0.2f));
     }
@@ -21,7 +21,7 @@ public class Toolbar extends UICanvas {
     public void setDimensions(float x, float y, float width, float height) {
         super.setDimensions(x, y, width, height);
 
-        UIButton fileButton = new UIButton(0) {
+        UIButton fileButton = new UIButton() {
             @Override
             public void actionPerformed() {
                 Util.print("Open File menu");
@@ -32,7 +32,7 @@ public class Toolbar extends UICanvas {
         fileButton.setColor(0);
         fileButton.setRoundness(0);
 
-        UIButton settingsButton = new UIButton(0) {
+        UIButton settingsButton = new UIButton() {
             @Override
             public void actionPerformed() {
                 Util.print("Open Settings menu");
@@ -45,7 +45,7 @@ public class Toolbar extends UICanvas {
         settingsButton.setRoundness(0);
 
 
-        UIButton uiToggleButton = new UIButton(0) {
+        UIButton uiToggleButton = new UIButton() {
             @Override
             public void actionPerformed() {
                 if (Lodestone.lodestoneEngine.isRunning) {
@@ -74,7 +74,7 @@ public class Toolbar extends UICanvas {
         uiToggleButton.setColor(0);
 
 
-        UIButton consoleOutput = new UIButton(0) {
+        UIButton consoleOutput = new UIButton() {
             @Override
             public void drawScreen(float mouseX, float mouseY) {
                 if (TabConsole.consoleLines.size() > 0) {

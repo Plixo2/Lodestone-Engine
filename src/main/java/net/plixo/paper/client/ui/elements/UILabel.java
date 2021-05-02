@@ -10,9 +10,6 @@ import net.plixo.paper.client.util.Gui;
  **/
 public class UILabel extends UIElement {
 
-    public UILabel(int id) {
-        super(id);
-    }
 
 
     //simple space or text (without function)

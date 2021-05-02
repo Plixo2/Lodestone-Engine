@@ -17,9 +17,6 @@ public class UIArray extends UICanvas {
     float offset = 0;
     int lineColor = ColorLib.orange();
 
-    public UIArray(int id) {
-        super(id);
-    }
 
     @Override
     public void drawScreen(float mouseX, float mouseY) {
