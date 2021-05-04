@@ -4,6 +4,7 @@ import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.manager.ClientManager;
 import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.ui.GUI.GUIAccept;
+import net.plixo.paper.client.ui.GUI.GUIEditor;
 import net.plixo.paper.client.ui.GUI.GUITextInput;
 import net.plixo.paper.client.ui.UITab;
 import net.plixo.paper.client.ui.elements.UIArray;
@@ -107,7 +108,20 @@ public class TabExplorer extends UITab {
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-        hideMenu();
+        if(mouseButton == 1 && parent.isMouseInside(mouseX,mouseY)) {
+        GUIEditor.instance.beginMenu();
+        GUIEditor.instance.addMenuOption("Add Entity", () -> {
+            GUITextInput input = new GUITextInput((a) -> {
+                GameObject entity = new GameObject(a);
+                ClientManager.addEntity(entity);
+                reCalc();
+            }, (b) -> {
+            }, "Add Entity");
+            input.Syes = "Create";
+            mc.displayGuiScreen(input);
+        });
+        GUIEditor.instance.showMenu();
+        }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 

@@ -34,6 +34,9 @@ public class MetaManager {
     }
 
     public static Meta getMetaByFile(File file) {
+        if(file == null) {
+            return null;
+        }
         if (SaveUtil.FileFormat.getFromFile(file) == SaveUtil.FileFormat.Code) {
             return new CodeMeta(file);
         }

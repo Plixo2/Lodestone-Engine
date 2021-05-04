@@ -2,17 +2,17 @@ package net.plixo.paper.client.editor.tabs;
 
 
 import net.plixo.paper.Lodestone;
+import net.plixo.paper.client.manager.AssetLoader;
 import net.plixo.paper.client.manager.ClientManager;
 import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.manager.MetaManager;
+import net.plixo.paper.client.ui.GUI.GUIEditor;
 import net.plixo.paper.client.util.Options;
-import net.plixo.paper.client.engine.meta.Meta;
 import net.plixo.paper.client.engine.ecs.*;
 import net.plixo.paper.client.ui.UIElement;
 import net.plixo.paper.client.ui.elements.UICanvas;
 import net.plixo.paper.client.ui.UITab;
 import net.plixo.paper.client.ui.elements.*;
-import net.plixo.paper.client.ui.other.OptionMenu;
 import net.plixo.paper.client.util.*;
 import org.lwjgl.glfw.GLFW;
 
@@ -20,7 +20,6 @@ import java.io.File;
 
 public class TabInspector extends UITab {
 
-    GameObject lastEntity;
 
     public TabInspector(int id) {
         super(id, "Inspector");
@@ -38,20 +37,18 @@ public class TabInspector extends UITab {
         super.init();
     }
 
-    Meta meta;
-
     public void initInspector(File origin) {
         canvas.clear();
-        meta = null;
+        AssetLoader.setCurrentEntity(null);
+        AssetLoader.setCurrentMeta(null);
         if (origin == null) {
             return;
         }
         try {
-            meta = MetaManager.getMetaByFile(origin);
-
             int yRes = 5;
-            if(meta != null)
-                for (Resource res : meta.serialized) {
+            AssetLoader.setCurrentMeta(MetaManager.getMetaByFile(origin));
+            if(AssetLoader.getLoadedMeta() != null)
+                for (Resource res : AssetLoader.getLoadedMeta().serialized) {
                 UIElement element = Resource.getUIElement(res, 50, yRes, parent.width - 54, 20);
                 UILabel label = new UILabel() {
                     @Override
@@ -73,21 +70,13 @@ public class TabInspector extends UITab {
         }
     }
 
-    @Override
-    public void close() {
-        if (meta != null) {
-            meta.saveMeta();
-            Util.print("saved");
-        }
-    }
-
     public void initInspector(GameObject entity) {
         canvas.clear();
-        meta = null;
+        AssetLoader.setCurrentEntity(entity);
+        AssetLoader.setCurrentMeta(null);
         if (entity == null) {
             return;
         }
-
         try {
             UITextbox nameField = new UITextbox() {
                 @Override
@@ -187,7 +176,7 @@ public class TabInspector extends UITab {
                         if (hovered(mouseX, mouseY) && !Lodestone.lodestoneEngine.isRunning && KeyboardUtil.isKeyDown(GLFW.GLFW_KEY_DELETE)) {
                             entity.components.remove(b);
                             init();
-                            initInspector(lastEntity);
+                            initInspector(entity);
                         } else {
                             super.mouseClicked(mouseX, mouseY, mouseButton);
                         }
@@ -227,37 +216,23 @@ public class TabInspector extends UITab {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        lastEntity = entity;
     }
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
 
-        hideMenu();
-        if (!parent.isMouseInside(mouseX, mouseY) || lastEntity == null) {
-            super.mouseClicked(mouseX, mouseY, mouseButton);
-            return;
-        }
-        if (mouseButton == 1) {
-            OptionMenu.TxtRun[] array = new OptionMenu.TxtRun[ClientManager.standardBehavior.size()];
-            int index = 0;
+        if (mouseButton == 1 && parent.isMouseInside(mouseX,mouseY) && AssetLoader.getLoadedEntity() != null) {
+            GUIEditor.instance.beginMenu();
             for (Behavior b : ClientManager.standardBehavior) {
-                OptionMenu.TxtRun run = new OptionMenu.TxtRun(b.name) {
-                    @Override
-                    public void run() {
-                        Behavior instance = ClientManager.newInstanceByName(b.name);
-                        if (instance != null && lastEntity != null) {
-                            lastEntity.addBehavior(instance);
-                            initInspector(lastEntity);
-                        }
-
+                GUIEditor.instance.addMenuOption(b.name , () -> {
+                    Behavior instance = ClientManager.newInstanceByName(b.name);
+                    if (instance != null && AssetLoader.getLoadedEntity() != null) {
+                        AssetLoader.getLoadedEntity().addBehavior(instance);
+                        initInspector(AssetLoader.getLoadedEntity());
                     }
-                };
-                array[index] = run;
-                index += 1;
+                });
             }
-
-            showMenu(0, mouseX, mouseY, array);
+            GUIEditor.instance.showMenu();
         } else {
             super.mouseClicked(mouseX, mouseY, mouseButton);
         }

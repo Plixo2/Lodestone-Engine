@@ -1,11 +1,13 @@
 package net.plixo.paper;
 
+import net.plixo.paper.client.manager.AssetLoader;
 import net.plixo.paper.client.manager.FunctionManager;
 import net.plixo.paper.client.events.ClientEvent;
 import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.manager.ClientManager;
 import net.plixo.paper.client.ui.GUI.GUIEditor;
 import net.plixo.paper.client.ui.TabbedUI;
+import net.plixo.paper.client.util.ClassPaths;
 
 /**
  * Second main class.
@@ -16,17 +18,14 @@ public class Lodestone {
     public static LodestoneEngine lodestoneEngine;
 
     /**
-     * First function called.
+     * First function called (only once)
      * Initialises {@link LodestoneEngine} parameter.
      * Calls load function.
      */
     public static void startClient() {
         System.setProperty("java.awt.headless", "false");
         lodestoneEngine = new LodestoneEngine();
-        ClientManager.register();
-        FunctionManager.register();
-        EditorManager.register();
-        ClientManager.load();
+        AssetLoader.reloadAndCompile();
     }
 
 
@@ -38,7 +37,7 @@ public class Lodestone {
         for (TabbedUI tab : GUIEditor.instance.tabs) {
             tab.save();
         }
-        ClientManager.save();
+       AssetLoader.save();
     }
 
     public static void update(ClientEvent event) {

@@ -6,20 +6,19 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.avs.newVersion.TabViewport;
-import net.plixo.paper.client.events.ClientEvent;
+import net.plixo.paper.client.editor.tabs.TabViewport;
 import net.plixo.paper.client.ui.TabbedUI;
 import net.plixo.paper.client.ui.UITab;
 import net.plixo.paper.client.editor.tabs.*;
 import net.plixo.paper.client.ui.other.Toolbar;
-import net.plixo.paper.client.util.ColorLib;
-import net.plixo.paper.client.util.Gui;
-import net.plixo.paper.client.util.MouseUtil;
+import net.plixo.paper.client.ui.other.UIMouseMenu;
+import net.plixo.paper.client.util.*;
 import org.lwjgl.opengl.GL11;
 
 public class GUIEditor extends Screen {
 
     public static GUIEditor instance;
+    UIMouseMenu menu;
 
     public GUIEditor() {
         super(new StringTextComponent("UI"));
@@ -52,6 +51,9 @@ public class GUIEditor extends Screen {
             tab.drawScreen(mouseX, mouseY);
             GL11.glPopMatrix();
         }
+        if (menu != null) {
+            menu.drawScreen(mouseX,mouseY);
+        }
         MouseUtil.resetWheel();
         super.render(p_230430_1_, mouseX, mouseY, partialTicks);
     }
@@ -73,7 +75,7 @@ public class GUIEditor extends Screen {
         background.x = side;
 
         background.addTab(new TabViewport(0));
-        //background.addTab(new TabModelViewer(1));
+        background.addTab(new TabEditor(1));
 
 
         TabbedUI explorer = new TabbedUI(side, (this.height / 2f) - 12, "Test0");
@@ -126,14 +128,29 @@ public class GUIEditor extends Screen {
 
     @Override
     public boolean keyPressed(int key, int scanCode, int action) {
+
+        if(key == 280  && KeyboardUtil.isKeyDown(key)) {
+            Util.print("stopped");
+
+        }
         for (TabbedUI tab : tabs) {
             tab.keyPressed(key, scanCode, action);
         }
         return super.keyPressed(key, scanCode, action);
     }
 
+    float mouseX , mouseY;
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+
+        this.mouseX = (float)mouseX;
+        this.mouseY = (float)mouseY;
+        if (menu != null) {
+            menu.mouseClicked((float) mouseX,(float) mouseY,mouseButton);
+            hideMenu();
+            return false;
+        }
+
         toolbar.mouseClicked((float) mouseX, (float) mouseY, mouseButton);
         if (mouseButton == 0) {
             for (TabbedUI tab : tabs) {
@@ -186,4 +203,16 @@ public class GUIEditor extends Screen {
         super.tick();
     }
 
+    public void hideMenu() {
+        menu = null;
+    }
+    public void showMenu() {
+        menu.build(mouseX,mouseY);
+    }
+    public void beginMenu() {
+        menu = new UIMouseMenu();
+    }
+    public void addMenuOption(String name,Runnable runnable) {
+        menu.addOption(name,runnable);
+    }
 }

@@ -15,7 +15,6 @@ public class TabbedUI implements IGuiEvent {
 
 
     static float headWidth = 60;
-    public OptionMenu menu;
     String name;
     public int selectedIndex = 0;
     public ArrayList<UITab> tabs = new ArrayList<>();
@@ -69,10 +68,6 @@ public class TabbedUI implements IGuiEvent {
         Gui.drawGradientRect(0, 0, width, 5, 0x80000000, 0);
         Gui.drawRect(width, 0, width + 0.5f, height, 0x55AAAAAA);
 
-        if (menu != null) {
-            menu.drawScreen(mouseX, mouseY);
-        }
-
     }
 
     @Override
@@ -89,7 +84,6 @@ public class TabbedUI implements IGuiEvent {
     public UITab getHoveredHead(float mouseX, float mouseY) {
         for (UITab tab : tabs) {
             if (tab.head.mouseInside(mouseX, mouseY, -1)) {
-                menu = null;
                 return tab;
             }
         }
@@ -113,9 +107,6 @@ public class TabbedUI implements IGuiEvent {
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-        if (menu != null && isMouseInside(mouseX,mouseY)) {
-            menu.mouseClicked(mouseX, mouseY, mouseButton);
-        }
         tabs.get(selectedIndex).mouseClicked(mouseX, mouseY, mouseButton);
     }
 

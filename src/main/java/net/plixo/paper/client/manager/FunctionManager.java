@@ -2,6 +2,7 @@ package net.plixo.paper.client.manager;
 
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.plixo.paper.client.avs.newVersion.VisualScript;
@@ -46,44 +47,6 @@ public class FunctionManager {
         return null;
     }
 
-    public static void register() {
-        functions.clear();
-        functions.add(new Event());
-        functions.add(new getGround());
-        functions.add(new If());
-        functions.add(new Jump());
-        functions.add(new Print());
-        functions.add(new Script());
-
-
-        File library = SaveUtil.getFolderFromName("");
-        if (!library.exists()) {
-            SaveUtil.makeFolder(library);
-            return;
-        }
-        ArrayList<File> files = new ArrayList<>();
-        Util.findFiles(library.getAbsolutePath(), files, SaveUtil.FileFormat.Code);
-
-        for (File file : files) {
-            try {
-                Util.print("File: " + file);
-                Object object = ScriptManager.loadClassFromFile(file);
-                if (object instanceof nFunction) {
-                    nFunction function = ((nFunction) object);
-                    functions.add(function);
-                } else {
-                    Util.print("Object is not a nFunction: " + object);
-                    if (object != null) {
-                        Util.print(object.getClass());
-                    }
-                }
-            } catch (Exception e) {
-                Util.print(e);
-                e.printStackTrace();
-            }
-        }
-    }
-
 
     public static VisualScript loadFromFile(File file) {
         VisualScript script = new VisualScript(file);
@@ -100,7 +63,7 @@ public class FunctionManager {
                 float x = object.get("X").getAsFloat();
                 float y = object.get("Y").getAsFloat();
                // nFunction instance = getInstanceByClassName(classPath);
-                 nFunction instance = getInstanceByName(ClassName);
+                nFunction instance = getInstanceByName(ClassName);
                 Objects.requireNonNull(instance);
                 instance.id = uuid;
                 script.getFunctions().add(instance);
@@ -148,12 +111,26 @@ public class FunctionManager {
 
                     for (int i = 0; i < function.input.length; i++) {
                         String id = input.get("" + i).getAsString();
+                        int linkIndex = -1;
+                        JsonElement element1 = input.get("L" + i);
+                        if (element1 != null) {
+                           linkIndex = element1.getAsInt();
+                        }
                         if (id.isEmpty()) {
                             continue;
                         }
                         UUID uuid = UUID.fromString(id);
 
-                        function.input[i] = script.getByUUID(uuid).output[i];
+                        try {
+                        nFunction nFunction = script.getByUUID(uuid);
+                        if(nFunction != null && linkIndex >= 0) {
+                            function.input[i] = nFunction.output[linkIndex];
+                        }
+
+                        } catch (Exception e) {
+                            Util.print(e);
+                            e.printStackTrace();
+                        }
                     }
                 }
 
@@ -201,6 +178,23 @@ public class FunctionManager {
             for (int i = 0; i < function.input.length; i++) {
                 nFunction.Output input = function.input[i];
                 inputs.addProperty("" + i, input == null ? "" : input.function.id.toString());
+                if(input != null) {
+                    int linkI = -1;
+                    if(input.function.output.length > 0)
+                    for (int i1 = 0; i1 < input.function.output.length; i1++) {
+                        nFunction.Output out =  input.function.output[i1];
+                        if(out == input) {
+                            linkI = i1;
+                            break;
+                        }
+                    }
+                    if(linkI == -1) {
+                        Util.print("Something went wrong");
+                    }
+                    inputs.addProperty("L" + i, linkI);
+                } else {
+                    inputs.addProperty("L" + i, "-1");
+                }
             }
             body.add("Inputs", inputs);
 

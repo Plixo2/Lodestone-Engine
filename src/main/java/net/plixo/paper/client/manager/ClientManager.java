@@ -46,24 +46,6 @@ public class ClientManager {
         }
         return null;
     }
-    public static void register() {
-        standardBehavior.clear();
-        standardBehavior.add(new Visual_Script());
-        standardBehavior.add(new Renderer());
-        standardBehavior.add(new Java_Addon());
-
-    }
-
-    public static void load() {
-        try {
-            loadEntities();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public static void save() {
-        saveEntities();
-    }
 
 
     public static void loadEntities() {

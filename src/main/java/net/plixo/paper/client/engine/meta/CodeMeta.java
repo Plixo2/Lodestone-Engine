@@ -5,6 +5,6 @@ import java.io.File;
 public class CodeMeta extends Meta {
     public CodeMeta(File origin) {
         super(origin);
-        setSerializedResources(getResource("Output",String.class),getResource("Input",String.class),getResource("Execution",Boolean.class));
+        setSerializedResources(getResource("in",Integer.class),getResource("out",Integer.class),getResource("links",Integer.class));
     }
 }

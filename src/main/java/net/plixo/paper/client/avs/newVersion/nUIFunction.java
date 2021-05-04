@@ -13,11 +13,14 @@ import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.Util;
 
+import java.awt.*;
+import java.lang.reflect.AnnotatedType;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 
 public class nUIFunction extends UIDraggable {
 
-    nFunction function;
+    public nFunction function;
 
     public nUIFunction(nFunction function) {
         super();
@@ -60,7 +63,7 @@ public class nUIFunction extends UIDraggable {
             };
 
             element.setDimensions(0, 0, 12, 12);
-            element.setColor(ColorLib.orange());
+            element.setColor(ColorLib.cyan());
             element.radius = 4;
             inputs.add(element);
         }
@@ -75,7 +78,7 @@ public class nUIFunction extends UIDraggable {
             };
             element.setDimensions(0, 0, 12, 12);
             element.radius = 4;
-            element.setColor(ColorLib.orange());
+            element.setColor(ColorLib.getMainColor());
             outputs.add(element);
         }
 
@@ -114,7 +117,7 @@ public class nUIFunction extends UIDraggable {
             outputList.put(function.output[i], element);
             element.setDimensions(0, 0, 12, 12);
             element.radius = 3;
-            element.setColor(-1);
+            element.setColor(ColorLib.interpolateColor(0x99CCDDEE, 0xFF000000, 0.4f));
             outputs.add(element);
         }
 
@@ -127,7 +130,6 @@ public class nUIFunction extends UIDraggable {
             for (Resource setting : function.settings) {
                 UIElement element = Resource.getUIElement(setting, 5, 0, width - 10, 20);
                 resources.add(element);
-                Util.print("add element");
             }
 
         add(name);
@@ -147,6 +149,7 @@ public class nUIFunction extends UIDraggable {
         for (int i = 0; i < function.input.length; i++) {
             nFunction.Output out = function.input[i];
             if (out != null) {
+
                 nFunction conntectedFunction = out.function;
                 nUIFunction nUIFunction = conntectedFunction.ui;
                 UIElement element = nUIFunction.outputList.get(out);
@@ -173,9 +176,18 @@ public class nUIFunction extends UIDraggable {
                 Vector2f endL = new Vector2f(xE + reach, yE);
                 Vector2f end = new Vector2f(xE + 12, yE);
 
-                Gui.Bezier(0x99CCDDEE, 3, start, startR, mid, endL, end);
-                Gui.drawCircle(start.x, start.y, 2, 0xAACCDDEE);
-                Gui.drawCircle(end.x, end.y, 2, 0xAACCDDEE);
+                /*
+                if( out.value != null) {
+                    int code = out.value.hashCode();
+                    code = code % 25;
+                    float percent = code/25f;
+                    color = Color.HSBtoRGB(percent,1,1);
+                }
+                */
+                int color =  ColorLib.interpolateColor(0xFFCCDDEE, 0xFF000000, 0.6f);
+                Gui.Bezier(0xFFCCDDEE,color, 3, start, startR, mid, endL, end);
+                Gui.drawCircle(start.x, start.y, 2, 0xFFCCDDEE);
+                Gui.drawCircle(end.x, end.y, 2,color);
             }
         }
 
@@ -195,9 +207,9 @@ public class nUIFunction extends UIDraggable {
                 Vector2f mid = new Vector2f((xI + xE) / 2, (yI + yE) / 2);
                 Vector2f endL = new Vector2f(xE - reach, yE);
                 Vector2f end = new Vector2f(xE - 12, yE);
-                Gui.drawCircle(start.x, start.y, 2, ColorLib.orange());
-                Gui.drawCircle(end.x, end.y, 2, ColorLib.orange());
-                Gui.Bezier(ColorLib.getDarker(ColorLib.orange()), 3, start, startR, mid, endL, end);
+                Gui.Bezier(ColorLib.getDarker(ColorLib.getMainColor()), ColorLib.cyan(), 3, start, startR, mid, endL, end);
+                Gui.drawCircle(start.x, start.y, 2, ColorLib.getMainColor());
+                Gui.drawCircle(end.x, end.y, 2, ColorLib.cyan());
             }
         }
 

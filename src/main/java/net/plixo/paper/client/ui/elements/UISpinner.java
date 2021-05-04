@@ -11,17 +11,12 @@ import net.plixo.paper.client.util.Util;
  *  for editing and displaying a integer in the UI
  *  using Minecraft {@code TextFieldWidget} and up and down buttons
  **/
-public class UISpinner extends UIMultiButton {
+public class UISpinner extends UICanvas {
 
     public TextFieldWidget field;
 
-
     public UISpinner() {
-        super(new UIButton(), new UIButton());
-        others[0].displayName = "+";
-        others[0].setRoundness(1);
-        others[1].displayName = "-";
-        others[1].setRoundness(1);
+        setColor(0);
     }
 
     @Override
@@ -76,24 +71,42 @@ public class UISpinner extends UIMultiButton {
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-    //triggered from UIMultiButton for the + and - button
-    @Override
-    public void otherButton(int id) {
-        if (id == 0) {
-            setNumber(getNumber() + 1);
-        } else {
-            setNumber(getNumber() - 1);
-        }
-    }
 
     //set dimensions of + and - button
     @Override
     public void setDimensions(float x, float y, float width, float height) {
-        others[0].setDimensions(width - height, 0, height, height / 2);
-        others[1].setDimensions(width - height, height / 2, height, height / 2);
+
+        UIButton up = new UIButton() {
+            @Override
+            public void actionPerformed() {
+                setNumber(getNumber() + 1);
+            }
+        };
+
+        UIButton down = new UIButton() {
+            @Override
+            public void actionPerformed() {
+                setNumber(getNumber() - 1);
+            }
+        };
+
+        up.displayName = "+";
+        up.setRoundness(1);
+        up.setDimensions(width - height, 0, height, height / 2);
+
+        down.displayName = "-";
+        down.setRoundness(1);
+        down.setDimensions(width - height, height / 2, height, height / 2);
+
+        add(up);
+        add(down);
+
+
         field = new TextFieldWidget(Minecraft.getInstance().fontRenderer, (int) x + 2, (int) (y + height / 3), (int) (width - height),
                 (int) height / 2, new StringTextComponent(""));
         field.setEnableBackgroundDrawing(false);
+        field.setMaxStringLength(100);
+
         super.setDimensions(x, y, width, height);
     }
 

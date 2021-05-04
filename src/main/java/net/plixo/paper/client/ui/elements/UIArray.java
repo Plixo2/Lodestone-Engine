@@ -75,6 +75,12 @@ public class UIArray extends UICanvas {
         sort();
     }
 
+    @Override
+    public void remove(UIElement element) {
+        super.remove(element);
+        sort();
+    }
+
     public float getMax() {
         float y = 0;
         if (elements.size() > 0) {
@@ -103,6 +109,7 @@ public class UIArray extends UICanvas {
         }
     }
 
+    /*
     @Override
     public boolean hovered(float mouseX, float mouseY) {
         for (UIElement element : elements) {
@@ -112,4 +119,5 @@ public class UIArray extends UICanvas {
         }
         return false;
     }
+    */
 }

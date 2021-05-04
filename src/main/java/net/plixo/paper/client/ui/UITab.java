@@ -69,15 +69,5 @@ public class UITab implements IGuiEvent {
         this.parent = parent;
     }
 
-    //TODO do this global
-    //for hiding the option Menu
-    public void hideMenu() {
-        parent.menu = null;
-    }
-    //displaying and creating a new options menu
-    public void showMenu(int id, float x, float y, OptionMenu.TxtRun... options) {
-        parent.menu = new OptionMenu(id, x, y, options);
-    }
-
-
+    
 }

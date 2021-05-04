@@ -4,12 +4,14 @@ import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.engine.behaviors.Java_Addon;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 import javax.script.*;
 import javax.tools.*;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
@@ -85,16 +87,8 @@ public class ScriptManager {
 
     public static Object createClass(String JarPath, String JarCode , Object... objects) throws Exception {
         String className = JarPath;
-        Path temp = Paths.get(System.getProperty("java.io.tmpdir"), className);
+        Path temp = Paths.get(System.getProperty("java.io.tmpdir")+"/VisualScript", className);
         Files.createDirectories(temp);
-        File f = temp.toFile();
-        Util.print("FIle"+f);
-        for (File file : f.listFiles()) {
-            if(file.isFile() && FilenameUtils.getBaseName(file.getAbsolutePath()).endsWith("class")) {
-                file.delete();
-                Util.print(file);
-            }
-        }
         Path javaSourceFile = Paths.get(temp.normalize().toAbsolutePath().toString(), className + ".java");
         System.out.println("The java source file is loacted at " + javaSourceFile);
         String code = JarCode;
@@ -128,7 +122,9 @@ public class ScriptManager {
             System.out.format("Error on line %d in %s%n",
                     diagnostic.getLineNumber(),
                     diagnostic.getSource());
-            Util.print("Error on line "+ diagnostic.getLineNumber()+" in " + diagnostic.getSource());
+            long line = diagnostic.getLineNumber();
+            if(line >= 0)
+            Util.print("Error on line "+ line+" in " + diagnostic.getSource());
         }
 
         fileManager.close();
@@ -140,10 +136,23 @@ public class ScriptManager {
             Object runnable = javaDemoClass.getConstructors()[0].newInstance(objects);
             return runnable;
         } catch (Exception e) {
-          Util.print(e);
           e.printStackTrace();
         }
         return null;
+    }
+
+    public static void deleteTemp() {
+        File file = new File(System.getProperty("java.io.tmpdir")+"/VisualScript");
+        Util.print("temp path: " +file.getAbsolutePath());
+        for (File listFile : file.listFiles()) {
+            if(listFile.isDirectory()) {
+                try {
+                    FileUtils.deleteDirectory(listFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public static Object loadClassFromFile(File file) {
@@ -152,7 +161,7 @@ public class ScriptManager {
         try {
             return createClass(name,code);
         } catch (Exception e) {
-          Util.print(e);
+          e.printStackTrace();
         }
         return null;
     }

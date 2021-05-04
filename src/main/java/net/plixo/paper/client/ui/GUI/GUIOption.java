@@ -5,10 +5,8 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.client.util.Options;
 import net.plixo.paper.client.ui.elements.UIArray;
-import net.plixo.paper.client.ui.elements.UIButton;
 import net.plixo.paper.client.ui.elements.UICanvas;
 import net.plixo.paper.client.ui.elements.UIToggleButton;
-import net.plixo.paper.client.manager.VisualScriptManager;
 import net.plixo.paper.client.util.*;
 
 public class GUIOption extends Screen {

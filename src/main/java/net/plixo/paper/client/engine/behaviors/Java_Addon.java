@@ -34,10 +34,7 @@ public class Java_Addon extends Behavior {
             Objects.requireNonNull(file);
             if (file.exists()) {
                 try {
-                    String name = FilenameUtils.removeExtension(file.getName());
-                    String code = SaveUtil.loadAsString(file.getAbsolutePath());
-
-                    Object obj = ScriptManager.createClass(name, code);
+                    Object obj = ScriptManager.loadClassFromFile(file);
                     Objects.requireNonNull(obj);
                     this.runnable = (Runnable) obj;
                 } catch (Exception e) {

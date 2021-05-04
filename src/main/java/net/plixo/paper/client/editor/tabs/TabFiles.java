@@ -1,10 +1,12 @@
 package net.plixo.paper.client.editor.tabs;
 
 import net.plixo.paper.Lodestone;
+import net.plixo.paper.client.manager.AssetLoader;
 import net.plixo.paper.client.manager.FunctionManager;
 import net.plixo.paper.client.avs.newVersion.VisualScript;
 import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.ui.GUI.GUIAccept;
+import net.plixo.paper.client.ui.GUI.GUIEditor;
 import net.plixo.paper.client.ui.GUI.GUITextInput;
 import net.plixo.paper.client.ui.UITab;
 import net.plixo.paper.client.ui.elements.UICanvas;
@@ -39,7 +41,7 @@ public class TabFiles extends UITab {
         ArrayList<File> allFiles = new ArrayList<>();
         Util.findFiles(SaveUtil.getFolderFromName("").getAbsolutePath(), allFiles);
         for (File file : allFiles) {
-            filesChanged.put(file,file.lastModified());
+            filesChanged.put(file, file.lastModified());
         }
         canvas = new UICanvas();
         canvas.setDimensions(0, 0, parent.width, parent.height);
@@ -52,47 +54,34 @@ public class TabFiles extends UITab {
         update();
 
 
-
-
         super.init();
     }
 
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-
-        if (parent.menu != null) {
-            hideMenu();
-            return;
-        }
-
         if (parent.isMouseInside(mouseX, mouseY) && mouseButton == 1) {
-            showMenu(0, mouseX, mouseY,
-                    newRunnable(SaveUtil.FileFormat.Code),
-                    newRunnable(SaveUtil.FileFormat.VisualScript),
-                    newRunnable(SaveUtil.FileFormat.Hud),
-                    newRunnable(SaveUtil.FileFormat.Other),
-                    newRunnable(SaveUtil.FileFormat.Model));
+            GUIEditor.instance.beginMenu();
+            newRunnable(SaveUtil.FileFormat.Code);
+            newRunnable(SaveUtil.FileFormat.VisualScript);
+            GUIEditor.instance.showMenu();
         }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-    public OptionMenu.TxtRun newRunnable(SaveUtil.FileFormat format) {
-        return new OptionMenu.TxtRun("New ." + format.format) {
-            @Override
-            public void run() {
-                GUITextInput input = new GUITextInput((txt) -> {
-                    File f = new File(home.getAbsolutePath() + "\\" + txt + "." + format.format);
-                    if (!f.exists()) {
-                        SaveUtil.makeFile(f);
-                    } else {
-                        Util.print("File already exists");
-                    }
-                }, (txt) -> {
-                }, format.format);
-                mc.displayGuiScreen(input);
-            }
-        };
+    public void newRunnable(SaveUtil.FileFormat format) {
+        GUIEditor.instance.addMenuOption("New " + format.name(), () -> {
+            GUITextInput input = new GUITextInput((txt) -> {
+                File f = new File(home.getAbsolutePath() + "\\" + txt + "." + format.format);
+                if (!f.exists()) {
+                    SaveUtil.makeFile(f);
+                } else {
+                    Util.print("File already exists");
+                }
+            }, (txt) -> {
+            }, format.format);
+            mc.displayGuiScreen(input);
+        });
     }
 
     @Override
@@ -156,108 +145,25 @@ public class TabFiles extends UITab {
                             home = file;
                             update();
                         } else if (mouseButton == 1) {
-                            OptionMenu.TxtRun open = new OptionMenu.TxtRun("Open") {
-                                @Override
-                                public void run() {
-                                    home = file;
-                                    update();
-                                }
-                            };
-                            OptionMenu.TxtRun explorer = new OptionMenu.TxtRun("Explorer") {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Desktop.getDesktop().open(file);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            };
-                            OptionMenu.TxtRun delete = new OptionMenu.TxtRun("Delete") {
-                                @Override
-                                public void run() {
-                                    mc.displayGuiScreen(new GUIAccept(() -> {
-                                        file.delete(); //update();
-                                    }, () -> {
-                                    }, "Sure?"));
-                                }
-                            };
-                            OptionMenu.TxtRun rename = new OptionMenu.TxtRun("Rename") {
-                                @Override
-                                public void run() {
-                                    GUITextInput input = new GUITextInput((txt) -> {
-                                        if (!txt.isEmpty()) {
-                                            String fileFormat = FilenameUtils.getExtension(file.getName());
-                                            File oldFile = new File(file.getParent() + "/" + txt + "." + fileFormat);
-                                            if (!oldFile.exists()) {
-                                                boolean status = file.renameTo(oldFile);
-                                                if (!status) {
-                                                    Util.print("Failed to rename");
-                                                }
-                                            } else {
-                                                Util.print("File already exists");
-                                            }
-                                        }
-                                    }, (txt) -> {
-                                    }, FilenameUtils.removeExtension(file.getName()));
-                                    mc.displayGuiScreen(input);
-                                }
-                            };
-                            showMenu(0, mouseX, mouseY, open, explorer, delete, rename);
-                        }
-                    } else {
-
-                        String extenstion = FilenameUtils.getExtension(file.getName());
-
-                        OptionMenu.TxtRun open = new OptionMenu.TxtRun("View") {
-                            @Override
-                            public void run() {
-                            }
-                        };
-
-                        if (extenstion.equals(SaveUtil.FileFormat.VisualScript.format)) {
-                            open = new OptionMenu.TxtRun("View") {
-                                @Override
-                                public void run() {
-                                     VisualScript script = FunctionManager.loadFromFile(file);
-                                     EditorManager.viewport.load(script);
-                                }
-                            };
-                        }
-                        OptionMenu.TxtRun edit = new OptionMenu.TxtRun("Edit") {
-                            @Override
-                            public void run() {
+                            GUIEditor.instance.beginMenu();
+                            GUIEditor.instance.addMenuOption("Open", () -> {
+                                home = file;
+                                update();
+                            });
+                            GUIEditor.instance.addMenuOption("Explorer", () -> {
                                 try {
                                     Desktop.getDesktop().open(file);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                            }
-                        };
-
-                        OptionMenu.TxtRun explorer = new OptionMenu.TxtRun("Explorer") {
-                            @Override
-                            public void run() {
-                                try {
-                                    Runtime.getRuntime().exec("explorer.exe /select," + file);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        };
-
-                        OptionMenu.TxtRun delete = new OptionMenu.TxtRun("Delete") {
-                            @Override
-                            public void run() {
+                            });
+                            GUIEditor.instance.addMenuOption("Delete", () -> {
                                 mc.displayGuiScreen(new GUIAccept(() -> {
                                     file.delete(); //update();
                                 }, () -> {
                                 }, "Sure?"));
-                            }
-                        };
-                        OptionMenu.TxtRun rename = new OptionMenu.TxtRun("Rename") {
-                            @Override
-                            public void run() {
+                            });
+                            GUIEditor.instance.addMenuOption("Rename", () -> {
                                 GUITextInput input = new GUITextInput((txt) -> {
                                     if (!txt.isEmpty()) {
                                         String fileFormat = FilenameUtils.getExtension(file.getName());
@@ -274,22 +180,79 @@ public class TabFiles extends UITab {
                                 }, (txt) -> {
                                 }, FilenameUtils.removeExtension(file.getName()));
                                 mc.displayGuiScreen(input);
+                            });
+                            GUIEditor.instance.showMenu();
+                        }
+                    } else {
+
+                        if (mouseButton == 1) {
+                            String extenstion = FilenameUtils.getExtension(file.getName());
+                            GUIEditor.instance.beginMenu();
+
+                            if (SaveUtil.FileFormat.getFromFile(file) == SaveUtil.FileFormat.VisualScript) {
+                                GUIEditor.instance.addMenuOption("View", () -> {
+                                    EditorManager.viewport.load(file);
+                                });
                             }
-                        };
-                        try {
+                            if (SaveUtil.FileFormat.getFromFile(file) == SaveUtil.FileFormat.Code) {
+                                GUIEditor.instance.addMenuOption("View", () -> {
+                                    EditorManager.editor.load(file);
+                                });
+                            }
+
+                            GUIEditor.instance.addMenuOption("Edit", () -> {
+                                try {
+                                    Desktop.getDesktop().open(file);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                            GUIEditor.instance.addMenuOption("Explorer", () -> {
+                                try {
+                                    Runtime.getRuntime().exec("explorer.exe /select," + file);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                            GUIEditor.instance.addMenuOption("Delete", () -> {
+                                mc.displayGuiScreen(new GUIAccept(() -> {
+                                    file.delete(); //update();
+                                }, () -> {
+                                }, "Sure?"));
+                            });
+                            GUIEditor.instance.addMenuOption("Rename", () -> {
+                                GUITextInput input = new GUITextInput((txt) -> {
+                                    if (!txt.isEmpty()) {
+                                        String fileFormat = FilenameUtils.getExtension(file.getName());
+                                        File oldFile = new File(file.getParent() + "/" + txt + "." + fileFormat);
+                                        if (!oldFile.exists()) {
+                                            boolean status = file.renameTo(oldFile);
+                                            if (!status) {
+                                                Util.print("Failed to rename");
+                                            }
+                                        } else {
+                                            Util.print("File already exists");
+                                        }
+                                    }
+                                }, (txt) -> {
+                                }, FilenameUtils.removeExtension(file.getName()));
+                                mc.displayGuiScreen(input);
+                            });
+                            GUIEditor.instance.showMenu();
+                        } else if (mouseButton == 0) {
+                            try {
                                 EditorManager.inspector.initInspector(file);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
 
-                        showMenu(0, mouseX, mouseY, open, edit, explorer, delete, rename);
-
                     }
-
 
                     super.mouseClicked(mouseX, mouseY, mouseButton);
                 }
             };
+
             icon.setDimensions(x, y, xWidth, yHeight);
             icon.setRoundness(0);
             icon.setColor(0);
@@ -304,27 +267,27 @@ public class TabFiles extends UITab {
 
     }
 
-    Map<File ,Long> filesChanged = new HashMap<>();
+    Map<File, Long> filesChanged = new HashMap<>();
     int ticks = 0;
 
     @Override
     public void onTick() {
         ticks += 1;
-        if(!Lodestone.lodestoneEngine.isRunning) {
-            if(ticks % 80 == 0) {
+        if (!Lodestone.lodestoneEngine.isRunning) {
+            if (ticks % 40 == 0) {
                 boolean shouldReload = false;
                 ArrayList<File> allFiles = new ArrayList<>();
                 Util.findFiles(SaveUtil.getFolderFromName("").getAbsolutePath(), allFiles, SaveUtil.FileFormat.Code);
                 for (File file : allFiles) {
-                    long time = filesChanged.getOrDefault(file,0l);
-                    long delta = file.lastModified()-time;
-                    if(delta > 5000) {
+                    long time = filesChanged.getOrDefault(file, 0l);
+                    long delta = file.lastModified() - time;
+                    if (delta > 1000) {
                         shouldReload = true;
-                        filesChanged.put(file,file.lastModified());
+                        filesChanged.put(file, file.lastModified());
                     }
                 }
                 if (shouldReload) {
-                    FunctionManager.register();
+                    AssetLoader.reloadAndCompile();
                     Util.print("All Functions got reloaded fix this pls...");
                 }
             }

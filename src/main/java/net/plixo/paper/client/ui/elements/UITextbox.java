@@ -6,6 +6,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.client.ui.UIElement;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
+import org.lwjgl.opengl.GL11;
 
 
 /**
@@ -14,24 +15,32 @@ import net.plixo.paper.client.util.Gui;
  **/
 public class UITextbox extends UIElement {
 
-
+    public UITextbox() {
+        super();
+        setColor(ColorLib.getBackground(0.3f));
+    }
     public TextFieldWidget field;
-
+    int outlineColor = 0x6F000000;
 
     @Override
     public void drawScreen(float mouseX, float mouseY) {
 
-        Gui.drawRoundedRect(x, y, x + width, y + height, roundness, ColorLib.getBackground(0.3f));
+        Gui.drawRoundedRect(x, y, x + width, y + height, roundness, this.color);
 
         int color = ColorLib.interpolateColorAlpha(0x00000000, 0x23000000, hoverProgress / 100f);
         Gui.drawRoundedRect(x, y, x + width, y + height, roundness, color);
-        Gui.drawLinedRoundedRect(x, y, x + width, y + height, roundness, 0x6F000000, 1);
+        Gui.drawLinedRoundedRect(x, y, x + width, y + height, roundness, outlineColor, 1);
 
-        field.render(Gui.matrixStack, (int) mouseX, (int) mouseY, 0);
+        GL11.glPushMatrix();
+        GL11.glTranslated(x,y,0);
+        field.render(Gui.matrixStack, (int) (mouseX-x), (int) (mouseY-y), 0);
+        GL11.glPopMatrix();
 
         super.drawScreen(mouseX, mouseY);
     }
-
+    public void setOutlineColor(int color) {
+        outlineColor = color;
+    }
 
     //get the field context
     public String getText() {
@@ -59,14 +68,17 @@ public class UITextbox extends UIElement {
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
-        field.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
+        field.mouseClicked((int) mouseX-x, (int) mouseY-y, mouseButton);
+        if(hovered(mouseX,mouseY)) {
+            field.setFocused2(true);
+        }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
     //set text field dimensions
     @Override
     public void setDimensions(float x, float y, float width, float height) {
-        field = new TextFieldWidget(Minecraft.getInstance().fontRenderer, (int) x + 4, (int) (y + height / 2) - 4, (int) width - 8, (int) height / 2, new StringTextComponent(""));
+        field = new TextFieldWidget(Minecraft.getInstance().fontRenderer, (int)  4, (int) (height / 2) - 4, (int) width - 8, (int) height / 2, new StringTextComponent(""));
         //disable background
         field.setEnableBackgroundDrawing(false);
         field.setTextColor(textColor);

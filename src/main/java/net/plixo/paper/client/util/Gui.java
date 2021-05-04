@@ -388,9 +388,69 @@ public class Gui {
         GL11.glVertex2d(0, 0);
         float t = 0;
         while (t <= 1) {
-            bezierCurvePixel(t, first, Arrays.copyOfRange(list, 1, list.length));
+            Vector2f pos = bezierCurvePixel(t, first, Arrays.copyOfRange(list, 1, list.length));
+            GL11.glVertex2d(pos.x, pos.y);
             t += precision;
         }
+        GL11.glVertex2d(last.x - first.x, last.y - first.y);
+        GL11.glEnd();
+
+        Gui.reset();
+        GL11.glPopMatrix();
+    }
+
+    public static void Bezier(int color , int color2, float width, Vector2f... list) {
+
+        if (list.length < 2) {
+            return;
+        } else if (list.length == 2) {
+            Gui.drawLine(list[0].x, list[0].y, list[1].x, list[1].y, color, width);
+            return;
+        }
+
+        Vector2f first = list[0];
+        Vector2f last = list[list.length - 1];
+
+
+        double ix = first.x - last.x;
+        double iy = first.y - last.y;
+        float precision = (float) (1 / Math.sqrt(iy * iy + ix * ix)) / 0.2f;
+        precision = Math.min(0.07f, precision);
+
+        GL11.glPushMatrix();
+        GL11.glTranslated(first.x, first.y, 0);
+
+        Gui.set(color);
+
+        GL11.glEnable(GL_LINE_SMOOTH);
+        GL11.glLineWidth(width);
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glEnable(GL11.GL_POINT_SMOOTH);
+
+
+        GL11.glBegin(GL11.GL_LINE_STRIP);
+
+        GL11.glVertex2d(0, 0);
+        float t = 0;
+        while (t <= 1) {
+            Vector2f pos = bezierCurvePixel(t, first, Arrays.copyOfRange(list, 1, list.length));
+
+            color = ColorLib.interpolateColor(color , color2,t);
+            float alpha = (float) (color >> 24 & 255) / 255.0f;
+            float red = (float) (color >> 16 & 255) / 255.0f;
+            float green = (float) (color >> 8 & 255) / 255.0f;
+            float blue = (float) (color & 255) / 255.0f;
+            glColor4f(red, green, blue, alpha);
+
+            GL11.glVertex2d(pos.x, pos.y);
+            t += precision;
+        }
+        float alpha = (float) (color2 >> 24 & 255) / 255.0f;
+        float red = (float) (color2 >> 16 & 255) / 255.0f;
+        float green = (float) (color2 >> 8 & 255) / 255.0f;
+        float blue = (float) (color2 & 255) / 255.0f;
+        glColor4f(red, green, blue, alpha);
+
         GL11.glVertex2d(last.x - first.x, last.y - first.y);
         GL11.glEnd();
 
@@ -412,7 +472,7 @@ public class Gui {
         return (float) ((fact(n) / (fact(i) * fact(n - i))) * Math.pow(1 - t, n - i) * Math.pow(t, i));
     }
 
-    private static void bezierCurvePixel(float t, Vector2f origin, Vector2f... list) {
+    private static Vector2f bezierCurvePixel(float t, Vector2f origin, Vector2f... list) {
 
         float[] bPoly = new float[list.length];
 
@@ -427,8 +487,7 @@ public class Gui {
             sumX += bPoly[i] * (list[i].x - origin.x);
             sumY += bPoly[i] * (list[i].y - origin.y);
         }
-
-        GL11.glVertex2d(sumX, sumY);
+        return new Vector2f(sumX,sumY);
     }
 }
 
