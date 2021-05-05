@@ -4,12 +4,7 @@ import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.events.ClientEvent;
 import net.plixo.paper.client.manager.AssetLoader;
 import net.plixo.paper.client.manager.ClientManager;
-import net.plixo.paper.client.manager.EditorManager;
-import net.plixo.paper.client.ui.GUI.GUIEditor;
-import net.plixo.paper.client.ui.TabbedUI;
 import net.plixo.paper.client.util.Util;
-
-import javax.script.ScriptEngineManager;
 
 public class LodestoneEngine {
 
@@ -41,7 +36,7 @@ public class LodestoneEngine {
                 e.onEvent(new ClientEvent.StopEvent());
             }
             //Reload entities
-            AssetLoader.reloadAndCompile();
+            AssetLoader.load();
         }
     }
 

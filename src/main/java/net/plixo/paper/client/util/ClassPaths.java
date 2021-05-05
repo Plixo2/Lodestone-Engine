@@ -614,7 +614,7 @@ public class ClassPaths {
             names.add(s);
         }
 
-        Util.print("loaded " + dyn + " classes with extra " + (names.size()-dyn) + " standard classes");
+        Util.print("Loaded " + dyn + " classes with extra " + (names.size()-dyn) + " standard classes");
     }
 
     static Iterator list(ClassLoader CL)

@@ -1,13 +1,10 @@
 package net.plixo.paper;
 
 import net.plixo.paper.client.manager.AssetLoader;
-import net.plixo.paper.client.manager.FunctionManager;
 import net.plixo.paper.client.events.ClientEvent;
-import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.manager.ClientManager;
 import net.plixo.paper.client.ui.GUI.GUIEditor;
 import net.plixo.paper.client.ui.TabbedUI;
-import net.plixo.paper.client.util.ClassPaths;
 
 /**
  * Second main class.
@@ -25,7 +22,8 @@ public class Lodestone {
     public static void startClient() {
         System.setProperty("java.awt.headless", "false");
         lodestoneEngine = new LodestoneEngine();
-        AssetLoader.reloadAndCompile();
+        AssetLoader.load();
+        AssetLoader.compile();
     }
 
 

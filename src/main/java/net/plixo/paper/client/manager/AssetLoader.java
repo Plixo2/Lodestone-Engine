@@ -8,6 +8,7 @@ import net.plixo.paper.client.engine.behaviors.Renderer;
 import net.plixo.paper.client.engine.behaviors.Visual_Script;
 import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.engine.meta.Meta;
+import net.plixo.paper.client.util.ClassPaths;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
 
@@ -24,11 +25,13 @@ public class AssetLoader {
         saveScript();
         currentScript = script;
     }
+
     public static void saveScript() {
         if (currentScript != null) {
             FunctionManager.saveToFile(currentScript);
         }
     }
+
     public static VisualScript getLoadedScript() {
         return currentScript;
     }
@@ -37,11 +40,13 @@ public class AssetLoader {
         saveMeta();
         currentMeta = script;
     }
+
     public static void saveMeta() {
         if (currentMeta != null) {
             currentMeta.saveMeta();
         }
     }
+
     public static Meta getLoadedMeta() {
         return currentMeta;
     }
@@ -49,28 +54,40 @@ public class AssetLoader {
     public static void setCurrentEntity(GameObject entity) {
         currentEntity = entity;
     }
+
     public static GameObject getLoadedEntity() {
         return currentEntity;
     }
 
 
-
-    public static void reloadAndCompile() {
+    public static void load() {
+        Util.print("Loading...");
         setCurrentMeta(null);
         setCurrentEntity(null);
         setCurrentScript(null);
 
-        ScriptManager.deleteTemp();
         loadBehaviors();
-        loadFunctions();
         loadEntities();
         EditorManager.register();
+        Util.print("done");
     }
 
     public static void save() {
+        Util.print("Saving...");
         ClientManager.saveEntities();
+        Util.print("Saved Entities");
         saveScript();
         saveMeta();
+        Util.print("done");
+    }
+
+    public static void compile() {
+        Util.print("Compiling...");
+        ClassPaths.generate();
+        ScriptManager.deleteTemp();
+        Util.print("Deleted temp File");
+        loadFunctions();
+        Util.print("done");
     }
 
     static void loadBehaviors() {
@@ -78,6 +95,7 @@ public class AssetLoader {
         ClientManager.standardBehavior.add(new Visual_Script());
         ClientManager.standardBehavior.add(new Renderer());
         ClientManager.standardBehavior.add(new Java_Addon());
+        Util.print("Loaded " + ClientManager.standardBehavior.size() + " Behaviors");
     }
 
     static void loadEntities() {
@@ -86,6 +104,7 @@ public class AssetLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Util.print("Loaded " + ClientManager.allEntities.size() + " Entities");
     }
 
     static void loadFunctions() {
@@ -125,5 +144,6 @@ public class AssetLoader {
                 e.printStackTrace();
             }
         }
+        Util.print("Loaded " + FunctionManager.functions.size() + " Functions");
     }
 }

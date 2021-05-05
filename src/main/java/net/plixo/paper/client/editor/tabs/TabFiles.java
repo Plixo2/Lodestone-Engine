@@ -2,8 +2,6 @@ package net.plixo.paper.client.editor.tabs;
 
 import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.manager.AssetLoader;
-import net.plixo.paper.client.manager.FunctionManager;
-import net.plixo.paper.client.avs.newVersion.VisualScript;
 import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.ui.GUI.GUIAccept;
 import net.plixo.paper.client.ui.GUI.GUIEditor;
@@ -11,7 +9,6 @@ import net.plixo.paper.client.ui.GUI.GUITextInput;
 import net.plixo.paper.client.ui.UITab;
 import net.plixo.paper.client.ui.elements.UICanvas;
 import net.plixo.paper.client.ui.elements.UIFileIcon;
-import net.plixo.paper.client.ui.other.OptionMenu;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Options;
 import net.plixo.paper.client.util.SaveUtil;
@@ -38,11 +35,14 @@ public class TabFiles extends UITab {
     @Override
     public void init() {
 
+        /*
         ArrayList<File> allFiles = new ArrayList<>();
         Util.findFiles(SaveUtil.getFolderFromName("").getAbsolutePath(), allFiles);
         for (File file : allFiles) {
             filesChanged.put(file, file.lastModified());
         }
+
+         */
         canvas = new UICanvas();
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
@@ -267,6 +267,7 @@ public class TabFiles extends UITab {
 
     }
 
+    /*
     Map<File, Long> filesChanged = new HashMap<>();
     int ticks = 0;
 
@@ -287,11 +288,12 @@ public class TabFiles extends UITab {
                     }
                 }
                 if (shouldReload) {
-                    AssetLoader.reloadAndCompile();
+                    AssetLoader.load();
                     Util.print("All Functions got reloaded fix this pls...");
                 }
             }
         }
         super.onTick();
     }
+    */
 }

@@ -24,6 +24,47 @@ public class TabEditor extends UITab {
     UIArray propositions;
     int currentLine = 0;
 
+    String[] other = {
+            "nFunction",
+            "public",
+            "class",
+            "extends",
+            "void",
+            "import",
+            "@Override",
+
+            "set() {}",
+            "set(inputs,outputs,links);",
+
+            "input(index)",
+            "output(index,object);",
+            "hasInput(index)",
+
+            "pullInputs();",
+            "calculate() {}",
+            "run() {}",
+            "execute();",
+
+            "float",
+            "int",
+            "boolean",
+            "Number",
+            ".floatValue()",
+            ".intValue()",
+
+            "if",
+            "else",
+            "true",
+            "false",
+            "instanceof",
+            "equals",
+            "&&",
+            "==",
+            "||",
+            "!=",
+
+    };
+
     public void load(File file) {
         this.file = file;
         Util.print("load file " + file);
@@ -34,8 +75,6 @@ public class TabEditor extends UITab {
 
     @Override
     public void init() {
-
-        ClassPaths.generate();
         currentLine = 0;
         canvas = new UICanvas() {
             @Override
@@ -55,7 +94,7 @@ public class TabEditor extends UITab {
         if (file != null && file.exists()) {
             ArrayList<String> list = SaveUtil.loadFromFile(file);
             for (String s : list) {
-                addLine(s);
+                addLine(s.replace("\t", "    "));
             }
         }
 
@@ -78,74 +117,38 @@ public class TabEditor extends UITab {
 
                 int i = 0;
                 for (String name : ClassPaths.names) {
-                    if (i > 100) {
-                        break;
-                    }
                     if (name.startsWith(classPath)) {
                         i += 1;
-                        UILabel label = new UILabel() {
-                            @Override
-                            public void drawDisplayString() {
-                                if (displayName != null) {
-                                    Gui.drawString(displayName, x + 1, y + height / 2, textColor);
-                                }
-                            }
-
-                            @Override
-                            public void actionPerformed() {
-                                lastField.setText("import " + name + ";");
-                            }
-                        };
-                        label.setDisplayName(name.substring(classPath.length()));
-                        label.setDimensions(0, 0, 240, 12);
-                        propositions.add(label);
+                        addProposition(name.substring(classPath.length()),() -> lastField.setText("import " + name + ";"));
+                        if (i > 100) {
+                            break;
+                        }
                     }
                 }
             } else {
+                if(txt.isEmpty()) {
+                    for (String s1 : other) {
+                            addProposition(s1,null);
+                    }
+                } else
                 if (txt.contains(" ")) {
                     String[] first = txt.split(" ");
                     if (first != null) {
                         for (String s : first) {
                             if (s.length() > 2) {
                                 int i = 0;
-                                for (String name : ClassPaths.names) {
-                                    if (i > 100) {
-                                        break;
+                                for (String s1 : other) {
+                                    if (s1.startsWith(s)) {
+                                        addProposition(s1,null);
                                     }
-
+                                }
+                                for (String name : ClassPaths.names) {
                                     if (name.endsWith(s)) {
                                         i += 1;
-                                        UILabel label = new UILabel() {
-                                            @Override
-                                            public void drawDisplayString() {
-                                                if (displayName != null) {
-                                                    Gui.drawString(displayName, x + 1, y + height / 2, textColor);
-                                                }
-                                            }
-
-                                            @Override
-                                            public void actionPerformed() {
-                                                UITextbox box = new UITextbox() {
-                                                    @Override
-                                                    public void drawScreen(float mouseX, float mouseY) {
-                                                        super.drawScreen(mouseX, mouseY);
-                                                        Gui.drawRect(x, y, x + 2, y + height, ColorLib.getMainColor());
-                                                    }
-                                                };
-                                                box.setDimensions(0, 0, array.width, 11);
-                                                box.setText("import " + name + ";");
-                                                box.setColor(0);
-                                                box.setOutlineColor(0);
-                                                box.setRoundness(0);
-                                               array.elements.add(0 , box);
-                                            }
-                                        };
-                                        label.setDisplayName(name);
-                                        if(name.length() > 35) {
-                                            label.setDisplayName(name.substring(name.length()/2));
+                                        addProposition(name,() ->  addLine("import " + name + ";",0));
+                                        if (i > 100) {
+                                            break;
                                         }
-                                        label.setDimensions(0, 0, 240, 12);
-                                        propositions.add(label);
                                     }
                                 }
                             }
@@ -156,6 +159,26 @@ public class TabEditor extends UITab {
             }
 
         }
+    }
+
+    public void addProposition(String name , Runnable action) {
+        UILabel label = new UILabel() {
+            @Override
+            public void drawDisplayString() {
+                if (displayName != null) {
+                    Gui.drawString(displayName, x + 1, y + height / 2, textColor);
+                }
+            }
+            @Override
+            public void actionPerformed() {
+                if (action != null) {
+                    action.run();
+                }
+            }
+        };
+        label.setDisplayName(name);
+        label.setDimensions(0, 0, 240, 12);
+        propositions.add(label);
     }
 
 
@@ -173,6 +196,26 @@ public class TabEditor extends UITab {
         text.setRoundness(0);
         text.setOutlineColor(0);
         array.add(text);
+    }
+
+    public UITextbox addLine(String txt , int index) {
+
+        UITextbox box = new UITextbox() {
+            @Override
+            public void drawScreen(float mouseX, float mouseY) {
+                super.drawScreen(mouseX, mouseY);
+                Gui.drawRect(x, y, x + 2, y + height, ColorLib.getMainColor());
+            }
+        };
+        box.setDimensions(0, 0, array.width, 11);
+        box.setText(txt);
+        box.setColor(0);
+        box.setOutlineColor(0);
+        box.setRoundness(0);
+
+        array.elements.add(index,box);
+        array.sort();
+        return box;
     }
 
     @Override
@@ -203,7 +246,6 @@ public class TabEditor extends UITab {
             boolean add = KeyboardUtil.isKeyDown(257) && key == 257;
             if (tab) {
                 int pos = currentBox.field.getCursorPosition();
-                Util.print("Cursor at " + pos);
                 String last = currentBox.getText().substring(pos);
                 String first = currentBox.getText().substring(0, pos);
                 currentBox.field.setText(first + "    " + last);
@@ -226,33 +268,18 @@ public class TabEditor extends UITab {
             }
             if (add) {
                 int pos = currentBox.field.getCursorPosition();
-                Util.print("Cursor at " + pos);
                 String text = currentBox.getText();
                 String last = currentBox.getText().substring(pos, text.length());
                 String first = currentBox.getText().substring(0, pos);
 
                 currentBox.setText(first);
 
-                UITextbox box = new UITextbox() {
-                    @Override
-                    public void drawScreen(float mouseX, float mouseY) {
-                        super.drawScreen(mouseX, mouseY);
-                        Gui.drawRect(x, y, x + 2, y + height, ColorLib.getMainColor());
-                    }
-                };
-                box.setDimensions(0, 0, array.width, 11);
-                box.setText(last);
-                box.setColor(0);
-                box.setOutlineColor(0);
-                box.setRoundness(0);
+                currentLine += 1;
+                UITextbox box = addLine(last,currentLine);
                 box.field.setCursorPosition(0);
                 currentBox.field.setFocused2(false);
                 box.field.setFocused2(true);
 
-                currentLine += 1;
-                array.elements.add(currentLine, box);
-
-                array.sort();
             }
             /*
             GUIEditor.instance.hideMenu();

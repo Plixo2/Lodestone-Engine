@@ -24,8 +24,6 @@ public class UIMouseMenu extends UIArray {
         }
         max += 5;
 
-
-
         int y = 2;
         for (Map.Entry<String, Runnable> stringRunnableEntry : options.entrySet()) {
             UIButton button = new UIButton() {
@@ -43,7 +41,7 @@ public class UIMouseMenu extends UIArray {
         }
         setRoundness(2);
         setColor(ColorLib.getBackground(0.1f));
-        setDimensions(mouseX,mouseY,max+4,Math.min(y+2,400));
+        setDimensions(mouseX,mouseY,max+4,Math.min(y+2,300));
     }
 
 }

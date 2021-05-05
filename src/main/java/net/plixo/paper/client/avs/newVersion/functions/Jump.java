@@ -3,6 +3,7 @@ package net.plixo.paper.client.avs.newVersion.functions;
 
 import net.plixo.paper.client.avs.newVersion.nFunction;
 import net.plixo.paper.client.engine.ecs.Resource;
+import net.plixo.paper.client.ui.elements.UISpinner;
 import net.plixo.paper.client.util.Util;
 
 public class Jump extends nFunction {

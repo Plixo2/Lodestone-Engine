@@ -185,7 +185,7 @@ public class nUIFunction extends UIDraggable {
                 }
                 */
                 int color =  ColorLib.interpolateColor(0xFFCCDDEE, 0xFF000000, 0.6f);
-                Gui.Bezier(0xFFCCDDEE,color, 3, start, startR, mid, endL, end);
+                Gui.Bezier(0xFFCCDDEE,color, 3*EditorManager.viewport.zoom, start, startR, mid, endL, end);
                 Gui.drawCircle(start.x, start.y, 2, 0xFFCCDDEE);
                 Gui.drawCircle(end.x, end.y, 2,color);
             }
@@ -207,7 +207,7 @@ public class nUIFunction extends UIDraggable {
                 Vector2f mid = new Vector2f((xI + xE) / 2, (yI + yE) / 2);
                 Vector2f endL = new Vector2f(xE - reach, yE);
                 Vector2f end = new Vector2f(xE - 12, yE);
-                Gui.Bezier(ColorLib.getDarker(ColorLib.getMainColor()), ColorLib.cyan(), 3, start, startR, mid, endL, end);
+                Gui.Bezier(ColorLib.getDarker(ColorLib.getMainColor()), ColorLib.cyan(), 3*EditorManager.viewport.zoom, start, startR, mid, endL, end);
                 Gui.drawCircle(start.x, start.y, 2, ColorLib.getMainColor());
                 Gui.drawCircle(end.x, end.y, 2, ColorLib.cyan());
             }
