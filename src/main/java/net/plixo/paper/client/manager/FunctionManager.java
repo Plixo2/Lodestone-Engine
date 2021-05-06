@@ -10,6 +10,7 @@ import net.plixo.paper.client.avs.newVersion.functions.*;
 import net.plixo.paper.client.avs.newVersion.nFunction;
 import net.plixo.paper.client.avs.newVersion.nUIFunction;
 import net.plixo.paper.client.engine.ecs.Resource;
+import net.plixo.paper.client.engine.meta.Meta;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
 
@@ -22,6 +23,7 @@ import java.util.UUID;
 public class FunctionManager {
 
     public static ArrayList<nFunction> functions = new ArrayList<>();
+    public static HashMap<String , Meta> MetaNameMap = new HashMap<>();
 
     public static nFunction getInstanceByName(String name) {
         for (nFunction function : functions) {

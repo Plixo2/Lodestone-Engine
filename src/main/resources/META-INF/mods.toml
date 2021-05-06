@@ -31,11 +31,9 @@ logoFile="examplemod.png" #optional
 # A text field displayed in the mod UI
 credits="None" #optional
 # A text field displayed in the mod UI
-authors="Plixo, Maxmurks" #optional
+authors="Plixo" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-
-
 Lodestone Engine Prototype
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
@@ -49,7 +47,7 @@ Lodestone Engine Prototype
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
-    side="BOTH"
+    side="CLIENT"
 # Here's another dependency
 [[dependencies.lodestone]]
     modId="minecraft"

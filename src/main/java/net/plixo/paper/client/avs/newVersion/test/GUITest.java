@@ -18,6 +18,7 @@ import java.lang.reflect.Modifier;
 
 public class GUITest extends nFunction {
 
+    int speed = 0;
     @Override
     public void run() {
         pullInputs();
@@ -72,6 +73,16 @@ public class GUITest extends nFunction {
         }
         */
 
+        UISpinner spinner = new UISpinner() {
+
+
+            @Override
+            public void onTick() {
+                super.onTick();
+                speed = getNumber();
+            }
+        };
+
         LivingEntity livingEntity;
         for (Entity allEntity : mc.world.getAllEntities()) {
           //  allEntity.getPositionVec()
@@ -85,6 +96,7 @@ public class GUITest extends nFunction {
                 //}
             }
         }
+
 
        // FunctionManager.loadFromFile()
         UIArray sideBar = new UIArray();

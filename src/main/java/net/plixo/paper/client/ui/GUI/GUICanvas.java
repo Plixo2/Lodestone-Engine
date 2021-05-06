@@ -63,4 +63,9 @@ public class GUICanvas extends Screen {
         return false;
     }
 
+    @Override
+    public void tick() {
+        canvas.onTick();
+        super.tick();
+    }
 }

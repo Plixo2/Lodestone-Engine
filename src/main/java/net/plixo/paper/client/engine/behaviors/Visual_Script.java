@@ -1,5 +1,6 @@
 package net.plixo.paper.client.engine.behaviors;
 
+import net.minecraft.util.ResourceLocation;
 import net.plixo.paper.client.manager.FunctionManager;
 import net.plixo.paper.client.avs.newVersion.VisualScript;
 import net.plixo.paper.client.avs.newVersion.nFunction;
@@ -29,6 +30,7 @@ public class Visual_Script extends Behavior {
             this.script = null;
         }
         if(event instanceof ClientEvent.InitEvent) {
+
             Resource resource = getResource(0);
             File file = resource.getAsFile();
             Objects.requireNonNull(file);

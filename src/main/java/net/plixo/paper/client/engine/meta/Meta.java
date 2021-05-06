@@ -38,30 +38,35 @@ public class Meta {
     protected Resource getResource(String name, Class clazz) {
         Object obj = null;
 
-        if (hasValue()) {
-            JsonElement jsonElement = data.get(name);
-            if (jsonElement instanceof JsonObject) {
-                JsonObject jsonObject = jsonElement.getAsJsonObject();
-                JsonElement element = jsonObject.get("Value");
-                if (jsonObject.get("Type").isJsonPrimitive()) {
-                    String type = jsonObject.get("Type").getAsString();
-                    if (type.equalsIgnoreCase(clazz.getName())) {
-                        if (clazz == String.class) {
-                            obj = element.getAsString();
-                        } else if (clazz == Float.class) {
-                            obj = element.getAsFloat();
-                        } else if (clazz == Integer.class) {
-                            obj = element.getAsInt();
-                        } else if (clazz == Vector3d.class) {
-                            obj = Util.getVecFromString(element.getAsString());
-                        } else if (clazz == Boolean.class) {
-                            obj = element.getAsBoolean();
-                        } else if (clazz == File.class) {
-                            obj = new File(element.getAsString());
+        try {
+            if (hasValue()) {
+                JsonElement jsonElement = data.get(name);
+                if (jsonElement instanceof JsonObject) {
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+                    JsonElement element = jsonObject.get("Value");
+                    if (jsonObject.get("Type").isJsonPrimitive()) {
+                        String type = jsonObject.get("Type").getAsString();
+                        if (type.equalsIgnoreCase(clazz.getName())) {
+                            if (clazz == String.class) {
+                                obj = element.getAsString();
+                            } else if (clazz == Float.class) {
+                                obj = element.getAsFloat();
+                            } else if (clazz == Integer.class) {
+                                obj = element.getAsInt();
+                            } else if (clazz == Vector3d.class) {
+                                obj = Util.getVecFromString(element.getAsString());
+                            } else if (clazz == Boolean.class) {
+                                obj = element.getAsBoolean();
+                            } else if (clazz == File.class) {
+                                obj = new File(element.getAsString());
+                            }
                         }
                     }
                 }
             }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
         return new Resource(name, clazz, obj);
     }

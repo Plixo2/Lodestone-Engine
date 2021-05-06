@@ -11,6 +11,7 @@ import net.plixo.paper.client.engine.meta.Meta;
 import net.plixo.paper.client.util.ClassPaths;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -109,11 +110,11 @@ public class AssetLoader {
 
     static void loadFunctions() {
         FunctionManager.functions.clear();
+        FunctionManager.MetaNameMap.clear();
         FunctionManager.functions.add(new Event());
         FunctionManager.functions.add(new getGround());
         FunctionManager.functions.add(new If());
         FunctionManager.functions.add(new Jump());
-        FunctionManager.functions.add(new Print());
         FunctionManager.functions.add(new Script());
         FunctionManager.functions.add(new Equal());
         FunctionManager.functions.add(new Not());
@@ -129,6 +130,8 @@ public class AssetLoader {
         for (File file : files) {
             try {
                 Util.print("File: " + file.getName());
+                //Util.print("put: " + FilenameUtils.removeExtension(file.getName()));
+                FunctionManager.MetaNameMap.put(FilenameUtils.removeExtension(file.getName()),MetaManager.getMetaByFile(file));
                 Object object = ScriptManager.loadClassFromFile(file);
                 if (object instanceof nFunction) {
                     nFunction function = ((nFunction) object);

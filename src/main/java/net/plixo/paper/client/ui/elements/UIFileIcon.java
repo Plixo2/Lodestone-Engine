@@ -75,11 +75,18 @@ public class UIFileIcon extends UICanvas {
                         Gui.drawRoundedRect(x + (width / 2) - 7, y + (height / 2) + 7, x + (width / 2) + 7,
                                 y + (height / 2) + 14, 3f, 0xFF101010);
                     } else if (extension.equals(SaveUtil.FileFormat.Code.format)) {
+                        long time = System.currentTimeMillis() % 1800;
+                        String code = "</>";
+                        Gui.drawCenteredString(code.substring(0,1+ (int) (time/600)), x + width / 2, y + height / 2 + 5, -1);
+
+                        /*
                         if (System.currentTimeMillis() % 1200 < 600) {
-                            Gui.drawCenteredString("<>", x + width / 2, y + height / 2 + 5, -1);
+                            Gui.drawCenteredString("</>", x + width / 2, y + height / 2 + 5, -1);
                         } else {
                             Gui.drawCenteredString("< >", x + width / 2, y + height / 2 + 5, -1);
                         }
+
+                         */
                     }
                     else if (extension.equals(SaveUtil.FileFormat.Hud.format)) {
                         long time2 = (System.currentTimeMillis() / 100) % 180;
