@@ -147,6 +147,9 @@ public class ScriptManager {
     public static void deleteTemp() {
         File file = new File(System.getProperty("java.io.tmpdir") + "/VisualScript");
         System.out.println("temp path: " + file.getAbsolutePath());
+        if(!file.exists()) {
+            return;
+        }
         for (File listFile : file.listFiles()) {
             if (listFile.isDirectory()) {
                 try {
