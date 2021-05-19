@@ -585,19 +585,17 @@ public class ClassPaths {
     public static void generate() {
         names.clear();
         try {
-            ClassLoader myCL = Thread.currentThread().getContextClassLoader();
+            ClassLoader myCL = ClassPaths.class.getClassLoader();
             while (myCL != null) {
-                for (Iterator iter = list(myCL); iter.hasNext(); ) {
-                    Class clazz = (Class) iter.next();
-                    String txt = clazz.getName();
-                  //  Util.print(txt);
-                    if (txt.contains("$")) {
-                        continue;
+                    for (Iterator iter = list(myCL); iter.hasNext(); ) {
+                        Class clazz = (Class) iter.next();
+                        String txt = clazz.getName();
+                        if (txt.contains("$")) {
+                            continue;
+                        }
+                        names.add(txt);
                     }
-
-                    names.add(txt);
-                }
-                myCL = myCL.getParent();
+                    myCL = myCL.getParent();
             }
         }
         catch (Exception e) {
@@ -624,8 +622,7 @@ public class ClassPaths {
         while (CL_class != java.lang.ClassLoader.class) {
             CL_class = CL_class.getSuperclass();
         }
-        java.lang.reflect.Field ClassLoader_classes_field = CL_class
-                .getDeclaredField("classes");
+        java.lang.reflect.Field ClassLoader_classes_field = CL_class.getDeclaredField("classes");
         ClassLoader_classes_field.setAccessible(true);
         Vector classes = (Vector) ClassLoader_classes_field.get(CL);
         return classes.iterator();

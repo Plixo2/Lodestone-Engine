@@ -5,7 +5,7 @@ import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.manager.AssetLoader;
 import net.plixo.paper.client.ui.elements.UIButton;
 import net.plixo.paper.client.ui.elements.UICanvas;
-import net.plixo.paper.client.editor.tabs.TabConsole;
+import net.plixo.paper.client.tabs.TabConsole;
 import net.plixo.paper.client.ui.GUI.GUIOption;
 import net.plixo.paper.client.ui.elements.UILabel;
 import net.plixo.paper.client.util.ColorLib;

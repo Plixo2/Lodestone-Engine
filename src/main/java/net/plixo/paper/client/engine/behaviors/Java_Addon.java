@@ -1,13 +1,10 @@
 package net.plixo.paper.client.engine.behaviors;
 
-import net.plixo.paper.client.avs.old.components.Module;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.events.ClientEvent;
 import net.plixo.paper.client.manager.ScriptManager;
-import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
-import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.util.Objects;
@@ -15,7 +12,6 @@ import java.util.Objects;
 
 public class Java_Addon extends Behavior {
 
-    Module mod;
     public Runnable runnable;
 
     public Java_Addon() {

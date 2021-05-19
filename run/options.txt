@@ -23,7 +23,7 @@ fov:0.525
 screenEffectScale:1.0
 fovEffectScale:1.0
 gamma:1.0
-renderDistance:4
+renderDistance:3
 entityDistanceScaling:1.0
 guiScale:2
 particles:2
@@ -33,7 +33,7 @@ graphicsMode:0
 ao:0
 biomeBlendRadius:0
 renderClouds:false
-resourcePacks:["vanilla","mod_resources","file/Reptillium.zip"]
+resourcePacks:["vanilla","mod_resources"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us
@@ -97,9 +97,9 @@ key_key.hotbar.3:key.keyboard.3
 key_key.hotbar.4:key.keyboard.4
 key_key.hotbar.5:key.keyboard.5
 key_key.hotbar.6:key.keyboard.6
-key_key.hotbar.7:key.mouse.4
+key_key.hotbar.7:key.keyboard.7
 key_key.hotbar.8:key.keyboard.8
-key_key.hotbar.9:key.mouse.5
+key_key.hotbar.9:key.keyboard.9
 key_open.engine:key.keyboard.right.shift
 soundCategory_master:0.0
 soundCategory_music:0.0

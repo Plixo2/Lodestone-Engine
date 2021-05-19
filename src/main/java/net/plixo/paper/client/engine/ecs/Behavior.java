@@ -1,7 +1,6 @@
 package net.plixo.paper.client.engine.ecs;
 
 import net.minecraft.client.Minecraft;
-import net.plixo.paper.client.avs.old.components.variable.Variable;
 import net.plixo.paper.client.events.ClientEvent;
 
 public abstract class Behavior {
@@ -14,10 +13,6 @@ public abstract class Behavior {
 
     public Behavior(String name) {
         this.name = name;
-    }
-
-    public void EditorUpdate() {
-
     }
 
     public Resource getResource(int index) {

@@ -1,9 +1,8 @@
 package net.plixo.paper.client.manager;
 
 
-import net.plixo.paper.client.editor.tabs.TabViewport;
+import net.plixo.paper.client.tabs.*;
 import net.plixo.paper.client.ui.UITab;
-import net.plixo.paper.client.editor.tabs.*;
 
 public class EditorManager {
 

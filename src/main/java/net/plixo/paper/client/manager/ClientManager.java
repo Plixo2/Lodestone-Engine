@@ -40,7 +40,7 @@ public class ClientManager {
                     return (Behavior) b.getClass().getConstructors()[0].newInstance();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Util.print(e.getMessage());
+                    Util.print(e);
                 }
             }
         }

@@ -112,6 +112,7 @@ public class UIFileChooser extends UICanvas {
         button.displayName = ">";
         button.setRoundness(2);
         button.setDimensions(width - height, 0, height, height);
+        clear();
         add(button);
         super.setDimensions(x, y, width, height);
     }

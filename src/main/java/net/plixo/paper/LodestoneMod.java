@@ -15,7 +15,9 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.plixo.paper.client.forge.KeyBinds;
 import net.plixo.paper.client.forge.events.KeyInput;
+import net.plixo.paper.client.forge.events.Render2D;
 import net.plixo.paper.client.forge.events.Ticking;
+import net.plixo.paper.client.visualscript.CustomFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,6 +53,7 @@ public class LodestoneMod {
         KeyBinds.register();
         MinecraftForge.EVENT_BUS.register(new KeyInput());
         MinecraftForge.EVENT_BUS.register(new Ticking());
+        MinecraftForge.EVENT_BUS.register(new Render2D());
 
         LOGGER.info("//PRE-INIT//");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
@@ -62,6 +65,7 @@ public class LodestoneMod {
      * @param event The initialise event. Variable only used to log settings.
      */
     private void doClientStuff(final FMLClientSetupEvent event) {
+        LOGGER.info("Begin Startup");
         Lodestone.startClient();
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
     }

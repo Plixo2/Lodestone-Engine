@@ -2,10 +2,6 @@ package net.plixo.paper.client.ui;
 
 import net.minecraft.client.Minecraft;
 import net.plixo.paper.client.ui.elements.UICanvas;
-import net.plixo.paper.client.ui.other.OptionMenu;
-import net.plixo.paper.client.avs.old.ui.Rect;
-import net.plixo.paper.client.util.ColorLib;
-import net.plixo.paper.client.util.Gui;
 
 
 /**

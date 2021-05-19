@@ -9,16 +9,19 @@ import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 
-public class GUIAccept extends Screen {
+public class GUIAccept extends GUICanvas {
 
     Runnable yes, no;
     String displayString;
 
+    public String SYes = "Yes";
+    public String SNo = "No";
+    Screen currentScreen;
     public GUIAccept(Runnable yes, Runnable no, String displayString) {
-        super(new StringTextComponent("Accept"));
         this.yes = yes;
         this.no = no;
         this.displayString = displayString;
+        currentScreen = Minecraft.getInstance().currentScreen;
     }
 
 
@@ -29,15 +32,16 @@ public class GUIAccept extends Screen {
         int buttonWidth = 50;
         int buttonHeight = 20;
 
-        addButton(new Button(wH - (10 + buttonWidth), hH, buttonWidth, buttonHeight, new StringTextComponent("Yes"), a -> {
+        addButton(new Button(wH - (10 + buttonWidth), hH, buttonWidth, buttonHeight, new StringTextComponent(SYes), a -> {
             yes.run();
-            Minecraft.getInstance().displayGuiScreen(new GUIEditor());
+            Minecraft.getInstance().displayGuiScreen(currentScreen);
         }));
-        addButton(new Button(wH + (10), hH, buttonWidth, buttonHeight, new StringTextComponent("No"), b -> {
+        addButton(new Button(wH + (10), hH, buttonWidth, buttonHeight, new StringTextComponent(SNo), b -> {
             no.run();
-            Minecraft.getInstance().displayGuiScreen(new GUIEditor());
+            Minecraft.getInstance().displayGuiScreen(currentScreen);
         }));
         super.init();
+        canvas.setColor(0);
     }
 
     @Override
@@ -46,6 +50,7 @@ public class GUIAccept extends Screen {
         Gui.drawRect(0, 0, width, height, ColorLib.getBackground(0.1f));
         Gui.drawRoundedRect(width / 2 - 71, height / 2 - 41, width / 2 + 71, height / 2 + 61, 7, ColorLib.getBackground(-0.1f));
         Gui.drawRoundedRect(width / 2 - 70, height / 2 - 40, width / 2 + 70, height / 2 + 60, 7, ColorLib.getBackground(0.3f));
+        if(displayString != null)
         Gui.drawCenteredStringWithShadow(displayString,width/2, height / 2 - 20, -1);
         super.render(p_230430_1_, mouseX, mouseY, p_230430_4_);
     }

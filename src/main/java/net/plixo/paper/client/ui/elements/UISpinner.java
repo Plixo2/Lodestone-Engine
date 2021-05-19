@@ -98,6 +98,7 @@ public class UISpinner extends UICanvas {
         down.setRoundness(1);
         down.setDimensions(width - height, height / 2, height, height / 2);
 
+        clear();
         add(up);
         add(down);
 

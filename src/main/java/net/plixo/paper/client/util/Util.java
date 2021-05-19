@@ -3,8 +3,7 @@ package net.plixo.paper.client.util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
-import net.plixo.paper.client.editor.tabs.TabConsole;
-import net.plixo.paper.client.avs.old.components.variable.Variable;
+import net.plixo.paper.client.tabs.TabConsole;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -119,71 +118,11 @@ public class Util {
 
 
     /**
-     * @param var  Variable where custom data should get put in
-     * @param name data as String
-     */
-    public static void loadIntoVar(Variable var, String name) {
-        if (!name.isEmpty()) {
-
-            boolean isTrue = name.equalsIgnoreCase("true");
-            boolean isFalse = name.equalsIgnoreCase("false");
-            boolean isOne = name.equalsIgnoreCase("1");
-            boolean isZero = name.equalsIgnoreCase("0");
-
-            var.vectorValue = new Vector3d(0, 0, 0);
-            var.booleanValue = false;
-            var.floatValue = 0;
-            var.intValue = 0;
-
-            if (name.contains(",")) {
-                String[] slits = name.split(",");
-                if (slits.length >= 3) {
-                    if (isNumeric(slits[0]) && isNumeric(slits[1]) && isNumeric(slits[2])) {
-                        try {
-                            double arg0 = Double.parseDouble(slits[0]);
-                            double arg1 = Double.parseDouble(slits[1]);
-                            double arg2 = Double.parseDouble(slits[2]);
-                            var.vectorValue = new Vector3d(arg0, arg1, arg2);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-            if (isOne) {
-                var.booleanValue = true;
-            }
-            if (isZero) {
-                var.booleanValue = false;
-            }
-            if (isNumeric(name)) {
-                try {
-                    var.floatValue = Float.parseFloat(name);
-                    var.intValue = Math.round(var.floatValue);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if (isTrue) {
-                var.floatValue = 1;
-                var.intValue = 1;
-                var.booleanValue = true;
-            } else if (isFalse) {
-                var.floatValue = 0;
-                var.intValue = 0;
-                var.booleanValue = true;
-            }
-            var.stringValue = name;
-        }
-    }
-
-    /**
      * Standard print for System Console and {@link TabConsole} for debugging
      *
      * @param obj String as Obj
      */
     public static void print(Object obj) {
-
         TabConsole.consoleLines.add(new TabConsole.ConsoleLine(obj + ""));
         mc.ingameGUI.getChatGUI().printChatMessage(new StringTextComponent(obj + ""));
     }
@@ -250,7 +189,7 @@ public class Util {
     }
 
 
-    public static void findFiles(String directoryName, ArrayList<File> files , SaveUtil.FileFormat format) {
+    public static void findFiles(String directoryName, ArrayList<File> files, SaveUtil.FileFormat format) {
         File directory = new File(directoryName);
         File[] fList = directory.listFiles();
         if (fList != null)
@@ -258,7 +197,7 @@ public class Util {
                 if (file.isFile() && SaveUtil.FileFormat.getFromFile(file) == format) {
                     files.add(file);
                 } else if (file.isDirectory()) {
-                    findFiles(file.getAbsolutePath(), files,format);
+                    findFiles(file.getAbsolutePath(), files, format);
                 }
             }
     }

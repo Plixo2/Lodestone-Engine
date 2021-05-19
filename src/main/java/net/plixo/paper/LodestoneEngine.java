@@ -20,7 +20,6 @@ public class LodestoneEngine {
     public void startEngine() {
         if (!isRunning) {
             isRunning = true;
-            System.out.println("Starting Engine");
             Lodestone.save();
             for (GameObject e : ClientManager.allEntities) {
                 e.onEvent(ClientEvent.InitEvent.event);
@@ -31,7 +30,6 @@ public class LodestoneEngine {
     public void stopEngine() {
         if (isRunning) {
             isRunning = false;
-            Util.print("Engine stopped");
             for (GameObject e : ClientManager.allEntities) {
                 e.onEvent(new ClientEvent.StopEvent());
             }

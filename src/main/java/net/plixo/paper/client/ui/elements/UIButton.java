@@ -45,4 +45,17 @@ public class UIButton extends UIElement {
             Gui.drawCenteredString(displayName, x + width / 2, y + height / 2, textColor);
         }
     }
+
+    Runnable action;
+    public void setAction(Runnable runnable) {
+        action = runnable;
+    }
+
+    @Override
+    public void actionPerformed() {
+        super.actionPerformed();
+        if(action != null) {
+            action.run();
+        }
+    }
 }

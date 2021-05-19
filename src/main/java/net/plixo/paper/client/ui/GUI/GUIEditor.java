@@ -1,19 +1,18 @@
 package net.plixo.paper.client.ui.GUI;
 
-import java.util.ArrayList;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.editor.tabs.TabViewport;
+import net.plixo.paper.client.tabs.*;
 import net.plixo.paper.client.ui.TabbedUI;
 import net.plixo.paper.client.ui.UITab;
-import net.plixo.paper.client.editor.tabs.*;
 import net.plixo.paper.client.ui.other.Toolbar;
 import net.plixo.paper.client.ui.other.UIMouseMenu;
 import net.plixo.paper.client.util.*;
 import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
 
 public class GUIEditor extends Screen {
 
@@ -52,7 +51,7 @@ public class GUIEditor extends Screen {
             GL11.glPopMatrix();
         }
         if (menu != null) {
-            menu.drawScreen(mouseX,mouseY);
+            menu.drawScreen(mouseX, mouseY);
         }
         MouseUtil.resetWheel();
         super.render(p_230430_1_, mouseX, mouseY, partialTicks);
@@ -60,7 +59,6 @@ public class GUIEditor extends Screen {
 
     @Override
     protected void init() {
-
 
         tabs.clear();
 
@@ -119,8 +117,13 @@ public class GUIEditor extends Screen {
     @Override
     public boolean charTyped(char typedChar, int keyCode) {
 
-        for (TabbedUI tab : tabs) {
-            tab.keyTyped(typedChar, keyCode);
+        try {
+            for (TabbedUI tab : tabs) {
+                tab.keyTyped(typedChar, keyCode);
+            }
+        } catch (Exception e) {
+            Util.print(e);
+            e.printStackTrace();
         }
 
         return false;
@@ -129,48 +132,60 @@ public class GUIEditor extends Screen {
     @Override
     public boolean keyPressed(int key, int scanCode, int action) {
 
-        if(key == 280  && KeyboardUtil.isKeyDown(key)) {
-            Util.print("stopped");
+        try {
+            if (key == 280 && KeyboardUtil.isKeyDown(key)) {
+                Util.print("stopped");
 
-        }
-        for (TabbedUI tab : tabs) {
-            tab.keyPressed(key, scanCode, action);
+            }
+            for (TabbedUI tab : tabs) {
+                tab.keyPressed(key, scanCode, action);
+            }
+        } catch (Exception e) {
+            Util.print(e);
+            e.printStackTrace();
         }
         return super.keyPressed(key, scanCode, action);
     }
 
-    float mouseX , mouseY;
+    float mouseX, mouseY;
+
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+        try {
 
-        this.mouseX = (float)mouseX;
-        this.mouseY = (float)mouseY;
-        if (menu != null) {
-            menu.mouseClicked((float) mouseX,(float) mouseY,mouseButton);
-            hideMenu();
-            return false;
-        }
 
-        toolbar.mouseClicked((float) mouseX, (float) mouseY, mouseButton);
-        if (mouseButton == 0) {
+            this.mouseX = (float) mouseX;
+            this.mouseY = (float) mouseY;
+            if (menu != null) {
+                menu.mouseClicked((float) mouseX, (float) mouseY, mouseButton);
+                hideMenu();
+                return false;
+            }
+
+            toolbar.mouseClicked((float) mouseX, (float) mouseY, mouseButton);
+            if (mouseButton == 0) {
+                for (TabbedUI tab : tabs) {
+                    float newMx = (float) (mouseX - tab.x);
+                    float newMy = (float) (mouseY - tab.y);
+
+                    UITab CTab = tab.getHoveredHead(newMx, newMy);
+
+                    if (CTab != null) {
+                        tab.selectedIndex = CTab.head.id;
+                    }
+                }
+            }
+
             for (TabbedUI tab : tabs) {
                 float newMx = (float) (mouseX - tab.x);
                 float newMy = (float) (mouseY - tab.y);
 
-                UITab CTab = tab.getHoveredHead(newMx, newMy);
+                tab.mouseClicked(newMx, newMy, mouseButton);
 
-                if (CTab != null) {
-                    tab.selectedIndex = CTab.head.id;
-                }
             }
-        }
-
-        for (TabbedUI tab : tabs) {
-            float newMx = (float) (mouseX - tab.x);
-            float newMy = (float) (mouseY - tab.y);
-
-            tab.mouseClicked(newMx, newMy, mouseButton);
-
+        } catch (Exception e) {
+            Util.print(e);
+            e.printStackTrace();
         }
         return false;
     }
@@ -178,27 +193,46 @@ public class GUIEditor extends Screen {
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int state) {
-        for (TabbedUI tab : tabs) {
-            float newMx = (float) (mouseX - tab.x);
-            float newMy = (float) (mouseY - tab.y);
-            tab.mouseReleased(newMx, newMy, state);
+        try {
+            for (TabbedUI tab : tabs) {
+                float newMx = (float) (mouseX - tab.x);
+                float newMy = (float) (mouseY - tab.y);
+                tab.mouseReleased(newMx, newMy, state);
+            }
+        } catch (Exception e) {
+            Util.print(e);
+            e.printStackTrace();
         }
         return false;
     }
 
     @Override
     public void onClose() {
+        try {
+
+
         Lodestone.save();
         for (TabbedUI tab : tabs) {
             tab.close();
+        }
+        } catch (Exception e) {
+            Util.print(e);
+            e.printStackTrace();
         }
         super.onClose();
     }
 
     @Override
     public void tick() {
+        try {
+
+
         for (TabbedUI tab : tabs) {
             tab.onTick();
+        }
+        } catch (Exception e) {
+            Util.print(e);
+            e.printStackTrace();
         }
         super.tick();
     }
@@ -206,13 +240,16 @@ public class GUIEditor extends Screen {
     public void hideMenu() {
         menu = null;
     }
+
     public void showMenu() {
-        menu.build(mouseX,mouseY);
+        menu.build(mouseX, mouseY);
     }
+
     public void beginMenu() {
         menu = new UIMouseMenu();
     }
-    public void addMenuOption(String name,Runnable runnable) {
-        menu.addOption(name,runnable);
+
+    public void addMenuOption(String name, Runnable runnable) {
+        menu.addOption(name, runnable);
     }
 }

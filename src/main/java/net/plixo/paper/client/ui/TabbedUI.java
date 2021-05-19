@@ -19,7 +19,7 @@ public class TabbedUI implements IGuiEvent {
     public int selectedIndex = 0;
     public ArrayList<UITab> tabs = new ArrayList<>();
 
-    //TODO redo option tab system
+    //TODO redo option tab system sometimes...
 
     public float width, height;
     public float x, y;

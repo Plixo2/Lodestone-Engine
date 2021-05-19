@@ -5,6 +5,8 @@ import net.plixo.paper.client.events.ClientEvent;
 import net.plixo.paper.client.manager.ClientManager;
 import net.plixo.paper.client.ui.GUI.GUIEditor;
 import net.plixo.paper.client.ui.TabbedUI;
+import net.plixo.paper.client.util.ColorLib;
+import net.plixo.paper.client.visualscript.CustomFunction;
 
 /**
  * Second main class.
@@ -13,7 +15,7 @@ import net.plixo.paper.client.ui.TabbedUI;
 public class Lodestone {
     static long lastMS = 0;
     public static LodestoneEngine lodestoneEngine;
-
+    CustomFunction n;
     /**
      * First function called (only once)
      * Initialises {@link LodestoneEngine} parameter.
@@ -24,6 +26,7 @@ public class Lodestone {
         lodestoneEngine = new LodestoneEngine();
         AssetLoader.load();
         AssetLoader.compile();
+        ColorLib.load();
     }
 
 

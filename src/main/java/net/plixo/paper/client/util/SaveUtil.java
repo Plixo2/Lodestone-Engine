@@ -17,7 +17,7 @@ public class SaveUtil {
      * Used to have different formats separately and globally
      */
     public enum FileFormat {
-        Code("js"), Hud("hud"), Other("json"), VisualScript("vs"), Model("obj"), Asset("asset") , Meta("meta") ;
+        Code("java"), Hud("hud"), Other("json"), VisualScript("vs"), Model("obj"), Asset("asset") , Meta("meta") ;
 
         public String format;
 

@@ -1,8 +1,12 @@
 package net.plixo.paper.client.manager;
 
-import net.plixo.paper.client.avs.newVersion.VisualScript;
-import net.plixo.paper.client.avs.newVersion.functions.*;
-import net.plixo.paper.client.avs.newVersion.nFunction;
+import net.plixo.paper.client.ui.UIElement;
+import net.plixo.paper.client.ui.elements.UITextbox;
+import net.plixo.paper.client.visualscript.VisualScript;
+import net.plixo.paper.client.visualscript.functions.*;
+import net.plixo.paper.client.visualscript.functions.Object;
+import net.plixo.paper.client.visualscript.functions.events.*;
+import net.plixo.paper.client.visualscript.Function;
 import net.plixo.paper.client.engine.behaviors.Java_Addon;
 import net.plixo.paper.client.engine.behaviors.Renderer;
 import net.plixo.paper.client.engine.behaviors.Visual_Script;
@@ -11,9 +15,18 @@ import net.plixo.paper.client.engine.meta.Meta;
 import net.plixo.paper.client.util.ClassPaths;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
+import net.plixo.paper.client.visualscript.functions.logic.Branch;
+import net.plixo.paper.client.visualscript.functions.logic.Equal;
+import net.plixo.paper.client.visualscript.functions.logic.If;
+import net.plixo.paper.client.visualscript.functions.logic.Not;
+import net.plixo.paper.client.visualscript.functions.math.Add;
+import net.plixo.paper.client.visualscript.functions.math.Divide;
+import net.plixo.paper.client.visualscript.functions.math.Minus;
+import net.plixo.paper.client.visualscript.functions.math.Multiply;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class AssetLoader {
@@ -48,6 +61,7 @@ public class AssetLoader {
         }
     }
 
+
     public static Meta getLoadedMeta() {
         return currentMeta;
     }
@@ -62,33 +76,39 @@ public class AssetLoader {
 
 
     public static void load() {
-        Util.print("Loading...");
+        System.out.println("Loading...");
         setCurrentMeta(null);
         setCurrentEntity(null);
-        setCurrentScript(null);
+       // setCurrentScript(null);
 
         loadBehaviors();
         loadEntities();
+        loadEntities();
+        loadEntities();
         EditorManager.register();
-        Util.print("done");
+        Util.print("Loaded");
     }
 
     public static void save() {
-        Util.print("Saving...");
+        System.out.println("Start Saving");
         ClientManager.saveEntities();
-        Util.print("Saved Entities");
+        System.out.println("Saved Entities");
         saveScript();
+        System.out.println("Saved Script");
         saveMeta();
-        Util.print("done");
+        System.out.println("Saved Meta");
+        EditorManager.editor.close();
+        System.out.println("Saved Editor File");
+        Util.print("Saved");
     }
 
     public static void compile() {
-        Util.print("Compiling...");
+        System.out.println("Compiling...");
         ClassPaths.generate();
         ScriptManager.deleteTemp();
-        Util.print("Deleted temp File");
+        System.out.println("Deleted temp File");
         loadFunctions();
-        Util.print("done");
+        Util.print("Compiled");
     }
 
     static void loadBehaviors() {
@@ -96,7 +116,7 @@ public class AssetLoader {
         ClientManager.standardBehavior.add(new Visual_Script());
         ClientManager.standardBehavior.add(new Renderer());
         ClientManager.standardBehavior.add(new Java_Addon());
-        Util.print("Loaded " + ClientManager.standardBehavior.size() + " Behaviors");
+        System.out.println("Loaded " + ClientManager.standardBehavior.size() + " Behaviors");
     }
 
     static void loadEntities() {
@@ -105,19 +125,31 @@ public class AssetLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Util.print("Loaded " + ClientManager.allEntities.size() + " Entities");
+        System.out.println("Loaded " + ClientManager.allEntities.size() + " Entities");
     }
 
     static void loadFunctions() {
         FunctionManager.functions.clear();
         FunctionManager.MetaNameMap.clear();
-        FunctionManager.functions.add(new Event());
-        FunctionManager.functions.add(new getGround());
+        FunctionManager.functions.add(new TickEvent());
+        FunctionManager.functions.add(new KeyEvent());
+        FunctionManager.functions.add(new StartEvent());
+        FunctionManager.functions.add(new StopEvent());
+
         FunctionManager.functions.add(new If());
-        FunctionManager.functions.add(new Jump());
-        FunctionManager.functions.add(new Script());
         FunctionManager.functions.add(new Equal());
         FunctionManager.functions.add(new Not());
+        FunctionManager.functions.add(new Branch());
+
+        FunctionManager.functions.add(new Add());
+        FunctionManager.functions.add(new Minus());
+        FunctionManager.functions.add(new Multiply());
+        FunctionManager.functions.add(new Divide());
+
+        FunctionManager.functions.add(new Print());
+        FunctionManager.functions.add(new Object());
+        FunctionManager.functions.add(new getGround());
+        FunctionManager.functions.add(new Jump());
 
         File library = SaveUtil.getFolderFromName("");
         if (!library.exists()) {
@@ -129,17 +161,23 @@ public class AssetLoader {
 
         for (File file : files) {
             try {
-                Util.print("File: " + file.getName());
-                //Util.print("put: " + FilenameUtils.removeExtension(file.getName()));
                 FunctionManager.MetaNameMap.put(FilenameUtils.removeExtension(file.getName()),MetaManager.getMetaByFile(file));
-                Object object = ScriptManager.loadClassFromFile(file);
-                if (object instanceof nFunction) {
-                    nFunction function = ((nFunction) object);
+                java.lang.Object object = ScriptManager.loadClassFromFile(file);
+                if (object instanceof Function) {
+                    Class c = object.getClass();
+                    if (c != null) {
+                        Method[] methodsb = c.getDeclaredMethods();
+                        for (int i = 0; i < methodsb.length; i++) {
+                           // Util.print("B: " + methodsb[i].getName());
+                            //TODO something with this
+                        }
+                    }
+                    Function function = ((Function) object);
                     FunctionManager.functions.add(function);
                 } else {
-                    Util.print("Object is not a nFunction: " + object);
+                    Util.print(file.getName() + " is not a nFunction");
                     if (object != null) {
-                        Util.print(object.getClass());
+                        Util.print("Class: " + object.getClass());
                     }
                 }
             } catch (Exception e) {
@@ -147,6 +185,6 @@ public class AssetLoader {
                 e.printStackTrace();
             }
         }
-        Util.print("Loaded " + FunctionManager.functions.size() + " Functions");
+        System.out.println("Loaded " + FunctionManager.functions.size() + " Functions");
     }
 }

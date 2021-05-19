@@ -170,6 +170,7 @@ public class UIFileIcon extends UICanvas {
             name.setHoverName("."+extension);
 
 
+        clear();
         add(button);
         add(name);
     }

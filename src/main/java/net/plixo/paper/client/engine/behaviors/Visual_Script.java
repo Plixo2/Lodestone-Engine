@@ -1,10 +1,9 @@
 package net.plixo.paper.client.engine.behaviors;
 
-import net.minecraft.util.ResourceLocation;
 import net.plixo.paper.client.manager.FunctionManager;
-import net.plixo.paper.client.avs.newVersion.VisualScript;
-import net.plixo.paper.client.avs.newVersion.nFunction;
-import net.plixo.paper.client.avs.old.components.Module;
+import net.plixo.paper.client.visualscript.VisualScript;
+import net.plixo.paper.client.visualscript.functions.events.*;
+import net.plixo.paper.client.visualscript.Function;
 import net.plixo.paper.client.engine.ecs.Behavior;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.events.ClientEvent;
@@ -15,9 +14,12 @@ import java.util.Objects;
 
 public class Visual_Script extends Behavior {
 
-    Module mod;
     VisualScript script;
-    nFunction event;
+    TickEvent tickEvent;
+    KeyEvent keyEvent;
+    StopEvent stopEvent;
+
+
     public Visual_Script() {
         super("Visual Script");
         setSerializableResources(new Resource("File", File.class, null));
@@ -26,25 +28,49 @@ public class Visual_Script extends Behavior {
     @Override
     public void onEvent(ClientEvent event) {
         if(event instanceof ClientEvent.StopEvent) {
-            this.event = null;
+            if (stopEvent != null) {
+                stopEvent.run();
+            }
+            this.tickEvent = null;
+            this.keyEvent = null;
             this.script = null;
         }
-        if(event instanceof ClientEvent.InitEvent) {
 
+        if(event instanceof ClientEvent.InitEvent) {
             Resource resource = getResource(0);
             File file = resource.getAsFile();
             Objects.requireNonNull(file);
             if(file.exists()) {
                 script = FunctionManager.loadFromFile(file);
-                this.event = script.getEvent();
+
+                for (Function function : script.functions) {
+                    if (function instanceof TickEvent) {
+                        tickEvent = ((TickEvent) function);
+                    }
+                    if (function instanceof KeyEvent) {
+                        keyEvent = ((KeyEvent) function);
+                    }
+                    if(function instanceof StopEvent) {
+                        stopEvent = ((StopEvent) function);
+                    }
+                    if (function instanceof StartEvent) {
+                        function.run();
+                    }
+
+                }
             }
         }
         if(event instanceof ClientEvent.TickEvent) {
-            if (this.event != null) {
-                this.event.run();
+            if (this.tickEvent != null) {
+                this.tickEvent.run();
             }
         }
-
+        if(event instanceof ClientEvent.KeyEvent)  {
+            if (keyEvent != null) {
+                ClientEvent.KeyEvent keyEvent = ((ClientEvent.KeyEvent) event);
+                this.keyEvent.runWith(keyEvent.key,keyEvent.state,keyEvent.name);
+            }
+        }
         super.onEvent(event);
     }
 }

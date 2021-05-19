@@ -1,7 +1,6 @@
 package net.plixo.paper.client.engine.ecs;
 
 import net.minecraft.util.math.vector.Vector3d;
-import net.plixo.paper.client.avs.old.components.variable.Variable;
 import net.plixo.paper.client.events.ClientEvent;
 import net.plixo.paper.client.util.Util;
 

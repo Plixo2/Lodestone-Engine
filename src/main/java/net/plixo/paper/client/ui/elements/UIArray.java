@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL11;
 public class UIArray extends UICanvas {
 
 
+    public float space = 0;
     float percent = 0;
     float offset = 0;
     int lineColor = ColorLib.orange();
@@ -85,7 +86,7 @@ public class UIArray extends UICanvas {
         float y = 0;
         if (elements.size() > 0) {
             UIElement element = elements.get(elements.size() - 1);
-            y = element.y + element.height;
+            y = element.y + element.height+space;
         }
         return y;
     }
@@ -105,19 +106,8 @@ public class UIArray extends UICanvas {
         float y = 0;
         for (UIElement element : elements) {
             element.y = y;
-            y += element.height;
+            y += element.height + space;
         }
     }
 
-    /*
-    @Override
-    public boolean hovered(float mouseX, float mouseY) {
-        for (UIElement element : elements) {
-            if(element.hovered(mouseX-this.x,mouseY+offset-this.y)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    */
 }

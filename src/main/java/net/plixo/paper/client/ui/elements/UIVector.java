@@ -21,7 +21,7 @@ public class UIVector extends UICanvas {
     public void setDimensions(float x, float y, float width, float height) {
         super.setDimensions(x, y, width, height);
         float spinnerWidth = width / 3;
-        elements.clear();
+        clear();
 
         spinnerX = new UIPointNumber();
         spinnerX.setDimensions(0, 0, spinnerWidth, height);
@@ -39,9 +39,9 @@ public class UIVector extends UICanvas {
         spinnerY.color = ColorLib.cyan();
         spinnerZ.color = ColorLib.blue();
 
-        elements.add(spinnerX);
-        elements.add(spinnerY);
-        elements.add(spinnerZ);
+        add(spinnerX);
+        add(spinnerY);
+        add(spinnerZ);
     }
 
     //set XYZ values
