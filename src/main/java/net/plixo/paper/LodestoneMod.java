@@ -28,6 +28,7 @@ public class LodestoneMod {
     public final static String Mod_ID = "lodestone";
     private static final Logger LOGGER = LogManager.getLogger();
 
+    //TODO more builtin Nodes, change "Function" to "Node"
     /**
      * First function called by forge. Used to initialise.
      * Eventbuses(Listeners) are being registered.
