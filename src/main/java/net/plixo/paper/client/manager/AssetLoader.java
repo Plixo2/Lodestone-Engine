@@ -4,20 +4,21 @@ import net.plixo.paper.client.engine.behaviors.Java_Addon;
 import net.plixo.paper.client.engine.behaviors.Renderer;
 import net.plixo.paper.client.engine.behaviors.Visual_Script;
 import net.plixo.paper.client.engine.ecs.GameObject;
-import net.plixo.paper.client.engine.meta.Meta;
+import net.plixo.paper.client.engine.ecs.Meta;
 import net.plixo.paper.client.util.ClassPaths;
+import net.plixo.paper.client.util.Options;
 import net.plixo.paper.client.util.SaveUtil;
 import net.plixo.paper.client.util.Util;
 import net.plixo.paper.client.visualscript.Function;
 import net.plixo.paper.client.visualscript.VisualScript;
-import net.plixo.paper.client.visualscript.functions.Jump;
+import net.plixo.paper.client.visualscript.functions.player.Jump;
 import net.plixo.paper.client.visualscript.functions.Object;
 import net.plixo.paper.client.visualscript.functions.Print;
 import net.plixo.paper.client.visualscript.functions.events.KeyEvent;
 import net.plixo.paper.client.visualscript.functions.events.StartEvent;
 import net.plixo.paper.client.visualscript.functions.events.StopEvent;
 import net.plixo.paper.client.visualscript.functions.events.TickEvent;
-import net.plixo.paper.client.visualscript.functions.getGround;
+import net.plixo.paper.client.visualscript.functions.player.getGround;
 import net.plixo.paper.client.visualscript.functions.logic.Branch;
 import net.plixo.paper.client.visualscript.functions.logic.Equal;
 import net.plixo.paper.client.visualscript.functions.logic.If;
@@ -60,7 +61,7 @@ public class AssetLoader {
 
     public static void saveMeta() {
         if (currentMeta != null) {
-            currentMeta.saveMeta();
+            currentMeta.save();
         }
     }
 
@@ -84,6 +85,8 @@ public class AssetLoader {
             setCurrentMeta(null);
             setCurrentEntity(null);
 
+            Options.options = Options.load(Options.options);
+
             loadBehaviors();
             loadEntities();
             loadEntities();
@@ -99,13 +102,17 @@ public class AssetLoader {
     public static void save() {
         try {
             System.out.println("Start Saving");
+
+            Options.options.save();
+            System.out.println("Saved Options");
+
             ClientManager.saveEntities();
             System.out.println("Saved Entities");
             saveScript();
             System.out.println("Saved Script");
             saveMeta();
             System.out.println("Saved Meta");
-            EditorManager.editor.close();
+//            EditorManager.editor.close();
             System.out.println("Saved Editor File");
             Util.print("Saved");
         } catch (Exception e) {
@@ -167,6 +174,9 @@ public class AssetLoader {
         FunctionManager.functions.add(new Object());
         FunctionManager.functions.add(new getGround());
         FunctionManager.functions.add(new Jump());
+
+
+
 
         File library = SaveUtil.getFolderFromName("");
         if (!library.exists()) {

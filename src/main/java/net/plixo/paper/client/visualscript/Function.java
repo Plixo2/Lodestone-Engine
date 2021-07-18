@@ -22,6 +22,10 @@ public abstract class Function {
     public Resource[] settings = new Resource[0];
     public Function[] links;
 
+    public String[] inputNames;
+    public String[] outputNames;
+    public String[] linkNames;
+
     public UIFunction ui;
 
     public void calculate() {
@@ -73,6 +77,7 @@ public abstract class Function {
         return false;
     }
 
+/*
     public void set(int inputs, int outputs, int links) {
         this.links = new Function[links];
         input = new Output[inputs];
@@ -80,6 +85,28 @@ public abstract class Function {
         for (int i = 0; i < output.length; i++) {
             output[i] = new Output(this);
         }
+    }
+
+ */
+
+
+
+    public void setInputs(String... names) {
+        inputNames = names;
+        input = new Output[names.length];
+    }
+
+    public void setOutputs(String... names) {
+        outputNames = names;
+        output = new Output[names.length];
+        for (int i = 0; i < output.length; i++) {
+            output[i] = new Output(this);
+        }
+    }
+
+    public void setLinks(String... names) {
+        linkNames = names;
+        this.links = new Function[names.length];
     }
 
     public void custom(Resource... res) {

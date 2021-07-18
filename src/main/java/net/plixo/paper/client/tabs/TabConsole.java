@@ -1,19 +1,22 @@
 package net.plixo.paper.client.tabs;
 
 import net.plixo.paper.client.ui.UITab;
-import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
 import net.plixo.paper.client.manager.EditorManager;
-import net.plixo.paper.client.util.ColorLib;
-import net.plixo.paper.client.util.Gui;
-import net.plixo.paper.client.util.MouseUtil;
+import net.plixo.paper.client.util.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-
+@Deprecated
 public class TabConsole extends UITab {
 
+    public TabConsole(int id) {
+        super(id, "");
+    }
+
+/*
     public static class ConsoleLine {
         public String line;
         public String time;
@@ -25,15 +28,20 @@ public class TabConsole extends UITab {
             this.line =  line;
             time = formatter.format(calendar.getTime());
         }
+        public ConsoleLine() {
+
+        }
     }
 
     public static CopyOnWriteArrayList<ConsoleLine> consoleLines = new CopyOnWriteArrayList<>();
+
+
 
     float zoom = 1;
 
     public TabConsole(int id) {
         super(id, "Console");
-        EditorManager.console = this;
+      //  EditorManager.console = this;
     }
 
     @Override
@@ -96,4 +104,6 @@ public class TabConsole extends UITab {
         }
         super.onTick();
     }
+
+ */
 }

@@ -3,7 +3,7 @@ package net.plixo.paper.client.forge.events;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
 import org.lwjgl.opengl.GL11;
 
 public class Render2D {

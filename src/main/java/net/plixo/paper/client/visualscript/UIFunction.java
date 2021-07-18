@@ -1,17 +1,21 @@
 package net.plixo.paper.client.visualscript;
 
 import net.minecraft.util.math.vector.Vector2f;
-import net.plixo.paper.client.visualscript.functions.events.Event;
 import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.manager.EditorManager;
+import net.plixo.paper.client.ui.GUI.GUIMain;
 import net.plixo.paper.client.ui.UIElement;
-import net.plixo.paper.client.ui.elements.UIArray;
-import net.plixo.paper.client.ui.elements.UICircle;
-import net.plixo.paper.client.ui.elements.UIDraggable;
-import net.plixo.paper.client.ui.elements.UILabel;
+import net.plixo.paper.client.ui.elements.canvas.UIArray;
+import net.plixo.paper.client.ui.elements.canvas.UIDraggable;
+import net.plixo.paper.client.ui.elements.other.UICircle;
+import net.plixo.paper.client.ui.elements.values.UIResource;
+import net.plixo.paper.client.ui.elements.visual.UILabel;
 import net.plixo.paper.client.util.ColorLib;
+import net.plixo.paper.client.util.CursorObject;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.Util;
+import net.plixo.paper.client.util.simple.SimpleParagraph;
+import net.plixo.paper.client.visualscript.functions.events.Event;
 
 import java.util.HashMap;
 
@@ -47,12 +51,11 @@ public class UIFunction extends UIDraggable {
             UICircle element = new UICircle() {
                 @Override
                 public void mouseReleased(float mouseX, float mouseY, int state) {
-                    if (hovered(mouseX, mouseY) && state == 0) {
-                        CursorObject o = EditorManager.viewport.getDraggedObj();
-                        if (o.isLink()) {
-                            Function nfunction = o.getLink();
-                            nfunction.links[o.id] = function;
-                            EditorManager.viewport.setDraggedObj(null);
+                    if (hovered(mouseX, mouseY) && state == 1) {
+                        FunctionCursorHolder cursorObject = GUIMain.instance.cursorObject.getAs(FunctionCursorHolder.class);
+                        if (cursorObject != null && cursorObject.isLink()) {
+                            Function nfunction = cursorObject.getLink();
+                            nfunction.links[cursorObject.id] = function;
                         }
                     }
                     super.mouseReleased(mouseX, mouseY, state);
@@ -67,15 +70,12 @@ public class UIFunction extends UIDraggable {
 
         for (int i = 0; i < function.links.length; i++) {
             int finalI = i;
-            UICircle element = new UICircle() {
-                @Override
-                public void actionPerformed() {
-                    EditorManager.viewport.setDraggedObj(finalI, CursorObject.DraggedType.LINK, function);
-                }
-            };
+            UICircle element = new UICircle();
+            element.setCursorObject(() -> new FunctionCursorHolder(finalI, FunctionCursorHolder.DraggedType.LINK, function));
             element.setDimensions(0, 0, 12, 12);
             element.radius = 4;
             element.setColor(ColorLib.getMainColor());
+            element.hoverName = function.linkNames[i];
             outputs.add(element);
         }
 
@@ -85,12 +85,11 @@ public class UIFunction extends UIDraggable {
             UICircle element = new UICircle() {
                 @Override
                 public void mouseReleased(float mouseX, float mouseY, int state) {
-                    if (hovered(mouseX, mouseY) && state == 0) {
-                        CursorObject o = EditorManager.viewport.getDraggedObj();
-                        if (o.isOutput()) {
-                            Function nfunction = o.getLink();
-                            function.input[finalI] = nfunction.output[o.id];
-                            EditorManager.viewport.setDraggedObj(null);
+                    if (hovered(mouseX, mouseY) && state == 1) {
+                        FunctionCursorHolder cursorObject = GUIMain.instance.cursorObject.getAs(FunctionCursorHolder.class);
+                        if (cursorObject != null && cursorObject.isOutput()) {
+                            Function nfunction = cursorObject.getLink();
+                            function.input[finalI] = nfunction.output[cursorObject.id];
                         }
                     }
                     super.mouseReleased(mouseX, mouseY, state);
@@ -100,33 +99,34 @@ public class UIFunction extends UIDraggable {
             element.setDimensions(0, 0, 12, 12);
             element.radius = 3;
             element.setColor(-1);
+            element.hoverName = function.inputNames[i];
             inputs.add(element);
         }
 
         for (int i = 0; i < function.output.length; i++) {
             int finalI = i;
-            UICircle element = new UICircle() {
-                @Override
-                public void actionPerformed() {
-                    EditorManager.viewport.setDraggedObj(finalI, CursorObject.DraggedType.OUTPUT, function);
-                }
-            };
+            UICircle element = new UICircle();
+            element.setCursorObject(() -> new FunctionCursorHolder(finalI, FunctionCursorHolder.DraggedType.OUTPUT, function));
             outputList.put(function.output[i], element);
             element.setDimensions(0, 0, 12, 12);
             element.radius = 3;
             element.setColor(ColorLib.interpolateColor(0x99CCDDEE, 0xFF000000, 0.4f));
+            element.hoverName = function.outputNames[i];
             outputs.add(element);
         }
 
         float IOHeight = 23 + Math.max(outputs.getMax(), inputs.getMax());
 
         UIArray resources = new UIArray();
-        resources.setDimensions(0, IOHeight, width, 100);
-
+        resources.setDimensions(0, IOHeight, width, 200);
+        resources.space = 3;
         if (function.settings != null)
-            for (Resource setting : function.settings) {
-                UIElement element = Resource.getUIElement(setting, 5, 0, width - 10, 20);
-                resources.add(element);
+            for (Resource<?> setting : function.settings) {
+                UIResource resource = new UIResource();
+                resource.setResource(setting);
+                resource.setDimensions(5, 0, width - 10, 20);
+                resource.setColor(ColorLib.getBackground(-0.1f));
+                resources.add(resource);
             }
 
         add(name);
@@ -138,6 +138,16 @@ public class UIFunction extends UIDraggable {
 
         this.height = IOHeight + 5 + resources.getMax();
         this.roundness = 4;
+    }
+
+    public float getWidth() {
+        if (function.settings != null)
+            for (Resource<?> setting : function.settings) {
+                if (setting.clazz == SimpleParagraph.class) {
+                    return 240;
+                }
+            }
+        return 120;
     }
 
     @Override
@@ -173,18 +183,10 @@ public class UIFunction extends UIDraggable {
                 Vector2f endL = new Vector2f(xE + reach, yE);
                 Vector2f end = new Vector2f(xE + 12, yE);
 
-                /*
-                if( out.value != null) {
-                    int code = out.value.hashCode();
-                    code = code % 25;
-                    float percent = code/25f;
-                    color = Color.HSBtoRGB(percent,1,1);
-                }
-                */
-                int color =  ColorLib.interpolateColor(0xFFCCDDEE, 0xFF000000, 0.6f);
-                Gui.Bezier(0xFFCCDDEE,color, 3*EditorManager.viewport.zoom, start, startR, mid, endL, end);
+                int color = ColorLib.interpolateColor(0xFFCCDDEE, 0xFF000000, 0.6f);
+                Gui.Bezier(0xFFCCDDEE, color, 3 * EditorManager.viewport.zoom, start, startR, mid, endL, end);
                 Gui.drawCircle(start.x, start.y, 2, 0xFFCCDDEE);
-                Gui.drawCircle(end.x, end.y, 2,color);
+                Gui.drawCircle(end.x, end.y, 2, color);
             }
         }
 
@@ -204,7 +206,7 @@ public class UIFunction extends UIDraggable {
                 Vector2f mid = new Vector2f((xI + xE) / 2, (yI + yE) / 2);
                 Vector2f endL = new Vector2f(xE - reach, yE);
                 Vector2f end = new Vector2f(xE - 12, yE);
-                Gui.Bezier(ColorLib.getDarker(ColorLib.getMainColor()), ColorLib.cyan(), 3*EditorManager.viewport.zoom, start, startR, mid, endL, end);
+                Gui.Bezier(ColorLib.getDarker(ColorLib.getMainColor()), ColorLib.cyan(), 3 * EditorManager.viewport.zoom, start, startR, mid, endL, end);
                 Gui.drawCircle(start.x, start.y, 2, ColorLib.getMainColor());
                 Gui.drawCircle(end.x, end.y, 2, ColorLib.cyan());
             }
@@ -212,19 +214,15 @@ public class UIFunction extends UIDraggable {
 
         int color = ColorLib.getBackground(0.5f);
 
-        if(isSelected) {
-            Gui.drawRoundedRect(x-1,y-1,x+width+1,y+20+1,4,-1);
-            Gui.drawRect(x-1,y+10-1,x+width+1,y+height-10+1,-1);
-            Gui.drawRoundedRect(x-1,y+height-20-1,x+width+1,y+height+1,4,-1);
+        if (isSelected) {
+            Gui.drawRoundedRect(x - 1, y - 1, x + width + 1, y + 20 + 1, 4, -1);
+            Gui.drawRect(x - 1, y + 10 - 1, x + width + 1, y + height - 10 + 1, -1);
+            Gui.drawRoundedRect(x - 1, y + height - 20 - 1, x + width + 1, y + height + 1, 4, -1);
         }
 
-        Gui.drawRoundedRect(x,y,x+width,y+20,4,color);
-        Gui.drawRect(x,y+10,x+width,y+height-10,color);
-        Gui.drawRoundedRect(x,y+height-20,x+width,y+height,4,color);
-
-
-     //   Gui.drawGradientRect(x, y + 20, x + width, y + 23, 0x60000000, 0);
-
+        Gui.drawRoundedRect(x, y, x + width, y + 20, 4, color);
+        Gui.drawRect(x, y + 10, x + width, y + height - 10, color);
+        Gui.drawRoundedRect(x, y + height - 20, x + width, y + height, 4, color);
 
         super.drawScreen(mouseX, mouseY);
     }
@@ -232,12 +230,13 @@ public class UIFunction extends UIDraggable {
 
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
+
+
+        super.mouseClicked(mouseX, mouseY, mouseButton);
         for (UIElement element : elements) {
-            if(element.hovered(mouseX-x,mouseY-y) && !(element instanceof UILabel)) {
-                element.mouseClicked(mouseX-x,mouseY-y,mouseButton);
-                return;
+            if (element.hovered(mouseX - x, mouseY - y) && !(element instanceof UILabel)) {
+                dragging = false;
             }
         }
-        super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 }

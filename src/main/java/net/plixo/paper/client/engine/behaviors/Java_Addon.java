@@ -12,11 +12,12 @@ import java.util.Objects;
 
 public class Java_Addon extends Behavior {
 
-    public Runnable runnable;
+    public transient Runnable runnable;
 
+    Resource<File> fileResource = new Resource<>("File",new File(""));
     public Java_Addon() {
         super("Java Addon");
-        setSerializableResources(new Resource("File", File.class, null));
+        setSerializableResources(fileResource);
     }
 
     @Override
@@ -25,8 +26,7 @@ public class Java_Addon extends Behavior {
             this.runnable = null;
         }
         if (event instanceof ClientEvent.InitEvent) {
-            Resource resource = getResource(0);
-            File file = resource.getAsFile();
+            File file = fileResource.value;
             Objects.requireNonNull(file);
             if (file.exists()) {
                 try {

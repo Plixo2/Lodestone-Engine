@@ -7,6 +7,8 @@ import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.events.ClientEvent;
 import net.plixo.paper.client.forge.KeyBinds;
 import net.plixo.paper.client.ui.GUI.GUIEditor;
+import net.plixo.paper.client.ui.GUI.GUIMain;
+import net.plixo.paper.client.util.KeyboardUtil;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyInput {
@@ -16,7 +18,7 @@ public class KeyInput {
 
         Lodestone.update(new ClientEvent.KeyEvent(event.getKey(), event.getAction() == GLFW.GLFW_PRESS, GLFW.glfwGetKeyName(event.getKey(), 0)));
         if (KeyBinds.openUI.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(new GUIEditor());
+                Minecraft.getInstance().displayGuiScreen(new GUIMain());
         }
     }
 }

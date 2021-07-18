@@ -4,7 +4,9 @@ public class StartEvent extends Event {
 
     @Override
     public void set() {
-        set(0,0,1);
+        setInputs();
+        setOutputs();
+        setLinks("Event");
     }
 
     @Override

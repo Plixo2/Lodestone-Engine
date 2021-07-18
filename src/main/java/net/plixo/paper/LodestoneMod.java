@@ -1,5 +1,6 @@
 package net.plixo.paper;
 
+import com.bulenkov.darcula.DarculaLaf;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,13 +21,57 @@ import net.plixo.paper.client.forge.events.Ticking;
 import net.plixo.paper.client.visualscript.CustomFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.appender.mom.kafka.KafkaManager;
 
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicLookAndFeel;
+import java.awt.*;
 import java.util.stream.Collectors;
 
 @Mod(LodestoneMod.Mod_ID)
 public class LodestoneMod {
     public final static String Mod_ID = "lodestone";
     private static final Logger LOGGER = LogManager.getLogger();
+
+    static {
+        System.setProperty("java.awt.headless","false");
+        /*
+        UIManager.put( "control", new Color( 49, 56, 107) );
+        UIManager.put( "info", new Color(42, 49, 94) );
+        UIManager.put( "nimbusBase", new Color( 18, 30, 49) );
+        UIManager.put( "nimbusAlertYellow", new Color( 248, 187, 0) );
+        UIManager.put( "nimbusDisabledText", new Color( 34, 39, 110) );
+        UIManager.put( "nimbusFocus", new Color(30, 50, 105) );
+        UIManager.put( "nimbusGreen", new Color(176,179,50) );
+        UIManager.put( "nimbusInfoBlue", new Color( 66, 139, 221) );
+        UIManager.put( "nimbusLightBackground", new Color( 18, 30, 49) );
+        UIManager.put( "nimbusOrange", new Color(191,98,4) );
+        UIManager.put( "nimbusRed", new Color(169,46,34) );
+        UIManager.put( "nimbusSelectedText", new Color( 222, 222, 222) );
+        UIManager.put( "nimbusSelectionBackground", new Color( 84, 87, 148) );
+        UIManager.put( "text", new Color( 189, 189, 189) );
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+         */
+
+        BasicLookAndFeel darculaLookAndFeel = new DarculaLaf();
+        try {
+            UIManager.setLookAndFeel(darculaLookAndFeel);
+        } catch (UnsupportedLookAndFeelException ex) {
+            // ups!
+        }
+
+        System.out.println("Loaded Modclass");
+    }
 
     //TODO more builtin Nodes, change "Function" to "Node"
     /**

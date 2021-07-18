@@ -27,6 +27,10 @@ public class GUIAccept extends GUICanvas {
 
     @Override
     protected void init() {
+        super.init();
+        if(getClass() != GUIAccept.class) {
+            return;
+        }
         int wH = width / 2;
         int hH = (height / 2) + 30;
         int buttonWidth = 50;
@@ -34,13 +38,13 @@ public class GUIAccept extends GUICanvas {
 
         addButton(new Button(wH - (10 + buttonWidth), hH, buttonWidth, buttonHeight, new StringTextComponent(SYes), a -> {
             yes.run();
-            Minecraft.getInstance().displayGuiScreen(currentScreen);
+            Minecraft.getInstance().displayGuiScreen(new GUIMain());
         }));
         addButton(new Button(wH + (10), hH, buttonWidth, buttonHeight, new StringTextComponent(SNo), b -> {
             no.run();
-            Minecraft.getInstance().displayGuiScreen(currentScreen);
+            Minecraft.getInstance().displayGuiScreen(new GUIMain());
         }));
-        super.init();
+
         canvas.setColor(0);
     }
 

@@ -33,6 +33,8 @@ public class Minus extends Function {
 
     @Override
     public void set() {
-        set(2,1,0);
+        setInputs("Minuend","Subtrahend");
+        setOutputs("Difference");
+        setLinks();
     }
 }

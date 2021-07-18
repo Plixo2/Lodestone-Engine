@@ -7,28 +7,29 @@ import net.plixo.paper.Lodestone;
 import net.plixo.paper.client.tabs.*;
 import net.plixo.paper.client.ui.TabbedUI;
 import net.plixo.paper.client.ui.UITab;
-import net.plixo.paper.client.ui.other.Toolbar;
+import net.plixo.paper.client.ui.other.UIToolbar;
 import net.plixo.paper.client.ui.other.UIMouseMenu;
 import net.plixo.paper.client.util.*;
 import org.lwjgl.opengl.GL11;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class GUIEditor extends Screen {
 
-    public static GUIEditor instance;
+    // public static GUIEditor instance;
     UIMouseMenu menu;
 
     public GUIEditor() {
         super(new StringTextComponent("UI"));
-        this.instance = this;
+        //  this.instance = this;
     }
 
 
     //static Minecraft mc = Minecraft.getInstance();
 
     public ArrayList<TabbedUI> tabs = new ArrayList<>();
-    Toolbar toolbar;
+    UIToolbar toolbar;
 
     @Override
     public boolean isPauseScreen() {
@@ -57,6 +58,8 @@ public class GUIEditor extends Screen {
         super.render(p_230430_1_, mouseX, mouseY, partialTicks);
     }
 
+    File srcLines = SaveUtil.getFileFromName("TabConsole", SaveUtil.FileFormat.Other);
+
     @Override
     protected void init() {
 
@@ -65,7 +68,7 @@ public class GUIEditor extends Screen {
         float side = width * 0.2f;
         float heightSide = height * 0.33f;
 
-        toolbar = new Toolbar(0);
+        toolbar = new UIToolbar();
         toolbar.setDimensions(0, 0, width, 20);
 
         TabbedUI background = new TabbedUI(super.width - side, super.height - (heightSide + 10), "Project");
@@ -90,6 +93,8 @@ public class GUIEditor extends Screen {
 
         UITab b3 = new TabFiles(0);
         UITab b7 = new TabConsole(1);
+
+
         console.addTab(b3);
         console.addTab(b7);
 
@@ -133,10 +138,6 @@ public class GUIEditor extends Screen {
     public boolean keyPressed(int key, int scanCode, int action) {
 
         try {
-            if (key == 280 && KeyboardUtil.isKeyDown(key)) {
-                Util.print("stopped");
-
-            }
             for (TabbedUI tab : tabs) {
                 tab.keyPressed(key, scanCode, action);
             }
@@ -152,7 +153,6 @@ public class GUIEditor extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         try {
-
 
             this.mouseX = (float) mouseX;
             this.mouseY = (float) mouseY;
@@ -209,12 +209,10 @@ public class GUIEditor extends Screen {
     @Override
     public void onClose() {
         try {
-
-
-        Lodestone.save();
-        for (TabbedUI tab : tabs) {
-            tab.close();
-        }
+            Lodestone.save();
+            for (TabbedUI tab : tabs) {
+                tab.close();
+            }
         } catch (Exception e) {
             Util.print(e);
             e.printStackTrace();
@@ -225,11 +223,9 @@ public class GUIEditor extends Screen {
     @Override
     public void tick() {
         try {
-
-
-        for (TabbedUI tab : tabs) {
-            tab.onTick();
-        }
+            for (TabbedUI tab : tabs) {
+                tab.onTick();
+            }
         } catch (Exception e) {
             Util.print(e);
             e.printStackTrace();

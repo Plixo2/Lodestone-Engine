@@ -13,6 +13,7 @@ import java.util.Scanner;
  */
 public class SaveUtil {
 
+    static JsonParser parser = new JsonParser();
     /**
      * Used to have different formats separately and globally
      */
@@ -109,17 +110,19 @@ public class SaveUtil {
     }
 
     /**
-     * @param parser {@link JsonParser} to parse (can be {@code new JsonParser()})
      * @param file File to read
      * @return constructed {@link JsonElement}
      */
-    public static JsonElement loadFromJson(JsonParser parser, File file) {
+    public static JsonElement loadFromJson(File file) {
         try {
             if (!file.exists()) {
                 makeFile(file);
                 return null;
             }
-            return parser.parse(new java.io.FileReader(file));
+            FileReader json = new FileReader(file);
+            JsonElement parse = parser.parse(json);
+            json.close();
+            return parse;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

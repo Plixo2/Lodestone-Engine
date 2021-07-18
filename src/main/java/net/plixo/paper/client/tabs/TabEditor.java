@@ -1,23 +1,21 @@
 package net.plixo.paper.client.tabs;
 
-import net.minecraft.client.Minecraft;
-import net.plixo.paper.client.manager.EditorManager;
-import net.plixo.paper.client.ui.GUI.GUIEditor;
 import net.plixo.paper.client.ui.UIElement;
 import net.plixo.paper.client.ui.UITab;
-import net.plixo.paper.client.ui.elements.*;
+import net.plixo.paper.client.ui.elements.canvas.UIArray;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
+import net.plixo.paper.client.ui.elements.values.UITextbox;
+import net.plixo.paper.client.ui.elements.visual.UILabel;
 import net.plixo.paper.client.util.*;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
 
+@Deprecated
 public class TabEditor extends UITab {
+
     public TabEditor(int id) {
         super(id, "Editor");
-        EditorManager.editor = this;
     }
 
     UIArray array;
@@ -119,19 +117,18 @@ public class TabEditor extends UITab {
                 for (String name : ClassPaths.names) {
                     if (name.startsWith(classPath)) {
                         i += 1;
-                        addProposition(name.substring(classPath.length()),() -> lastField.setText("import " + name + ";"));
+                        addProposition(name.substring(classPath.length()), () -> lastField.setText("import " + name + ";"));
                         if (i > 100) {
                             break;
                         }
                     }
                 }
             } else {
-                if(txt.isEmpty()) {
+                if (txt.isEmpty()) {
                     for (String s1 : other) {
-                            addProposition(s1,null);
+                        addProposition(s1, null);
                     }
-                } else
-                if (txt.contains(" ")) {
+                } else if (txt.contains(" ")) {
                     String[] first = txt.split(" ");
                     if (first != null) {
                         for (String s : first) {
@@ -139,13 +136,13 @@ public class TabEditor extends UITab {
                                 int i = 0;
                                 for (String s1 : other) {
                                     if (s1.startsWith(s)) {
-                                        addProposition(s1,null);
+                                        addProposition(s1, null);
                                     }
                                 }
                                 for (String name : ClassPaths.names) {
                                     if (name.endsWith(s)) {
                                         i += 1;
-                                        addProposition(name,() ->  addLine("import " + name + ";",0));
+                                        addProposition(name, () -> addLine("import " + name + ";", 0));
                                         if (i > 100) {
                                             break;
                                         }
@@ -161,7 +158,7 @@ public class TabEditor extends UITab {
         }
     }
 
-    public void addProposition(String name , Runnable action) {
+    public void addProposition(String name, Runnable action) {
         UILabel label = new UILabel() {
             @Override
             public void drawDisplayString() {
@@ -169,6 +166,7 @@ public class TabEditor extends UITab {
                     Gui.drawString(displayName, x + 1, y + height / 2, textColor);
                 }
             }
+
             @Override
             public void actionPerformed() {
                 if (action != null) {
@@ -194,11 +192,11 @@ public class TabEditor extends UITab {
         text.setText(txt);
         text.setColor(0);
         text.setRoundness(0);
-        text.setOutlineColor(0);
+
         array.add(text);
     }
 
-    public UITextbox addLine(String txt , int index) {
+    public UITextbox addLine(String txt, int index) {
 
         UITextbox box = new UITextbox() {
             @Override
@@ -210,10 +208,9 @@ public class TabEditor extends UITab {
         box.setDimensions(0, 0, array.width, 11);
         box.setText(txt);
         box.setColor(0);
-        box.setOutlineColor(0);
         box.setRoundness(0);
 
-        array.elements.add(index,box);
+        array.elements.add(index, box);
         array.sort();
         return box;
     }
@@ -275,7 +272,7 @@ public class TabEditor extends UITab {
                 currentBox.setText(first);
 
                 currentLine += 1;
-                UITextbox box = addLine(last,currentLine);
+                UITextbox box = addLine(last, currentLine);
                 box.field.setCursorPosition(0);
                 currentBox.field.setFocused2(false);
                 box.field.setFocused2(true);

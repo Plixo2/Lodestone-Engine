@@ -14,6 +14,8 @@ public class If extends Function {
 
     @Override
     public void set() {
-        set(1, 0, 2);
+        setInputs("Condition");
+        setOutputs();
+        setLinks("True","False");
     }
 }

@@ -4,7 +4,9 @@ public class KeyEvent extends Event {
 
     @Override
     public void set() {
-        set(0,3,1);
+        setInputs();
+        setOutputs("Key","State","Name");
+        setLinks("Event");
     }
 
     public void runWith(Object... objects) {

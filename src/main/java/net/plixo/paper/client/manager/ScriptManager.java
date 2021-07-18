@@ -24,77 +24,16 @@ import java.util.List;
 
 public class ScriptManager {
 
-
     public static ScriptEngine getNewEngine() {
         return new ScriptEngineManager(null).getEngineByName("Nashorn");
     }
 
-    public static boolean setup(File file, ScriptEngine engine) {
-        try {
-            engine.eval("var util = Java.type(\"net.plixo.paper.client.util.Util\");");
-            engine.eval("var mc = util.mc;");
-            engine.eval(new FileReader(file));
-            return true;
-        } catch (Exception e) {
-            Util.print(e);
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public static Object findIgnoreCase(String name, ScriptEngine engine) {
-        Bindings b = engine.getBindings(ScriptContext.ENGINE_SCOPE);
-        for (String str : b.keySet()) {
-            if (str.equalsIgnoreCase(name)) {
-                return b.get(str);
-            }
-        }
-        return null;
-    }
-
-    public static Object find(String name, ScriptEngine engine) {
-        try {
-            return engine.get(name);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static List<Object> getAllBindings(ScriptEngine engine) {
-        Bindings b = engine.getBindings(ScriptContext.ENGINE_SCOPE);
-        List<Object> list = new ArrayList<>();
-        for (String str : b.keySet()) {
-            list.add(b.get(str));
-        }
-        return list;
-    }
-
-    public static Object invokeFunction(String name, ScriptEngine engine, Object... objs) {
-        try {
-            Invocable invocable = (Invocable) engine;
-            Object obj = find(name, engine);
-            if (obj == null) {
-                return null;
-            }
-            return invocable.invokeFunction(name, objs);
-        } catch (Exception e) {
-            Util.print(e);
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-
-    public static Object createClass(String JarPath, String JarCode, Object... objects) throws Exception {
-        String className = JarPath;
-        Path temp = Paths.get(System.getProperty("java.io.tmpdir") + "/VisualScript", className);
+    public static Object createClass(String jarPath, String jarCode, Object... objects) throws Exception {
+        Path temp = Paths.get(System.getProperty("java.io.tmpdir") + "/VisualScript", jarPath);
         Files.createDirectories(temp);
-        Path javaSourceFile = Paths.get(temp.normalize().toAbsolutePath().toString(), className + ".java");
-        System.out.println("The java source file is loacted at " + javaSourceFile);
-        String code = JarCode;
-        Files.write(javaSourceFile, code.getBytes());
+        Path javaSourceFile = Paths.get(temp.normalize().toAbsolutePath().toString(), jarPath + ".java");
+        System.out.println("The java source file is located at " + javaSourceFile);
+        Files.write(javaSourceFile, jarCode.getBytes());
 
         final String toolsJarFileName = "tools.jar";
         final String javaHome = System.getProperty("java.home");
@@ -135,7 +74,7 @@ public class ScriptManager {
         try {
             ClassLoader classLoader = ScriptManager.class.getClassLoader();
             URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{temp.toUri().toURL()}, classLoader);
-            Class javaDemoClass = urlClassLoader.loadClass(className);
+            Class javaDemoClass = urlClassLoader.loadClass(jarPath);
             Object runnable = javaDemoClass.getConstructors()[0].newInstance(objects);
             return runnable;
         } catch (Exception e) {

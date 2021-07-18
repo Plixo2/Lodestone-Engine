@@ -33,6 +33,8 @@ public class Divide extends Function {
 
     @Override
     public void set() {
-        set(2,1,0);
+        setInputs("Dividend","Divisor");
+        setOutputs("Quotient");
+        setLinks();
     }
 }

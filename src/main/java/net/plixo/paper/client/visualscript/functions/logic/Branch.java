@@ -12,6 +12,8 @@ public class Branch extends Function {
 
     @Override
     public void set() {
-        set(0, 0, 2);
+        setInputs();
+        setOutputs();
+        setLinks("First","Second");
     }
 }

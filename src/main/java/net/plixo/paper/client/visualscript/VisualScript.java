@@ -1,5 +1,8 @@
 package net.plixo.paper.client.visualscript;
 
+import net.plixo.paper.client.engine.ecs.Resource;
+import net.plixo.paper.client.util.Util;
+import net.plixo.paper.client.util.simple.SimpleParagraph;
 import net.plixo.paper.client.visualscript.functions.events.Event;
 import org.apache.commons.io.FilenameUtils;
 
@@ -23,7 +26,7 @@ public class VisualScript {
         functions.add(function);
         function.set();
         function.ui = new UIFunction(function);
-        function.ui.setDimensions(x, y, 120, 20);
+        function.ui.setDimensions(x, y, function.ui.getWidth(), 20);
     }
 
     public void removeFunction(Function function) {

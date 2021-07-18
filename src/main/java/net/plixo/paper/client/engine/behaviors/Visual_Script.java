@@ -19,10 +19,10 @@ public class Visual_Script extends Behavior {
     KeyEvent keyEvent;
     StopEvent stopEvent;
 
-
+    Resource<File> fileResource = new Resource<>("File",new File(""));
     public Visual_Script() {
         super("Visual Script");
-        setSerializableResources(new Resource("File", File.class, null));
+        setSerializableResources(fileResource);
     }
 
     @Override
@@ -37,8 +37,7 @@ public class Visual_Script extends Behavior {
         }
 
         if(event instanceof ClientEvent.InitEvent) {
-            Resource resource = getResource(0);
-            File file = resource.getAsFile();
+            File file =  fileResource.value;
             Objects.requireNonNull(file);
             if(file.exists()) {
                 script = FunctionManager.loadFromFile(file);
@@ -55,8 +54,8 @@ public class Visual_Script extends Behavior {
                     }
                     if (function instanceof StartEvent) {
                         function.run();
+                        System.out.println("Start event");
                     }
-
                 }
             }
         }

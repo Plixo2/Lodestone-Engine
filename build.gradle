@@ -14,6 +14,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
+
 version = '1.0'
 group = 'net.plixo.paper' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'lodestone'
@@ -23,6 +24,7 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
+
     // The mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   Snapshot are built nightly.
     // stable_#            Stables are built at the discretion of the MCP team.
@@ -105,7 +107,10 @@ dependencies {
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
-     implementation 'org.openjdk.nashorn:nashorn-core:15.0'
+
+    implementation 'org.openjdk.nashorn:nashorn-core:15.0'
+     implementation files('libs/Jrcos1.2.4-java8.jar')
+    implementation files('libs/Darcula.jar')
      //compile 'org.openjdk.nashorn:nashorn-core:15.0'
 //    embed 'org.openjdk.nashorn:nashorn-core:15.0'
 
@@ -116,10 +121,6 @@ dependencies {
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
 
-   // compile files('libs/lwjgl-assimp.jar')
-   // compile files('libs/lwjgl-assimp-javadoc.jar')
-  //  compile files('libs/lwjgl-assimp-natives-windows.jar')
-  //  compile files('slick-util3.jar')
 
 
 

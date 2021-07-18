@@ -16,6 +16,8 @@ public class Not extends Function {
 
     @Override
     public void set() {
-        set(1,1,0);
+        setInputs("State");
+        setOutputs("Opposite");
+        setLinks();
     }
 }

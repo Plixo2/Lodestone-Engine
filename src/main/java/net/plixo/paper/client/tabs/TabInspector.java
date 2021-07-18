@@ -1,32 +1,36 @@
 package net.plixo.paper.client.tabs;
 
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import net.plixo.paper.Lodestone;
+import net.plixo.paper.client.engine.ecs.Behavior;
+import net.plixo.paper.client.engine.ecs.GameObject;
+import net.plixo.paper.client.engine.ecs.Resource;
 import net.plixo.paper.client.manager.AssetLoader;
 import net.plixo.paper.client.manager.ClientManager;
 import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.manager.MetaManager;
-import net.plixo.paper.client.ui.GUI.GUIEditor;
-import net.plixo.paper.client.util.Options;
-import net.plixo.paper.client.engine.ecs.*;
+import net.plixo.paper.client.ui.GUI.GUIMain;
 import net.plixo.paper.client.ui.UIElement;
-import net.plixo.paper.client.ui.elements.UICanvas;
 import net.plixo.paper.client.ui.UITab;
-import net.plixo.paper.client.ui.elements.*;
-import net.plixo.paper.client.util.*;
-import org.lwjgl.glfw.GLFW;
+import net.plixo.paper.client.ui.elements.canvas.UIArray;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
+import net.plixo.paper.client.ui.elements.clickable.UIButton;
+import net.plixo.paper.client.ui.elements.values.UIResource;
+import net.plixo.paper.client.ui.elements.values.UITextbox;
+import net.plixo.paper.client.ui.elements.values.UIVector;
+import net.plixo.paper.client.ui.elements.visual.UILabel;
+import net.plixo.paper.client.util.ColorLib;
+import net.plixo.paper.client.util.Gui;
+import net.plixo.paper.client.util.Util;
 
 import java.io.File;
 
+@Deprecated
 public class TabInspector extends UITab {
 
 
     public TabInspector(int id) {
         super(id, "Inspector");
-        EditorManager.inspector = this;
+        //  EditorManager.inspector = this;
     }
 
 
@@ -50,22 +54,24 @@ public class TabInspector extends UITab {
         try {
             int yRes = 5;
             AssetLoader.setCurrentMeta(MetaManager.getMetaByFile(origin));
-            if(AssetLoader.getLoadedMeta() != null)
-                for (Resource res : AssetLoader.getLoadedMeta().serialized) {
-                UIElement element = Resource.getUIElement(res, 50, yRes, parent.width - 54, 20);
-                UILabel label = new UILabel() {
-                    @Override
-                    public void drawDisplayString() {
+            if (AssetLoader.getLoadedMeta() != null)
+                for (Resource res : AssetLoader.getLoadedMeta().list) {
+                    UIResource resource = new UIResource();
+                    resource.setResource(res);
+                    resource.setDimensions(50, yRes, parent.width - 54, 20);
+                    UILabel label = new UILabel() {
+                        @Override
+                        public void drawDisplayString() {
                             Gui.drawString(displayName, x, y + height / 2, textColor);
-                    }
-                };
-                label.setDimensions(3,yRes,50,20);
-                label.setDisplayName(res.name);
-                canvas.add(label);
-                element.setDisplayName(res.name);
-                canvas.add(element);
-                yRes += 22;
-            }
+                        }
+                    };
+                    label.setDimensions(3, yRes, 50, 20);
+                    label.setDisplayName(res.getName());
+                    canvas.add(label);
+                    resource.setDisplayName(res.getName());
+                    canvas.add(resource);
+                    yRes += 22;
+                }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,9 +99,9 @@ public class TabInspector extends UITab {
                 public void drawScreen(float mouseX, float mouseY) {
                     super.drawScreen(mouseX, mouseY);
 
-                    if (!field.isFocused() && Options.useUnicode) {
-                        Gui.drawString(" \u270E", x + width - 20, y + height / 2, textColor);
-                    }
+                    //  if (!field.isFocused() && Options.options.useUnicode) {
+                    //     Gui.drawString(" \u270E", x + width - 20, y + height / 2, textColor);
+                    //  }
                 }
             };
 
@@ -169,11 +175,10 @@ public class TabInspector extends UITab {
             rotationLabel.setColor(ColorLib.getBackground(0.1f));
 
 
-
             yBe += 5;
 
             UIArray array = new UIArray();
-            array.setDimensions(0,yBe,parent.width,parent.height-yBe);
+            array.setDimensions(0, yBe, parent.width, parent.height - yBe);
             array.space = 5;
             for (Behavior b : entity.components) {
                 UICanvas behaviorCanvas = new UICanvas();
@@ -196,7 +201,7 @@ public class TabInspector extends UITab {
 
                 UIButton remove = new UIButton();
                 remove.setDisplayName("-");
-                remove.setDimensions(parent.width-20,0,20,20);
+                remove.setDimensions(parent.width - 20, 0, 20, 20);
                 remove.setColor(0);
                 remove.setAction(() -> {
                     entity.components.remove(b);
@@ -207,9 +212,11 @@ public class TabInspector extends UITab {
 
                 int yRes = 25;
                 for (Resource res : b.serializable) {
-                    UIElement element = Resource.getUIElement(res, 2, yRes, parent.width - 4, 20);
-                    element.setDisplayName(res.name);
-                    behaviorCanvas.add(element);
+                    UIResource resource = new UIResource();
+                    resource.setResource(res);
+                    resource.setDimensions(2, yRes, parent.width - 4, 20);
+                    resource.setDisplayName(res.getName());
+                    behaviorCanvas.add(resource);
                     yRes += 22;
                 }
 
@@ -236,10 +243,10 @@ public class TabInspector extends UITab {
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
 
-        if (mouseButton == 1 && parent.isMouseInside(mouseX,mouseY) && AssetLoader.getLoadedEntity() != null) {
-            GUIEditor.instance.beginMenu();
+        if (mouseButton == 1 && parent.isMouseInside(mouseX, mouseY) && AssetLoader.getLoadedEntity() != null) {
+            GUIMain.instance.beginMenu();
             for (Behavior b : ClientManager.standardBehavior) {
-                GUIEditor.instance.addMenuOption(b.name , () -> {
+                GUIMain.instance.addMenuOption(b.name, () -> {
                     Behavior instance = ClientManager.newInstanceByName(b.name);
                     if (instance != null && AssetLoader.getLoadedEntity() != null) {
                         AssetLoader.getLoadedEntity().addBehavior(instance);
@@ -247,7 +254,7 @@ public class TabInspector extends UITab {
                     }
                 });
             }
-            GUIEditor.instance.showMenu();
+            GUIMain.instance.showMenu();
         } else {
             super.mouseClicked(mouseX, mouseY, mouseButton);
         }

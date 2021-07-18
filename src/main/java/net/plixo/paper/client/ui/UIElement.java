@@ -1,7 +1,10 @@
 package net.plixo.paper.client.ui;
 
 
+import net.minecraft.client.Minecraft;
+import net.plixo.paper.client.ui.GUI.GUIMain;
 import net.plixo.paper.client.util.ColorLib;
+import net.plixo.paper.client.util.CursorObject;
 import net.plixo.paper.client.util.Util;
 
 /**
@@ -10,13 +13,14 @@ import net.plixo.paper.client.util.Util;
  **/
 public abstract class UIElement implements IGuiEvent {
 
-
+    public static Minecraft mc = Minecraft.getInstance();
     public String displayName;
-    public float height , width;
+    public float height, width;
     protected float hoverProgress = 0;
+    public transient Runnable onTick;
+    public transient Util.IGetObject<?> cursorObject;
 
     long lastMs = 0;
-
 
     protected float roundness = 0;
 
@@ -49,9 +53,20 @@ public abstract class UIElement implements IGuiEvent {
 
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
         if (hovered(mouseX, mouseY)) {
-            actionPerformed();
+            if (mouseButton == 0) {
+                actionPerformed();
+            } else if (mouseButton == 1) {
+                if (cursorObject != null) {
+                    Object run = cursorObject.run();
+                    if (run != null) {
+                        GUIMain.instance.cursorObject = new CursorObject<>(run);
+                        Util.print(run);
+                    }
+                }
+            }
         }
     }
+
 
     public void setDimensions(float x, float y, float width, float height) {
         this.x = x;
@@ -72,6 +87,21 @@ public abstract class UIElement implements IGuiEvent {
         this.textColor = color;
     }
 
+    @Override
+    public void onTick() {
+        if (onTick != null) {
+            onTick.run();
+        }
+    }
+
+    public void setCursorObject(Util.IGetObject<?> getObject) {
+
+        this.cursorObject = getObject;
+    }
+
+    public void setTickAction(Runnable runnable) {
+        this.onTick = runnable;
+    }
 
     public void updateHoverProgress(float mouseX, float mouseY) {
         long delta = System.currentTimeMillis() - lastMs;

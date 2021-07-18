@@ -6,7 +6,7 @@ import net.plixo.paper.client.events.ClientEvent;
 public abstract class Behavior {
 
     public static Minecraft mc = Minecraft.getInstance();
-    public GameObject entity;
+    public transient GameObject entity;
 
     public String name;
     public Resource[] serializable = new Resource[0];
@@ -14,11 +14,7 @@ public abstract class Behavior {
     public Behavior(String name) {
         this.name = name;
     }
-
-    public Resource getResource(int index) {
-        return serializable[index];
-    }
-
+    
     public void onEvent(ClientEvent event) {
 
     }

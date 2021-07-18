@@ -12,7 +12,7 @@ public class Ticking {
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == (Options.usePreEvent ? TickEvent.Phase.START : TickEvent.Phase.END))
+        if (event.phase == (Options.options.usePreEvent.value ? TickEvent.Phase.START : TickEvent.Phase.END))
             Lodestone.update(ClientEvent.TickEvent.event);
     }
 

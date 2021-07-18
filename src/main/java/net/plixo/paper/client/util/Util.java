@@ -3,10 +3,14 @@ package net.plixo.paper.client.util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
+import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.tabs.TabConsole;
+import net.plixo.paper.client.ui.tabs.UIConsole;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 
@@ -123,8 +127,18 @@ public class Util {
      * @param obj String as Obj
      */
     public static void print(Object obj) {
-        TabConsole.consoleLines.add(new TabConsole.ConsoleLine(obj + ""));
+        UIConsole.consoleLines.add(new UIConsole.ConsoleLine(obj + ""));
         mc.ingameGUI.getChatGUI().printChatMessage(new StringTextComponent(obj + ""));
+    }
+
+    public static void print(Object... obj) {
+
+        Util.print(">");
+        for (Object o : obj) {
+            UIConsole.consoleLines.add(new UIConsole.ConsoleLine(o + ""));
+            mc.ingameGUI.getChatGUI().printChatMessage(new StringTextComponent(o + ""));
+        }
+        Util.print("<");
     }
 
     /**
@@ -200,5 +214,11 @@ public class Util {
                     findFiles(file.getAbsolutePath(), files, format);
                 }
             }
+    }
+    public interface IObject<O> {
+        public void run(O object);
+    }
+    public interface IGetObject<O> {
+        public O run();
     }
 }

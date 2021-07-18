@@ -1,15 +1,19 @@
 package net.plixo.paper.client.ui.other;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
-import net.plixo.paper.client.ui.elements.UIArray;
-import net.plixo.paper.client.ui.elements.UIButton;
-import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.ui.UIElement;
+import net.plixo.paper.client.ui.elements.canvas.UIArray;
+import net.plixo.paper.client.ui.elements.clickable.UIButton;
+import net.plixo.paper.client.ui.elements.visual.UILabel;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 
 import java.util.*;
 
 public class UIMouseMenu extends UIArray {
+
+    public UIMouseMenu() {
+        super();
+    }
 
     LinkedHashMap<String , Runnable> options = new LinkedHashMap<>();
 
@@ -24,14 +28,14 @@ public class UIMouseMenu extends UIArray {
         }
         max += 5;
 
+        UIElement e = new UIElement() {
+        };
+        e.height = 2;
+        add(e);
         int y = 2;
         for (Map.Entry<String, Runnable> stringRunnableEntry : options.entrySet()) {
-            UIButton button = new UIButton() {
-                @Override
-                public void actionPerformed() {
-                    stringRunnableEntry.getValue().run();
-                }
-            };
+            UIButton button = new UIButton();
+            button.setAction(stringRunnableEntry.getValue());
             button.setDisplayName(stringRunnableEntry.getKey());
             button.setRoundness(0);
             button.setColor(ColorLib.getMainColor());
@@ -40,7 +44,7 @@ public class UIMouseMenu extends UIArray {
             y += 12;
         }
         setRoundness(2);
-        setColor(ColorLib.getBackground(0.1f));
+        setColor(ColorLib.getDarker(ColorLib.getDarker(ColorLib.getMainColor())));
         setDimensions(mouseX,mouseY,max+4,Math.min(y+2,300));
     }
 

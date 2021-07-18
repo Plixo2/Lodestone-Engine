@@ -1,7 +1,7 @@
 package net.plixo.paper.client.ui;
 
 import net.minecraft.client.Minecraft;
-import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
 
 
 /**
@@ -53,7 +53,6 @@ public class UITab implements IGuiEvent {
         canvas.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-    public void save() {};
 
     @Override
     public void mouseReleased(float mouseX, float mouseY, int state) {

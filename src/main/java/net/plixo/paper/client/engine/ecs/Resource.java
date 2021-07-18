@@ -1,231 +1,153 @@
 package net.plixo.paper.client.engine.ecs;
 
-import com.google.gson.JsonObject;
 import net.minecraft.util.math.vector.Vector3d;
+import net.plixo.paper.client.ui.elements.values.UIMultiline;
 import net.plixo.paper.client.ui.UIElement;
-import net.plixo.paper.client.ui.elements.*;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
+import net.plixo.paper.client.ui.elements.clickable.UIButton;
+import net.plixo.paper.client.ui.elements.values.*;
+import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.Util;
+import net.plixo.paper.client.util.simple.SimpleColor;
+import net.plixo.paper.client.util.simple.SimpleParagraph;
 
 import java.io.File;
 
-public class Resource {
+public class Resource<O> {
 
-    public Class clazz;
-    public String name;
-    public Object value;
+    String name;
+    public O value;
+    public Class<?> clazz;
 
-
-    public Resource(String name, Class clazz, Object initValue) {
-        this.clazz = clazz;
+    public Resource(String name, O value) {
         this.name = name;
-        this.value = initValue;
-    }
-
-    public void fromString(String str) {
-        try {
-            if (str.isEmpty()) {
-                return;
-            }
-            if (isFile()) {
-                setValue(new File(str));
-            } else if (isBoolean()) {
-                setValue(Boolean.valueOf(str));
-            } else if (isFloat()) {
-                setValue(Float.valueOf(str));
-            } else if (isInteger()) {
-                setValue(Integer.valueOf(str));
-            } else if (isString()) {
-                setValue(str);
-            } else if (isVector()) {
-                setValue(Util.getVecFromString(str));
-            }
-        } catch (Exception e) {
-          Util.print(e.getMessage());
-          e.printStackTrace();
-        }
-    }
-
-
-    public boolean getAsBoolean() {
-        if (!hasValue()) {
-            return false;
-        }
-        return (boolean) value;
-    }
-
-    public File getAsFile() {
-        if (!hasValue()) {
-            return null;
-        }
-        return (File) value;
-    }
-
-    public float getAsFloat() {
-        if (!hasValue()) {
-            return 0;
-        }
-        return (float) value;
-    }
-
-    public int getAsInteger() {
-        if (!hasValue()) {
-            return 0;
-        }
-        return (int) value;
-    }
-
-    public String getAsString() {
-        if (!hasValue()) {
-            return "";
-        }
-        return (String) value;
-    }
-
-    public Vector3d getAsVector() {
-        if (!hasValue()) {
-            return new Vector3d(0, 0, 0);
-        }
-        return (Vector3d) value;
-    }
-
-
-    public boolean hasValue() {
-        return value != null;
-    }
-
-
-    public boolean isBoolean() {
-        return clazz == Boolean.class;
-    }
-
-    public boolean isFile() {
-        return clazz == File.class;
-    }
-
-    public boolean isFloat() {
-        return clazz == Float.class;
-    }
-
-    public boolean isInteger() {
-        return clazz == Integer.class;
-    }
-
-    public boolean isString() {
-        return clazz == String.class;
-    }
-
-    public boolean isVector() {
-        return clazz == Vector3d.class;
-    }
-
-
-    public JsonObject serialize() {
-        JsonObject obj = new JsonObject();
-        obj.addProperty("Value", toTxt());
-        return obj;
-    }
-
-    public void setValue(Object value) {
         this.value = value;
+        if(value == null) {
+            throw new NullPointerException("Value is Null");
+        }
+        clazz = value.getClass();
     }
 
-    public String toTxt() {
-        if (!hasValue()) {
-            return "";
-        }
-        if (isFile()) {
-            return getAsFile().getPath();
-        } else if (isBoolean()) {
-            return getAsBoolean() + "";
-        } else if (isFloat()) {
-            return getAsFloat() + "";
-        } else if (isInteger()) {
-            return getAsInteger() + "";
-        } else if (isString()) {
-            return getAsString();
-        } else if (isVector()) {
 
-            return Util.getStringFromVector(getAsVector());
+    public static UIElement getUIElwement(Resource resource, float x, float y, float width, float height) {
+        if (resource.clazz == SimpleParagraph.class) {
+            height *= 4;
         }
-        return "";
-    }
+        UICanvas canvas = new UICanvas();
+        canvas.setDimensions(x,y,width,height);
+        canvas.setColor(0);
 
-    public static UIElement getUIElement(Resource res , float x, float y, float width, float height) {
-        UIElement element = null;
-        if (res.isFile()) {
-            UIFileChooser chooser = new UIFileChooser() {
-                @Override
-                public void onTick() {
-                    res.setValue(getFile());
-                    super.onTick();
+        float strWidth = width*0.33f;
+
+        UIButton name = new UIButton() {
+            @Override
+            public void drawStringCentered(float mouseX, float mouseY) {
+                if (displayName != null) {
+                    Gui.drawString(displayName, x + 4, y + height / 2, textColor);
                 }
-            };
+            }
+        };
+        name.setAction(() -> Util.print(resource));
+        name.setDisplayName(resource.getName());
+        name.setDimensions(0,0,strWidth,height);
+        name.setRoundness(2);
+        name.setColor(0);
+
+        strWidth += 2;
+
+        float xStart = strWidth;
+        width -= strWidth;
+        y = 0;
+
+        UIElement element;
+        if (resource.clazz == File.class) {
+            UIFileChooser chooser = new UIFileChooser();
+            chooser.setDimensions(xStart, y, width, height);
+            chooser.setFile(((Resource<File>) resource).value);
+            chooser.onTick = () -> ((Resource<File>) resource).value = chooser.getFile();
             element = chooser;
-            element.setDimensions(x,y,width,height);
-            chooser.setFile(res.getAsFile());
-
-        } else if (res.isInteger()) {
-            UISpinner spinner = new UISpinner() {
-                @Override
-                public void onTick() {
-                    res.setValue(getNumber());
-                    super.onTick();
-                }
-            };
+        } else if (resource.clazz == Integer.class || resource.clazz == int.class) {
+            UISpinner spinner = new UISpinner();
+            spinner.setDimensions(xStart, y, width, height);
+            spinner.setNumber(((Resource<Integer>) resource).value);
+            spinner.onTick = () -> resource.value = spinner.getNumber();
             element = spinner;
-            element.setDimensions(x,y,width,height);
-            spinner.setNumber(res.getAsInteger());
-        } else if (res.isBoolean()) {
-            UIToggleButton toggleButton = new UIToggleButton() {
-                @Override
-                public void onTick() {
-                    res.setValue(getState());
-                    super.onTick();
-                }
-            };
-            element = toggleButton;
-            element.setDimensions(x,y,width,height);
-            toggleButton.setYesNo("True", "False");
-            toggleButton.setState(res.getAsBoolean());
-        } else if (res.isString()) {
-            UITextbox txt = new UITextbox() {
-                @Override
-                public void onTick() {
-                    res.setValue(getText());
-                    super.onTick();
-                }
-            };
-            element = txt;
-            element.setDimensions(x,y,width,height);
-            txt.setText(res.getAsString());
-        } else if (res.isFloat()) {
-            UIPointNumber number = new UIPointNumber() {
-                @Override
-                public void onTick() {
-                    res.setValue((float)getAsDouble());
-                    super.onTick();
-                }
-            };
+        } else if (resource.clazz == Float.class || resource.clazz == float.class) {
+            UIPointNumber number = new UIPointNumber();
+            number.setDimensions(xStart, y, width, height);
+            number.setNumber(((Resource<Float>) resource).value);
+            number.onTick = () -> resource.value = (float) number.getAsDouble();
             element = number;
-            element.setDimensions(x,y,width,height);
-            number.setValue(res.getAsFloat());
-        } else if (res.isVector()) {
-            UIVector vec = new UIVector() {
-                @Override
-                public void onTick() {
-                    res.setValue(getAsVector());
-                    super.onTick();
-                }
-            };
-            element = vec;
-            element.setDimensions(x,y,width,height);
-            vec.setVector(res.getAsVector());
+        } else if (resource.clazz == Boolean.class || resource.clazz == boolean.class) {
+            UIToggleButton toggleButton = new UIToggleButton();
+            toggleButton.setDimensions(xStart, y, width, height);
+            toggleButton.setState(((Resource<Boolean>) resource).value);
+            toggleButton.onTick = () -> resource.value = toggleButton.getState();
+            element = toggleButton;
+        } else if (resource.clazz == String.class) {
+            UITextbox textbox = new UITextbox();
+            textbox.setDimensions(xStart, y, width, height);
+            textbox.setText(((Resource<String>) resource).value);
+            textbox.onTick = () -> resource.value = textbox.getText();
+            element = textbox;
+        } else if (resource.clazz == Vector3d.class) {
+            UIVector vector = new UIVector();
+            vector.setDimensions(xStart, y, width, height);
+            vector.setVector(((Resource<Vector3d>) resource).value);
+            vector.onTick = () -> resource.value = vector.getAsVector();
+            element = vector;
+        } else if (resource.clazz == SimpleParagraph.class) {
+            UIMultiline textbox = new UIMultiline();
+            textbox.setDimensions(xStart, y, width, height);
+            textbox.setText(((Resource<SimpleParagraph>) resource).value.value);
+            textbox.onTick = () -> resource.value = new SimpleParagraph(textbox.getText());
+            element = textbox;
+        } else if (resource.clazz == SimpleColor.class) {
+            UIColorChooser chooser = new UIColorChooser();
+            chooser.setDimensions(xStart, y, width, height);
+            chooser.setCustomColor(((Resource<SimpleColor>) resource).value.value);
+            chooser.onTick = () -> resource.value = new SimpleColor(chooser.getCustomColor());
+            element = chooser;
+        } else if (resource.clazz.isEnum()) {
+            UIEnum uiEnum = new UIEnum();
+            uiEnum.setDimensions(xStart, y, width, height);
+            uiEnum.setEnumType(((Resource<Enum<?>>) resource).value);
+            uiEnum.onTick = () -> resource.value = uiEnum.getType();
+            element = uiEnum;
+        } else {
+
+            UIObject uiObject = new UIObject();
+            uiObject.setObject(resource.value);
+            uiObject.setDimensions(xStart, y, width, height);
+            element = uiObject;
+            /*
+            element = new UILabel();
+            element.setDimensions(xStart, y, width, height);
+            String w = "Missing!";
+            if (res.value != null) {
+                w = String.valueOf(res.value);
+            }
+            element.setDisplayName(res.getName() + " | " + w);
+            System.out.println(res.getName() + " | " + w);
+
+             */
         }
-        return element;
+        element.setRoundness(2);
+        canvas.add(element);
+        canvas.add(name);
+        return canvas;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
     public String toString() {
-        return "name="+name+ ", class=" + getClass() + ", data=" +toTxt();
+        String clazzName = clazz == null ? "null" : ((clazz.isInterface() ? "interface " : (clazz.isPrimitive() ? "" : "class=")) + clazz.getName());
+        return "Resource{" +
+                "name='" + name + '\'' +
+                ", value=" + value +", "+ clazzName+
+                '}';
     }
 }

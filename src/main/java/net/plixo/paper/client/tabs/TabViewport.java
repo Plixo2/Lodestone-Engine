@@ -1,15 +1,15 @@
 package net.plixo.paper.client.tabs;
 
 import net.minecraft.util.math.vector.Vector2f;
-import net.plixo.paper.client.ui.elements.*;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
+import net.plixo.paper.client.ui.elements.canvas.UIDraggable;
 import net.plixo.paper.client.util.*;
-import net.plixo.paper.client.visualscript.CursorObject;
+import net.plixo.paper.client.visualscript.FunctionCursorHolder;
 import net.plixo.paper.client.visualscript.UIFunction;
 import net.plixo.paper.client.visualscript.Function;
 import net.plixo.paper.client.manager.AssetLoader;
-import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.manager.FunctionManager;
-import net.plixo.paper.client.ui.GUI.GUIEditor;
+import net.plixo.paper.client.ui.GUI.GUIMain;
 import net.plixo.paper.client.ui.UIElement;
 import net.plixo.paper.client.ui.UITab;
 import org.lwjgl.glfw.GLFW;
@@ -17,8 +17,8 @@ import org.lwjgl.opengl.GL11;
 
 import java.io.File;
 
+@Deprecated
 public class TabViewport extends UITab {
-
 
     public float x = 0, y = 0;
     public float zoom = 1;
@@ -28,7 +28,7 @@ public class TabViewport extends UITab {
 
     public TabViewport(int id) {
         super(id, "Viewport");
-        EditorManager.viewport = this;
+        //EditorManager.viewport = this;
     }
 
     public void load(File file) {
@@ -45,7 +45,6 @@ public class TabViewport extends UITab {
         canvas.setDimensions(0, 0, parent.width, parent.height);
         canvas.setRoundness(0);
         canvas.setColor(0);
-
 
         if(AssetLoader.getLoadedScript() != null) {
             for (Function function : AssetLoader.getLoadedScript().getFunctions()) {
@@ -77,7 +76,7 @@ public class TabViewport extends UITab {
             drawLines();
             Vector2f mouseToWorld = screenToWorld(mouseX, mouseY);
             super.drawScreen(mouseToWorld.x, mouseToWorld.y);
-            CursorObject draggedObj = getDraggedObj();
+            FunctionCursorHolder draggedObj = getDraggedObj();
             if (draggedObj.isLink()) {
                 Function function = draggedObj.getLink();
                 float xE = mouseToWorld.x;
@@ -179,10 +178,10 @@ public class TabViewport extends UITab {
         if (state == 1) {
             if(parent.isMouseInside(mouseX,mouseY) && Math.abs(mouseX-startMouseX) < 5 && Math.abs(mouseY-startMouseY) < 5) {
                 Vector2f mouseToWorld = screenToWorld(mouseX, mouseY);
-                GUIEditor.instance.beginMenu();
+                GUIMain.instance.beginMenu();
                 for (int i = 0; i < FunctionManager.functions.size(); i++) {
                     Function function = FunctionManager.functions.get(i);
-                    GUIEditor.instance.addMenuOption(function.getName() , () -> {
+                    GUIMain.instance.addMenuOption(function.getName() , () -> {
                         if(AssetLoader.getLoadedScript() != null) {
                             Function Function = FunctionManager.getInstanceByName(function.getName());
                             if(Function != null) {
@@ -192,9 +191,8 @@ public class TabViewport extends UITab {
                         }
                     });
                 }
-                GUIEditor.instance.showMenu();
+                GUIMain.instance.showMenu();
             }
-
             dragging = false;
             dragX = 0;
             dragY = 0;
@@ -242,12 +240,12 @@ public class TabViewport extends UITab {
         float y = top.y;
         float mY = y % i;
         int color = 0x6F000000;
-        for (double j = top.x; j <= bottom.x; j += i) {
-            double off = j - mX;
+        for (float j = top.x; j <= bottom.x; j += i) {
+            float off = j - mX;
             Gui.drawLine(off, top.y, off, bottom.y, color, 1);
         }
-        for (double j = top.y; j <= bottom.y; j += i) {
-            double off = j - mY;
+        for (float j = top.y; j <= bottom.y; j += i) {
+            float off = j - mY;
             Gui.drawLine(top.x, off, bottom.x, off, color, 1);
         }
     }
@@ -274,18 +272,18 @@ public class TabViewport extends UITab {
         return new Vector2f(x, y);
     }
 
-    private CursorObject draggedObj;
+    private FunctionCursorHolder draggedObj;
 
-    public CursorObject getDraggedObj() {
-        return draggedObj == null ? CursorObject.none : draggedObj;
+    public FunctionCursorHolder getDraggedObj() {
+        return draggedObj == null ? FunctionCursorHolder.none : draggedObj;
     }
 
-    public void setDraggedObj(CursorObject object) {
+    public void setDraggedObj(FunctionCursorHolder object) {
         this.draggedObj = object;
     }
 
-    public void setDraggedObj(int id, CursorObject.DraggedType type, Object object) {
-        this.draggedObj = new CursorObject(id, type, object);
+    public void setDraggedObj(int id, FunctionCursorHolder.DraggedType type, Function object) {
+        this.draggedObj = new FunctionCursorHolder(id, type, object);
     }
 
 }

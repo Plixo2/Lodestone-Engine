@@ -13,6 +13,8 @@ public class Print extends Function {
 
     @Override
     public void set() {
-        set(1, 0, 1);
+        setInputs("Object");
+        setOutputs();
+        setLinks("");
     }
 }

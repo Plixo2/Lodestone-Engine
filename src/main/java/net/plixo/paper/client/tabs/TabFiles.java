@@ -1,16 +1,14 @@
 package net.plixo.paper.client.tabs;
 
-import net.plixo.paper.Lodestone;
-import net.plixo.paper.client.manager.AssetLoader;
 import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.ui.GUI.GUIAccept;
-import net.plixo.paper.client.ui.GUI.GUIEditor;
+import net.plixo.paper.client.ui.GUI.GUIMain;
 import net.plixo.paper.client.ui.GUI.GUITextInput;
 import net.plixo.paper.client.ui.UITab;
-import net.plixo.paper.client.ui.elements.UIArray;
-import net.plixo.paper.client.ui.elements.UIButton;
-import net.plixo.paper.client.ui.elements.UICanvas;
-import net.plixo.paper.client.ui.elements.UIFileIcon;
+import net.plixo.paper.client.ui.elements.canvas.UIArray;
+import net.plixo.paper.client.ui.elements.clickable.UIButton;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
+import net.plixo.paper.client.ui.elements.visual.UIFileIcon;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Options;
 import net.plixo.paper.client.util.SaveUtil;
@@ -23,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+@Deprecated
 public class TabFiles extends UITab {
 
     File[] files = new File[0];
@@ -30,7 +29,7 @@ public class TabFiles extends UITab {
 
     public TabFiles(int id) {
         super(id, "Files");
-        EditorManager.files = this;
+       // EditorManager.files = this;
     }
 
 
@@ -54,16 +53,16 @@ public class TabFiles extends UITab {
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
         if (parent.isMouseInside(mouseX, mouseY) && mouseButton == 1) {
-            GUIEditor.instance.beginMenu();
+            GUIMain.instance.beginMenu();
             newRunnable(SaveUtil.FileFormat.Code);
             newRunnable(SaveUtil.FileFormat.VisualScript);
-            GUIEditor.instance.showMenu();
+            GUIMain.instance.showMenu();
         }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
     public void newRunnable(SaveUtil.FileFormat format) {
-        GUIEditor.instance.addMenuOption("New " + format.name(), () -> {
+        GUIMain.instance.addMenuOption("New " + format.name(), () -> {
             GUITextInput input = new GUITextInput((txt) -> {
                 File f = new File(home.getAbsolutePath() + "\\" + txt + "." + format.format);
                 if (!f.exists()) {
@@ -94,12 +93,12 @@ public class TabFiles extends UITab {
 
         canvas.clear();
         files = home.listFiles();
-        if (!Options.showMetadata) {
+        //if (!Options.options.showMetadata) {
             files = Arrays.stream(files).filter(file -> {
                 String name = FilenameUtils.getExtension(file.getAbsolutePath());
                 return !name.equals(SaveUtil.FileFormat.Meta.format);
             }).toArray(File[]::new);
-        }
+      //  }
 
         String index = "0123456789abcdefghijklmnopqrstuvwxyzöüä";
         Arrays.sort(files, Comparator.comparingInt(file -> file.isFile() ? index.indexOf(String.valueOf(file.getName().chars().toArray()[0])) : -3));
@@ -162,25 +161,25 @@ public class TabFiles extends UITab {
                         home = file;
                         update();
                     } else if (mouseButton == 1) {
-                        GUIEditor.instance.beginMenu();
-                        GUIEditor.instance.addMenuOption("Open", () -> {
+                        GUIMain.instance.beginMenu();
+                        GUIMain.instance.addMenuOption("Open", () -> {
                             home = file;
                             update();
                         });
-                        GUIEditor.instance.addMenuOption("Explorer", () -> {
+                        GUIMain.instance.addMenuOption("Explorer", () -> {
                             try {
                                 Desktop.getDesktop().open(file);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         });
-                        GUIEditor.instance.addMenuOption("Delete", () -> {
+                        GUIMain.instance.addMenuOption("Delete", () -> {
                             mc.displayGuiScreen(new GUIAccept(() -> {
                                 file.delete(); //update();
                             }, () -> {
                             }, "Sure?"));
                         });
-                        GUIEditor.instance.addMenuOption("Rename", () -> {
+                        GUIMain.instance.addMenuOption("Rename", () -> {
                             GUITextInput input = new GUITextInput((txt) -> {
                                 if (!txt.isEmpty()) {
                                     String fileFormat = FilenameUtils.getExtension(file.getName());
@@ -198,45 +197,45 @@ public class TabFiles extends UITab {
                             }, FilenameUtils.removeExtension(file.getName()));
                             mc.displayGuiScreen(input);
                         });
-                        GUIEditor.instance.showMenu();
+                        GUIMain.instance.showMenu();
                     }
                 } else {
                     if (mouseButton == 1) {
                         String extenstion = FilenameUtils.getExtension(file.getName());
-                        GUIEditor.instance.beginMenu();
+                        GUIMain.instance.beginMenu();
 
                         if (SaveUtil.FileFormat.getFromFile(file) == SaveUtil.FileFormat.VisualScript) {
-                            GUIEditor.instance.addMenuOption("View", () -> {
+                            GUIMain.instance.addMenuOption("View", () -> {
                                 EditorManager.viewport.load(file);
                             });
                         }
                         if (SaveUtil.FileFormat.getFromFile(file) == SaveUtil.FileFormat.Code) {
-                            GUIEditor.instance.addMenuOption("View", () -> {
-                                EditorManager.editor.load(file);
+                            GUIMain.instance.addMenuOption("View", () -> {
+
                             });
                         }
 
-                        GUIEditor.instance.addMenuOption("Edit", () -> {
+                        GUIMain.instance.addMenuOption("Edit", () -> {
                             try {
                                 Desktop.getDesktop().open(file);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         });
-                        GUIEditor.instance.addMenuOption("Explorer", () -> {
+                        GUIMain.instance.addMenuOption("Explorer", () -> {
                             try {
                                 Runtime.getRuntime().exec("explorer.exe /select," + file);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         });
-                        GUIEditor.instance.addMenuOption("Delete", () -> {
+                        GUIMain.instance.addMenuOption("Delete", () -> {
                             mc.displayGuiScreen(new GUIAccept(() -> {
                                 file.delete(); //update();
                             }, () -> {
                             }, "Sure?"));
                         });
-                        GUIEditor.instance.addMenuOption("Rename", () -> {
+                        GUIMain.instance.addMenuOption("Rename", () -> {
                             GUITextInput input = new GUITextInput((txt) -> {
                                 if (!txt.isEmpty()) {
                                     String fileFormat = FilenameUtils.getExtension(file.getName());
@@ -254,7 +253,7 @@ public class TabFiles extends UITab {
                             }, FilenameUtils.removeExtension(file.getName()));
                             mc.displayGuiScreen(input);
                         });
-                        GUIEditor.instance.showMenu();
+                        GUIMain.instance.showMenu();
                     } else if (mouseButton == 0) {
                         try {
                             EditorManager.inspector.initInspector(file);

@@ -1,17 +1,18 @@
 package net.plixo.paper.client.manager;
 
 
-import net.plixo.paper.client.tabs.*;
 import net.plixo.paper.client.ui.UITab;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
+import net.plixo.paper.client.ui.tabs.*;
+import net.plixo.paper.client.ui.tabs.viewport.UIViewport;
 
 public class EditorManager {
 
-    public static TabConsole console;
-    public static TabExplorer explorer;
-    public static TabFiles files;
-    public static TabInspector inspector;
-    public static TabViewport viewport;
-    public static TabEditor editor;
+    public static UIConsole console;
+    public static UIHierarchy explorer;
+    public static UIFiles files;
+    public static UIInspector inspector;
+    public static UIViewport viewport;
 
     public static void register() {
         initTab(console);
@@ -19,10 +20,14 @@ public class EditorManager {
         initTab(explorer);
         initTab(viewport);
         initTab(inspector);
-        initTab(editor);
     }
 
     public static void initTab(UITab tab) {
+        if (tab != null) {
+            tab.init();
+        }
+    }
+    public static void initTab(UICanvas tab) {
         if (tab != null) {
             tab.init();
         }

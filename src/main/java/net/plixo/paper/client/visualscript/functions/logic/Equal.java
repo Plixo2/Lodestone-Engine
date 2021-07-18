@@ -17,6 +17,8 @@ public class Equal extends Function {
 
     @Override
     public void set() {
-        set(2,1,0);
+        setInputs("Object 1","Object 2");
+        setOutputs("Result");
+        setLinks();
     }
 }

@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.StringTextComponent;
+import net.plixo.paper.client.util.Util;
 
 public class GUITextInput extends GUIAccept {
 
@@ -18,6 +19,7 @@ public class GUITextInput extends GUIAccept {
 
     @Override
     protected void init() {
+        super.init();
         int wH = width/2;
         int hH = (height/2);
         int buttonWidth = 70;
@@ -28,12 +30,22 @@ public class GUITextInput extends GUIAccept {
 
 
         addButton(new Button(wH - (10 + 50), hH+30, 50, buttonHeight, new StringTextComponent(Syes), a -> {
-            yes.run();
-            Minecraft.getInstance().displayGuiScreen(new GUIEditor());
+            try {
+                yes.run();
+            } catch (Exception e) {
+              Util.print(e);
+              e.printStackTrace();
+            }
+            Minecraft.getInstance().displayGuiScreen(new GUIMain());
         }));
         addButton(new Button(wH + (10), hH+30, 50, buttonHeight, new StringTextComponent(Sno), b -> {
-            no.run();
-            Minecraft.getInstance().displayGuiScreen(new GUIEditor());
+          try {
+              no.run();
+          } catch (Exception e) {
+            Util.print(e);
+            e.printStackTrace();
+          }
+            Minecraft.getInstance().displayGuiScreen(new GUIMain());
         }));
 
 

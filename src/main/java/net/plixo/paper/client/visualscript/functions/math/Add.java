@@ -34,6 +34,8 @@ public class Add extends Function {
 
     @Override
     public void set() {
-        set(2,1,0);
+        setInputs("Addend","Addend");
+        setOutputs("Sum");
+        setLinks();
     }
 }

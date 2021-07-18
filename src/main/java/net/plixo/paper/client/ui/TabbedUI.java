@@ -1,6 +1,5 @@
 package net.plixo.paper.client.ui;
 
-import net.plixo.paper.client.ui.other.OptionMenu;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import org.lwjgl.opengl.GL11;
@@ -75,11 +74,6 @@ public class TabbedUI implements IGuiEvent {
         tabs.get(selectedIndex).close();
     }
 
-    public void save() {
-        for (UITab tab : tabs) {
-            tab.save();
-        }
-    }
 
     public UITab getHoveredHead(float mouseX, float mouseY) {
         for (UITab tab : tabs) {

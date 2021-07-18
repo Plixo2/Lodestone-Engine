@@ -4,22 +4,22 @@ import net.plixo.paper.client.engine.ecs.GameObject;
 import net.plixo.paper.client.manager.ClientManager;
 import net.plixo.paper.client.manager.EditorManager;
 import net.plixo.paper.client.ui.GUI.GUIAccept;
-import net.plixo.paper.client.ui.GUI.GUIEditor;
+import net.plixo.paper.client.ui.GUI.GUIMain;
 import net.plixo.paper.client.ui.GUI.GUITextInput;
 import net.plixo.paper.client.ui.UITab;
-import net.plixo.paper.client.ui.elements.UIArray;
-import net.plixo.paper.client.ui.elements.UIButton;
-import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.ui.elements.canvas.UIArray;
+import net.plixo.paper.client.ui.elements.clickable.UIButton;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 
-
+@Deprecated
 public class TabExplorer extends UITab {
 
 
     public TabExplorer(int id) {
         super(id, "Explorer");
-        EditorManager.explorer = this;
+       // EditorManager.explorer = this;
     }
 
 
@@ -86,8 +86,8 @@ public class TabExplorer extends UITab {
     @Override
     public void mouseClicked(float mouseX, float mouseY, int mouseButton) {
         if (mouseButton == 1 && parent.isMouseInside(mouseX, mouseY)) {
-            GUIEditor.instance.beginMenu();
-            GUIEditor.instance.addMenuOption("Add Entity", () -> {
+            GUIMain.instance.beginMenu();
+            GUIMain.instance.addMenuOption("Add Entity", () -> {
                 GUITextInput input = new GUITextInput((a) -> {
                     GameObject entity = new GameObject(a);
                     ClientManager.addEntity(entity);
@@ -97,7 +97,7 @@ public class TabExplorer extends UITab {
                 input.Syes = "Create";
                 mc.displayGuiScreen(input);
             });
-            GUIEditor.instance.showMenu();
+            GUIMain.instance.showMenu();
         }
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }

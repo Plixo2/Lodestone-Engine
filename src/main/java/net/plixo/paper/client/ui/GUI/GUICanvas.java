@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
 import net.plixo.paper.client.ui.UIElement;
-import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 import net.plixo.paper.client.util.MouseUtil;
@@ -18,16 +18,31 @@ public class GUICanvas extends Screen {
     public GUICanvas() {
         super(new StringTextComponent("UI"));
         try {
+            createCanvas();
+        } catch (Exception e) {
+            Util.print(e);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void init() {
+        try {
+            createCanvas();
+        } catch (Exception e) {
+          Util.print(e);
+          e.printStackTrace();
+        }
+        super.init();
+    }
+
+    void createCanvas() {
             float width = Minecraft.getInstance().getMainWindow().getScaledWidth();
             float height = Minecraft.getInstance().getMainWindow().getScaledHeight();
             canvas = new UICanvas();
             canvas.setDimensions(0, 0, width, height);
             canvas.setRoundness(0);
             canvas.setColor(ColorLib.getBackground(0));
-        } catch (Exception e) {
-          Util.print(e);
-          e.printStackTrace();
-        }
     }
 
     public void add(UIElement element) {
@@ -109,5 +124,10 @@ public class GUICanvas extends Screen {
             e.printStackTrace();
         }
         super.tick();
+    }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
     }
 }

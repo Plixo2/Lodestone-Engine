@@ -2,12 +2,12 @@ package net.plixo.paper.client.ui.other;
 
 
 import net.plixo.paper.client.ui.IGuiEvent;
-import net.plixo.paper.client.ui.elements.UIButton;
-import net.plixo.paper.client.ui.elements.UICanvas;
+import net.plixo.paper.client.ui.elements.clickable.UIButton;
+import net.plixo.paper.client.ui.elements.canvas.UICanvas;
 import net.plixo.paper.client.util.ColorLib;
 import net.plixo.paper.client.util.Gui;
 
-
+@Deprecated
 public class OptionMenu implements IGuiEvent {
 
     public int id;
