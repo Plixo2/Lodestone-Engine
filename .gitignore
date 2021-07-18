@@ -26,6 +26,5 @@ hs_err_pid*
 .gradle/4.10.3/fileHashes/fileHashes.bin
 *.lock
 /gradle/
-/run/
 *.bin
 *.dat
