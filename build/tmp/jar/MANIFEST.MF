@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: VisualScriptMinecraft
+Implementation-Version: 1.0
+Specification-Vendor: examplemodsareus
+Specification-Title: lodestone
+Implementation-Timestamp: 2021-07-08T12:35:25+0200
+Specification-Version: 1
+Implementation-Vendor: examplemodsareus
+
