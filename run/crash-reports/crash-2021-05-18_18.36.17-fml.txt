@@ -34,14 +34,14 @@ A detailed walkthrough of the error, its code path and all known details is as f
 -- Head --
 Thread: Render thread
 Stacktrace:
-	at net.plixo.paper.client.util.ColorLib.load(ColorLib.java:36) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.util.UColor.load(ColorLib.java:36) ~[?:?] {re:classloading}
 -- MOD lodestone --
 Details:
 	Caused by 0: java.lang.ExceptionInInitializerError
-		at net.plixo.paper.client.ui.UIElement.<init>(UIElement.java:24) ~[main/:?] {re:classloading}
-		at net.plixo.paper.client.ui.elements.canvas.UICanvas.<init>(UICanvas.java:13) ~[main/:?] {re:classloading}
-		at net.plixo.paper.client.forge.events.Render2D.<clinit>(Render2D.java:10) ~[main/:?] {re:classloading}
-		at net.plixo.paper.LodestoneMod.setup(LodestoneMod.java:56) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.client.ui.elements.UIElement.<init>(UIElement.java:24) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.<init>(UICanvas.java:13) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.client.forge.events.Render2D.<clinit>(Render2D.java:10) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.LodestoneMod.setup(LodestoneMod.java:56) ~[main/:?] {re:classloading}
 		at net.minecraftforge.eventbus.EventBus.doCastFilter(EventBus.java:247) ~[eventbus-3.0.5-service.jar:?] {}
 		at net.minecraftforge.eventbus.EventBus.lambda$addListener$11(EventBus.java:239) ~[eventbus-3.0.5-service.jar:?] {}
 		at net.minecraftforge.eventbus.EventBus.post(EventBus.java:297) ~[eventbus-3.0.5-service.jar:?] {}
@@ -62,12 +62,12 @@ Details:
 	Mod Issue URL: NOT PROVIDED
 	Exception message: java.lang.NullPointerException
 Stacktrace:
-	at net.plixo.paper.client.util.ColorLib.load(ColorLib.java:36) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.util.ColorLib.<clinit>(ColorLib.java:15) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.UIElement.<init>(UIElement.java:24) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.<init>(UICanvas.java:13) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.forge.events.Render2D.<clinit>(Render2D.java:10) ~[main/:?] {re:classloading}
-	at net.plixo.paper.LodestoneMod.setup(LodestoneMod.java:56) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.util.UColor.load(ColorLib.java:36) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.util.UColor.<clinit>(ColorLib.java:15) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.UIElement.<init>(UIElement.java:24) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.<init>(UICanvas.java:13) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.forge.events.Render2D.<clinit>(Render2D.java:10) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.LodestoneMod.setup(LodestoneMod.java:56) ~[main/:?] {re:classloading}
 	at net.minecraftforge.eventbus.EventBus.doCastFilter(EventBus.java:247) ~[eventbus-3.0.5-service.jar:?] {}
 	at net.minecraftforge.eventbus.EventBus.lambda$addListener$11(EventBus.java:239) ~[eventbus-3.0.5-service.jar:?] {}
 	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:297) ~[eventbus-3.0.5-service.jar:?] {}

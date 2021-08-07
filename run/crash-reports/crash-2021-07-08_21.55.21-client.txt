@@ -5,9 +5,9 @@ Time: 08.07.21 21:55
 Description: Rendering screen
 
 java.lang.NullPointerException: Rendering screen
-	at net.plixo.paper.client.ui.UITab.drawScreen(UITab.java:38) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.TabbedUI.drawScreen(TabbedUI.java:54) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.render(GUIEditor.java:51) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.UITab.drawScreen(UITab.java:38) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.TabbedUI.drawScreen(TabbedUI.java:54) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.render(GUIEditor.java:51) ~[main/:?] {re:classloading}
 	at net.minecraftforge.client.ForgeHooksClient.drawScreen(ForgeHooksClient.java:286) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading}
 	at net.minecraft.client.renderer.GameRenderer.updateCameraAndRender(GameRenderer.java:503) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
 	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1002) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
@@ -32,13 +32,13 @@ A detailed walkthrough of the error, its code path and all known details is as f
 -- Head --
 Thread: Render thread
 Stacktrace:
-	at net.plixo.paper.client.ui.UITab.drawScreen(UITab.java:38) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.TabbedUI.drawScreen(TabbedUI.java:54) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.render(GUIEditor.java:51) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.UITab.drawScreen(UITab.java:38) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.TabbedUI.drawScreen(TabbedUI.java:54) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.render(GUIEditor.java:51) ~[?:?] {re:classloading}
 	at net.minecraftforge.client.ForgeHooksClient.drawScreen(ForgeHooksClient.java:286) ~[forge:?] {re:classloading}
 -- Screen render details --
 Details:
-	Screen name: net.plixo.paper.client.ui.GUI.GUIEditor
+	Screen name: net.plixo.lodestone.client.ui.screen.GUIEditor
 	Mouse location: Scaled: (281, 364). Absolute: (562.000000, 728.000000)
 	Screen size: Scaled: (960, 501). Absolute: (1920, 1001). Scale factor of 2.000000
 

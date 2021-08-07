@@ -4,10 +4,10 @@
 Time: 18.05.21, 21:41
 Description: mouseClicked event handler
 
-java.lang.ClassCastException: class net.plixo.paper.client.ui.elements.values.UIColorChooser cannot be cast to class net.plixo.paper.client.ui.elements.canvas.UIDraggable (net.plixo.paper.client.ui.elements.values.UIColorChooser and net.plixo.paper.client.ui.elements.canvas.UIDraggable are in unnamed module of loader cpw.mods.modlauncher.TransformingClassLoader @783115d9)
-	at net.plixo.paper.client.tabs.TabViewport.mouseClicked(TabViewport.java:164) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.TabbedUI.mouseClicked(TabbedUI.java:110) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.mouseClicked(GUIEditor.java:171) ~[main/:?] {re:classloading}
+java.lang.ClassCastException: class UIColorChooser cannot be cast to class net.plixo.lodestone.client.ui.elements.canvas.UIDraggable (UIColorChooser and net.plixo.lodestone.client.ui.elements.canvas.UIDraggable are in unnamed module of loader cpw.mods.modlauncher.TransformingClassLoader @783115d9)
+	at net.plixo.lodestone.client.tabs.TabViewport.mouseClicked(TabViewport.java:164) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.TabbedUI.mouseClicked(TabbedUI.java:110) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.mouseClicked(GUIEditor.java:171) ~[main/:?] {re:classloading}
 	at net.minecraft.client.MouseHelper.lambda$mouseButtonCallback$0(MouseHelper.java:92) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.MouseHelper.mouseButtonCallback(MouseHelper.java:90) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
@@ -41,13 +41,13 @@ A detailed walkthrough of the error, its code path and all known details is as f
 -- Head --
 Thread: Render thread
 Stacktrace:
-	at net.plixo.paper.client.tabs.TabViewport.mouseClicked(TabViewport.java:164) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.TabbedUI.mouseClicked(TabbedUI.java:110) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.mouseClicked(GUIEditor.java:171) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.tabs.TabViewport.mouseClicked(TabViewport.java:164) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.TabbedUI.mouseClicked(TabbedUI.java:110) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.mouseClicked(GUIEditor.java:171) ~[?:?] {re:classloading}
 	at net.minecraft.client.MouseHelper.lambda$mouseButtonCallback$0(MouseHelper.java:92) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 -- Affected screen --
 Details:
-	Screen name: net.plixo.paper.client.ui.GUI.GUIEditor
+	Screen name: net.plixo.lodestone.client.ui.screen.GUIEditor
 Stacktrace:
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.MouseHelper.mouseButtonCallback(MouseHelper.java:90) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}

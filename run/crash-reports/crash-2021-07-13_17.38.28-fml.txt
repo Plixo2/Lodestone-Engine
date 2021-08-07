@@ -38,7 +38,7 @@ Stacktrace:
 -- MOD lodestone --
 Details:
 	Caused by 0: java.lang.NoClassDefFoundError: net/plixo/paper/client/ui/GUI/GUIEditor
-		at net.plixo.paper.LodestoneMod.setup(LodestoneMod.java:87) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.LodestoneMod.setup(LodestoneMod.java:87) ~[main/:?] {re:classloading}
 		at net.minecraftforge.eventbus.EventBus.doCastFilter(EventBus.java:247) ~[eventbus-3.0.5-service.jar:?] {}
 		at net.minecraftforge.eventbus.EventBus.lambda$addListener$11(EventBus.java:239) ~[eventbus-3.0.5-service.jar:?] {}
 		at net.minecraftforge.eventbus.EventBus.post(EventBus.java:297) ~[eventbus-3.0.5-service.jar:?] {}
@@ -56,13 +56,13 @@ Details:
 		java.lang.NoClassDefFoundError: net/plixo/paper/client/ui/GUI/GUIEditor
 	Mod Version: 1.0
 	Mod Issue URL: NOT PROVIDED
-	Exception message: java.lang.ClassNotFoundException: net.plixo.paper.client.ui.GUI.GUIEditor
+	Exception message: java.lang.ClassNotFoundException: net.plixo.lodestone.client.ui.screen.GUIEditor
 Stacktrace:
 	at java.lang.ClassLoader.findClass(ClassLoader.java:523) ~[?:1.8.0_292] {}
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:418) ~[?:1.8.0_292] {}
 	at cpw.mods.modlauncher.TransformingClassLoader.loadClass(TransformingClassLoader.java:106) ~[modlauncher-8.0.6.jar:?] {re:classloading}
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_292] {}
-	at net.plixo.paper.LodestoneMod.setup(LodestoneMod.java:87) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.LodestoneMod.setup(LodestoneMod.java:87) ~[main/:?] {re:classloading}
 	at net.minecraftforge.eventbus.EventBus.doCastFilter(EventBus.java:247) ~[eventbus-3.0.5-service.jar:?] {}
 	at net.minecraftforge.eventbus.EventBus.lambda$addListener$11(EventBus.java:239) ~[eventbus-3.0.5-service.jar:?] {}
 	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:297) ~[eventbus-3.0.5-service.jar:?] {}

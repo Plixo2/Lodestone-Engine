@@ -4,12 +4,12 @@
 Time: 05.07.21 12:52
 Description: Rendering screen
 
-java.lang.ClassCastException: net.plixo.paper.client.tabs.TabConsole$ConsoleLine cannot be cast to net.plixo.paper.client.tabs.TabConsole$ConsoleLine
-	at net.plixo.paper.client.ui.other.UIToolbar$4.drawDisplayString(Toolbar.java:86) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.visual.UILabel.drawScreen(UILabel.java:18) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.drawScreen(UICanvas.java:49) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.other.UIToolbar.drawScreen(Toolbar.java:104) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.render(GUIEditor.java:50) ~[main/:?] {re:classloading}
+java.lang.ClassCastException: net.plixo.lodestone.client.tabs.TabConsole$ConsoleLine cannot be cast to net.plixo.lodestone.client.tabs.TabConsole$ConsoleLine
+	at UIToolbar$4.drawDisplayString(Toolbar.java:86) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.other.UILabel.drawScreen(UILabel.java:18) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.drawScreen(UICanvas.java:49) ~[main/:?] {re:classloading}
+	at UIToolbar.drawScreen(Toolbar.java:104) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.render(GUIEditor.java:50) ~[main/:?] {re:classloading}
 	at net.minecraftforge.client.ForgeHooksClient.drawScreen(ForgeHooksClient.java:286) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading}
 	at net.minecraft.client.renderer.GameRenderer.updateCameraAndRender(GameRenderer.java:503) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
 	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1002) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
@@ -34,15 +34,15 @@ A detailed walkthrough of the error, its code path and all known details is as f
 -- Head --
 Thread: Render thread
 Stacktrace:
-	at net.plixo.paper.client.ui.other.UIToolbar$4.drawDisplayString(Toolbar.java:86) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.visual.UILabel.drawScreen(UILabel.java:18) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.drawScreen(UICanvas.java:49) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.other.UIToolbar.drawScreen(Toolbar.java:104) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.render(GUIEditor.java:50) ~[?:?] {re:classloading}
+	at UIToolbar$4.drawDisplayString(Toolbar.java:86) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.other.UILabel.drawScreen(UILabel.java:18) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.drawScreen(UICanvas.java:49) ~[?:?] {re:classloading}
+	at UIToolbar.drawScreen(Toolbar.java:104) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.render(GUIEditor.java:50) ~[?:?] {re:classloading}
 	at net.minecraftforge.client.ForgeHooksClient.drawScreen(ForgeHooksClient.java:286) ~[forge:?] {re:classloading}
 -- Screen render details --
 Details:
-	Screen name: net.plixo.paper.client.ui.GUI.GUIEditor
+	Screen name: net.plixo.lodestone.client.ui.screen.GUIEditor
 	Mouse location: Scaled: (480, 250). Absolute: (960.000000, 500.000000)
 	Screen size: Scaled: (960, 501). Absolute: (1920, 1001). Scale factor of 2.000000
 

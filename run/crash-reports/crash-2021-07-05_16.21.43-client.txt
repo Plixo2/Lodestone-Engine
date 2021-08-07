@@ -5,16 +5,16 @@ Time: 05.07.21 16:21
 Description: mouseClicked event handler
 
 java.lang.NoClassDefFoundError: net/plixo/paper/client/visualscript/Function$Output
-	at net.plixo.paper.client.visualscript.Function.set(Function.java:78) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.visualscript.functions.events.KeyEvent.set(KeyEvent.java:7) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.manager.FunctionManager.loadFromFile(FunctionManager.java:71) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.tabs.viewport.UIViewport.load(UIViewport.java:38) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.tabs.UIFiles$1.lambda$mouseClicked$8(UIFiles.java:197) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.other.UIMouseMenu$1.actionPerformed(UIMouseMenu.java:30) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.UIElement.mouseClicked(UIElement.java:54) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:86) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UIArray.mouseClicked(UIArray.java:95) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIMain.mouseClicked(GUIMain.java:95) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.visualscript.Function.set(Function.java:78) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.visualscript.functions.events.KeyEvent.set(KeyEvent.java:7) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.manager.RFunctions.loadFromFile(FunctionManager.java:71) ~[main/:?] {re:classloading}
+	at UIViewport.load(UIViewport.java:38) ~[main/:?] {re:classloading}
+	at UIFiles$1.lambda$mouseClicked$8(UIFiles.java:197) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.other.UIMouseMenu$1.actionPerformed(UIMouseMenu.java:30) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.UIElement.mouseClicked(UIElement.java:54) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:86) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UIArray.mouseClicked(UIArray.java:95) ~[main/:?] {re:classloading}
+	at ScreenMain.mouseClicked(GUIMain.java:95) ~[main/:?] {re:classloading}
 	at net.minecraft.client.MouseHelper.lambda$mouseButtonCallback$0(MouseHelper.java:92) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.MouseHelper.mouseButtonCallback(MouseHelper.java:90) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
@@ -40,7 +40,7 @@ java.lang.NoClassDefFoundError: net/plixo/paper/client/visualscript/Function$Out
 	at cpw.mods.modlauncher.Launcher.run(Launcher.java:82) [modlauncher-8.0.6.jar:?] {}
 	at cpw.mods.modlauncher.Launcher.main(Launcher.java:66) [modlauncher-8.0.6.jar:?] {}
 	at net.minecraftforge.userdev.LaunchTesting.main(LaunchTesting.java:105) [forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {}
-Caused by: java.lang.ClassNotFoundException: net.plixo.paper.client.visualscript.Function$Output
+Caused by: java.lang.ClassNotFoundException: net.plixo.lodestone.client.visualscript.Function$Output
 	at java.lang.ClassLoader.findClass(ClassLoader.java:523) ~[?:1.8.0_292] {}
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:418) ~[?:1.8.0_292] {}
 	at cpw.mods.modlauncher.TransformingClassLoader.loadClass(TransformingClassLoader.java:106) ~[modlauncher-8.0.6.jar:?] {re:classloading}
@@ -51,16 +51,16 @@ Caused by: java.lang.ClassNotFoundException: net.plixo.paper.client.visualscript
 		at cpw.mods.modlauncher.TransformingClassLoader.loadClass(TransformingClassLoader.java:136) ~[modlauncher-8.0.6.jar:?] {re:classloading}
 		at cpw.mods.modlauncher.TransformingClassLoader.loadClass(TransformingClassLoader.java:98) ~[modlauncher-8.0.6.jar:?] {re:classloading}
 		at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_292] {}
-		at net.plixo.paper.client.visualscript.Function.set(Function.java:78) ~[main/:?] {re:classloading}
-		at net.plixo.paper.client.visualscript.functions.events.KeyEvent.set(KeyEvent.java:7) ~[main/:?] {re:classloading}
-		at net.plixo.paper.client.manager.FunctionManager.loadFromFile(FunctionManager.java:71) ~[main/:?] {re:classloading}
-		at net.plixo.paper.client.ui.tabs.viewport.UIViewport.load(UIViewport.java:38) ~[main/:?] {re:classloading}
-		at net.plixo.paper.client.ui.tabs.UIFiles$1.lambda$mouseClicked$8(UIFiles.java:197) ~[main/:?] {re:classloading}
-		at net.plixo.paper.client.ui.other.UIMouseMenu$1.actionPerformed(UIMouseMenu.java:30) ~[main/:?] {re:classloading}
-		at net.plixo.paper.client.ui.UIElement.mouseClicked(UIElement.java:54) ~[main/:?] {re:classloading}
-		at net.plixo.paper.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:86) ~[main/:?] {re:classloading}
-		at net.plixo.paper.client.ui.elements.canvas.UIArray.mouseClicked(UIArray.java:95) ~[main/:?] {re:classloading}
-		at net.plixo.paper.client.ui.GUI.GUIMain.mouseClicked(GUIMain.java:95) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.client.visualscript.Function.set(Function.java:78) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.client.visualscript.functions.events.KeyEvent.set(KeyEvent.java:7) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.client.manager.RFunctions.loadFromFile(FunctionManager.java:71) ~[main/:?] {re:classloading}
+		at UIViewport.load(UIViewport.java:38) ~[main/:?] {re:classloading}
+		at UIFiles$1.lambda$mouseClicked$8(UIFiles.java:197) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.client.ui.elements.other.UIMouseMenu$1.actionPerformed(UIMouseMenu.java:30) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.client.ui.elements.UIElement.mouseClicked(UIElement.java:54) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:86) ~[main/:?] {re:classloading}
+		at net.plixo.lodestone.client.ui.elements.canvas.UIArray.mouseClicked(UIArray.java:95) ~[main/:?] {re:classloading}
+		at ScreenMain.mouseClicked(GUIMain.java:95) ~[main/:?] {re:classloading}
 		at net.minecraft.client.MouseHelper.lambda$mouseButtonCallback$0(MouseHelper.java:92) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 		at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 		at net.minecraft.client.MouseHelper.mouseButtonCallback(MouseHelper.java:90) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
@@ -94,20 +94,20 @@ A detailed walkthrough of the error, its code path and all known details is as f
 -- Head --
 Thread: Render thread
 Stacktrace:
-	at net.plixo.paper.client.visualscript.Function.set(Function.java:78) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.visualscript.functions.events.KeyEvent.set(KeyEvent.java:7) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.manager.FunctionManager.loadFromFile(FunctionManager.java:71) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.tabs.viewport.UIViewport.load(UIViewport.java:38) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.tabs.UIFiles$1.lambda$mouseClicked$8(UIFiles.java:197) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.other.UIMouseMenu$1.actionPerformed(UIMouseMenu.java:30) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.UIElement.mouseClicked(UIElement.java:54) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:86) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UIArray.mouseClicked(UIArray.java:95) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIMain.mouseClicked(GUIMain.java:95) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.visualscript.Function.set(Function.java:78) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.visualscript.functions.events.KeyEvent.set(KeyEvent.java:7) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.manager.RFunctions.loadFromFile(FunctionManager.java:71) ~[?:?] {re:classloading}
+	at UIViewport.load(UIViewport.java:38) ~[?:?] {re:classloading}
+	at UIFiles$1.lambda$mouseClicked$8(UIFiles.java:197) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.other.UIMouseMenu$1.actionPerformed(UIMouseMenu.java:30) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.UIElement.mouseClicked(UIElement.java:54) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:86) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UIArray.mouseClicked(UIArray.java:95) ~[?:?] {re:classloading}
+	at ScreenMain.mouseClicked(GUIMain.java:95) ~[?:?] {re:classloading}
 	at net.minecraft.client.MouseHelper.lambda$mouseButtonCallback$0(MouseHelper.java:92) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 -- Affected screen --
 Details:
-	Screen name: net.plixo.paper.client.ui.GUI.GUIMain
+	Screen name: ScreenMain
 Stacktrace:
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.MouseHelper.mouseButtonCallback(MouseHelper.java:90) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}

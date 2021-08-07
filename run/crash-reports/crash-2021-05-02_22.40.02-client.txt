@@ -5,15 +5,15 @@ Time: 02.05.21 22:40
 Description: keyPressed event handler
 
 java.lang.ArrayIndexOutOfBoundsException: 1
-	at net.plixo.paper.client.manager.FunctionManager.saveToFile(FunctionManager.java:235) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.manager.RFunctions.saveToFile(FunctionManager.java:235) ~[main/:?] {re:classloading}
 	at TabViewport.save(TabViewport.java:59) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.TabbedUI.save(TabbedUI.java:80) ~[main/:?] {re:classloading}
-	at net.plixo.paper.Lodestone.save(Lodestone.java:39) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.onClose(GUIEditor.java:189) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.TabbedUI.save(TabbedUI.java:80) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.Lodestone.save(Lodestone.java:39) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.onClose(GUIEditor.java:189) ~[main/:?] {re:classloading}
 	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:863) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.closeScreen(Screen.java:102) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.keyPressed(Screen.java:83) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.keyPressed(GUIEditor.java:137) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.keyPressed(GUIEditor.java:137) ~[main/:?] {re:classloading}
 	at net.minecraft.client.KeyboardListener.lambda$onKeyEvent$4(KeyboardListener.java:302) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.KeyboardListener.onKeyEvent(KeyboardListener.java:293) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
@@ -47,19 +47,19 @@ A detailed walkthrough of the error, its code path and all known details is as f
 -- Head --
 Thread: Render thread
 Stacktrace:
-	at net.plixo.paper.client.manager.FunctionManager.saveToFile(FunctionManager.java:235) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.manager.RFunctions.saveToFile(FunctionManager.java:235) ~[?:?] {re:classloading}
 	at TabViewport.save(TabViewport.java:59) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.TabbedUI.save(TabbedUI.java:80) ~[?:?] {re:classloading}
-	at net.plixo.paper.Lodestone.save(Lodestone.java:39) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.onClose(GUIEditor.java:189) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.TabbedUI.save(TabbedUI.java:80) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.Lodestone.save(Lodestone.java:39) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.onClose(GUIEditor.java:189) ~[?:?] {re:classloading}
 	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:863) ~[forge:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.closeScreen(Screen.java:102) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.keyPressed(Screen.java:83) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.keyPressed(GUIEditor.java:137) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.keyPressed(GUIEditor.java:137) ~[?:?] {re:classloading}
 	at net.minecraft.client.KeyboardListener.lambda$onKeyEvent$4(KeyboardListener.java:302) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 -- Affected screen --
 Details:
-	Screen name: net.plixo.paper.client.ui.GUI.GUIEditor
+	Screen name: net.plixo.lodestone.client.ui.screen.GUIEditor
 Stacktrace:
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.KeyboardListener.onKeyEvent(KeyboardListener.java:293) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}

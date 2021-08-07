@@ -19,10 +19,10 @@ java.lang.UnsupportedClassVersionError: org/plixo/jrcos/Initializer has been com
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:405) ~[?:1.8.0_292] {}
 	at cpw.mods.modlauncher.TransformingClassLoader.loadClass(TransformingClassLoader.java:106) ~[modlauncher-8.0.6.jar:?] {re:classloading}
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_292] {}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.init(GUIEditor.java:74) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.init(GUIEditor.java:74) ~[main/:?] {re:classloading}
 	at net.minecraft.client.gui.screen.Screen.init(Screen.java:325) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:874) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
-	at net.plixo.paper.client.forge.events.KeyInput.onKeyInput(KeyInput.java:19) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.forge.events.KeyInput.onKeyInput(KeyInput.java:19) ~[main/:?] {re:classloading}
 	at net.minecraftforge.eventbus.ASMEventHandler_16_KeyInput_onKeyInput_KeyInputEvent.invoke(.dynamic) ~[?:?] {}
 	at net.minecraftforge.eventbus.ASMEventHandler.invoke(ASMEventHandler.java:85) ~[eventbus-3.0.5-service.jar:?] {}
 	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:297) ~[eventbus-3.0.5-service.jar:?] {}
@@ -72,10 +72,10 @@ Stacktrace:
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:405) ~[?:1.8.0_292] {}
 	at cpw.mods.modlauncher.TransformingClassLoader.loadClass(TransformingClassLoader.java:106) ~[modlauncher-8.0.6.jar:?] {re:classloading}
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_292] {}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.init(GUIEditor.java:74) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.init(GUIEditor.java:74) ~[main/:?] {re:classloading}
 	at net.minecraft.client.gui.screen.Screen.init(Screen.java:325) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:874) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
-	at net.plixo.paper.client.forge.events.KeyInput.onKeyInput(KeyInput.java:19) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.forge.events.KeyInput.onKeyInput(KeyInput.java:19) ~[main/:?] {re:classloading}
 	at net.minecraftforge.eventbus.ASMEventHandler_16_KeyInput_onKeyInput_KeyInputEvent.invoke(.dynamic) ~[?:?] {}
 	at net.minecraftforge.eventbus.ASMEventHandler.invoke(ASMEventHandler.java:85) ~[eventbus-3.0.5-service.jar:?] {}
 	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:297) ~[eventbus-3.0.5-service.jar:?] {}

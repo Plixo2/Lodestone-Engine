@@ -15,8 +15,8 @@ java.lang.NoClassDefFoundError: net/plixo/paper/client/ui/GUi/GUIAccept (wrong n
 	at TabEditor.findClasses(TabEditor.java:73) ~[main/:?] {re:classloading}
 	at TabEditor.getClasses(TabEditor.java:55) ~[main/:?] {re:classloading}
 	at TabEditor.keyPressed(TabEditor.java:227) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.TabbedUI.keyPressed(TabbedUI.java:104) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.keyPressed(GUIEditor.java:134) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.TabbedUI.keyPressed(TabbedUI.java:104) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.keyPressed(GUIEditor.java:134) ~[main/:?] {re:classloading}
 	at net.minecraft.client.KeyboardListener.lambda$onKeyEvent$4(KeyboardListener.java:302) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.KeyboardListener.onKeyEvent(KeyboardListener.java:293) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
@@ -60,12 +60,12 @@ Stacktrace:
 	at TabEditor.findClasses(TabEditor.java:73) ~[?:?] {re:classloading}
 	at TabEditor.getClasses(TabEditor.java:55) ~[?:?] {re:classloading}
 	at TabEditor.keyPressed(TabEditor.java:227) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.TabbedUI.keyPressed(TabbedUI.java:104) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.keyPressed(GUIEditor.java:134) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.TabbedUI.keyPressed(TabbedUI.java:104) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.keyPressed(GUIEditor.java:134) ~[?:?] {re:classloading}
 	at net.minecraft.client.KeyboardListener.lambda$onKeyEvent$4(KeyboardListener.java:302) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 -- Affected screen --
 Details:
-	Screen name: net.plixo.paper.client.ui.GUI.GUIEditor
+	Screen name: net.plixo.lodestone.client.ui.screen.GUIEditor
 Stacktrace:
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.KeyboardListener.onKeyEvent(KeyboardListener.java:293) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}

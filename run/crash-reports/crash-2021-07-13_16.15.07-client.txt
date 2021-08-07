@@ -4,18 +4,18 @@
 Time: 13.07.21 16:15
 Description: Ticking screen
 
-java.lang.NoSuchMethodError: net.plixo.paper.client.engine.ecs.Resource.lambda$getUIElement$5(Lnet/plixo/paper/client/engine/ecs/Resource;Lnet/plixo/paper/client/ui/elements/values/UITextbox;)V
-	at net.plixo.paper.client.ui.UIElement.onTick(UIElement.java:81) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UIArray.onTick(UIArray.java:58) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUICanvas.tick(GUICanvas.java:122) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIMain.tick(GUIMain.java:40) ~[main/:?] {re:classloading}
+java.lang.NoSuchMethodError: net.plixo.lodestone.client.engine.core.Resource.lambda$getUIElement$5(Lnet/plixo/paper/client/engine/ecs/Resource;Lnet/plixo/paper/client/ui/elements/values/UITextbox;)V
+	at net.plixo.lodestone.client.ui.elements.UIElement.onTick(UIElement.java:81) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UIArray.onTick(UIArray.java:58) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenCanvasUI.tick(GUICanvas.java:122) ~[main/:?] {re:classloading}
+	at ScreenMain.tick(GUIMain.java:40) ~[main/:?] {re:classloading}
 	at net.minecraft.client.Minecraft.lambda$runTick$20(Minecraft.java:1497) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1496) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
@@ -41,21 +41,21 @@ A detailed walkthrough of the error, its code path and all known details is as f
 -- Head --
 Thread: Render thread
 Stacktrace:
-	at net.plixo.paper.client.ui.UIElement.onTick(UIElement.java:81) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UIArray.onTick(UIArray.java:58) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUICanvas.tick(GUICanvas.java:122) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIMain.tick(GUIMain.java:40) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.UIElement.onTick(UIElement.java:81) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UIArray.onTick(UIArray.java:58) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.onTick(UICanvas.java:105) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenCanvasUI.tick(GUICanvas.java:122) ~[?:?] {re:classloading}
+	at ScreenMain.tick(GUIMain.java:40) ~[?:?] {re:classloading}
 	at net.minecraft.client.Minecraft.lambda$runTick$20(Minecraft.java:1497) ~[forge:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
 -- Affected screen --
 Details:
-	Screen name: net.plixo.paper.client.ui.GUI.GUIMain
+	Screen name: ScreenMain
 Stacktrace:
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 

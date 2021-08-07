@@ -34,7 +34,7 @@ A detailed walkthrough of the error, its code path and all known details is as f
 -- Head --
 Thread: Render thread
 Stacktrace:
-	at net.plixo.paper.client.util.Util.print(Util.java:129) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.util.UMath.print(Util.java:129) ~[?:?] {re:classloading}
 -- MOD lodestone --
 Details:
 	Mod File: main
@@ -44,10 +44,10 @@ Details:
 	Mod Issue URL: NOT PROVIDED
 	Exception message: java.lang.NullPointerException
 Stacktrace:
-	at net.plixo.paper.client.util.Util.print(Util.java:129) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.manager.AssetLoader.load(AssetLoader.java:94) ~[main/:?] {re:classloading}
-	at net.plixo.paper.Lodestone.startClient(Lodestone.java:27) ~[main/:?] {re:classloading}
-	at net.plixo.paper.LodestoneMod.doClientStuff(LodestoneMod.java:70) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.util.UMath.print(Util.java:129) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.manager.RAssets.load(AssetLoader.java:94) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.Lodestone.startClient(Lodestone.java:27) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.LodestoneMod.doClientStuff(LodestoneMod.java:70) ~[main/:?] {re:classloading}
 	at net.minecraftforge.eventbus.EventBus.doCastFilter(EventBus.java:247) ~[eventbus-3.0.5-service.jar:?] {}
 	at net.minecraftforge.eventbus.EventBus.lambda$addListener$11(EventBus.java:239) ~[eventbus-3.0.5-service.jar:?] {}
 	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:297) ~[eventbus-3.0.5-service.jar:?] {}

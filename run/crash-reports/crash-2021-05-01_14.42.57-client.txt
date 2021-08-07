@@ -8,13 +8,13 @@ java.lang.AssertionError: java.lang.LinkageError: loader (instance of  cpw/mods/
 	at net.compiler.CompilerUtils.defineClass(CompilerUtils.java:164) ~[main/:?] {re:classloading}
 	at net.compiler.CachedCompiler.loadFromJava(CachedCompiler.java:167) ~[main/:?] {re:classloading}
 	at net.compiler.CachedCompiler.loadFromJava(CachedCompiler.java:66) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.engine.behaviors.Java_Addon.onEvent(Java_Addon.java:46) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.engine.ecs.GameObject.onEvent(GameObject.java:39) ~[main/:?] {re:classloading}
-	at net.plixo.paper.LodestoneEngine.startEngine(LodestoneEngine.java:30) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.other.UIToolbar$3.actionPerformed(Toolbar.java:54) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.UIElement.mouseClicked(UIElement.java:58) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:91) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.mouseClicked(GUIEditor.java:137) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.engine.behaviors.BJava.onEvent(Java_Addon.java:46) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.engine.core.GameObject.onEvent(GameObject.java:39) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.LodestoneEngine.startEngine(LodestoneEngine.java:30) ~[main/:?] {re:classloading}
+	at UIToolbar$3.actionPerformed(Toolbar.java:54) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.UIElement.mouseClicked(UIElement.java:58) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:91) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.mouseClicked(GUIEditor.java:137) ~[main/:?] {re:classloading}
 	at net.minecraft.client.MouseHelper.lambda$mouseButtonCallback$0(MouseHelper.java:92) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.MouseHelper.mouseButtonCallback(MouseHelper.java:90) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
@@ -61,17 +61,17 @@ Stacktrace:
 	at net.compiler.CompilerUtils.defineClass(CompilerUtils.java:164) ~[?:?] {re:classloading}
 	at net.compiler.CachedCompiler.loadFromJava(CachedCompiler.java:167) ~[?:?] {re:classloading}
 	at net.compiler.CachedCompiler.loadFromJava(CachedCompiler.java:66) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.engine.behaviors.Java_Addon.onEvent(Java_Addon.java:46) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.engine.ecs.GameObject.onEvent(GameObject.java:39) ~[?:?] {re:classloading}
-	at net.plixo.paper.LodestoneEngine.startEngine(LodestoneEngine.java:30) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.other.UIToolbar$3.actionPerformed(Toolbar.java:54) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.UIElement.mouseClicked(UIElement.java:58) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:91) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.mouseClicked(GUIEditor.java:137) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.engine.behaviors.BJava.onEvent(Java_Addon.java:46) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.engine.core.GameObject.onEvent(GameObject.java:39) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.LodestoneEngine.startEngine(LodestoneEngine.java:30) ~[?:?] {re:classloading}
+	at UIToolbar$3.actionPerformed(Toolbar.java:54) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.UIElement.mouseClicked(UIElement.java:58) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:91) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.mouseClicked(GUIEditor.java:137) ~[?:?] {re:classloading}
 	at net.minecraft.client.MouseHelper.lambda$mouseButtonCallback$0(MouseHelper.java:92) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 -- Affected screen --
 Details:
-	Screen name: net.plixo.paper.client.ui.GUI.GUIEditor
+	Screen name: net.plixo.lodestone.client.ui.screen.GUIEditor
 Stacktrace:
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.MouseHelper.mouseButtonCallback(MouseHelper.java:90) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}

@@ -5,17 +5,17 @@ Time: 18.05.21, 21:26
 Description: mouseClicked event handler
 
 java.lang.NullPointerException: mouseClicked event handler
-	at net.plixo.paper.client.ui.GUI.GUIAccept.<init>(GUIAccept.java:23) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.tabs.TabExplorer$2.actionPerformed(TabExplorer.java:70) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.UIElement.mouseClicked(UIElement.java:52) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UIArray.mouseClicked(UIArray.java:95) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.UITab.mouseClicked(UITab.java:53) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.tabs.TabExplorer.mouseClicked(TabExplorer.java:108) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.TabbedUI.mouseClicked(TabbedUI.java:110) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.mouseClicked(GUIEditor.java:171) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenAccept.<init>(GUIAccept.java:23) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.tabs.TabExplorer$2.actionPerformed(TabExplorer.java:70) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.UIElement.mouseClicked(UIElement.java:52) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UIArray.mouseClicked(UIArray.java:95) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.UITab.mouseClicked(UITab.java:53) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.tabs.TabExplorer.mouseClicked(TabExplorer.java:108) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.TabbedUI.mouseClicked(TabbedUI.java:110) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.mouseClicked(GUIEditor.java:171) ~[main/:?] {re:classloading}
 	at net.minecraft.client.MouseHelper.lambda$mouseButtonCallback$0(MouseHelper.java:92) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.MouseHelper.mouseButtonCallback(MouseHelper.java:90) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
@@ -49,21 +49,21 @@ A detailed walkthrough of the error, its code path and all known details is as f
 -- Head --
 Thread: Render thread
 Stacktrace:
-	at net.plixo.paper.client.ui.GUI.GUIAccept.<init>(GUIAccept.java:23) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.tabs.TabExplorer$2.actionPerformed(TabExplorer.java:70) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.UIElement.mouseClicked(UIElement.java:52) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UIArray.mouseClicked(UIArray.java:95) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.UITab.mouseClicked(UITab.java:53) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.tabs.TabExplorer.mouseClicked(TabExplorer.java:108) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.TabbedUI.mouseClicked(TabbedUI.java:110) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUIEditor.mouseClicked(GUIEditor.java:171) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenAccept.<init>(GUIAccept.java:23) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.tabs.TabExplorer$2.actionPerformed(TabExplorer.java:70) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.UIElement.mouseClicked(UIElement.java:52) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UIArray.mouseClicked(UIArray.java:95) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.elements.canvas.UICanvas.mouseClicked(UICanvas.java:88) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.UITab.mouseClicked(UITab.java:53) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.tabs.TabExplorer.mouseClicked(TabExplorer.java:108) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.TabbedUI.mouseClicked(TabbedUI.java:110) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screen.GUIEditor.mouseClicked(GUIEditor.java:171) ~[?:?] {re:classloading}
 	at net.minecraft.client.MouseHelper.lambda$mouseButtonCallback$0(MouseHelper.java:92) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 -- Affected screen --
 Details:
-	Screen name: net.plixo.paper.client.ui.GUI.GUIEditor
+	Screen name: net.plixo.lodestone.client.ui.screen.GUIEditor
 Stacktrace:
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.MouseHelper.mouseButtonCallback(MouseHelper.java:90) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}

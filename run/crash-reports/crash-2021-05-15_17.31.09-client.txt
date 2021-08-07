@@ -5,7 +5,7 @@ Time: 15.05.21 17:31
 Description: Ticking screen
 
 java.lang.NullPointerException: Ticking screen
-	at net.plixo.paper.client.ui.GUI.GUICanvas.tick(GUICanvas.java:68) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenCanvasUI.tick(GUICanvas.java:68) ~[main/:?] {re:classloading}
 	at net.minecraft.client.Minecraft.lambda$runTick$20(Minecraft.java:1497) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1496) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
@@ -31,7 +31,7 @@ A detailed walkthrough of the error, its code path and all known details is as f
 -- Head --
 Thread: Render thread
 Stacktrace:
-	at net.plixo.paper.client.ui.GUI.GUICanvas.tick(GUICanvas.java:68) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenCanvasUI.tick(GUICanvas.java:68) ~[?:?] {re:classloading}
 	at net.minecraft.client.Minecraft.lambda$runTick$20(Minecraft.java:1497) ~[forge:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
 -- Affected screen --
 Details:

@@ -5,15 +5,15 @@ Time: 05.07.21 20:59
 Description: mouseClicked event handler
 
 java.lang.NullPointerException: mouseClicked event handler
-	at net.plixo.paper.client.ui.tabs.UIHierarchy.reCalc(UIHierarchy.java:56) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.tabs.UIHierarchy.lambda$null$4(UIHierarchy.java:90) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUITextInput.lambda$new$0(GUITextInput.java:15) ~[main/:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUITextInput.lambda$init$2(GUITextInput.java:32) ~[main/:?] {re:classloading}
+	at UIHierarchy.reCalc(UIHierarchy.java:56) ~[main/:?] {re:classloading}
+	at UIHierarchy.lambda$null$4(UIHierarchy.java:90) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenTextInput.lambda$new$0(GUITextInput.java:15) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenTextInput.lambda$init$2(GUITextInput.java:32) ~[main/:?] {re:classloading}
 	at net.minecraft.client.gui.widget.button.Button.onPress(Button.java:26) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.widget.button.AbstractButton.onClick(AbstractButton.java:18) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.widget.Widget.mouseClicked(Widget.java:136) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.INestedGuiEventHandler.mouseClicked(INestedGuiEventHandler.java:31) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
-	at net.plixo.paper.client.ui.GUI.GUICanvas.mouseClicked(GUICanvas.java:76) ~[main/:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenCanvasUI.mouseClicked(GUICanvas.java:76) ~[main/:?] {re:classloading}
 	at net.minecraft.client.MouseHelper.lambda$mouseButtonCallback$0(MouseHelper.java:92) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.MouseHelper.mouseButtonCallback(MouseHelper.java:90) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
@@ -47,19 +47,19 @@ A detailed walkthrough of the error, its code path and all known details is as f
 -- Head --
 Thread: Render thread
 Stacktrace:
-	at net.plixo.paper.client.ui.tabs.UIHierarchy.reCalc(UIHierarchy.java:56) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.tabs.UIHierarchy.lambda$null$4(UIHierarchy.java:90) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUITextInput.lambda$new$0(GUITextInput.java:15) ~[?:?] {re:classloading}
-	at net.plixo.paper.client.ui.GUI.GUITextInput.lambda$init$2(GUITextInput.java:32) ~[?:?] {re:classloading}
+	at UIHierarchy.reCalc(UIHierarchy.java:56) ~[?:?] {re:classloading}
+	at UIHierarchy.lambda$null$4(UIHierarchy.java:90) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenTextInput.lambda$new$0(GUITextInput.java:15) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenTextInput.lambda$init$2(GUITextInput.java:32) ~[?:?] {re:classloading}
 	at net.minecraft.client.gui.widget.button.Button.onPress(Button.java:26) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.widget.button.AbstractButton.onClick(AbstractButton.java:18) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.widget.Widget.mouseClicked(Widget.java:136) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.gui.INestedGuiEventHandler.mouseClicked(INestedGuiEventHandler.java:31) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
-	at net.plixo.paper.client.ui.GUI.GUICanvas.mouseClicked(GUICanvas.java:76) ~[?:?] {re:classloading}
+	at net.plixo.lodestone.client.ui.screens.ScreenCanvasUI.mouseClicked(GUICanvas.java:76) ~[?:?] {re:classloading}
 	at net.minecraft.client.MouseHelper.lambda$mouseButtonCallback$0(MouseHelper.java:92) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
 -- Affected screen --
 Details:
-	Screen name: net.plixo.paper.client.ui.GUI.GUITextInput
+	Screen name: net.plixo.lodestone.client.ui.screens.ScreenTextInput
 Stacktrace:
 	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:427) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
 	at net.minecraft.client.MouseHelper.mouseButtonCallback(MouseHelper.java:90) ~[forge-1.16.4-35.1.4_mapped_snapshot_20201028-1.16.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
